@@ -3,9 +3,13 @@ import {
   StyleSheet,
   View,
   Image,
-  Dimensions
+  Dimensions,
+  Button,
+  TouchableHighlight
 } from 'react-native';
 import moment from 'moment';
+
+import AlbumArt from './album-art'
 
 var albums = {
   0: {
@@ -17,10 +21,10 @@ var albums = {
     currentTime: 60000
   },
   1: {
-    art_url: 'https://i.scdn.co/image/6ecc3b12c7f9560e3729535af77dba6527e0c85c',
-    name: 'Sun',
-    artist: 'Two Door Cinema Club',
-    album_name: 'Beacon',
+    art_url: 'https://i.scdn.co/image/2f979440bc6c5312cde340592f715e8a40bd7cbd',
+    name: 'Payphone',
+    artist: 'Maroon 5',
+    album_name: 'Overexposed',
     totalTime: 93000,
     currentTime: 60000
   },
@@ -45,7 +49,8 @@ var albums = {
 var Playscreen = React.createClass({
   getInitialState: function() {
     return {
-      currentSong: 0
+      currentSong: 1,
+      playing: false
     }
   },
   render: function() {
@@ -60,33 +65,31 @@ var Playscreen = React.createClass({
         </View>
       </View>
       <View style={[styles.playBar, this.border('yellow')]}>
-
+        <Button onPress={this.cycleSongBackward} style={styles.skipButton} title="<=" color="black"/>
+        { this.playButton() }
+        <Button onPress={this.cycleSongForward} style={styles.skipButton} title="=>" color="black"/>
       </View>
     </View>
   },
   currentAlbumArt: function() {
-    return <Image source={{uri: albums[this.state.currentSong].art_url}} style={styles.albumArt} />
+    return <AlbumArt url={albums[this.state.currentSong].art_url} />;
   },
   timeBar: function(totalTime, currentTime) {
     return <View style={styles.timeBar}>
       <Image source={require('./time-bar-back.png')} resizeMode="stretch" style={[
         {
           alignSelf: 'flex-start',
-          overflow: 'hidden',
           height: 2,
-          width: 100,
           position: 'absolute',
-          flex: 20
+          flex: 100 - ((currentTime / totalTime) * 100)
         }
       ]}></Image>
       <Image source={require('./time-bar-front.png')} resizeMode="stretch" style={[
         {
           alignSelf: 'flex-end',
-          overflow: 'hidden',
           height: 2,
-          width: 100,
           position: 'absolute',
-          flex: 10 //(currentTime / totalTime) * 100
+          flex: (currentTime / totalTime) * 100
         }
       ]}></Image>
   </View>
@@ -97,6 +100,34 @@ var Playscreen = React.createClass({
     //   borderWidth: 2
     // }
     return null;
+  },
+  playButton() {
+    if(this.state.playing) {
+      return <TouchableHighlight onPress={this.play} underlayColor={'transparent'}>
+        <Image source={require('./play-button.png')} style={styles.playButton} />
+      </TouchableHighlight>
+    } else {
+      return <TouchableHighlight onPress={this.play} underlayColor={'transparent'}>
+        <Image source={require('./pause-button.png')} style={styles.playButton} />
+      </TouchableHighlight>
+    }
+  },
+  play() {
+    this.setState({playing: !this.state.playing});
+  },
+  cycleSongForward: function() {
+    if(this.state.currentSong < 3) {
+      this.setState({currentSong: this.state.currentSong + 1});
+    } else {
+      this.setState({currentSong: 0});
+    }
+  },
+  cycleSongBackward: function() {
+    if(this.state.currentSong > 0) {
+      this.setState({currentSong: this.state.currentSong - 1});
+    } else {
+      this.setState({currentSong: 3});
+    }
   }
 });
 
@@ -118,13 +149,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   playBar: {
-    flex: 30
-  },
-  albumArt: {
-    flex: 75,
-    width: width - (0.1 * width),
-    height: width - (0.1 * width),
-    resizeMode: 'contain'
+    flex: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
   albumInfo: {
     flex: 22,
@@ -145,6 +173,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 15,
     resizeMode: 'stretch'
+  },
+  playButton: {
+    width: 70,
+    height: 70
+  },
+  skipButton: {
+    flex: 1
   }
 });
 
