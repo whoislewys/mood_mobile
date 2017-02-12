@@ -65,29 +65,44 @@ var Playscreen = React.createClass({
         </View>
       </View>
       <View style={[styles.playBar, this.border('yellow')]}>
-        <Button onPress={this.cycleSongBackward} style={styles.skipButton} title="<=" color="black"/>
         { this.playButton() }
-        <Button onPress={this.cycleSongForward} style={styles.skipButton} title="=>" color="black"/>
       </View>
     </View>
   },
   currentAlbumArt: function() {
-    return <AlbumArt url={albums[this.state.currentSong].art_url} />;
+    return (
+      <AlbumArt
+        url={albums[this.state.currentSong].art_url}
+        skipForward={this.cycleSongForward}
+        skipBack={this.cycleSongBackward}
+      />);
   },
   timeBar: function(totalTime, currentTime) {
     return <View style={styles.timeBar}>
       <Image source={require('./time-bar-back.png')} resizeMode="stretch" style={[
         {
           alignSelf: 'flex-start',
-          height: 2,
+          height: 1,
+          width: 200,
+          top: 10,
           position: 'absolute',
           flex: 100 - ((currentTime / totalTime) * 100)
         }
       ]}></Image>
+      <Image source={require('./time-bar-tick.png')} style={[
+        {
+          width: 2,
+          height: 11,
+          left: 200,
+          top: 5,
+          position: 'absolute'
+        }
+      ]}/>
       <Image source={require('./time-bar-front.png')} resizeMode="stretch" style={[
         {
           alignSelf: 'flex-end',
-          height: 2,
+          height: 1,
+          top: 10,
           position: 'absolute',
           flex: (currentTime / totalTime) * 100
         }
@@ -175,8 +190,8 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch'
   },
   playButton: {
-    width: 70,
-    height: 70
+    width: 75,
+    height: 75
   },
   skipButton: {
     flex: 1

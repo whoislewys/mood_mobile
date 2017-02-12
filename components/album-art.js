@@ -20,15 +20,46 @@ let AlbumArt = React.createClass({
 
     this.drag.x = e.nativeEvent.pageX;
   },
+  handleRelease: function(e) {
+    if(this.state.x > 100) {
+      this.props.skipForward();
+    } else if(this.state.x < -100) {
+      this.props.skipBack();
+    }
+    this.resetPosition();
+  },
   resetPosition: function(e) {
     this.dragging = false;
 
     this.setState({
-      
-    })
+      x: 0
+    });
+  },
+  _onStartShouldSetResponder: function(e) {
+    this.dragging = true;
+
+    this.drag = {
+      x: e.nativeEvent.pageX
+    };
+
+    return true;
+  },
+  _onMoveShouldSetResponder: function(e) {
+    return true;
+  },
+  getCardStyle: function() {
+    var transform = [{translateX: this.state.x}];
+    return {transform: transform};
   },
   render: function() {
-    return <Image source={{uri: this.props.url}} style={styles.albumArt} />
+    return <Image
+      onResponderMove={this.setPosition}
+      onResponderRelease={this.handleRelease}
+      onStartShouldSetResponder={this._onStartShouldSetResponder}
+      onMoveShouldSetResponder={this._onMoveShouldSetResponder}
+      source={{uri: this.props.url}}
+      style={[styles.albumArt, this.getCardStyle()]}
+    />
   }
 });
 
