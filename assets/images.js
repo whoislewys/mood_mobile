@@ -1,5 +1,5 @@
 const images = {
-	bgImage: require('./img/album-blurred.png')
+	bgImage: "/Users/samrondinelli/Projects/Work/Mood/"
 };
 
 export default images;

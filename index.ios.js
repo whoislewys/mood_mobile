@@ -9,17 +9,15 @@ import {
 
 import Playscreen from './components/playscreen';
 import Images from '@assets/images';
+import Background from './components/background'
 
 var Mood = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image
-          source={Images.bgImage}
-          style={styles.bgImage}
-        >
-
-        </Image>
+        <Background>
+          <Playscreen />
+        </Background>
       </View>
     );
   }
@@ -27,16 +25,7 @@ var Mood = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 4,
-    borderColor: 'green',
-    position: 'relative'
-  },
-  bgImage: {
-    resizeMode: 'stretch'
+    flex: 1
   }
 });
 
