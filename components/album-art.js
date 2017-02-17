@@ -22,9 +22,9 @@ let AlbumArt = React.createClass({
   },
   handleRelease: function(e) {
     if(this.state.x > 100) {
-      this.props.skipForward();
-    } else if(this.state.x < -100) {
       this.props.skipBack();
+    } else if(this.state.x < -100) {
+      this.props.skipForward();
     }
     this.resetPosition();
   },

@@ -4,13 +4,14 @@ import {
   View,
   Image
 } from 'react-native';
+import Images from '@assets/images.js';
 
 var Background = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image source={require('./album-blurred.png')} style={styles.bgImage}>
-          <Image source={require('./background-overlay.png')} style={styles.bgImage}>
+        <Image source={Images.bgImage} style={styles.bgImage}>
+          <Image source={Images.bgOverlay} style={styles.bgImage}>
             { this.props.children }
           </Image>
         </Image>
