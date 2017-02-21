@@ -85,7 +85,6 @@ var Playscreen = React.createClass({
       this.startPlayback(track);
     }
   },
-
   startPlayback: function(track) {
     track.play((success) => {
       if (success) {
