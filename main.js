@@ -7,16 +7,17 @@ import {
   Image
 } from 'react-native';
 
-import Playscreen from './components/playscreen';
+import Playscreen from './components/play-screen';
 import Images from '@assets/images';
-import Background from './components/background'
+import Setlists from '@assets/setlists';
+import Background from './components/background';
 
 module.exports = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
         <Background>
-          <Playscreen />
+          <Playscreen list={Setlists[0]}/>
         </Background>
       </View>
     );
