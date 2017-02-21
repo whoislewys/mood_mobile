@@ -275,7 +275,7 @@ var Playscreen = React.createClass({
       this.state.file.getCurrentTime((seconds) => {
         this.setState({currentTime: seconds});
       });
-    }, 50);
+    }, 200);
   },
   pause: function() {
     this.state.file.pause();
