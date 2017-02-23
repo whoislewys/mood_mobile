@@ -43,13 +43,14 @@
 		61D418B1739B43048C60E821 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D44D624C311425994F54173 /* Roboto-LightItalic.ttf */; };
 		6997453FA287447984363294 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0A3283DC444F8F863DDA95 /* Roboto-ThinItalic.ttf */; };
 		7439B7061E56DDDD00795E6A /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7439B7051E56DDBD00795E6A /* libRNSound.a */; };
-		7439B7071E56DE1F00795E6A /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7439B6FE1E56D12D00795E6A /* music.mp3 */; };
-		7439B7091E56E5B800795E6A /* weak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7439B7081E56E5B800795E6A /* weak.mp3 */; };
-		7439B70C1E56E6A100795E6A /* dawes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7439B70A1E56E6A100795E6A /* dawes.mp3 */; };
-		7439B70D1E56E6A100795E6A /* payphone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7439B70B1E56E6A100795E6A /* payphone.mp3 */; };
-		7439B7111E56E79F00795E6A /* avett.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7439B70E1E56E79F00795E6A /* avett.mp3 */; };
-		7439B7121E56E79F00795E6A /* sadnecessary.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7439B70F1E56E79F00795E6A /* sadnecessary.mp3 */; };
-		7439B7131E56E79F00795E6A /* world.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7439B7101E56E79F00795E6A /* world.mp3 */; };
+		748D20CD1E5D09BF006D416D /* avett.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20C51E5D09BF006D416D /* avett.mp3 */; };
+		748D20CE1E5D09BF006D416D /* dawes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20C61E5D09BF006D416D /* dawes.mp3 */; };
+		748D20CF1E5D09BF006D416D /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20C71E5D09BF006D416D /* music.mp3 */; };
+		748D20D01E5D09BF006D416D /* payphone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20C81E5D09BF006D416D /* payphone.mp3 */; };
+		748D20D11E5D09BF006D416D /* sadnecessary.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20C91E5D09BF006D416D /* sadnecessary.mp3 */; };
+		748D20D21E5D09BF006D416D /* stressed.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20CA1E5D09BF006D416D /* stressed.mp3 */; };
+		748D20D31E5D09BF006D416D /* weak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20CB1E5D09BF006D416D /* weak.mp3 */; };
+		748D20D41E5D09BF006D416D /* world.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 748D20CC1E5D09BF006D416D /* world.mp3 */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8AA857009A394B93931CAC88 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 030B1A2673C845938F791607 /* Roboto-Regular.ttf */; };
 		8DF51201F876403E8BDA4806 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAD6040BA36644FFBE069D2B /* Roboto-Italic.ttf */; };
@@ -295,14 +296,15 @@
 		445EFE9FDC9246B493D88FFA /* RobotoCondensed-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Light.ttf"; path = "../assets/roboto/RobotoCondensed-Light.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		6E20BED09372478097374809 /* RobotoCondensed-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-LightItalic.ttf"; path = "../assets/roboto/RobotoCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
-		7439B6FE1E56D12D00795E6A /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = music.mp3; path = ../../../../../Downloads/music.mp3; sourceTree = "<group>"; };
 		7439B7001E56DDBD00795E6A /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
-		7439B7081E56E5B800795E6A /* weak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = weak.mp3; path = ../../../../../Downloads/weak.mp3; sourceTree = "<group>"; };
-		7439B70A1E56E6A100795E6A /* dawes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dawes.mp3; path = ../../../../../Downloads/dawes.mp3; sourceTree = "<group>"; };
-		7439B70B1E56E6A100795E6A /* payphone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = payphone.mp3; path = ../../../../../Downloads/payphone.mp3; sourceTree = "<group>"; };
-		7439B70E1E56E79F00795E6A /* avett.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = avett.mp3; path = ../../../../../Downloads/avett.mp3; sourceTree = "<group>"; };
-		7439B70F1E56E79F00795E6A /* sadnecessary.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sadnecessary.mp3; path = ../../../../../Downloads/sadnecessary.mp3; sourceTree = "<group>"; };
-		7439B7101E56E79F00795E6A /* world.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = world.mp3; path = ../../../../../Downloads/world.mp3; sourceTree = "<group>"; };
+		748D20C51E5D09BF006D416D /* avett.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = avett.mp3; path = ../android/app/src/main/res/raw/avett.mp3; sourceTree = "<group>"; };
+		748D20C61E5D09BF006D416D /* dawes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dawes.mp3; path = ../android/app/src/main/res/raw/dawes.mp3; sourceTree = "<group>"; };
+		748D20C71E5D09BF006D416D /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = music.mp3; path = ../android/app/src/main/res/raw/music.mp3; sourceTree = "<group>"; };
+		748D20C81E5D09BF006D416D /* payphone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = payphone.mp3; path = ../android/app/src/main/res/raw/payphone.mp3; sourceTree = "<group>"; };
+		748D20C91E5D09BF006D416D /* sadnecessary.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sadnecessary.mp3; path = ../android/app/src/main/res/raw/sadnecessary.mp3; sourceTree = "<group>"; };
+		748D20CA1E5D09BF006D416D /* stressed.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stressed.mp3; path = ../android/app/src/main/res/raw/stressed.mp3; sourceTree = "<group>"; };
+		748D20CB1E5D09BF006D416D /* weak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = weak.mp3; path = ../android/app/src/main/res/raw/weak.mp3; sourceTree = "<group>"; };
+		748D20CC1E5D09BF006D416D /* world.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = world.mp3; path = ../android/app/src/main/res/raw/world.mp3; sourceTree = "<group>"; };
 		7879A46AD8EA483887B45920 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -556,14 +558,15 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				7439B70E1E56E79F00795E6A /* avett.mp3 */,
-				7439B70F1E56E79F00795E6A /* sadnecessary.mp3 */,
-				7439B7101E56E79F00795E6A /* world.mp3 */,
-				7439B70A1E56E6A100795E6A /* dawes.mp3 */,
-				7439B70B1E56E6A100795E6A /* payphone.mp3 */,
-				7439B7081E56E5B800795E6A /* weak.mp3 */,
+				748D20C51E5D09BF006D416D /* avett.mp3 */,
+				748D20C61E5D09BF006D416D /* dawes.mp3 */,
+				748D20C71E5D09BF006D416D /* music.mp3 */,
+				748D20C81E5D09BF006D416D /* payphone.mp3 */,
+				748D20C91E5D09BF006D416D /* sadnecessary.mp3 */,
+				748D20CA1E5D09BF006D416D /* stressed.mp3 */,
+				748D20CB1E5D09BF006D416D /* weak.mp3 */,
+				748D20CC1E5D09BF006D416D /* world.mp3 */,
 				7439B7001E56DDBD00795E6A /* RNSound.xcodeproj */,
-				7439B6FE1E56D12D00795E6A /* music.mp3 */,
 				13B07FAE1A68108700A75B9A /* moodmobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* moodmobileTests */,
@@ -952,32 +955,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7439B7071E56DE1F00795E6A /* music.mp3 in Resources */,
-				7439B7121E56E79F00795E6A /* sadnecessary.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				7439B70C1E56E6A100795E6A /* dawes.mp3 in Resources */,
-				7439B7131E56E79F00795E6A /* world.mp3 in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				B4BF7A558AC7400CA260F03D /* Roboto-Black.ttf in Resources */,
+				748D20CE1E5D09BF006D416D /* dawes.mp3 in Resources */,
 				E0DF531FBB95484DB4B1B77A /* Roboto-BlackItalic.ttf in Resources */,
 				F074DA910D05412094D8F887 /* Roboto-Bold.ttf in Resources */,
 				23F0747386F34295948D92FB /* Roboto-BoldItalic.ttf in Resources */,
+				748D20D11E5D09BF006D416D /* sadnecessary.mp3 in Resources */,
 				8DF51201F876403E8BDA4806 /* Roboto-Italic.ttf in Resources */,
-				7439B7111E56E79F00795E6A /* avett.mp3 in Resources */,
 				CA8F5352F9B54DA8933067A6 /* Roboto-Light.ttf in Resources */,
 				61D418B1739B43048C60E821 /* Roboto-LightItalic.ttf in Resources */,
 				AD07B639A70D48E0B36D8A1F /* Roboto-Medium.ttf in Resources */,
 				0DA6F932EC0741CDAB39CD7E /* Roboto-MediumItalic.ttf in Resources */,
-				7439B7091E56E5B800795E6A /* weak.mp3 in Resources */,
 				8AA857009A394B93931CAC88 /* Roboto-Regular.ttf in Resources */,
 				C97683FBE84C4E7CACEFDE2E /* Roboto-Thin.ttf in Resources */,
+				748D20CF1E5D09BF006D416D /* music.mp3 in Resources */,
 				6997453FA287447984363294 /* Roboto-ThinItalic.ttf in Resources */,
 				05FF0012B19F42C8A3CFD0B0 /* RobotoCondensed-Bold.ttf in Resources */,
 				46048BFE7FC34365AF9AB14A /* RobotoCondensed-BoldItalic.ttf in Resources */,
+				748D20D41E5D09BF006D416D /* world.mp3 in Resources */,
+				748D20CD1E5D09BF006D416D /* avett.mp3 in Resources */,
+				748D20D31E5D09BF006D416D /* weak.mp3 in Resources */,
 				E9D49FA089A547B2B327E142 /* RobotoCondensed-Italic.ttf in Resources */,
+				748D20D21E5D09BF006D416D /* stressed.mp3 in Resources */,
 				ADD884DB892B4539BA1A06AA /* RobotoCondensed-Light.ttf in Resources */,
 				1BE9C4008CEE468B87A07E0D /* RobotoCondensed-LightItalic.ttf in Resources */,
-				7439B70D1E56E6A100795E6A /* payphone.mp3 in Resources */,
+				748D20D01E5D09BF006D416D /* payphone.mp3 in Resources */,
 				C0DDBE01B4354F1B99B44D3F /* RobotoCondensed-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

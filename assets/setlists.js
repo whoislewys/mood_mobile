@@ -41,6 +41,52 @@ const setlists = [
       artist: 'Modest Mouse',
       album_name: 'Good News For People Who Love Bad News',
       file: 'world.mp3'
+    },
+    {
+      art_url: 'https://i.scdn.co/image/52fc1b3b08807194b87cd7e4fd68f5118d991e44',
+      name: 'Stressed Out',
+      artist: 'Twenty One Pilots',
+      album_name: 'Blurryface',
+      file: 'stressed.mp3'
+    }
+  ],
+  [
+    {
+      art_url: 'https://i.scdn.co/image/52fc1b3b08807194b87cd7e4fd68f5118d991e44',
+      name: 'Stressed Out',
+      artist: 'Twenty One Pilots',
+      album_name: 'Blurryface',
+      file: 'stressed.mp3'
+    }
+  ],
+  [
+    {
+      art_url: 'https://i.scdn.co/image/52fc1b3b08807194b87cd7e4fd68f5118d991e44',
+      name: 'Stressed Out',
+      artist: 'Twenty One Pilots',
+      album_name: 'Blurryface',
+      file: 'stressed.mp3'
+    },
+    {
+      art_url: 'https://i.scdn.co/image/52fc1b3b08807194b87cd7e4fd68f5118d991e44',
+      name: 'Stressed Out',
+      artist: 'Twenty One Pilots',
+      album_name: 'Blurryface',
+      file: 'stressed.mp3'
+    },
+    {
+      art_url: 'https://i.scdn.co/image/d4b8ab3438e93a26db2bc6d0208b900044d9dc17',
+      name: 'World At Large',
+      artist: 'Modest Mouse',
+      album_name: 'Good News For People Who Love Bad News',
+      file: 'world.mp3'
+    },
+    {
+      art_url: 'https://i.scdn.co/image/d4b8ab3438e93a26db2bc6d0208b900044d9dc17',
+      name: 'World At Large',
+      artist: 'Modest Mouse',
+      album_name: 'Good News For People Who Love Bad News',
+      file: 'world.mp3'
     }
   ]
 ];

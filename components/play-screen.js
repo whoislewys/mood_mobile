@@ -22,27 +22,15 @@ var Playscreen = React.createClass({
       added: false,
       repeat: false,
       more: false,
-      files: [],
-      currentTime: 0
+      currentTime: 0,
+      files: []
     }
   },
-  componentWillMount() {
-    let files = [];
-    const list = this.props.list;
-
-    for(var i = 0; i < list.length; i++) {
-      files[i] = (
-        new Sound(list[i].file, Sound.MAIN_BUNDLE, ((error, name) => {
-          if(error) {
-            console.log('Error loading track: ' + name);
-          } else {
-            console.log('Loaded track: ' + name);
-          }
-        }).bind(null, null, list[i].name))
-      );
-    }
-
-    this.setState({files: files});
+  componentWillMount: function() {
+    this.buildFiles();
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.buildFiles(nextProps.list);
   },
   render: function() {
     return (
@@ -80,7 +68,7 @@ var Playscreen = React.createClass({
     let track = this.state.files[this.state.currentTrack];
 
     if(this.state.playing) {
-      this.stopPlayback(track);
+      this.pausePlayback(track);
     } else {
       this.startPlayback(track);
     }
@@ -102,31 +90,73 @@ var Playscreen = React.createClass({
 
     this.setState({playing: true});
   },
-  stopPlayback: function(track) {
+  pausePlayback: function(track) {
     track.pause();
     clearInterval(this.interval);
     this.setState({playing: false});
   },
+  stopPlayback: function(track) {
+    this.pausePlayback(track);
+    track.stop();
+  },
   cycleSong: function(direction) {
     let track = this.state.files[this.state.currentTrack];
-    this.stopPlayback(track);
-    track.stop();
     let nextTrack = this.state.currentTrack + direction;
 
-    if(nextTrack >= this.props.list.length) {
-      nextTrack = 0;
-    } else if(nextTrack < 0) {
-      nextTrack = this.props.list.length - 1;
+    this.stopPlayback(track);
+
+    if(this.state.repeat) {
+      if(nextTrack >= this.props.list.length) {
+        nextTrack = 0;
+      } else if(nextTrack < 0) {
+        nextTrack = this.props.list.length - 1;
+      }
+    } else {
+      if(nextTrack >= this.props.list.length) {
+        this.setState({currentTrack: 0, currentTime: 0, playing: false});
+        return;
+      } else if(nextTrack < 0) {
+        this.setState({currentTrack: 0, currentTime: 0, playing: false}, this.handlePlayButtonPress);
+        return;
+      }
     }
 
     this.setState({currentTrack: nextTrack, currentTime: 0, playing: false}, this.handlePlayButtonPress);
   },
 
+  buildFiles: function(listIn) {
+    let files = [];
+    const list = (listIn == undefined) ? this.props.list : listIn;
+
+    for(var i = 0; i < list.length; i++) {
+      files[i] = (
+        new Sound(list[i].file, Sound.MAIN_BUNDLE, ((error, name) => {
+          if(error) {
+            console.log('Error loading track: ' + name);
+          } else {
+            console.log('Loaded track: ' + name);
+          }
+        }).bind(null, null, list[i].name))
+      );
+    }
+
+    this.setState({files: files});
+  },
   //Toggle functions
   toggleAdd: function() {
     this.setState({added: !this.state.added});
   },
   toggleShuffle: function() {
+    if(this.state.shuffle) {
+      this.stopPlayback(this.state.files[this.state.currentTrack]);
+      this.setState({playing: false, currentTime: 0, currentTrack: 0});
+      this.props.reset();
+    } else {
+      this.stopPlayback(this.state.files[this.state.currentTrack]);
+      this.setState({playing: false, currentTime: 0, currentTrack: 0});
+      this.props.shuffle();
+    }
+
     this.setState({shuffle: !this.state.shuffle});
   },
   toggleRepeat: function() {
@@ -153,7 +183,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 10,
     marginTop: 15,
-    marginLeft: 15,
+    marginLeft: 0.02 * width,
     resizeMode: 'stretch'
   }
 });

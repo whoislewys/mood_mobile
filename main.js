@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
-  View,
-  Image
+  View
 } from 'react-native';
+
+import _ from 'lodash';
 
 import Playscreen from './components/play-screen';
 import Images from '@assets/images';
@@ -13,14 +13,25 @@ import Setlists from '@assets/setlists';
 import Background from './components/background';
 
 module.exports = React.createClass({
+  getInitialState: function() {
+    return {
+      list: Setlists[0]
+    }
+  },
   render: function() {
     return (
       <View style={styles.container}>
         <Background>
-          <Playscreen list={Setlists[0]}/>
+          <Playscreen list={this.state.list} shuffle={this.shuffleTracks} reset={this.resetTracks}/>
         </Background>
       </View>
     );
+  },
+  shuffleTracks: function() {
+    this.setState({list: _.shuffle(Setlists[0])})
+  },
+  resetTracks: function() {
+    this.setState({list: Setlists[0]});
   }
 });
 

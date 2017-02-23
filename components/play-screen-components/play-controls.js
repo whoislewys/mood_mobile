@@ -46,13 +46,13 @@ let PlayControls = React.createClass({
     );
   },
   playButton: function() {
-    if(!this.props.playing) {
+    if(this.props.playing) {
       return <TouchableHighlight onPress={this.props.handlePlayPress} underlayColor={'transparent'}>
-        <Image source={Images.playButton} style={styles.playButton} />
+        <Image source={Images.pauseButton} style={styles.playButton} />
       </TouchableHighlight>
     } else {
       return <TouchableHighlight onPress={this.props.handlePlayPress} underlayColor={'transparent'}>
-        <Image source={Images.pauseButton} style={styles.playButton} />
+        <Image source={Images.playButton} style={styles.playButton} />
       </TouchableHighlight>
     }
   }
