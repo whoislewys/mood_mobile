@@ -28,6 +28,18 @@ var Playscreen = React.createClass({
   },
   componentWillMount: function() {
     this.buildFiles();
+
+    for(var i = 0; i < this.props.list.length; i++) {
+      let url = this.props.list[i].art_url;
+
+      let prefetchTask = Image.prefetch(url);
+
+      prefetchTask.then(() => {
+                  // console.log(`✔ Prefetch OK (+${new Date() - mountTime}ms) - ${url}`);
+                }, error => {
+                  console.log(`✘ Prefetch failed - ${this.props.list[i].album_name}`);
+                });
+    }
   },
   componentWillReceiveProps: function(nextProps) {
     this.buildFiles(nextProps.list);
@@ -39,11 +51,12 @@ var Playscreen = React.createClass({
           <Image source={Images.dropdownArrow} style={styles.dropdownButton}></Image>
         </View>
         <TrackInfo
-          skipForward={this.cycleSong.bind(null, 1)}
-          skipBack={this.cycleSong.bind(null, -1)}
+          skipForward={() => { this.cycleSong(1) }}
+          skipBack={() => { this.cycleSong(-1) }}
           track={this.props.list[this.state.currentTrack]}
           duration={this.state.files[this.state.currentTrack].getDuration()}
           currentTime={this.state.currentTime}
+          setTime={this.setTime}
         />
         <PlayControls
           add={this.state.added}
@@ -98,6 +111,15 @@ var Playscreen = React.createClass({
   stopPlayback: function(track) {
     this.pausePlayback(track);
     track.stop();
+  },
+  setTime: function(seconds) {
+    let track = this.state.files[this.state.currentTrack];
+
+    this.pausePlayback(track);
+    track.setCurrentTime(seconds);
+    this.setState({currentTime: seconds}, () => {
+      this.startPlayback(track)
+    });
   },
   cycleSong: function(direction) {
     let track = this.state.files[this.state.currentTrack];

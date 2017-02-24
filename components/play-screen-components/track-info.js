@@ -23,7 +23,11 @@ var TrackInfo = React.createClass({
           skipBack={this.props.skipBack}
         />
         <View style={[styles.albumInfo]}>
-          <TimeBar currentTime={this.props.currentTime} totalTime={this.props.duration} />
+          <TimeBar
+            currentTime={this.props.currentTime}
+            totalTime={this.props.duration}
+            setTime={this.props.setTime}
+          />
           <InfoText track={this.props.track} />
         </View>
       </View>
