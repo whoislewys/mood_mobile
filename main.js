@@ -8,24 +8,46 @@ import {
 import _ from 'lodash';
 
 import Playscreen from './components/play-screen';
+import MoodScreen from './components/mood-screen'
 import Images from '@assets/images';
-import Setlists from '@assets/setlists';
 import Background from './components/background';
 
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      list: Setlists[0]
+      list: null,
+      screen: 'mood'
     }
   },
   render: function() {
     return (
       <View style={styles.container}>
-        <Background>
-          <Playscreen list={this.state.list} shuffle={this.shuffleTracks} reset={this.resetTracks}/>
-        </Background>
+        { this.getScreen() }
       </View>
     );
+  },
+  getScreen: function() {
+    let comp = <MoodScreen play={this.play}/>;
+    if(this.state.screen == 'play') {
+      comp = (
+        <Background>
+          <Playscreen
+            list={this.state.list}
+            shuffle={this.shuffleTracks}
+            reset={this.resetTracks}
+            moodLink={this.moodScreen}
+          />
+        </Background>
+      );
+    }
+
+    return comp;
+  },
+  play: function(list) {
+    this.setState({screen: 'play', list: list});
+  },
+  moodScreen: function() {
+    this.setState({screen: 'mood', list: null});
   },
   shuffleTracks: function() {
     this.setState({list: _.shuffle(Setlists[0])})

@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Image,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 
 import moment from 'moment';
@@ -48,7 +49,9 @@ var Playscreen = React.createClass({
     return (
       <View style={styles.container}>
         <View style={styles.menuDropdown}>
-          <Image source={Images.dropdownArrow} style={styles.dropdownButton}></Image>
+          <TouchableHighlight onPress={this.props.moodLink}>
+            <Image source={Images.dropdownArrow} style={styles.dropdownButton}></Image>
+          </TouchableHighlight>
         </View>
         <TrackInfo
           skipForward={() => { this.cycleSong(1) }}

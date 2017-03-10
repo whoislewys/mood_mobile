@@ -12,7 +12,9 @@ const images = {
 	playButton: require('./img/play-button.png'),
 	pauseButton: require('./img/pause-button.png'),
 	shuffleButtonSelected: require('./img/shuffle-button-selected.png'),
-	shuffleButtonUnselected: require('./img/shuffle-button-unselected.png')
+	shuffleButtonUnselected: require('./img/shuffle-button-unselected.png'),
+	moodLogo: require('./img/mood-logo.png'),
+	dropdownArrowRight: require('./img/dropdown-arrow-right.png')
 };
 
 export default images;
