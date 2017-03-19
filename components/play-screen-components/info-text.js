@@ -59,7 +59,7 @@ let styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   albumInfoMain: {
-    color: '#ddd',
+    color: 'white',
     maxWidth: width * 0.5,
     fontSize: 18,
     fontFamily: 'Roboto',

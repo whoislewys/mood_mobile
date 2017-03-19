@@ -3,8 +3,10 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Image
+  Image,
+  Text
 } from 'react-native';
+import moment from 'moment';
 
 import Images from '@assets/images';
 const width = Dimensions.get('window').width * 0.8;
@@ -21,15 +23,45 @@ let TimeBar = React.createClass({
     if(!this.state.dragging) this.setState({x: x});
   },
 
+  getTickBoxStyle: function() {
+    return {
+      left: this.state.x - 17
+    };
+  },
   getTickStyle: function() {
-    let style = styles.tick;
-    let dragging = {
-      width: 3,
-      height: 18,
-      marginTop: 1
+    let style = {
+      width: 8,
+      height: 8,
+      top: 15,
+      left: 15
     };
 
-    return (this.state.dragging) ? dragging : style;
+    if(this.state.dragging) {
+      style = {
+        width: 16,
+        height: 16,
+        top: 11,
+        left: 11
+      };
+    }
+
+    return style;
+  },
+  getTime: function() {
+    let elem = null;
+
+    if(this.state.dragging) {
+      elem = (
+        <Text style={[styles.time, {
+          top: -20,
+          left: this.state.x - 12
+        }]}>
+          { moment(0).seconds(this.pxToSeconds(this.state.x)).format('m:ss') }
+        </Text>
+      );
+    }
+
+    return elem;
   },
   _onStartShouldSetResponder: function(e) {
     this.dragging = true;
@@ -73,16 +105,10 @@ let TimeBar = React.createClass({
             height: 1,
             width: this.state.x,
             marginTop: 10,
-            backgroundColor: '#eee'
+            backgroundColor: '#fff'
           }
         ]}></View>
-        <Image source={Images.timeBarTick}
-          onResponderMove={this.setPosition}
-          onResponderRelease={this.handleRelease}
-          onStartShouldSetResponder={this._onStartShouldSetResponder}
-          onMoveShouldSetResponder={this._onMoveShouldSetResponder}
-          style={this.getTickStyle()}
-        />
+        { this.getTime() }
         <View style={[
           {
             height: 1,
@@ -91,6 +117,16 @@ let TimeBar = React.createClass({
             backgroundColor: '#999'
           }
         ]}></View>
+        <View
+          style={[styles.tickContainer, this.getTickBoxStyle()]}
+          onResponderMove={this.setPosition}
+          onResponderRelease={this.handleRelease}
+          onStartShouldSetResponder={this._onStartShouldSetResponder}
+          onMoveShouldSetResponder={this._onMoveShouldSetResponder}>
+          <Image source={Images.sliderButton}
+            style={[styles.tick, this.getTickStyle()]}
+          />
+        </View>
       </View>
     );
   }
@@ -102,12 +138,27 @@ let styles = StyleSheet.create({
     width: width,
     marginHorizontal: 10,
     marginTop: 15,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    position: 'relative'
   },
   tick: {
-    width: 2,
-    height: 11,
-    marginTop: 5
+    position: 'absolute'
+  },
+  tickContainer: {
+    position: 'absolute',
+    top: -10,
+    width: 40,
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'red'
+  },
+  time: {
+    backgroundColor: 'transparent',
+    color: 'white',
+    fontSize: 14,
+    fontFamily: 'Roboto',
+    fontWeight: '400',
+    position: 'absolute'
   }
 });
 

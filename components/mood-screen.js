@@ -5,7 +5,9 @@ import {
   Image
 } from 'react-native';
 
+import MoodList from './mood-screen-components/mood-list';
 import MoodListItem from './mood-screen-components/mood-list-item';
+import Background from './background';
 
 import Images from '@assets/images';
 import Moods from '@assets/moods';
@@ -14,26 +16,18 @@ let MoodScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Image style={styles.logo} source={Images.moodLogo}></Image>
-        </View>
-        <View style={styles.body}>
-          { this.moodList() }
-        </View>
+        <Background image={Images.moodBackground} overlay={Images.moodBackgroundOverlay}>
+          <View style={styles.header}>
+            <Image style={styles.headerImage} source={Images.moodHeader}>
+              <Image style={styles.logo} source={Images.moodLogo}></Image>
+            </Image>
+          </View>
+          <View style={styles.body}>
+            <MoodList play={this.props.play}/>
+          </View>
+        </Background>
       </View>
     );
-  },
-  moodList: function() {
-    let list = [];
-    const length = Object.keys(Moods).length;
-
-    for(var i = 0; i < length; i++) {
-      list.push(
-        <MoodListItem mood={i} key={i} link={this.props.play} />
-      );
-    }
-
-    return list;
   }
 });
 
@@ -42,17 +36,29 @@ let styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    flex: 15,
+    flex: 17,
+    position: 'relative',
+  },
+  headerImage: {
+    resizeMode: 'stretch',
+    position: 'absolute',
+    width: null,
+    height: null,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#222'
   },
   body: {
-    flex: 85,
-    backgroundColor: '#4f4f4f'
+    flex: 83,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   logo: {
-    height: 70,
+    height: 60,
     resizeMode: 'contain',
     marginBottom: 15
   }

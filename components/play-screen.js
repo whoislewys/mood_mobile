@@ -13,6 +13,7 @@ import Sound from 'react-native-sound';
 import Images from '@assets/images.js';
 import PlayControls from './play-screen-components/play-controls';
 import TrackInfo from './play-screen-components/track-info';
+import Background from './background';
 
 var Playscreen = React.createClass({
   getInitialState: function() {
@@ -47,37 +48,39 @@ var Playscreen = React.createClass({
   },
   render: function() {
     return (
-      <View style={styles.container}>
-        <View style={styles.menuDropdown}>
-          <TouchableHighlight onPress={this.props.moodLink}>
-            <Image source={Images.dropdownArrow} style={styles.dropdownButton}></Image>
-          </TouchableHighlight>
+      <Background image={{uri: this.props.list[this.state.currentTrack].art_url}}>
+        <View style={styles.container}>
+          <View style={styles.menuDropdown}>
+            <TouchableHighlight onPress={this.props.moodLink}>
+              <Image source={Images.dropdownArrow} style={styles.dropdownButton}></Image>
+            </TouchableHighlight>
+          </View>
+          <TrackInfo
+            skipForward={() => { this.cycleSong(1) }}
+            skipBack={() => { this.cycleSong(-1) }}
+            track={this.props.list[this.state.currentTrack]}
+            duration={this.state.files[this.state.currentTrack].getDuration()}
+            currentTime={this.state.currentTime}
+            setTime={this.setTime}
+          />
+          <PlayControls
+            add={this.state.added}
+            toggleAdd={this.toggleAdd}
+
+            shuffle={this.state.shuffle}
+            toggleShuffle={this.toggleShuffle}
+
+            repeat={this.state.repeat}
+            toggleRepeat={this.toggleRepeat}
+
+            more={this.state.more}
+            toggleMore={this.toggleMore}
+
+            playing={this.state.playing}
+            handlePlayPress={this.handlePlayButtonPress}
+          />
         </View>
-        <TrackInfo
-          skipForward={() => { this.cycleSong(1) }}
-          skipBack={() => { this.cycleSong(-1) }}
-          track={this.props.list[this.state.currentTrack]}
-          duration={this.state.files[this.state.currentTrack].getDuration()}
-          currentTime={this.state.currentTime}
-          setTime={this.setTime}
-        />
-        <PlayControls
-          add={this.state.added}
-          toggleAdd={this.toggleAdd}
-
-          shuffle={this.state.shuffle}
-          toggleShuffle={this.toggleShuffle}
-
-          repeat={this.state.repeat}
-          toggleRepeat={this.toggleRepeat}
-
-          more={this.state.more}
-          toggleMore={this.toggleMore}
-
-          playing={this.state.playing}
-          handlePlayPress={this.handlePlayButtonPress}
-        />
-      </View>
+      </Background>
     );
   },
   handlePlayButtonPress: function() {

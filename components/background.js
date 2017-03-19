@@ -10,13 +10,22 @@ var Background = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image source={Images.bgImage} style={styles.bgImage}>
-          <Image source={Images.bgOverlay} style={styles.bgImage}>
-            { this.props.children }
-          </Image>
+        <Image source={this.props.image} style={styles.bgImage} blurRadius={50}>
+          { this.getOverlay() }
         </Image>
       </View>
     );
+  },
+  getOverlay: function() {
+    if(this.props.overlay == undefined) {
+      return <Image source={Images.bgOverlay} style={styles.bgImage}>
+        { this.props.children }
+      </Image>
+    } else {
+      return <Image source={this.props.overlay} style={styles.bgImage}>
+        { this.props.children }
+      </Image>
+    }
   }
 });
 

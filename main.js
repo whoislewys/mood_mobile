@@ -7,6 +7,8 @@ import {
 
 import _ from 'lodash';
 
+import Setlists from '@assets/mood_lists';
+
 import Playscreen from './components/play-screen';
 import MoodScreen from './components/mood-screen'
 import Images from '@assets/images';
@@ -15,8 +17,8 @@ import Background from './components/background';
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      list: null,
-      screen: 'mood'
+      list: Setlists,
+      screen: 'play'
     }
   },
   render: function() {
@@ -30,14 +32,12 @@ module.exports = React.createClass({
     let comp = <MoodScreen play={this.play}/>;
     if(this.state.screen == 'play') {
       comp = (
-        <Background>
           <Playscreen
             list={this.state.list}
             shuffle={this.shuffleTracks}
             reset={this.resetTracks}
             moodLink={this.moodScreen}
           />
-        </Background>
       );
     }
 

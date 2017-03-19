@@ -14,7 +14,12 @@ const images = {
 	shuffleButtonSelected: require('./img/shuffle-button-selected.png'),
 	shuffleButtonUnselected: require('./img/shuffle-button-unselected.png'),
 	moodLogo: require('./img/mood-logo.png'),
-	dropdownArrowRight: require('./img/dropdown-arrow-right.png')
+	dropdownArrowRight: require('./img/dropdown-arrow-right.png'),
+	moodBackground: require('./img/mood-background.png'),
+	moodHeader: require('./img/mood-header-overlay.png'),
+	moodBackgroundOverlay: require('./img/mood-background-overlay.png'),
+	horizontalRule: require('./img/hr.png'),
+	sliderButton: require('./img/slider-button.png')
 };
 
 export default images;

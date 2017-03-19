@@ -66,8 +66,8 @@ let styles = StyleSheet.create({
     alignItems: 'center'
   },
   playButton: {
-    width: 75,
-    height: 75
+    width: 65,
+    height: 65
   },
 });
 
