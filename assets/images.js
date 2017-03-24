@@ -19,7 +19,8 @@ const images = {
 	moodHeader: require('./img/mood-header-overlay.png'),
 	moodBackgroundOverlay: require('./img/mood-background-overlay.png'),
 	horizontalRule: require('./img/hr.png'),
-	sliderButton: require('./img/slider-button.png')
+	sliderButton: require('./img/slider-button.png'),
+	splashScreen: require('./img/splash-screen.png')
 };
 
 export default images;

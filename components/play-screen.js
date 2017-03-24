@@ -14,6 +14,7 @@ import Images from '@assets/images.js';
 import PlayControls from './play-screen-components/play-controls';
 import TrackInfo from './play-screen-components/track-info';
 import Background from './background';
+import Splash from './splash-screen';
 
 var Playscreen = React.createClass({
   getInitialState: function() {
@@ -29,7 +30,7 @@ var Playscreen = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.buildFiles();
+    this.buildFiles(this.props.list);
 
     for(var i = 0; i < this.props.list.length; i++) {
       let url = this.props.list[i].art_url;
@@ -158,14 +159,14 @@ var Playscreen = React.createClass({
 
     for(var i = 0; i < list.length; i++) {
       files[i] = (
-        new Sound(list[i].file, Sound.MAIN_BUNDLE, ((error, name) => {
+        new Sound({uri: list[i].file}, (error, props) => {
           if(error) {
-            console.log('Error loading track: ' + name);
-          } else {
-            console.log('Loaded track: ' + name);
+            console.log('Error loading track: ');
           }
-        }).bind(null, null, list[i].name))
+        })
       );
+
+      console.log('Loaded song: ' + list[i].name);
     }
 
     this.setState({files: files});

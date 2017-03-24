@@ -13,12 +13,29 @@ import Playscreen from './components/play-screen';
 import MoodScreen from './components/mood-screen'
 import Images from '@assets/images';
 import Background from './components/background';
+import Splash from './components/splash-screen';
 
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      list: Setlists,
-      screen: 'play'
+      list: null,
+      screen: 'play',
+      loadedSongs: false
+    }
+  },
+  componentDidMount: function() {
+    if(!this.state.loadedSongs) {
+      fetch('http://localhost:3000/api/v1/songs/?t=EXVbAWTqbGFl7BKuqUQv')
+        .then((responseJson) => {
+          return responseJson.json();
+        })
+        .then((json) => {
+          let list = Object.keys(json).map(function (key) { return json[key]; });
+          this.setState({list: list, loadedSongs: true}, () => console.log(this.state.list));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   },
   render: function() {
@@ -30,7 +47,11 @@ module.exports = React.createClass({
   },
   getScreen: function() {
     let comp = <MoodScreen play={this.play}/>;
-    if(this.state.screen == 'play') {
+    if(!this.state.loadedSongs) {
+      comp = (
+        <Splash />
+      )
+    } else if(this.state.screen == 'play') {
       comp = (
           <Playscreen
             list={this.state.list}
