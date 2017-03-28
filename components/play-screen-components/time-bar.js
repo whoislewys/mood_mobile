@@ -30,16 +30,16 @@ let TimeBar = React.createClass({
   },
   getTickStyle: function() {
     let style = {
-      width: 8,
-      height: 8,
+      width: 9,
+      height: 9,
       top: 15,
       left: 15
     };
 
     if(this.state.dragging) {
       style = {
-        width: 16,
-        height: 16,
+        width: 17,
+        height: 17,
         top: 11,
         left: 11
       };
@@ -146,11 +146,9 @@ let styles = StyleSheet.create({
   },
   tickContainer: {
     position: 'absolute',
-    top: -10,
+    top: -9,
     width: 40,
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'red'
+    height: 40
   },
   time: {
     backgroundColor: 'transparent',

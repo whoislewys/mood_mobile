@@ -25,7 +25,7 @@ module.exports = React.createClass({
   },
   componentDidMount: function() {
     if(!this.state.loadedSongs) {
-      fetch('http://localhost:3000/api/v1/songs/?t=EXVbAWTqbGFl7BKuqUQv')
+      fetch('http://api.moodindustries.com/api/v1/songs/?t=EXVbAWTqbGFl7BKuqUQv')
         .then((responseJson) => {
           return responseJson.json();
         })
@@ -34,7 +34,7 @@ module.exports = React.createClass({
           this.setState({list: list, loadedSongs: true}, () => console.log(this.state.list));
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     }
   },

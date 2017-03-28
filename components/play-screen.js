@@ -52,7 +52,7 @@ var Playscreen = React.createClass({
       <Background image={{uri: this.props.list[this.state.currentTrack].art_url}}>
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
-            <TouchableHighlight onPress={this.props.moodLink}>
+            <TouchableHighlight>
               <Image source={Images.dropdownArrow} style={styles.dropdownButton}></Image>
             </TouchableHighlight>
           </View>
