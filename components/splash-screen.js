@@ -10,13 +10,26 @@ import Background from './background';
 import Images from '@assets/images';
 
 var Splash = React.createClass({
+  componentDidMount: function() {
+    fetch('http://api.moodindustries.com/api/v1/songs/?t=EXVbAWTqbGFl7BKuqUQv')
+      .then((responseJson) => {
+        return responseJson.json();
+      })
+      .then((json) => {
+        let list = Object.keys(json).map(function (key) { return json[key]; });
+        this.props.navigation.navigate('Mood', {songs: list})
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   render: function() {
     return (
       <View style={styles.container}>
         <Image source={Images.splashScreen} style={styles.bgImage}>
         </Image>
       </View>
-    )
+    );
   }
 });
 

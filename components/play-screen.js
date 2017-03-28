@@ -16,6 +16,7 @@ import TrackInfo from './play-screen-components/track-info';
 import Background from './background';
 import Splash from './splash-screen';
 
+//TODO: unfuck this whole component
 var Playscreen = React.createClass({
   getInitialState: function() {
     return {
@@ -193,6 +194,12 @@ var Playscreen = React.createClass({
   },
   toggleMore: function() {
     this.setState({more: !this.state.more});
+  },
+  shuffleTracks: function() {
+    this.setState({list: _.shuffle(Setlists[0])})
+  },
+  resetTracks: function() {
+    this.setState({list: Setlists[0]});
   }
 });
 

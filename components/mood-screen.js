@@ -5,12 +5,8 @@ import {
   Image
 } from 'react-native';
 
-import MoodList from './mood-screen-components/mood-list';
-import MoodListItem from './mood-screen-components/mood-list-item';
 import Background from './background';
-
 import Images from '@assets/images';
-import Moods from '@assets/moods';
 
 let MoodScreen = React.createClass({
   render: function() {
@@ -23,7 +19,7 @@ let MoodScreen = React.createClass({
             </Image>
           </View>
           <View style={styles.body}>
-            <MoodList play={this.props.play}/>
+
           </View>
         </Background>
       </View>
