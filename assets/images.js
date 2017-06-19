@@ -20,7 +20,17 @@ const images = {
 	moodBackgroundOverlay: require('./img/mood-background-overlay.png'),
 	horizontalRule: require('./img/hr.png'),
 	sliderButton: require('./img/slider-button.png'),
-	splashScreen: require('./img/splash-screen.png')
+	splashScreen: require('./img/splash-screen.png'),
+	aliveBG: require('./img/alive.png'),
+	botheredBG: require('./img/bothered.png'),
+	brokenBG: require('./img/broken.png'),
+	excitedBG: require('./img/excited.png'),
+	hurtBG: require('./img/hurt.png'),
+	powerfulBG: require('./img/powerful.png'),
+	youngBG: require('./img/young.png'),
+	moodOverlay: require('./img/mood-overlay.png'),
+	moodHeader: require('./img/mood-header.png'),
+	moodCircle: require('./img/mood-circle.png')
 };
 
 export default images;

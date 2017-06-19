@@ -10,7 +10,7 @@ var Background = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image source={this.props.image} style={styles.bgImage} blurRadius={50}>
+        <Image source={this.props.image} style={styles.bgImage} blurRadius={this.props.blur}>
           { this.getOverlay() }
         </Image>
       </View>

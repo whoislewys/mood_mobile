@@ -1,9 +1,10 @@
 package com.moodmobile;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import fm.indiecast.rnaudiostreamer.RNAudioStreamerPackage;
+import com.tanguyantoine.react.MusicControl;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNAudioStreamerPackage(),
+            new MusicControl(),
             new RNSoundPackage()
       );
     }
