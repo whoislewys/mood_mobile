@@ -3,7 +3,7 @@ import {
   View,
   Image,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 
 import Images from '@assets/images.js';
@@ -60,13 +60,13 @@ const PlayControls = React.createClass({
   },
   playButton() {
     if (this.props.playing) {
-      return (<TouchableHighlight onPress={this.props.handlePlayPress} underlayColor={'transparent'}>
+      return (<TouchableOpacity onPress={this.props.handlePlayPress}>
         <Image source={Images.pauseButton} style={styles.playButton} />
-      </TouchableHighlight>);
+      </TouchableOpacity>);
     }
-    return (<TouchableHighlight onPress={this.props.handlePlayPress} underlayColor={'transparent'}>
+    return (<TouchableOpacity onPress={this.props.handlePlayPress}>
       <Image source={Images.playButton} style={styles.playButton} />
-    </TouchableHighlight>);
+    </TouchableOpacity>);
   },
 });
 

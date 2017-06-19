@@ -18,7 +18,7 @@ const Main = React.createClass({
       repeat: false,
       more: false,
       currentTime: 0,
-      duration: 100,
+      duration: 0,
       playQueue: [],
     };
   },
@@ -46,24 +46,26 @@ const Main = React.createClass({
     }
   },
   setTime(seconds) {
-    const track = this.state.playQueue[this.state.currentTrack].soundFile;
-
-    this.pausePlayback(track);
+    // const track = this.state.playQueue[this.state.currentTrack].soundFile;
+    //
+    // this.pausePlayback(track);
     // track.setCurrentTime(seconds);
-    Sound2.seekToTime(seconds);
     this.setState({ currentTime: seconds }, () => {
-      this.startPlayback(track);
+      Sound2.seekToTime(seconds);
     });
+    // this.setState({ currentTime: seconds }, () => {
+    //   this.startPlayback(track);
+    // });
   },
   toggleShuffle() {
     if (this.state.shuffle) {
-      this.stopPlayback();
+      this.pausePlayback();
       this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
-      this.props.reset();
+      this.unShuffle();
     } else {
-      this.stopPlayback();
+      this.pausePlayback();
       this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
-      this.props.shuffle();
+      this.shuffle();
     }
     this.setState({ shuffle: !this.state.shuffle });
   },
@@ -100,13 +102,8 @@ const Main = React.createClass({
       });
     });
   },
-  stopPlayback() {
-    const track = this.state.playQueue[this.state.currentTrack].soundFile;
-    this.pausePlayback(track);
-    // track.stop();
-  },
   startPlayback() {
-    const track = this.state.playQueue[this.state.currentTrack].soundFile;
+    // const track = this.state.playQueue[this.state.currentTrack].soundFile;
 
     // track.play((success) => {
     //   if (success) {
@@ -122,6 +119,9 @@ const Main = React.createClass({
         // MusicControl.updatePlayback({
         //   elapsedTime: seconds
         // });
+        if(this.state.duration == 0) {
+          this.getDuration();
+        }
         this.setState({ currentTime: seconds });
       });
     }, 200);
@@ -143,7 +143,7 @@ const Main = React.createClass({
 
   // Other
   unShuffle() {
-    this.setState({ playQueue: null });
+    // this.setState({ playQueue: null });
   },
   shuffle() {
     this.setState({ playQueue: _.shuffle(this.state.playQueue) });
@@ -179,17 +179,8 @@ const Main = React.createClass({
   },
   loadCurrentTrack() {
     Sound2.setUrl(this.state.playQueue[this.state.currentTrack].file);
-    Sound2.duration(
-      (error, duration) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(`URL: ${this.state.playQueue[this.state.currentTrack].file}`);
-          console.log(`Duration: ${duration}`);
-          this.setState({ duration });
-        }
-      },
-    );
+    this.startPlayback();
+    this.getDuration();
     // let tracks = this.state.playQueue;
     // let file = new Sound({uri: tracks[index].file},
     //                     (error, props) => {
@@ -201,6 +192,19 @@ const Main = React.createClass({
     // this.setState({playQueue: tracks}, () => {
     //   console.log(this.state.playQueue);
     // });
+  },
+  getDuration() {
+    Sound2.duration(
+      (error, duration) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(`URL: ${this.state.playQueue[this.state.currentTrack].file}`);
+          console.log(`Duration: ${duration}`);
+          this.setState({ duration });
+        }
+      },
+    );
   },
   // buildFiles: function(listIn) {
   //   let files = [];

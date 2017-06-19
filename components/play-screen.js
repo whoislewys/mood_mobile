@@ -4,7 +4,7 @@ import {
   View,
   Image,
   Dimensions,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 
 import Images from '@assets/images.js';
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
     color: 'white',
     justifyContent: 'center',
   },
-  dropdownButton: {
-    width: 20,
-    height: 10,
+  backButton: {
+    width: 10,
+    height: 20,
     marginTop: 15,
     marginLeft: 0.02 * width,
     resizeMode: 'stretch',
@@ -54,6 +54,19 @@ const Playscreen = React.createClass({
       });
     }
   },
+  navBack() {
+    fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
+      .then((responseJson) => {
+        return responseJson.json();
+      })
+      .then((json) => {
+        let list = Object.keys(json).map(function (key) { return json[key]; });
+        this.props.navigation.navigate('Mood', {moods: list})
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   render() {
     return (
       <Background
@@ -62,9 +75,9 @@ const Playscreen = React.createClass({
       >
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
-            <TouchableHighlight>
-              <Image source={Images.dropdownArrow} style={styles.dropdownButton} />
-            </TouchableHighlight>
+            <TouchableOpacity onPress={this.navBack}>
+              <Image source={Images.backArrow} style={styles.backButton} />
+            </TouchableOpacity>
             {/* <Text style={styles.moodText}>{this.props.mood.name}</Text> */}
           </View>
           <TrackInfo
@@ -73,7 +86,7 @@ const Playscreen = React.createClass({
             track={this.props.playQueue[this.props.currentTrack]}
             duration={this.props.duration}
             currentTime={this.props.currentTime}
-            setTime={this.setTime}
+            setTime={this.props.setTime}
           />
           <PlayControls
             add={this.props.added}
