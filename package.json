@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "assemble-android-release": "cd android && ./gradlew assembleRelease",
+    "install-android-release": "cd android && ./gradlew assembleRelease && react-native run-android --variant=release",
     "test": "jest"
   },
   "dependencies": {
