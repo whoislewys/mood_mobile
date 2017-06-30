@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+var TimerMixin = require('react-timer-mixin');
 
 import Images from '@assets/images.js';
 import Background from './background';
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
   },
   moodList: {
     flex: 90,
+    justifyContent: 'center'
   },
   footer: {
     alignItems: 'flex-end',
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
 });
 
 const MoodScreen = React.createClass({
+  mixins: [TimerMixin],
   getInitialState() {
     return {
       mood: 0,
@@ -89,8 +92,15 @@ const MoodScreen = React.createClass({
     }
   },
   setMood(index) {
+    this.clearTimeout(this.timeout);
+
     console.log(index);
-    this.setState({ mood: index });
+    this.setState({ mood: index }, () => {
+      this.timeout = this.setTimeout(
+        () => { this._onGo(); },
+        2000
+      );
+    });
   },
   _onGo() {
     fetch('http://api.moodindustries.com/api/v1/songs/?t=EXVbAWTqbGFl7BKuqUQv')
@@ -118,11 +128,11 @@ const MoodScreen = React.createClass({
           <View style={styles.moodList}>
             <MoodList moods={Moods} setMood={this.setMood} selected={this.state.mood} />
           </View>
-          <View style={styles.footer}>
+          {/* <View style={styles.footer}>
             <TouchableOpacity onPress={this._onGo}>
               <Image source={Images.goArrow} style={styles.goArrow}/>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </Background>
       </View>
     );

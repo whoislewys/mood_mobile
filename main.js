@@ -1,4 +1,5 @@
 import React from 'react';
+import { DeviceEventEmitter } from 'react-native';
 
 import _ from 'lodash';
 import Sound from 'react-native-sound';
@@ -18,14 +19,18 @@ const Main = React.createClass({
       repeat: false,
       more: false,
       currentTime: 0,
-      duration: 0,
+      duration: -1,
       playQueue: [],
+      playStatus: 'STOPPED'
     };
   },
   componentWillMount() {
     if (this.state.playQueue.length > 0) {
       this.loadCurrentTrack();
     }
+  },
+  componentDidMount() {
+    this.subscription = DeviceEventEmitter.addListener('RNAudioStreamerStatusChanged', this._statusChanged)
   },
 
   // Control Functions
@@ -103,15 +108,6 @@ const Main = React.createClass({
     });
   },
   startPlayback() {
-    // const track = this.state.playQueue[this.state.currentTrack].soundFile;
-
-    // track.play((success) => {
-    //   if (success) {
-    //     this.cycleSong(1);
-    //   } else {
-    //     console.log('playback failed due to audio decoding errors');
-    //   }
-    // });
     Sound2.play();
 
     this.interval = setInterval(() => {
@@ -119,7 +115,7 @@ const Main = React.createClass({
         // MusicControl.updatePlayback({
         //   elapsedTime: seconds
         // });
-        if(this.state.duration == 0) {
+        if(this.state.duration == -1) {
           this.getDuration();
         }
         this.setState({ currentTime: seconds });
@@ -161,17 +157,18 @@ const Main = React.createClass({
         nextTrack = this.state.playQueue.length - 1;
       }
     } else if (nextTrack >= this.state.playQueue.length) {
-      this.setState({ currentTrack: 0, currentTime: 0, playing: false });
+      this.setState({ currentTrack: 0, currentTime: 0, playing: false, duration: -1 });
       return;
     } else if (nextTrack < 0) {
-      this.setState({ currentTrack: 0, currentTime: 0, playing: false }, this.loadCurrentTrack);
+      this.setState({ currentTrack: 0, currentTime: 0, playing: false, duration: -1 }, this.loadCurrentTrack);
       return;
     }
 
     this.setState({
       currentTrack: nextTrack,
       currentTime: 0,
-      playing: false }, this.loadCurrentTrack);
+      playing: false,
+      duration: -1 }, this.loadCurrentTrack);
   },
   handleTrackChange() {
     this.loadCurrentTrack();
@@ -181,17 +178,6 @@ const Main = React.createClass({
     Sound2.setUrl(this.state.playQueue[this.state.currentTrack].file);
     this.startPlayback();
     this.getDuration();
-    // let tracks = this.state.playQueue;
-    // let file = new Sound({uri: tracks[index].file},
-    //                     (error, props) => {
-    //                       if(error) {
-    //                         console.log('Error loading track: ');
-    //                       }
-    //                     });
-    // tracks[index].soundFile = file;
-    // this.setState({playQueue: tracks}, () => {
-    //   console.log(this.state.playQueue);
-    // });
   },
   getDuration() {
     Sound2.duration(
@@ -201,29 +187,15 @@ const Main = React.createClass({
         } else {
           console.log(`URL: ${this.state.playQueue[this.state.currentTrack].file}`);
           console.log(`Duration: ${duration}`);
-          this.setState({ duration });
+          if(duration != 0) this.setState({ duration });
         }
       },
     );
   },
-  // buildFiles: function(listIn) {
-  //   let files = [];
-  //   const list = (listIn == undefined) ? this.props.list : listIn;
-  //
-  //   for(var i = 0; i < list.length; i++) {
-  //     files[i] = (
-  //       new Sound({uri: list[i].file}, (error, props) => {
-  //         if(error) {
-  //           console.log('Error loading track: ');
-  //         }
-  //       })
-  //     );
-  //
-  //     console.log('Loaded song: ' + list[i].name);
-  //   }
-  //
-  //   this.setState({files: files});
-  // },
+  _statusChanged(playStatus) {
+    if(playStatus == 'FINISHED') this.nextTrack();
+    this.setState({playStatus});
+  },
 
   render() {
     return (<Navigator

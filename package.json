@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "assemble-android-release": "cd android && ./gradlew assembleRelease",
-    "install-android-release": "cd android && ./gradlew assembleRelease && react-native run-android --variant=release",
+    "install-android-release": "cd android && ./gradlew assembleRelease && cd .. && react-native run-android --variant=release",
     "test": "jest"
   },
   "dependencies": {
@@ -17,7 +17,8 @@
     "react-native-checkbox": "^1.1.0",
     "react-native-music-control": "^0.4.4",
     "react-native-sound": "^0.9.0",
-    "react-navigation": "git+https://github.com/react-community/react-navigation.git"
+    "react-navigation": "git+https://github.com/react-community/react-navigation.git",
+    "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

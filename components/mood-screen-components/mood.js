@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import CheckBox from 'react-native-checkbox';
 
@@ -14,31 +15,28 @@ let Mood = React.createClass({
   },
   render: function() {
     // let text = this.props.mood.name.split(" ");
-    return (
-      <View style={styles.container}>
+    let ret = (
+      <TouchableOpacity style={styles.container} onPress={this._onCheckboxChange}>
         <Text style={styles.text}>{this.props.mood.name}</Text>
-        <View style={styles.checkbox}>
-          <CheckBox
-            label={""}
-            checked={this.props.selected == this.props.id}
-            onChange={this._onCheckboxChange}
-            checkedImage={Images.selectedDot}
-            uncheckedImage={Images.unselectedDot}
-            checkboxStyle={styles.circle}
-            containerStyle={{marginBottom: 0}}
-            underlayColor={'transparent'}
-          />
-        </View>
-      </View>
+      </TouchableOpacity>
     );
+
+    if(this.props.selected == this.props.id) {
+      ret = (
+        <View style={styles.container} onPress={this._onCheckboxChange}>
+          <Text style={styles.selected}>{this.props.mood.name}</Text>
+        </View>
+      );
+    }
+
+    return ret;
   }
 });
 
 let styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
-    height: 70,
+    height: 60,
     paddingLeft: 35,
     paddingRight: 30
   },
@@ -52,9 +50,17 @@ let styles = StyleSheet.create({
   },
   text: {
     flex: 10,
+    textAlign: 'center',
     color: 'lightgray',
     backgroundColor: 'transparent',
     fontSize: 20
+  },
+  selected: {
+    flex: 10,
+    textAlign: 'center',
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontSize: 26
   }
 });
 

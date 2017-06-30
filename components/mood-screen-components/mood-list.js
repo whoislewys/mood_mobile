@@ -9,8 +9,7 @@ import Mood from './mood';
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    justifyContent: 'center',
   }
 });
 
