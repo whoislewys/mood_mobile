@@ -185,8 +185,8 @@ const Main = React.createClass({
         if (error) {
           console.log(error);
         } else {
-          console.log(`URL: ${this.state.playQueue[this.state.currentTrack].file}`);
-          console.log(`Duration: ${duration}`);
+          // console.log(`URL: ${this.state.playQueue[this.state.currentTrack].file}`);
+          // console.log(`Duration: ${duration}`);
           if(duration != 0) this.setState({ duration });
         }
       },

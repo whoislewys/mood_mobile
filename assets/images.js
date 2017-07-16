@@ -34,7 +34,9 @@ const images = {
 	selectedDot: require('./img/selected-dot.png'),
 	unselectedDot: require('./img/unselected-dot.png'),
 	goArrow: require('./img/go-arrow.png'),
-	backArrow: require('./img/back-arrow.png')
+	backArrow: require('./img/back-arrow.png'),
+	pauseButtonNoRing: require('./img/pause-button-noring.png'),
+	playButtonNoRing: require('./img/play-button-noring.png')
 };
 
 export default images;

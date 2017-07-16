@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Images from '@assets/images.js';
 import ToggleButton from '../toggle-button';
@@ -33,21 +34,62 @@ const PlayControls = React.createClass({
           onPress={this.props.toggleAdd}
         /> */}
 
-        <ToggleButton
+        {/* <ToggleButton
           active={this.props.shuffle}
           iconSelected={Images.shuffleButtonSelected}
           iconUnselected={Images.shuffleButtonUnselected}
           onPress={this.props.toggleShuffle}
+        /> */}
+        <ToggleButton
+          active={this.props.repeat}
+          iconSelected={
+            <Icon
+              name='thumb-down'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          iconUnselected={
+            <Icon
+              name='thumb-down-outline'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          onPress={this.props.toggleRepeat}
         />
 
         { this.playButton() }
 
         <ToggleButton
           active={this.props.repeat}
+          iconSelected={
+            <Icon
+              name='thumb-up'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          iconUnselected={
+            <Icon
+              name='thumb-up-outline'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          onPress={this.props.toggleRepeat}
+        />
+
+        {/* <ToggleButton
+          active={this.props.repeat}
           iconSelected={Images.repeatButtonSelected}
           iconUnselected={Images.repeatButtonUnselected}
           onPress={this.props.toggleRepeat}
-        />
+        /> */}
 
         {/* <ToggleButton
           active={this.props.more}
