@@ -14,10 +14,7 @@ const Main = React.createClass({
     return {
       currentTrack: 0,
       playing: false,
-      shuffle: false,
-      added: false,
-      repeat: false,
-      more: false,
+      liked: 0,
       currentTime: 0,
       duration: -1,
       playQueue: [],
@@ -62,27 +59,41 @@ const Main = React.createClass({
     //   this.startPlayback(track);
     // });
   },
-  toggleShuffle() {
-    if (this.state.shuffle) {
-      this.pausePlayback();
-      this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
-      this.unShuffle();
+  toggleLike() {
+    if(this.state.liked != 1) {
+      this.setState({liked: 1});
     } else {
-      this.pausePlayback();
-      this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
-      this.shuffle();
+      this.setState({liked: 0});
     }
-    this.setState({ shuffle: !this.state.shuffle });
   },
-  toggleRepeat() {
-    this.setState({ repeat: !this.state.repeat });
+  toggleDislike() {
+    if(this.state.liked != -1) {
+      this.setState({liked: -1});
+    } else {
+      this.setState({liked: 0});
+    }
   },
-  toggleMore() {
-    this.setState({ more: !this.state.more });
-  },
-  toggleAdded() {
-    this.setState({ added: !this.state.added });
-  },
+  // toggleShuffle() {
+  //   if (this.state.shuffle) {
+  //     this.pausePlayback();
+  //     this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
+  //     this.unShuffle();
+  //   } else {
+  //     this.pausePlayback();
+  //     this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
+  //     this.shuffle();
+  //   }
+  //   this.setState({ shuffle: !this.state.shuffle });
+  // },
+  // toggleRepeat() {
+  //   this.setState({ repeat: !this.state.repeat });
+  // },
+  // toggleMore() {
+  //   this.setState({ more: !this.state.more });
+  // },
+  // toggleAdded() {
+  //   this.setState({ added: !this.state.added });
+  // },
   setCurrentTime(time) {
     this.setState({ currentTime: time });
   },
@@ -150,13 +161,14 @@ const Main = React.createClass({
 
     this.pausePlayback(track);
 
-    if (this.state.repeat) {
-      if (nextTrack >= this.state.playQueue.length) {
-        nextTrack = 0;
-      } else if (nextTrack < 0) {
-        nextTrack = this.state.playQueue.length - 1;
-      }
-    } else if (nextTrack >= this.state.playQueue.length) {
+    // if (this.state.repeat) {
+    //   if (nextTrack >= this.state.playQueue.length) {
+    //     nextTrack = 0;
+    //   } else if (nextTrack < 0) {
+    //     nextTrack = this.state.playQueue.length - 1;
+    //   }
+    // } else
+    if (nextTrack >= this.state.playQueue.length) {
       this.setState({ currentTrack: 0, currentTime: 0, playing: false, duration: -1 });
       return;
     } else if (nextTrack < 0) {
@@ -205,10 +217,11 @@ const Main = React.createClass({
       currentTime={this.state.currentTime}
       playQueue={this.state.playQueue}
       duration={this.state.duration}
+      liked={this.state.liked}
 
       // Queue mutations
-      shuffle={this.state.shuffle}
-      repeat={this.state.repeat}
+      // shuffle={this.state.shuffle}
+      // repeat={this.state.repeat}
 
       // Trash
       added={this.state.added}
@@ -219,11 +232,8 @@ const Main = React.createClass({
       previousTrack={this.previousTrack}
       handlePlayPress={this.handlePlayPress}
       setTime={this.setTime}
-      togglePlaying={this.togglePlaying}
-      toggleShuffle={this.toggleShuffle}
-      toggleRepeat={this.toggleRepeat}
-      toggleMore={this.toggleMore}
-      toggleAdded={this.toggleAdded}
+      toggleLike={this.toggleLike}
+      toggleDislike={this.toggleDislike}
       setCurrentTime={this.setCurrentTime}
       setPlayQueue={this.setPlayQueue}
       addToPlayQueue={this.addToPlayQueue}

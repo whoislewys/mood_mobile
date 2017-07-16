@@ -41,7 +41,7 @@ const PlayControls = React.createClass({
           onPress={this.props.toggleShuffle}
         /> */}
         <ToggleButton
-          active={this.props.repeat}
+          active={this.props.liked == -1}
           iconSelected={
             <Icon
               name='thumb-down'
@@ -58,13 +58,13 @@ const PlayControls = React.createClass({
               size={25}
             />
           }
-          onPress={this.props.toggleRepeat}
+          onPress={this.props.toggleDislike}
         />
 
         { this.playButton() }
 
         <ToggleButton
-          active={this.props.repeat}
+          active={this.props.liked == 1}
           iconSelected={
             <Icon
               name='thumb-up'
@@ -81,7 +81,7 @@ const PlayControls = React.createClass({
               size={25}
             />
           }
-          onPress={this.props.toggleRepeat}
+          onPress={this.props.toggleLike}
         />
 
         {/* <ToggleButton

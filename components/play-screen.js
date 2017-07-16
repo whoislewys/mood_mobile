@@ -90,17 +90,9 @@ const Playscreen = React.createClass({
             setTime={this.props.setTime}
           />
           <PlayControls
-            add={this.props.added}
-            toggleAdd={this.props.toggleAdd}
-
-            shuffle={this.props.shuffle}
-            toggleShuffle={this.props.toggleShuffle}
-
-            repeat={this.props.repeat}
-            toggleRepeat={this.props.toggleRepeat}
-
-            more={this.props.more}
-            toggleMore={this.props.toggleMore}
+            liked={this.props.liked}
+            toggleLike={this.props.toggleLike}
+            toggleDislike={this.props.toggleDislike}
 
             playing={this.props.playing}
             handlePlayPress={this.props.handlePlayPress}
