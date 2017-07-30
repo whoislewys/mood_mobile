@@ -10,19 +10,15 @@ import {
 
 import Images from '@assets/images.js';
 import ToggleButton from '../toggle-button';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    // justifyContent: 'flex-start',
     flexDirection: 'row',
     flex: 1,
-  },
-  playButton: {
-    width: 45,
-    height: 45,
   },
   albumArt: {
     resizeMode: 'cover',
@@ -43,13 +39,13 @@ const styles = StyleSheet.create({
     flex: 20,
   },
   albumInfoText: {
-    color: '#ddd',
+    color: '#fff',
     fontSize: 15,
     fontFamily: 'Roboto',
     fontWeight: '500'
   },
   albumInfoSubText: {
-    color: '#ddd',
+    color: '#fff',
     fontSize: 14,
     fontFamily: 'Roboto',
     fontWeight: '300'
@@ -61,13 +57,23 @@ export default React.createClass({
     if (this.props.playing) {
       return (
         <TouchableOpacity onPress={this.props.handlePlayPress}>
-          <Image source={Images.pauseButtonNoRing} style={styles.playButton} />
+          <Icon
+            name='pause'
+            color='white'
+            style={{backgroundColor: 'transparent'}}
+            size={35}
+          />
         </TouchableOpacity>
       );
     }
     return (
       <TouchableOpacity onPress={this.props.handlePlayPress}>
-        <Image source={Images.playButtonNoRing} style={styles.playButton} />
+        <Icon
+          name='play'
+          color='white'
+          style={{backgroundColor: 'transparent'}}
+          size={35}
+        />
       </TouchableOpacity>
     );
   },
@@ -99,25 +105,13 @@ export default React.createClass({
           <View style={styles.subInfo}>
             <Text
               style={[styles.albumInfoSubText, {
-                maxWidth: width * 0.3
+                maxWidth: width * 0.6
               }]}
               numberOfLines={1}
               ellipsizeMode="tail"
               >
               { track.artist }
-            </Text>
-            <Text style={[styles.albumInfoSubText, {
-              marginHorizontal: 2
-            }]}>
-              -
-            </Text>
-            <Text
-              style={[styles.albumInfoSubText, {
-                maxWidth: width * 0.3
-              }]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              >
+              &nbsp;-&nbsp;
               { track.album_name }
             </Text>
           </View>

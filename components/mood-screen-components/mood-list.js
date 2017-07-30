@@ -9,11 +9,25 @@ import Mood from './mood';
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    flex: 1,
   }
 });
 
 export default React.createClass({
+  _keyExtractor(mood, index) {
+    return index;
+  },
+  _renderItem({item, index}) {
+    return <Mood
+      mood={item}
+      key={index}
+      setMood={this.props.setMood}
+      selected={this.props.selected}
+      bg={this.props.moodBgs[index].bg}
+      id={index}
+    />
+  },
+
   mapMoodsToList(moods) {
     return moods.map((mood, index) => {
       return <Mood
@@ -21,15 +35,23 @@ export default React.createClass({
         key={index}
         setMood={this.props.setMood}
         selected={this.props.selected}
+        bg={this.props.moodBgs[index].bg}
         id={index}
       />
     });
   },
   render() {
     return (
-      <View style={styles.container}>
-        { this.mapMoodsToList(this.props.moods) }
-      </View>
+      <FlatList
+        data={this.props.moods}
+        keyExtractor={this._keyExtractor}
+        renderItem={this._renderItem}
+        >
+
+      </FlatList>
+      // <View style={styles.container}>
+      //   { this.mapMoodsToList(this.props.moods) }
+      // </View>
     );
   },
 });

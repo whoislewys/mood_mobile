@@ -28,6 +28,30 @@ const Main = React.createClass({
   },
   componentDidMount() {
     this.subscription = DeviceEventEmitter.addListener('RNAudioStreamerStatusChanged', this._statusChanged)
+    MusicControl.enableControl('play', true);
+    MusicControl.enableControl('pause', true);
+    MusicControl.enableControl('nextTrack', true);
+    MusicControl.enableControl('previousTrack', true);
+    MusicControl.enableControl('seekForward', false);
+    MusicControl.enableControl('seekBackward', false);
+    
+    MusicControl.enableBackgroundMode(true);
+
+    MusicControl.on('play', (() => {
+      if(!this.state.playing) {
+        this.startPlayback();
+      }
+    }).bind(this))
+
+    MusicControl.on('pause', (() => {
+      if(this.state.playing) {
+        this.pausePlayback();
+      }
+    }).bind(this))
+
+    MusicControl.on('nextTrack', this.nextTrack)
+
+    MusicControl.on('previousTrack', this.previousTrack)
   },
 
   // Control Functions
@@ -48,16 +72,9 @@ const Main = React.createClass({
     }
   },
   setTime(seconds) {
-    // const track = this.state.playQueue[this.state.currentTrack].soundFile;
-    //
-    // this.pausePlayback(track);
-    // track.setCurrentTime(seconds);
     this.setState({ currentTime: seconds }, () => {
       Sound2.seekToTime(seconds);
     });
-    // this.setState({ currentTime: seconds }, () => {
-    //   this.startPlayback(track);
-    // });
   },
   toggleLike() {
     if(this.state.liked != 1) {
@@ -73,27 +90,6 @@ const Main = React.createClass({
       this.setState({liked: 0});
     }
   },
-  // toggleShuffle() {
-  //   if (this.state.shuffle) {
-  //     this.pausePlayback();
-  //     this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
-  //     this.unShuffle();
-  //   } else {
-  //     this.pausePlayback();
-  //     this.setState({ playing: false, currentTime: 0, currentTrack: 0 });
-  //     this.shuffle();
-  //   }
-  //   this.setState({ shuffle: !this.state.shuffle });
-  // },
-  // toggleRepeat() {
-  //   this.setState({ repeat: !this.state.repeat });
-  // },
-  // toggleMore() {
-  //   this.setState({ more: !this.state.more });
-  // },
-  // toggleAdded() {
-  //   this.setState({ added: !this.state.added });
-  // },
   setCurrentTime(time) {
     this.setState({ currentTime: time });
   },
@@ -123,9 +119,10 @@ const Main = React.createClass({
 
     this.interval = setInterval(() => {
       Sound2.currentTime((err, seconds) => {
-        // MusicControl.updatePlayback({
-        //   elapsedTime: seconds
-        // });
+        MusicControl.updatePlayback({
+          elapsedTime: seconds,
+          duration: this.state.duration
+        });
         if(this.state.duration == -1) {
           this.getDuration();
         }
@@ -135,39 +132,25 @@ const Main = React.createClass({
 
     this.setState({ playing: true });
 
-    // const trackInfo = this.props.playQueue[this.state.currentTrack];
-    //
-    // MusicControl.setNowPlaying({
-    //   title: trackInfo.name,
-    //   artwork: trackInfo.art_url, // URL or RN's image require()
-    //   artist: trackInfo.artist,
-    //   album: trackInfo.album_name,
-    //   duration: track.getDuration(), // (Seconds)
-    //   description: '', // Android Only
-    //   color: 0xFFFFFF // Notification Color - Android Only
-    // });
+    const trackInfo = this.state.playQueue[this.state.currentTrack];
+
+    MusicControl.setNowPlaying({
+      title: trackInfo.name,
+      artwork: trackInfo.art_url, // URL or RN's image require()
+      artist: trackInfo.artist,
+      album: trackInfo.album_name,
+      duration: this.state.duration, // (Seconds)
+      description: '', // Android Only
+      color: 0xFFFFFF // Notification Color - Android Only
+    });
   },
 
-  // Other
-  unShuffle() {
-    // this.setState({ playQueue: null });
-  },
-  shuffle() {
-    this.setState({ playQueue: _.shuffle(this.state.playQueue) });
-  },
+  //Other
   cycleSong(direction) {
     const track = this.state.playQueue[this.state.currentTrack].soundFile;
     let nextTrack = this.state.currentTrack + direction;
 
     this.pausePlayback(track);
-
-    // if (this.state.repeat) {
-    //   if (nextTrack >= this.state.playQueue.length) {
-    //     nextTrack = 0;
-    //   } else if (nextTrack < 0) {
-    //     nextTrack = this.state.playQueue.length - 1;
-    //   }
-    // } else
     if (nextTrack >= this.state.playQueue.length) {
       this.setState({ currentTrack: 0, currentTime: 0, playing: false, duration: -1 });
       return;

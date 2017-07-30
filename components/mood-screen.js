@@ -4,8 +4,10 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Text,
+  ActivityIndicator
 } from 'react-native';
-var TimerMixin = require('react-timer-mixin');
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Images from '@assets/images.js';
 import Background from './background';
@@ -48,28 +50,49 @@ const Moods = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  shadow: {
+    flex: 10,
+    padding: 15,
+    paddingTop: 35,
+    zIndex: 3,
+
+    elevation: 2,
+    shadowOpacity: 0.75,
+    shadowRadius: 5,
+    shadowColor: '#555',
+    shadowOffset: { height: 0, width: 0 },
   },
   headerContainer: {
-    flex: 10,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    margin: 20,
+    backgroundColor: '#fff',
   },
-  header: {
-    flex: 54,
-    resizeMode: 'contain',
+  headerText: {
+    flex: 10,
+    textAlign: 'center',
+    color: '#111',
+    fontSize: 35,
+    fontWeight: '200',
+    shadowColor: 'white',
   },
   padding: {
-    flex: 23,
+    flex: 25,
   },
   moodList: {
     flex: 90,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    marginLeft: 2,
+    marginRight: 2
   },
   footer: {
     flex: 12,
-    backgroundColor: 'black'
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    // borderTopWidth: 2,
+    // borderTopColor: '#ddd'
   },
   goArrow: {
     resizeMode: 'stretch',
@@ -78,31 +101,19 @@ const styles = StyleSheet.create({
 });
 
 const MoodScreen = React.createClass({
-  mixins: [TimerMixin],
   getInitialState() {
     return {
       mood: -1,
     };
   },
-  nextMood() {
-    if (this.state.mood >= this.props.moods.length - 1) {
-      this.setState({ mood: 0 });
-    } else {
-      this.setState({ mood: this.state.mood + 1 });
-    }
-  },
   setMood(index) {
-    this.clearTimeout(this.timeout);
-
     console.log(index);
     this.setState({ mood: index }, () => {
-      this.timeout = this.setTimeout(
-        () => { this._onGo(); },
-        2000
-      );
+      this._onGo(index);
     });
   },
-  _onGo() {
+  _onGo(index) {
+    console.log(index);
     let url = `http://api.moodindustries.com/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
     // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
     console.log(url);
@@ -123,7 +134,7 @@ const MoodScreen = React.createClass({
     this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]})
   },
   _getBG() {
-    if(this.state.mood > -1) {
+    if(this.state.mood == -1) {
       return Moods[this.state.mood].bg;
     } else {
       return Moods[0].bg;
@@ -143,20 +154,49 @@ const MoodScreen = React.createClass({
       );
     }
   },
+  _getHeader() {
+    if(this.state.mood == -1) {
+      return <Text style={styles.headerText}>Mood</Text>;
+    } else {
+      return (
+        <ActivityIndicator color={'black'} size={'large'} animating={true} style={{flex: 10}}/>
+        // <Icon
+        //   name='loading'
+        //   color='black'
+        //   style={{backgroundColor: 'transparent', alignSelf: 'center'}}
+        //   size={35}
+        // />
+      );
+    }
+  },
   render() {
     return (
       <View style={styles.container}>
-        <Background image={this._getBG()} overlay={Images.moodOverlay}>
+        <View style={styles.shadow}>
+          <View style={styles.padding} />
+
           <View style={styles.headerContainer}>
-            <View style={styles.padding} />
-            <Image source={Images.moodHeader} style={styles.header} />
-            <View style={styles.padding} />
+            <Icon
+              name='account'
+              color='black'
+              style={{backgroundColor: 'transparent', alignSelf: 'center', flex: 1}}
+              size={25}
+            />
+            { this._getHeader() }
+            <Icon
+              name='settings'
+              color='black'
+              style={{backgroundColor: 'transparent', alignSelf: 'center', flex: 1}}
+              size={25}
+            />
           </View>
-          <View style={styles.moodList}>
-            <MoodList moods={this.props.moods} setMood={this.setMood} selected={this.state.mood} />
-          </View>
-          { this._getMusicBar() }
-        </Background>
+          <View style={styles.padding} />
+
+        </View>
+        <View style={styles.moodList}>
+          <MoodList moods={this.props.moods} moodBgs={Moods} setMood={this.setMood} selected={this.state.mood} />
+        </View>
+        { this._getMusicBar() }
       </View>
     );
   },
