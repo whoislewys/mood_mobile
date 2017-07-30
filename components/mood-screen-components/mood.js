@@ -1,70 +1,83 @@
 import React from 'react';
 import {
   View,
-  Image,
-  Text,
   StyleSheet,
-  Animated,
-  transform
+  Text,
+  TouchableOpacity,
+  Image
 } from 'react-native';
+import CheckBox from 'react-native-checkbox';
 
 import Images from '@assets/images';
 
 let Mood = React.createClass({
-  transform: function() {
-
-    // console.log(this.props.mood.name + ": " + this.props.yOffset._value);
-
-    return {
-      transform: [{
-        scale: this.props.yOffset.interpolate({
-          inputRange: [
-            0, 3.5, 7
-          ],
-          outputRange: [0.5, 1, 0.5],
-        })
-      }]
-    };
+  _handlePress() {
+    this.props.setMood(this.props.id);
   },
   render: function() {
-    let text = this.props.mood.name.split(" ");
     return (
-      <Animated.View style={[styles.container, this.transform()]}>
-        <Image source={Images.moodCircle} style={styles.circle}>
-          <Text style={styles.text}>
-            {text[0]}
+      <TouchableOpacity style={styles.container} onPress={this._handlePress} disabled={this.props.selected != -1}>
+        <View style={styles.art}>
+           <Image source={this.props.bg} style={styles.moodArt}/>
+        </View>
+        <View style={styles.info}>
+          <Text style={styles.moodName}>
+            { this.props.mood.name.toUpperCase() }
           </Text>
-          <Text style={styles.text}>
-            {text[1]}
+          <Text style={styles.moodInfo}>
+            This is some sample mood info...
           </Text>
-          <Text style={styles.text}>
-            {text[2]}
-          </Text>
-        </Image>
-      </Animated.View>
+        </View>
+      </TouchableOpacity>
     );
   }
 });
 
 let styles = StyleSheet.create({
   container: {
-    width: 200,
-    height: 180,
-    justifyContent: 'center',
-    alignItems: 'center'
+    flex: 1,
+    alignItems: 'center',
+    // justifyContent: 'flex-start',
+    flexDirection: 'row',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#eee',
+
+    // borderTopWidth: 1,
+    // borderTopColor: '#eee',
+    height: 90
   },
-  circle: {
-    width: 140,
-    height: 140,
-    justifyContent: 'center',
-    alignItems: 'center'
+  moodArt: {
+    resizeMode: 'cover',
+    flex: 1,
+    width: 65,
   },
-  text: {
-    color: 'white',
-    backgroundColor: 'transparent',
-    textAlign: 'center',
-    fontSize: 15
-  }
+  art: {
+    flex: 24,
+    justifyContent: 'flex-start'
+  },
+  moodName: {
+    color: '#333',
+    fontSize: 16,
+    fontFamily: 'Roboto',
+    fontWeight: '700',
+  },
+  moodInfo: {
+    color: '#555',
+    fontSize: 15,
+    fontFamily: 'Roboto',
+    fontWeight: '600'
+  },
+  info: {
+    flex: 80,
+    paddingLeft: 10,
+    justifyContent: 'center',
+    height: 65,
+    marginLeft: 10
+  },
 });
 
 export default Mood;

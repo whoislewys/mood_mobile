@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "assemble-android-release": "cd android && ./gradlew assembleRelease",
+    "install-android-release": "cd android && ./gradlew assembleRelease && cd .. && react-native run-android --variant=release",
     "test": "jest"
   },
   "dependencies": {
@@ -12,21 +14,16 @@
     "react": "^16.0.0-alpha.6",
     "react-native": "^0.44.0",
     "react-native-audio-streamer": "0.0.9",
+    "react-native-checkbox": "^1.1.0",
     "react-native-music-control": "^0.4.4",
     "react-native-sound": "^0.9.0",
-    "react-navigation": "git+https://github.com/react-community/react-navigation.git"
+    "react-native-vector-icons": "^4.2.0",
+    "react-navigation": "git+https://github.com/react-community/react-navigation.git",
+    "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "1.9.1",
-    "eslint": "^4.0.0",
-    "eslint-config-airbnb": "^15.0.1",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-jsx-a11y": "^5.0.3",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-standard": "^3.0.1",
     "jest": "18.1.0",
     "react-test-renderer": "15.4.2"
   },

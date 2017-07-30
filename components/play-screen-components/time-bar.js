@@ -15,12 +15,15 @@ let TimeBar = React.createClass({
   getInitialState: function() {
     return {
       x: 0,
-      dragging: false
+      dragging: false,
+      totalTime: 180
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    let x = (this.props.currentTime / this.props.totalTime) * width;
-    if(!this.state.dragging) this.setState({x: x});
+    if(nextProps.totalTime != -1) this.setState({totalTime: nextProps.totalTime});
+
+    let x = (nextProps.currentTime / this.state.totalTime) * width;
+    if(!this.state.dragging) this.setState({x});
   },
 
   getTickBoxStyle: function() {
@@ -94,7 +97,7 @@ let TimeBar = React.createClass({
   },
 
   pxToSeconds: function(pixels) {
-    return (this.props.totalTime * pixels) / width;
+    return (this.state.totalTime * pixels) / width;
   },
 
   render: function() {

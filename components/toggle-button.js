@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   Image,
   StyleSheet
 } from 'react-native';
@@ -9,14 +9,16 @@ import {
 let ToggleButton = React.createClass({
   render: function() {
     let child = this.props.active ? (
-      <Image source={this.props.iconSelected} style={styles.icon} />
+      // <Image source={this.props.iconSelected} style={styles.icon} />
+      this.props.iconSelected
     ) : (
-      <Image source={this.props.iconUnselected} style={styles.icon} />
+      this.props.iconUnselected
+      // <Image source={this.props.iconUnselected} style={styles.icon} />
     );
 
-    return <TouchableHighlight onPress={this.props.onPress} underlayColor={'transparent'}>
+    return <TouchableOpacity onPress={this.props.onPress}>
       { child }
-    </TouchableHighlight>;
+    </TouchableOpacity>;
   }
 });
 

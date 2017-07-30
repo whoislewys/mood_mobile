@@ -3,8 +3,9 @@ import {
   View,
   Image,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Images from '@assets/images.js';
 import ToggleButton from '../toggle-button';
@@ -33,21 +34,62 @@ const PlayControls = React.createClass({
           onPress={this.props.toggleAdd}
         /> */}
 
-        <ToggleButton
+        {/* <ToggleButton
           active={this.props.shuffle}
           iconSelected={Images.shuffleButtonSelected}
           iconUnselected={Images.shuffleButtonUnselected}
           onPress={this.props.toggleShuffle}
+        /> */}
+        <ToggleButton
+          active={this.props.liked == -1}
+          iconSelected={
+            <Icon
+              name='thumb-down'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          iconUnselected={
+            <Icon
+              name='thumb-down-outline'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          onPress={this.props.toggleDislike}
         />
 
         { this.playButton() }
 
         <ToggleButton
+          active={this.props.liked == 1}
+          iconSelected={
+            <Icon
+              name='thumb-up'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          iconUnselected={
+            <Icon
+              name='thumb-up-outline'
+              color='white'
+              style={{backgroundColor: 'transparent'}}
+              size={25}
+            />
+          }
+          onPress={this.props.toggleLike}
+        />
+
+        {/* <ToggleButton
           active={this.props.repeat}
           iconSelected={Images.repeatButtonSelected}
           iconUnselected={Images.repeatButtonUnselected}
           onPress={this.props.toggleRepeat}
-        />
+        /> */}
 
         {/* <ToggleButton
           active={this.props.more}
@@ -60,13 +102,13 @@ const PlayControls = React.createClass({
   },
   playButton() {
     if (this.props.playing) {
-      return (<TouchableHighlight onPress={this.props.handlePlayPress} underlayColor={'transparent'}>
+      return (<TouchableOpacity onPress={this.props.handlePlayPress}>
         <Image source={Images.pauseButton} style={styles.playButton} />
-      </TouchableHighlight>);
+      </TouchableOpacity>);
     }
-    return (<TouchableHighlight onPress={this.props.handlePlayPress} underlayColor={'transparent'}>
+    return (<TouchableOpacity onPress={this.props.handlePlayPress}>
       <Image source={Images.playButton} style={styles.playButton} />
-    </TouchableHighlight>);
+    </TouchableOpacity>);
   },
 });
 

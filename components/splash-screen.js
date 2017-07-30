@@ -12,6 +12,7 @@ import Images from '@assets/images';
 var Splash = React.createClass({
   componentDidMount: function() {
     fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
+    // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
       .then((responseJson) => {
         return responseJson.json();
       })
