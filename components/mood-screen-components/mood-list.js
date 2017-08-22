@@ -27,6 +27,9 @@ export default React.createClass({
       id={index}
     />
   },
+  _renderHeader() {
+    return <View style={{height: 10}}></View>;
+  },
 
   mapMoodsToList(moods) {
     return moods.map((mood, index) => {
@@ -46,6 +49,7 @@ export default React.createClass({
         data={this.props.moods}
         keyExtractor={this._keyExtractor}
         renderItem={this._renderItem}
+        ListHeaderComponent={this._renderHeader}
         >
 
       </FlatList>

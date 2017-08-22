@@ -34,7 +34,7 @@ const Main = React.createClass({
     MusicControl.enableControl('previousTrack', true);
     MusicControl.enableControl('seekForward', false);
     MusicControl.enableControl('seekBackward', false);
-    
+
     MusicControl.enableBackgroundMode(true);
 
     MusicControl.on('play', (() => {

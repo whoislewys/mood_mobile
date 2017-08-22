@@ -5,7 +5,8 @@ import {
   Image,
   TouchableOpacity,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
     marginLeft: 2,
-    marginRight: 2
+    marginRight: 2,
   },
   footer: {
     flex: 12,
@@ -101,6 +102,9 @@ const styles = StyleSheet.create({
 });
 
 const MoodScreen = React.createClass({
+  componentWillMount() {
+    StatusBar.setBarStyle('dark-content', true);
+  },
   getInitialState() {
     return {
       mood: -1,
@@ -116,7 +120,7 @@ const MoodScreen = React.createClass({
     console.log(index);
     let url = `http://api.moodindustries.com/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
     // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
-    console.log(url);
+
     fetch(url)
       .then((responseJson) => {
         return responseJson.json();
@@ -124,7 +128,18 @@ const MoodScreen = React.createClass({
       .then((json) => {
         let list = Object.keys(json).map(function (key) { return json[key]; });
         this.props.setPlayQueue(list);
-        this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]})
+
+        const art_url = list[0].art_url;
+
+        const prefetchTask = Image.prefetch(art_url);
+        prefetchTask.then(() => {
+          console.log(`✔ First Prefetch OK - ${list[0].album_name}`);
+          this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]})
+        }, () => {
+          console.log(`✘ Prefetch failed - ${list[0].album_name}`);
+          this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]})
+        });
+
       })
       .catch((error) => {
         console.log(error);
@@ -169,6 +184,9 @@ const MoodScreen = React.createClass({
       );
     }
   },
+  _settings() {
+    this.props.navigation.navigate('Settings', {});
+  },
   render() {
     return (
       <View style={styles.container}>
@@ -183,18 +201,20 @@ const MoodScreen = React.createClass({
               size={25}
             />
             { this._getHeader() }
-            <Icon
-              name='settings'
-              color='black'
-              style={{backgroundColor: 'transparent', alignSelf: 'center', flex: 1}}
-              size={25}
-            />
+            <TouchableOpacity onPress={this._settings} style={{alignSelf: 'center', flex: 1}}>
+              <Icon
+                name='settings'
+                color='black'
+                style={{backgroundColor: 'transparent'}}
+                size={25}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.padding} />
 
         </View>
         <View style={styles.moodList}>
-          <MoodList moods={this.props.moods} moodBgs={Moods} setMood={this.setMood} selected={this.state.mood} />
+          <MoodList moods={this.props.moods} moodBgs={Moods} setMood={this.setMood} selected={this.state.mood}/>
         </View>
         { this._getMusicBar() }
       </View>

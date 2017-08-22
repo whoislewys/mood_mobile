@@ -5,7 +5,10 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 import Images from '@assets/images.js';
 import PlayControls from './play-screen-components/play-controls';
@@ -22,9 +25,13 @@ const styles = StyleSheet.create({
     marginVertical: height * 0.03,
   },
   menuDropdown: {
-    flex: 11,
+    flex: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 0.01 * width,
+    marginRight: 0.02 * width,
+    marginTop: 20
   },
   moodText: {
     backgroundColor: 'transparent',
@@ -32,41 +39,43 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backButton: {
-    width: 10,
-    height: 20,
-    marginTop: 15,
-    marginLeft: 0.02 * width,
-    resizeMode: 'stretch',
+    // width: 10,
+    // height: 20,
+    // marginTop: 15,
+    // marginLeft: 0.02 * width,
+    // resizeMode: 'stretch',
   },
 });
 
 const Playscreen = React.createClass({
   componentWillMount() {
-    for (let i = 0; i < this.props.playQueue.length; i += 1) {
+    for (let i = 1; i < this.props.playQueue.length; i += 1) {
       const url = this.props.playQueue[i].art_url;
 
       const prefetchTask = Image.prefetch(url);
-
       prefetchTask.then(() => {
-        // console.log(`✔ Prefetch OK (+${new Date() - mountTime}ms) - ${url}`);
+        console.log(`✔ Prefetch OK - ${this.props.playQueue[i].album_name}`);
       }, () => {
         console.log(`✘ Prefetch failed - ${this.props.playQueue[i].album_name}`);
       });
     }
+
+    StatusBar.setBarStyle('light-content', true);
   },
   navBack() {
-    fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-      .then((responseJson) => {
-        return responseJson.json();
-      })
-      .then((json) => {
-        let list = Object.keys(json).map(function (key) { return json[key]; });
-        this.props.navigation.navigate('Mood', {moods: list})
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
+    // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
+    //   .then((responseJson) => {
+    //     return responseJson.json();
+    //   })
+    //   .then((json) => {
+    //     let list = Object.keys(json).map(function (key) { return json[key]; });
+    //     this.props.navigation.navigate('Mood', {moods: list})
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    this.props.navigation.goBack();
   },
   render() {
     return (
@@ -77,7 +86,22 @@ const Playscreen = React.createClass({
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
             <TouchableOpacity onPress={this.navBack}>
-              <Image source={Images.backArrow} style={styles.backButton} />
+              <Icon
+                name='arrow-left'
+                color='white'
+                style={{backgroundColor: 'transparent'}}
+                size={25}
+              />
+              {/* <Image source={Images.backArrow} style={styles.backButton} /> */}
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.navBack}>
+              <Icon
+                name='playlist-plus'
+                color='white'
+                style={{backgroundColor: 'transparent'}}
+                size={25}
+              />
+              {/* <Image source={Images.backArrow} style={styles.backButton} /> */}
             </TouchableOpacity>
             {/* <Text style={styles.moodText}>{this.props.mood.name}</Text> */}
           </View>
