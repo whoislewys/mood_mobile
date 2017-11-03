@@ -4,11 +4,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import CheckBox from 'react-native-checkbox';
 
 import Images from '@assets/images';
+
+const width = Dimensions.get('window').width;
 
 let Mood = React.createClass({
   _handlePress() {
@@ -17,16 +20,8 @@ let Mood = React.createClass({
   render: function() {
     return (
       <TouchableOpacity style={styles.container} onPress={this._handlePress} disabled={this.props.selected != -1}>
-        <View style={styles.art}>
-           <Image source={this.props.bg} style={styles.moodArt}/>
-        </View>
-        <View style={styles.info}>
-          <Text style={styles.moodName}>
-            { this.props.mood.name.toUpperCase() }
-          </Text>
-          <Text style={styles.moodInfo}>
-            This is some sample mood info...
-          </Text>
+        <View style={styles.tile}>
+          <Image style={styles.moodArt} source={{uri: this.props.mood.file}}></Image>
         </View>
       </TouchableOpacity>
     );
@@ -39,8 +34,8 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     // justifyContent: 'flex-start',
     flexDirection: 'row',
-    paddingTop: 10,
-    paddingBottom: 10,
+    marginTop: 10,
+    marginBottom: 30,
     paddingLeft: '5%',
     paddingRight: '5%',
     // borderBottomWidth: 1,
@@ -48,12 +43,18 @@ let styles = StyleSheet.create({
 
     // borderTopWidth: 1,
     // borderTopColor: '#eee',
-    height: 90
+    // height: 90
   },
   moodArt: {
-    resizeMode: 'cover',
+    resizeMode: 'contain',
+    width: width * 0.8,
+    height: width * 0.8,
+    // width: 370,
+    // height: 370,
+  },
+  tile: {
     flex: 1,
-    width: 65,
+    alignItems: 'center'
   },
   art: {
     flex: 24,
