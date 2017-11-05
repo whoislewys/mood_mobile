@@ -124,10 +124,14 @@ export default React.createClass({
           </View>
           <View style={[styles.section, styles.sectionOne]}>
             <Text style={styles.headText}>
-              Header One
+              Report a Bug
             </Text>
             <Text style={styles.bodyText}>
-              This is some settings text, lorem ipsum dolor sit amet
+              If you encounter a bug on our website, please report it on our &nbsp;
+              <Text style={[styles.bodyText, {color: '#222', textDecorationLine: 'underline'}]}
+                    onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
+                bug report page.
+              </Text>
             </Text>
           </View>
           <View style={[styles.section, styles.sectionOne]}>

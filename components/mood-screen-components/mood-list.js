@@ -2,15 +2,58 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  FlatList
+  FlatList,
+  Dimensions,
+  Text,
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
+import Images from '@assets/images.js';
 import Mood from './mood';
+const width = Dimensions.get('window').width;
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
+  header: {
+    flex: 10,
+    padding: 15,
+    paddingTop: 35,
+    alignItems: 'center'
+  },
+  headerContent: {
+    flexDirection: 'row'
+  },
+  headerDivider: {
+    resizeMode: 'contain',
+    width: width * 0.95
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  headerText: {
+    flex: 1,
+    textAlign: 'center',
+    color: '#666',
+    fontSize: 32,
+    fontWeight: '300',
+    paddingBottom: 25,
+    paddingTop: 10
+  },
+  settingsButton: {
+    flex: 1,
+    resizeMode: 'contain',
+    position: 'absolute',
+    right: 15,
+    width: 26,
+    top: 8
+  },
 });
 
 export default React.createClass({
@@ -23,25 +66,26 @@ export default React.createClass({
       key={index}
       setMood={this.props.setMood}
       selected={this.props.selected}
-      bg={this.props.moodBgs[index].bg}
       id={index}
     />
   },
   _renderHeader() {
-    return <View style={{height: 10}}></View>;
+    return (
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          <Text style={styles.headerText}>
+            How do you feel?
+          </Text>
+          <TouchableOpacity onPress={this._settings}>
+            <Image source={Images.settingsGear} style={styles.settingsButton}/>
+          </TouchableOpacity>
+        </View>
+        <Image source={Images.headerDivider} style={styles.headerDivider}/>
+      </View>
+    );
   },
-
-  mapMoodsToList(moods) {
-    return moods.map((mood, index) => {
-      return <Mood
-        mood={mood}
-        key={index}
-        setMood={this.props.setMood}
-        selected={this.props.selected}
-        bg={this.props.moodBgs[index].bg}
-        id={index}
-      />
-    });
+  _settings() {
+    this.props.navigation.navigate('Settings', {});
   },
   render() {
     return (

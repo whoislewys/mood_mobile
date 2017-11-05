@@ -18,7 +18,16 @@ var Splash = React.createClass({
       })
       .then((json) => {
         let list = Object.keys(json).map(function (key) { return json[key]; });
-        this.props.navigation.navigate('Mood', {moods: list})
+
+        //Prefetch mood art
+        var imagePrefetch = [];
+        for (let mood of list) {
+            imagePrefetch.push(Image.prefetch(mood.file));
+        }
+        Promise.all(imagePrefetch).then(results => {
+            console.log("All images prefetched in parallel");
+            this.props.navigation.navigate('Mood', {moods: list})
+        });
       })
       .catch((error) => {
         console.log(error);

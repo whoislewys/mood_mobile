@@ -24,13 +24,20 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     flex: 1,
   },
+  arrow: {
+    resizeMode: 'contain',
+    flex: 1,
+    marginLeft: 25,
+    width: 25,
+    transform: [{ rotateX: '180deg' }]
+  },
   art: {
-    flex: 24,
+    flex: 20,
     justifyContent: 'flex-start'
   },
   info: {
-    flex: 80,
-    paddingLeft: 10
+    flex: 84,
+    // paddingLeft: 10
   },
   subInfo: {
     flexDirection: 'row',
@@ -39,10 +46,13 @@ const styles = StyleSheet.create({
     flex: 20,
   },
   albumInfoText: {
+    flexDirection: 'row',
+    width: 280,
     color: '#fff',
-    fontSize: 15,
+    fontSize: 20,
     fontFamily: 'Roboto',
-    fontWeight: '500'
+    fontWeight: '400',
+    textAlign: 'center'
   },
   albumInfoSubText: {
     color: '#fff',
@@ -58,10 +68,10 @@ export default React.createClass({
       return (
         <TouchableOpacity onPress={this.props.handlePlayPress}>
           <Icon
-            name='pause'
+            name='pause-circle-outline'
             color='white'
             style={{backgroundColor: 'transparent'}}
-            size={35}
+            size={45}
           />
         </TouchableOpacity>
       );
@@ -69,17 +79,18 @@ export default React.createClass({
     return (
       <TouchableOpacity onPress={this.props.handlePlayPress}>
         <Icon
-          name='play'
+          name='play-circle-outline'
           color='white'
           style={{backgroundColor: 'transparent'}}
-          size={35}
+          size={45}
         />
       </TouchableOpacity>
     );
   },
   albumArt() {
     return (
-      <Image source={{uri: this.props.track.art_url}} style={styles.albumArt}/>
+      <Image source={Images.dropdownArrow} style={styles.arrow}/>
+      // <Image source={{uri: this.props.track.art_url}} style={styles.albumArt}/>
     );
   },
   render() {
@@ -91,7 +102,7 @@ export default React.createClass({
           {this.albumArt()}
         </TouchableOpacity>
         <TouchableOpacity onPress={this.props.go} style={styles.info}>
-          <View>
+          <View style={{alignItems: 'center'}}>
             <Text
               style={[styles.albumInfoText, {
                 maxWidth: width * 0.45
@@ -99,10 +110,10 @@ export default React.createClass({
               numberOfLines={1}
               ellipsizeMode="tail"
               >
-              { track.name }
+              { track.name } - { track.artist }
             </Text>
           </View>
-          <View style={styles.subInfo}>
+          {/* <View style={styles.subInfo}>
             <Text
               style={[styles.albumInfoSubText, {
                 maxWidth: width * 0.6
@@ -114,7 +125,7 @@ export default React.createClass({
               &nbsp;-&nbsp;
               { track.album_name }
             </Text>
-          </View>
+          </View> */}
         </TouchableOpacity>
         <View style={styles.controls}>
           {this.playButton()}

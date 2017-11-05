@@ -36,7 +36,9 @@ const images = {
 	goArrow: require('./img/go-arrow.png'),
 	backArrow: require('./img/back-arrow.png'),
 	pauseButtonNoRing: require('./img/pause-button-noring.png'),
-	playButtonNoRing: require('./img/play-button-noring.png')
+	playButtonNoRing: require('./img/play-button-noring.png'),
+	settingsGear: require('./img/settings.png'),
+	headerDivider: require('./img/header-divider.png'),
 };
 
 export default images;
