@@ -13,8 +13,8 @@ import Images from '@assets/images.js';
 import InfoText from './info-text';
 import TimeBar from './time-bar';
 
-var TrackInfo = React.createClass({
-  render: function() {
+export default class TrackInfo extends React.Component {
+  render = () => {
     return (
       <View style={styles.albumContainer}>
         <AlbumArt
@@ -33,7 +33,7 @@ var TrackInfo = React.createClass({
       </View>
     );
   }
-});
+}
 
 const width = Dimensions.get('window').width;
 
@@ -56,5 +56,3 @@ let styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
-
-export default TrackInfo;

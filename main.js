@@ -8,25 +8,25 @@ import MusicControl from 'react-native-music-control';
 
 import Navigator from './components/main-components/navigator';
 
-const Main = React.createClass({
+export default class Main extends React.Component {
   // Lifecycle Functions
-  getInitialState() {
-    return {
-      currentTrack: 0,
-      playing: false,
-      liked: 0,
-      currentTime: 0,
-      duration: -1,
-      playQueue: [],
-      playStatus: 'STOPPED'
-    };
-  },
-  componentWillMount() {
+  state = {
+    currentTrack: 0,
+    playing: false,
+    liked: 0,
+    currentTime: 0,
+    duration: -1,
+    playQueue: [],
+    playStatus: 'STOPPED'
+  };
+
+  componentWillMount = () => {
     if (this.state.playQueue.length > 0) {
       this.loadCurrentTrack();
     }
-  },
-  componentDidMount() {
+  }
+
+  componentDidMount = () => {
     this.subscription = DeviceEventEmitter.addListener('RNAudioStreamerStatusChanged', this._statusChanged)
     MusicControl.enableControl('play', true);
     MusicControl.enableControl('pause', true);
@@ -52,58 +52,67 @@ const Main = React.createClass({
     MusicControl.on('nextTrack', this.nextTrack)
 
     MusicControl.on('previousTrack', this.previousTrack)
-  },
+  }
 
   // Control Functions
-  nextTrack() {
+  nextTrack = () => {
     this.cycleSong(1);
-  },
-  previousTrack() {
+  }
+
+  previousTrack = () => {
     this.cycleSong(-1);
-  },
-  togglePlaying() {
+  }
+
+  togglePlaying = () => {
     this.setState({ playing: !this.state.playing });
-  },
-  handlePlayPress() {
+  }
+
+  handlePlayPress = () => {
     if (this.state.playing) {
       this.pausePlayback();
     } else {
       this.startPlayback();
     }
-  },
-  setTime(seconds) {
+  }
+
+  setTime = (seconds) => {
     this.setState({ currentTime: seconds }, () => {
       Sound2.seekToTime(seconds);
     });
-  },
-  toggleLike() {
+  }
+
+  toggleLike = () => {
     if(this.state.liked != 1) {
       this.setState({liked: 1});
     } else {
       this.setState({liked: 0});
     }
-  },
-  toggleDislike() {
+  }
+
+  toggleDislike = () => {
     if(this.state.liked != -1) {
       this.setState({liked: -1});
     } else {
       this.setState({liked: 0});
     }
-  },
-  setCurrentTime(time) {
+  }
+
+  setCurrentTime = (time) => {
     this.setState({ currentTime: time });
-  },
-  setPlayQueue(queue) {
+  }
+
+  setPlayQueue = (queue) => {
     this.setState({ playQueue: queue }, () => {
       this.loadCurrentTrack();
     });
-  },
-  addToPlayQueue(queue) {
+  }
+
+  addToPlayQueue = (queue) => {
     this.setState({ playQueue: this.state.playQueue.concat(queue) });
-  },
+  }
 
   // Playback Control
-  pausePlayback() {
+  pausePlayback = () => {
     const track = this.state.playQueue[this.state.currentTrack].soundFile;
 
     Sound2.pause();
@@ -113,8 +122,9 @@ const Main = React.createClass({
         state: MusicControl.STATE_PAUSED,
       });
     });
-  },
-  startPlayback() {
+  }
+
+  startPlayback = () => {
     Sound2.play();
 
     this.interval = setInterval(() => {
@@ -143,10 +153,10 @@ const Main = React.createClass({
       description: '', // Android Only
       color: 0xFFFFFF // Notification Color - Android Only
     });
-  },
+  }
 
   //Other
-  cycleSong(direction) {
+  cycleSong = (direction) => {
     const track = this.state.playQueue[this.state.currentTrack].soundFile;
     let nextTrack = this.state.currentTrack + direction;
 
@@ -164,17 +174,20 @@ const Main = React.createClass({
       currentTime: 0,
       playing: false,
       duration: -1 }, this.loadCurrentTrack);
-  },
-  handleTrackChange() {
+  }
+
+  handleTrackChange = () => {
     this.loadCurrentTrack();
     this.handlePlayPress();
-  },
-  loadCurrentTrack() {
+  }
+
+  loadCurrentTrack = () => {
     Sound2.setUrl(this.state.playQueue[this.state.currentTrack].file);
     this.startPlayback();
     this.getDuration();
-  },
-  getDuration() {
+  }
+
+  getDuration = () => {
     Sound2.duration(
       (error, duration) => {
         if (error) {
@@ -186,13 +199,14 @@ const Main = React.createClass({
         }
       },
     );
-  },
-  _statusChanged(playStatus) {
+  }
+
+  _statusChanged = (playStatus) => {
     if(playStatus == 'FINISHED') this.nextTrack();
     this.setState({playStatus});
-  },
+  }
 
-  render() {
+  render = () => {
     return (<Navigator
       // Track info
       currentTrack={this.state.currentTrack}
@@ -221,7 +235,5 @@ const Main = React.createClass({
       setPlayQueue={this.setPlayQueue}
       addToPlayQueue={this.addToPlayQueue}
     />);
-  },
-});
-
-export default Main;
+  }
+}

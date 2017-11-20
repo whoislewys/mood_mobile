@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default React.createClass({
-  playButton() {
+export default class PlayBar extends React.Component {
+  playButton = () => {
     if (this.props.playing) {
       return (
         <TouchableOpacity onPress={this.props.handlePlayPress}>
@@ -86,14 +86,16 @@ export default React.createClass({
         />
       </TouchableOpacity>
     );
-  },
-  albumArt() {
+  }
+
+  albumArt = () => {
     return (
       <Image source={Images.dropdownArrow} style={styles.arrow}/>
       // <Image source={{uri: this.props.track.art_url}} style={styles.albumArt}/>
     );
-  },
-  render() {
+  }
+
+  render = () => {
     const track = this.props.track;
 
     return (
@@ -132,5 +134,5 @@ export default React.createClass({
         </View>
       </View>
     );
-  },
-});
+  }
+}

@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const PlayControls = React.createClass({
-  render() {
+export default class PlayControls extends React.Component {
+  render = () => {
     return (
       <View style={styles.playControls}>
         {/* <ToggleButton
@@ -99,8 +99,9 @@ const PlayControls = React.createClass({
         /> */}
       </View>
     );
-  },
-  playButton() {
+  }
+
+  playButton = () => {
     if (this.props.playing) {
       return (<TouchableOpacity onPress={this.props.handlePlayPress}>
         <Image source={Images.pauseButton} style={styles.playButton} />
@@ -109,7 +110,5 @@ const PlayControls = React.createClass({
     return (<TouchableOpacity onPress={this.props.handlePlayPress}>
       <Image source={Images.playButton} style={styles.playButton} />
     </TouchableOpacity>);
-  },
-});
-
-export default PlayControls;
+  }
+}

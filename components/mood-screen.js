@@ -43,22 +43,23 @@ const styles = StyleSheet.create({
   }
 });
 
-const MoodScreen = React.createClass({
-  componentWillMount() {
+export default class MoodScreen extends React.Component {
+  componentWillMount = () => {
     StatusBar.setBarStyle('dark-content', true);
-  },
-  getInitialState() {
-    return {
-      mood: -1,
-      loading: false
-    };
-  },
-  setMood(index) {
+  }
+
+  state = {
+    mood: -1,
+    loading: false
+  };
+
+  setMood = (index) => {
     this.setState({ mood: index }, () => {
       this._onGo(index);
     });
-  },
-  _onGo(index) {
+  }
+
+  _onGo = (index) => {
     this.setState({loading: true});
     let url = `http://api.moodindustries.com/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
     // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
@@ -87,11 +88,13 @@ const MoodScreen = React.createClass({
       .catch((error) => {
         console.log(error);
       });
-  },
-  _playbarGo() {
+  }
+
+  _playbarGo = () => {
     this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]})
-  },
-  _getMusicBar() {
+  }
+
+  _getMusicBar = () => {
     if(this.props.playQueue.length > 0) {
       return (
         <View style={styles.footer}>
@@ -104,8 +107,9 @@ const MoodScreen = React.createClass({
         </View>
       );
     }
-  },
-  _getContent() {
+  }
+
+  _getContent = () => {
     if(!this.state.loading) {
       return <MoodList moods={this.props.moods} setMood={this.setMood} selected={this.state.mood} navigation={this.props.navigation}/>;
     } else {
@@ -113,8 +117,9 @@ const MoodScreen = React.createClass({
         <ActivityIndicator color={'black'} size={'large'} animating={true} style={{flex: 10}}/>
       );
     }
-  },
-  render() {
+  }
+
+  render = () => {
     return (
       <View style={styles.container}>
         <View style={styles.moodList}>
@@ -123,7 +128,5 @@ const MoodScreen = React.createClass({
         { this._getMusicBar() }
       </View>
     );
-  },
-});
-
-export default MoodScreen;
+  }
+}

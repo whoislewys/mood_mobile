@@ -27,17 +27,17 @@ Number.prototype.roundTo = function(num) {
     }
 }
 
-let Carousel = React.createClass({
-  getInitialState: function() {
-    return {
-      moods: this.props.moods,
-      offset: {x: 0, y: 0}
-    }
-  },
-  getMoods: function() {
+export default class Carousel extends React.Component {
+  state = {
+    moods: this.props.moods,
+    offset: {x: 0, y: 0}
+  }
+
+  getMoods = () => {
     return this.state.moods.map((mood, index) => { return <Mood mood={mood} key={index} yOffset={yOffset} /> })
-  },
-  handleScroll: function(event) {
+  }
+
+  handleScroll = (event) => {
     let yPos = event.nativeEvent.contentOffset.y;
     let index = Math.round(yPos/ITEM_HEIGHT);
     if(index > 2) {
@@ -53,8 +53,9 @@ let Carousel = React.createClass({
     return Animated.event(
       [{nativeEvent: {contentOffset: {y: yOffset}}}]
     );
-  },
-  snap: function(event) {
+  }
+
+  snap = (event) => {
     let yPos = event.nativeEvent.contentOffset.y;
     if(yPos % ITEM_HEIGHT != 0) {
       // console.log(yPos);
@@ -81,8 +82,9 @@ let Carousel = React.createClass({
         });
 
     this.props.setMood(this.state.moods[index]);
-  },
-  render: function() {
+  }
+
+  render = () => {
 
     return (
       <View style={{flex: 1}}>
@@ -103,10 +105,8 @@ let Carousel = React.createClass({
       </View>
     );
   }
-});
+}
 
 let styles = StyleSheet.create({
 
 });
-
-export default Carousel;

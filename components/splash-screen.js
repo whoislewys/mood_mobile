@@ -9,8 +9,8 @@ import {
 import Background from './background';
 import Images from '@assets/images';
 
-var Splash = React.createClass({
-  componentDidMount: function() {
+export default class Splash extends React.Component {
+  componentDidMount = () => {
     fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
       .then((responseJson) => {
@@ -32,8 +32,9 @@ var Splash = React.createClass({
       .catch((error) => {
         console.log(error);
       });
-  },
-  render: function() {
+  }
+
+  render = () => {
     return (
       <View style={styles.container}>
         <Image source={Images.splashScreen} style={styles.bgImage}>
@@ -41,7 +42,7 @@ var Splash = React.createClass({
       </View>
     );
   }
-});
+}
 
 let styles = StyleSheet.create({
   container: {
@@ -54,5 +55,3 @@ let styles = StyleSheet.create({
     resizeMode: 'cover'
   }
 });
-
-export default Splash;

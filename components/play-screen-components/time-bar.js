@@ -11,27 +11,27 @@ import moment from 'moment';
 import Images from '@assets/images';
 const width = Dimensions.get('window').width * 0.8;
 
-let TimeBar = React.createClass({
-  getInitialState: function() {
-    return {
-      x: 0,
-      dragging: false,
-      totalTime: 180
-    };
-  },
-  componentWillReceiveProps: function(nextProps) {
+export default class TimeBar extends React.Component {
+  state = {
+    x: 0,
+    dragging: false,
+    totalTime: 180
+  };
+
+  componentWillReceiveProps = (nextProps) => {
     if(nextProps.totalTime != -1) this.setState({totalTime: nextProps.totalTime});
 
     let x = (nextProps.currentTime / this.state.totalTime) * width;
     if(!this.state.dragging) this.setState({x});
-  },
+  }
 
-  getTickBoxStyle: function() {
+  getTickBoxStyle = () => {
     return {
       left: this.state.x - 17
     };
-  },
-  getTickStyle: function() {
+  }
+
+  getTickStyle = () => {
     let style = {
       width: 9,
       height: 9,
@@ -49,8 +49,9 @@ let TimeBar = React.createClass({
     }
 
     return style;
-  },
-  getTime: function() {
+  }
+
+  getTime = () => {
     let elem = null;
 
     if(this.state.dragging) {
@@ -65,8 +66,9 @@ let TimeBar = React.createClass({
     }
 
     return elem;
-  },
-  _onStartShouldSetResponder: function(e) {
+  }
+
+  _onStartShouldSetResponder = (e) => {
     this.dragging = true;
     this.setState({dragging: true});
 
@@ -75,12 +77,13 @@ let TimeBar = React.createClass({
     };
 
     return true;
-  },
-  _onMoveShouldSetResponder: function(e) {
-    return true;
-  },
+  }
 
-  setPosition: function(e) {
+  _onMoveShouldSetResponder = (e) => {
+    return true;
+  }
+
+  setPosition = (e) => {
     let dx = this.state.x + (e.nativeEvent.pageX - this.drag.x);
 
     if(dx - 1 > 0 && dx < width) {
@@ -90,17 +93,18 @@ let TimeBar = React.createClass({
 
       this.drag.x = e.nativeEvent.pageX;
     }
-  },
-  handleRelease: function(e) {
+  }
+
+  handleRelease = (e) => {
     this.setState({dragging: false});
     this.props.setTime(this.pxToSeconds(this.state.x));
-  },
+  }
 
-  pxToSeconds: function(pixels) {
+  pxToSeconds = (pixels) => {
     return (this.state.totalTime * pixels) / width;
-  },
+  }
 
-  render: function() {
+  render = () => {
     return (
       <View style={styles.timeBar}>
         <View style={[
@@ -133,7 +137,7 @@ let TimeBar = React.createClass({
       </View>
     );
   }
-});
+}
 
 let styles = StyleSheet.create({
   timeBar: {
@@ -162,5 +166,3 @@ let styles = StyleSheet.create({
     position: 'absolute'
   }
 });
-
-export default TimeBar;

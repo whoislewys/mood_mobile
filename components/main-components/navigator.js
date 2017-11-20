@@ -7,14 +7,14 @@ import SplashScreen from '../splash-screen';
 import SettingsScreen from '../settings-screen';
 
 const map = (SomeComponent) => {
-  return React.createClass({
-    render: function() {
+  return class SomeClass extends React.Component {
+    render = () => {
       const screenProps = this.props.screenProps;
       delete this.props.screenProps;
       const {navigation: {state: {params}}} = this.props
       return <SomeComponent {...params} {...this.props} {...screenProps} />
     }
-  });
+  }
 }
 
 let Nav = StackNavigator({
@@ -29,8 +29,8 @@ let Nav = StackNavigator({
   headerMode: 'none'
 });
 
-export default React.createClass({
-    render: function() {
+export default class Navigator extends React.Component {
+    render = () => {
       return <Nav screenProps={{...this.props}}/>;
     }
-});
+}

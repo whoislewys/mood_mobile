@@ -6,8 +6,9 @@ import {
   StyleSheet
 } from 'react-native';
 
-let ToggleButton = React.createClass({
-  render: function() {
+
+export default class ToggleButton extends React.Component {
+  render = () => {
     let child = this.props.active ? (
       // <Image source={this.props.iconSelected} style={styles.icon} />
       this.props.iconSelected
@@ -20,7 +21,7 @@ let ToggleButton = React.createClass({
       { child }
     </TouchableOpacity>;
   }
-});
+}
 
 let styles = StyleSheet.create({
   icon: {
@@ -29,5 +30,3 @@ let styles = StyleSheet.create({
     resizeMode: 'contain'
   }
 });
-
-export default ToggleButton;

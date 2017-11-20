@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Playscreen = React.createClass({
-  componentWillMount() {
+export default class PlayScreen extends React.Component {
+  componentWillMount = () => {
     for (let i = 1; i < this.props.playQueue.length; i += 1) {
       const url = this.props.playQueue[i].art_url;
 
@@ -61,8 +61,9 @@ const Playscreen = React.createClass({
     }
 
     StatusBar.setBarStyle('light-content', true);
-  },
-  navBack() {
+  }
+
+  navBack = () => {
     // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     //   .then((responseJson) => {
@@ -76,8 +77,9 @@ const Playscreen = React.createClass({
     //     console.log(error);
     //   });
     this.props.navigation.goBack();
-  },
-  render() {
+  }
+
+  render = () => {
     return (
       <Background
         image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
@@ -124,7 +126,5 @@ const Playscreen = React.createClass({
         </View>
       </Background>
     );
-  },
-});
-
-export default Playscreen;
+  }
+}

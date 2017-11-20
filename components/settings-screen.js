@@ -69,11 +69,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default React.createClass({
-  componentWillMount() {
+export default class SettingsScreen extends React.Component {
+  componentWillMount = () => {
     StatusBar.setBarStyle('dark-content', true);
-  },
-  _return() {
+  }
+
+  _return = () => {
     // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     //   .then((responseJson) => {
@@ -87,8 +88,9 @@ export default React.createClass({
     //     console.log(error);
     //   });
     this.props.navigation.goBack();
-  },
-  render() {
+  }
+
+  render = () => {
     return (
       <View style={styles.container}>
         <View style={styles.shadow}>
@@ -150,5 +152,5 @@ export default React.createClass({
         </View>
       </View>
     );
-  },
-});
+  }
+}

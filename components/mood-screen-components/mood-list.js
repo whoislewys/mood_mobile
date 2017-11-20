@@ -56,11 +56,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.createClass({
-  _keyExtractor(mood, index) {
+export default class MoodList extends React.Component {
+  _keyExtractor = (mood, index) => {
     return index;
-  },
-  _renderItem({item, index}) {
+  }
+
+  _renderItem = ({item, index}) => {
     return <Mood
       mood={item}
       key={index}
@@ -68,8 +69,9 @@ export default React.createClass({
       selected={this.props.selected}
       id={index}
     />
-  },
-  _renderHeader() {
+  }
+
+  _renderHeader = () => {
     return (
       <View style={styles.header}>
         <View style={styles.headerContent}>
@@ -83,11 +85,13 @@ export default React.createClass({
         <Image source={Images.headerDivider} style={styles.headerDivider}/>
       </View>
     );
-  },
-  _settings() {
+  }
+
+  _settings = () => {
     this.props.navigation.navigate('Settings', {});
-  },
-  render() {
+  }
+
+  render = () => {
     return (
       <FlatList
         data={this.props.moods}
@@ -101,5 +105,5 @@ export default React.createClass({
       //   { this.mapMoodsToList(this.props.moods) }
       // </View>
     );
-  },
-});
+  }
+}
