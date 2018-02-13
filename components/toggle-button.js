@@ -9,24 +9,18 @@ import {
 
 export default class ToggleButton extends React.Component {
   render = () => {
-    let child = this.props.active ? (
-      // <Image source={this.props.iconSelected} style={styles.icon} />
-      this.props.iconSelected
-    ) : (
-      this.props.iconUnselected
-      // <Image source={this.props.iconUnselected} style={styles.icon} />
-    );
+    let opacity = this.props.active ? 1 : 0.5;
 
     return <TouchableOpacity onPress={this.props.onPress}>
-      { child }
+      <Image source={this.props.iconUnselected} style={[styles.icon, {opacity: opacity}]}/>
     </TouchableOpacity>;
   }
 }
 
 let styles = StyleSheet.create({
   icon: {
-    height: 20,
-    width: 20,
+    height: 30,
+    width: 30,
     resizeMode: 'contain'
   }
 });

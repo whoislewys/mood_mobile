@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { NavigationActions } from 'react-navigation';
+
 import Images from '@assets/images.js';
 import Background from './background';
 import MoodList from './mood-screen-components/mood-list';
@@ -32,8 +34,8 @@ const styles = StyleSheet.create({
     marginRight: 2,
   },
   footer: {
-    flex: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    flex: 8,
+    backgroundColor: 'rgba(102, 102, 102, 1)',
     // borderTopWidth: 2,
     // borderTopColor: '#ddd'
   },
@@ -47,6 +49,24 @@ export default class MoodScreen extends React.Component {
   componentWillMount = () => {
     StatusBar.setBarStyle('dark-content', true);
   }
+
+  navigateToPlayScreen = (params) => {
+    const navigate = NavigationActions.navigate({
+      routeName: 'Play',
+      params: { ...params }
+    });
+
+    this.props.navigation.dispatch(navigate);
+  };
+
+  navigateToSettingsScreen = (params = {}) => {
+    const navigate = NavigationActions.navigate({
+      routeName: 'Settings',
+      params: { ...params }
+    });
+
+    this.props.navigation.dispatch(navigate);
+  };
 
   state = {
     mood: -1,
@@ -78,11 +98,11 @@ export default class MoodScreen extends React.Component {
         prefetchTask.then(() => {
           console.log(`✔ First Prefetch OK - ${list[0].album_name}`);
           this.setState({loading: false});
-          this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]});
+          this.navigateToPlayScreen({mood: this.props.moods[this.state.mood]});
         }, () => {
           console.log(`✘ Prefetch failed - ${list[0].album_name}`);
           this.setState({loading: false});
-          this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]});
+          this.navigateToPlayScreen({mood: this.props.moods[this.state.mood]});
         });
       })
       .catch((error) => {
@@ -91,7 +111,7 @@ export default class MoodScreen extends React.Component {
   }
 
   _playbarGo = () => {
-    this.props.navigation.navigate('Play', {mood: this.props.moods[this.state.mood]})
+    this.navigateToPlayScreen({mood: this.props.moods[this.state.mood]})
   }
 
   _getMusicBar = () => {
@@ -111,7 +131,7 @@ export default class MoodScreen extends React.Component {
 
   _getContent = () => {
     if(!this.state.loading) {
-      return <MoodList moods={this.props.moods} setMood={this.setMood} selected={this.state.mood} navigation={this.props.navigation}/>;
+      return <MoodList moods={this.props.moods} setMood={this.setMood} selected={this.state.mood} navigate={this.navigateToSettingsScreen}/>;
     } else {
       return (
         <ActivityIndicator color={'black'} size={'large'} animating={true} style={{flex: 10}}/>

@@ -1,19 +1,22 @@
 import React from 'react';
 import { DeviceEventEmitter } from 'react-native';
 
+import { Provider } from 'react-redux'
+import store from './components/redux/store.js'
+import Navigator from './components/main-components/navigator'
+
 import _ from 'lodash';
 import Sound from 'react-native-sound';
 import Sound2 from 'react-native-audio-streamer';
 import MusicControl from 'react-native-music-control';
-
-import Navigator from './components/main-components/navigator';
 
 export default class Main extends React.Component {
   // Lifecycle Functions
   state = {
     currentTrack: 0,
     playing: false,
-    liked: 0,
+    shuffle: false,
+    repeat: false,
     currentTime: 0,
     duration: -1,
     playQueue: [],
@@ -81,20 +84,22 @@ export default class Main extends React.Component {
     });
   }
 
-  toggleLike = () => {
-    if(this.state.liked != 1) {
-      this.setState({liked: 1});
-    } else {
-      this.setState({liked: 0});
-    }
+  toggleShuffle = () => {
+    this.setState({shuffle: !this.state.shuffle})
+    // if(this.state.liked != 1) {
+    //   this.setState({liked: 1});
+    // } else {
+    //   this.setState({liked: 0});
+    // }
   }
 
-  toggleDislike = () => {
-    if(this.state.liked != -1) {
-      this.setState({liked: -1});
-    } else {
-      this.setState({liked: 0});
-    }
+  toggleRepeat = () => {
+    this.setState({repeat: !this.state.repeat})
+    // if(this.state.liked != -1) {
+    //   this.setState({liked: -1});
+    // } else {
+    //   this.setState({liked: 0});
+    // }
   }
 
   setCurrentTime = (time) => {
@@ -207,33 +212,38 @@ export default class Main extends React.Component {
   }
 
   render = () => {
-    return (<Navigator
-      // Track info
-      currentTrack={this.state.currentTrack}
-      playing={this.state.playing}
-      currentTime={this.state.currentTime}
-      playQueue={this.state.playQueue}
-      duration={this.state.duration}
-      liked={this.state.liked}
+    return (
+      <Provider store={store}>
+        <Navigator
+          // Track info
+          currentTrack={this.state.currentTrack}
+          playing={this.state.playing}
+          currentTime={this.state.currentTime}
+          playQueue={this.state.playQueue}
+          duration={this.state.duration}
+          liked={this.state.liked}
 
-      // Queue mutations
-      // shuffle={this.state.shuffle}
-      // repeat={this.state.repeat}
+          // Queue mutations
+          shuffle={this.state.shuffle}
+          repeat={this.state.repeat}
 
-      // Trash
-      added={this.state.added}
-      more={this.state.more}
 
-      // Functions
-      nextTrack={this.nextTrack}
-      previousTrack={this.previousTrack}
-      handlePlayPress={this.handlePlayPress}
-      setTime={this.setTime}
-      toggleLike={this.toggleLike}
-      toggleDislike={this.toggleDislike}
-      setCurrentTime={this.setCurrentTime}
-      setPlayQueue={this.setPlayQueue}
-      addToPlayQueue={this.addToPlayQueue}
-    />);
+          // Trash
+          added={this.state.added}
+          more={this.state.more}
+
+          // Functions
+          nextTrack={this.nextTrack}
+          previousTrack={this.previousTrack}
+          handlePlayPress={this.handlePlayPress}
+          setTime={this.setTime}
+          toggleShuffle={this.toggleShuffle}
+          toggleRepeat={this.toggleRepeat}
+          setCurrentTime={this.setCurrentTime}
+          setPlayQueue={this.setPlayQueue}
+          addToPlayQueue={this.addToPlayQueue}
+        />
+      </Provider>
+    );
   }
 }

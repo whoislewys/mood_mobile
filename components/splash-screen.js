@@ -6,6 +6,8 @@ import {
   Image
 } from 'react-native';
 
+import { NavigationActions } from 'react-navigation';
+
 import Background from './background';
 import Images from '@assets/images';
 
@@ -18,6 +20,7 @@ export default class Splash extends React.Component {
       })
       .then((json) => {
         let list = Object.keys(json).map(function (key) { return json[key]; });
+        console.log(list);
 
         //Prefetch mood art
         var imagePrefetch = [];
@@ -26,13 +29,22 @@ export default class Splash extends React.Component {
         }
         Promise.all(imagePrefetch).then(results => {
             console.log("All images prefetched in parallel");
-            this.props.navigation.navigate('Mood', {moods: list})
+            this.navigateToMoodScreen({moods: list});
         });
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
+  navigateToMoodScreen = (params) => {
+    const navigate = NavigationActions.navigate({
+      routeName: 'Mood',
+      params: { ...params }
+    });
+
+    this.props.navigation.dispatch(navigate);
+  };
 
   render = () => {
     return (

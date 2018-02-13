@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   info: {
-    flex: 84,
+    flex: 88,
     // paddingLeft: 10
   },
   subInfo: {
@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 280,
     color: '#fff',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'Roboto',
-    fontWeight: '400',
+    fontWeight: '300',
     textAlign: 'center'
   },
   albumInfoSubText: {
@@ -59,6 +59,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Roboto',
     fontWeight: '300'
+  },
+  playPauseButton: {
+    width: 35,
+    height: 35,
+    backgroundColor: 'transparent'
   }
 });
 
@@ -67,23 +72,19 @@ export default class PlayBar extends React.Component {
     if (this.props.playing) {
       return (
         <TouchableOpacity onPress={this.props.handlePlayPress}>
-          <Icon
+          {/* <Icon
             name='pause-circle-outline'
             color='white'
             style={{backgroundColor: 'transparent'}}
             size={45}
-          />
+          /> */}
+          <Image source={Images.pauseButtonWhite} style={styles.playPauseButton} />
         </TouchableOpacity>
       );
     }
     return (
       <TouchableOpacity onPress={this.props.handlePlayPress}>
-        <Icon
-          name='play-circle-outline'
-          color='white'
-          style={{backgroundColor: 'transparent'}}
-          size={45}
-        />
+        <Image source={Images.playButtonWhite} style={styles.playPauseButton} />
       </TouchableOpacity>
     );
   }
@@ -104,15 +105,34 @@ export default class PlayBar extends React.Component {
           {this.albumArt()}
         </TouchableOpacity>
         <TouchableOpacity onPress={this.props.go} style={styles.info}>
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Text
               style={[styles.albumInfoText, {
-                maxWidth: width * 0.45
+                maxWidth: width * 0.32,
+                textAlign: 'right'
               }]}
               numberOfLines={1}
               ellipsizeMode="tail"
               >
-              { track.name } - { track.artist }
+              { track.name }
+            </Text>
+            <Text
+              style={[styles.albumInfoText, {
+                maxWidth: width * 0.03,
+                textAlign: 'center'
+              }]}
+              >
+                -
+            </Text>
+            <Text
+              style={[styles.albumInfoText, {
+                maxWidth: width * 0.32,
+                textAlign: 'left'
+              }]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              >
+              { track.artist }
             </Text>
           </View>
           {/* <View style={styles.subInfo}>

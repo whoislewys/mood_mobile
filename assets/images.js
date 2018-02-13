@@ -39,6 +39,11 @@ const images = {
 	playButtonNoRing: require('./img/play-button-noring.png'),
 	settingsGear: require('./img/settings.png'),
 	headerDivider: require('./img/header-divider.png'),
+	backArrowDark: require('./img/back-arrow-dark.png'),
+	navArrowLeft: require('./img/nav-arrow-left.png'),
+	gradientHeading: require('./img/gradient-heading.png'),
+	playButtonWhite: require('./img/play-button-white.png'),
+	pauseButtonWhite: require('./img/pause-button-white.png')
 };
 
 export default images;

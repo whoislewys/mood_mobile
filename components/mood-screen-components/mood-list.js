@@ -88,7 +88,8 @@ export default class MoodList extends React.Component {
   }
 
   _settings = () => {
-    this.props.navigation.navigate('Settings', {});
+    console.log('Linked');
+    this.props.navigate();
   }
 
   render = () => {
