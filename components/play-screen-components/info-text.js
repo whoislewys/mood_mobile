@@ -8,8 +8,8 @@ import {
 
 const width = Dimensions.get('window').width;
 
-let InfoText = React.createClass({
-  render: function() {
+export default class InfoText extends React.Component {
+  render = () => {
     let album = this.props.track;
 
     return (
@@ -49,7 +49,7 @@ let InfoText = React.createClass({
       </View>
     );
   }
-});
+}
 
 let styles = StyleSheet.create({
   albumInfoText: {
@@ -75,5 +75,3 @@ let styles = StyleSheet.create({
     fontWeight: '300'
   }
 });
-
-export default InfoText;

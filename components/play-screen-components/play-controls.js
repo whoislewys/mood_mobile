@@ -14,17 +14,27 @@ const styles = StyleSheet.create({
   playControls: {
     flex: 30,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   playButton: {
-    width: 65,
-    height: 65,
+    width: 85,
+    height: 85,
   },
+  toggleShuffle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  toggleRepeat: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  }
 });
 
-const PlayControls = React.createClass({
-  render() {
+export default class PlayControls extends React.Component {
+  render = () => {
     return (
       <View style={styles.playControls}>
         {/* <ToggleButton
@@ -34,13 +44,15 @@ const PlayControls = React.createClass({
           onPress={this.props.toggleAdd}
         /> */}
 
+        <View style={styles.toggleShuffle}>
+          <ToggleButton
+            active={this.props.shuffle}
+            iconSelected={Images.shuffleButtonSelected}
+            iconUnselected={Images.shuffleButtonUnselected}
+            onPress={this.props.toggleShuffle}
+          />
+        </View>
         {/* <ToggleButton
-          active={this.props.shuffle}
-          iconSelected={Images.shuffleButtonSelected}
-          iconUnselected={Images.shuffleButtonUnselected}
-          onPress={this.props.toggleShuffle}
-        /> */}
-        <ToggleButton
           active={this.props.liked == -1}
           iconSelected={
             <Icon
@@ -59,11 +71,12 @@ const PlayControls = React.createClass({
             />
           }
           onPress={this.props.toggleDislike}
-        />
+        /> */}
+        <View style={{alignItems: 'center', flex: 2}}>
+          { this.playButton() }
+        </View>
 
-        { this.playButton() }
-
-        <ToggleButton
+        {/* <ToggleButton
           active={this.props.liked == 1}
           iconSelected={
             <Icon
@@ -82,14 +95,17 @@ const PlayControls = React.createClass({
             />
           }
           onPress={this.props.toggleLike}
-        />
-
-        {/* <ToggleButton
-          active={this.props.repeat}
-          iconSelected={Images.repeatButtonSelected}
-          iconUnselected={Images.repeatButtonUnselected}
-          onPress={this.props.toggleRepeat}
         /> */}
+
+        <View style={styles.toggleRepeat}>
+          <ToggleButton
+            style={styles.toggleRepeat}
+            active={this.props.repeat}
+            iconSelected={Images.repeatButtonSelected}
+            iconUnselected={Images.repeatButtonUnselected}
+            onPress={this.props.toggleRepeat}
+          />
+        </View>
 
         {/* <ToggleButton
           active={this.props.more}
@@ -99,8 +115,9 @@ const PlayControls = React.createClass({
         /> */}
       </View>
     );
-  },
-  playButton() {
+  }
+
+  playButton = () => {
     if (this.props.playing) {
       return (<TouchableOpacity onPress={this.props.handlePlayPress}>
         <Image source={Images.pauseButton} style={styles.playButton} />
@@ -109,7 +126,5 @@ const PlayControls = React.createClass({
     return (<TouchableOpacity onPress={this.props.handlePlayPress}>
       <Image source={Images.playButton} style={styles.playButton} />
     </TouchableOpacity>);
-  },
-});
-
-export default PlayControls;
+  }
+}

@@ -7,17 +7,17 @@ import {
   Image,
   Dimensions
 } from 'react-native';
-import CheckBox from 'react-native-checkbox';
 
 import Images from '@assets/images';
 
 const width = Dimensions.get('window').width;
 
-let Mood = React.createClass({
-  _handlePress() {
+export default class Mood extends React.Component {
+  _handlePress = () => {
     this.props.setMood(this.props.id);
-  },
-  render: function() {
+  }
+
+  render = () => {
     return (
       <TouchableOpacity style={styles.container} onPress={this._handlePress} disabled={this.props.selected != -1}>
         <View style={styles.tile}>
@@ -26,7 +26,7 @@ let Mood = React.createClass({
       </TouchableOpacity>
     );
   }
-});
+}
 
 let styles = StyleSheet.create({
   container: {
@@ -80,5 +80,3 @@ let styles = StyleSheet.create({
     marginLeft: 10
   },
 });
-
-export default Mood;

@@ -7,35 +7,37 @@ import {
   Dimensions
 } from 'react-native';
 
-let AlbumArt = React.createClass({
-  getInitialState: function() {
-    return {
-      x: 0
-    }
-  },
-  setPosition: function(e) {
+export default class AlbumArt extends React.Component {
+  state = {
+    x: 0
+  }
+
+  setPosition = (e) => {
     this.setState({
       x: this.state.x + (e.nativeEvent.pageX - this.drag.x)
     });
 
     this.drag.x = e.nativeEvent.pageX;
-  },
-  handleRelease: function(e) {
+  }
+
+  handleRelease = (e) => {
     if(this.state.x > 100) {
       this.props.skipBack();
     } else if(this.state.x < -100) {
       this.props.skipForward();
     }
     this.resetPosition();
-  },
-  resetPosition: function(e) {
+  }
+
+  resetPosition = (e) => {
     this.dragging = false;
 
     this.setState({
       x: 0
     });
-  },
-  _onStartShouldSetResponder: function(e) {
+  }
+
+  _onStartShouldSetResponder = (e) => {
     this.dragging = true;
 
     this.drag = {
@@ -43,15 +45,18 @@ let AlbumArt = React.createClass({
     };
 
     return true;
-  },
-  _onMoveShouldSetResponder: function(e) {
+  }
+
+  _onMoveShouldSetResponder = (e) => {
     return true;
-  },
-  getCardStyle: function() {
+  }
+
+  getCardStyle = () => {
     var transform = [{translateX: this.state.x}];
     return {transform: transform};
-  },
-  render: function() {
+  }
+
+  render = () => {
     return <Image
       onResponderMove={this.setPosition}
       onResponderRelease={this.handleRelease}
@@ -61,7 +66,7 @@ let AlbumArt = React.createClass({
       style={[styles.albumArt, this.getCardStyle()]}
     />
   }
-});
+}
 
 const width = Dimensions.get('window').width;
 
@@ -73,5 +78,3 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   }
 });
-
-export default AlbumArt;

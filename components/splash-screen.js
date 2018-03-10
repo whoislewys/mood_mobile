@@ -6,11 +6,13 @@ import {
   Image
 } from 'react-native';
 
+import { NavigationActions } from 'react-navigation';
+
 import Background from './background';
 import Images from '@assets/images';
 
-var Splash = React.createClass({
-  componentDidMount: function() {
+export default class Splash extends React.Component {
+  componentDidMount = () => {
     fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
       .then((responseJson) => {
@@ -18,6 +20,7 @@ var Splash = React.createClass({
       })
       .then((json) => {
         let list = Object.keys(json).map(function (key) { return json[key]; });
+        console.log(list);
 
         //Prefetch mood art
         var imagePrefetch = [];
@@ -26,14 +29,24 @@ var Splash = React.createClass({
         }
         Promise.all(imagePrefetch).then(results => {
             console.log("All images prefetched in parallel");
-            this.props.navigation.navigate('Mood', {moods: list})
+            this.navigateToMoodScreen({moods: list});
         });
       })
       .catch((error) => {
         console.log(error);
       });
-  },
-  render: function() {
+  }
+
+  navigateToMoodScreen = (params) => {
+    const navigate = NavigationActions.navigate({
+      routeName: 'Mood',
+      params: { ...params }
+    });
+
+    this.props.navigation.dispatch(navigate);
+  };
+
+  render = () => {
     return (
       <View style={styles.container}>
         <Image source={Images.splashScreen} style={styles.bgImage}>
@@ -41,7 +54,7 @@ var Splash = React.createClass({
       </View>
     );
   }
-});
+}
 
 let styles = StyleSheet.create({
   container: {
@@ -54,5 +67,3 @@ let styles = StyleSheet.create({
     resizeMode: 'cover'
   }
 });
-
-export default Splash;

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { NavigationActions } from 'react-navigation';
 
 import Images from '@assets/images.js';
 import PlayControls from './play-screen-components/play-controls';
@@ -39,16 +40,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backButton: {
-    // width: 10,
-    // height: 20,
-    // marginTop: 15,
-    // marginLeft: 0.02 * width,
-    // resizeMode: 'stretch',
+    width: 25,
+    height: 13,
+    marginTop: 8,
+    marginLeft: 0.02 * width,
+    resizeMode: 'stretch',
   },
 });
 
-const Playscreen = React.createClass({
-  componentWillMount() {
+export default class PlayScreen extends React.Component {
+  componentWillMount = () => {
     for (let i = 1; i < this.props.playQueue.length; i += 1) {
       const url = this.props.playQueue[i].art_url;
 
@@ -61,8 +62,9 @@ const Playscreen = React.createClass({
     }
 
     StatusBar.setBarStyle('light-content', true);
-  },
-  navBack() {
+  }
+
+  navBack = () => {
     // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     //   .then((responseJson) => {
@@ -75,9 +77,10 @@ const Playscreen = React.createClass({
     //   .catch((error) => {
     //     console.log(error);
     //   });
-    this.props.navigation.goBack();
-  },
-  render() {
+    this.props.navigation.dispatch(NavigationActions.back())
+  }
+
+  render = () => {
     return (
       <Background
         image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
@@ -86,23 +89,23 @@ const Playscreen = React.createClass({
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
             <TouchableOpacity onPress={this.navBack}>
-              <Icon
+              {/* <Icon
                 name='arrow-left'
                 color='white'
                 style={{backgroundColor: 'transparent'}}
                 size={25}
-              />
-              {/* <Image source={Images.backArrow} style={styles.backButton} /> */}
+              /> */}
+              <Image source={Images.dropdownArrow} style={styles.backButton} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.navBack}>
+            {/* <TouchableOpacity onPress={this.navBack}>
               <Icon
                 name='playlist-plus'
                 color='white'
                 style={{backgroundColor: 'transparent'}}
                 size={25}
               />
-              {/* <Image source={Images.backArrow} style={styles.backButton} /> */}
-            </TouchableOpacity>
+              <Image source={Images.backArrow} style={styles.backButton} />
+            </TouchableOpacity> */}
             {/* <Text style={styles.moodText}>{this.props.mood.name}</Text> */}
           </View>
           <TrackInfo
@@ -114,9 +117,10 @@ const Playscreen = React.createClass({
             setTime={this.props.setTime}
           />
           <PlayControls
-            liked={this.props.liked}
-            toggleLike={this.props.toggleLike}
-            toggleDislike={this.props.toggleDislike}
+            shuffle={this.props.shuffle}
+            repeat={this.props.repeat}
+            toggleShuffle={this.props.toggleShuffle}
+            toggleRepeat={this.props.toggleRepeat}
 
             playing={this.props.playing}
             handlePlayPress={this.props.handlePlayPress}
@@ -124,7 +128,5 @@ const Playscreen = React.createClass({
         </View>
       </Background>
     );
-  },
-});
-
-export default Playscreen;
+  }
+}

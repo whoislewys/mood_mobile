@@ -1,36 +1,24 @@
-import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addNavigationHelpers } from 'react-navigation';
+import NavigationStack from './navigation-stack';
 
-import PlayScreen from '../play-screen';
-import MoodScreen from '../mood-screen'
-import SplashScreen from '../splash-screen';
-import SettingsScreen from '../settings-screen';
-
-const map = (SomeComponent) => {
-  return React.createClass({
-    render: function() {
-      const screenProps = this.props.screenProps;
-      delete this.props.screenProps;
-      const {navigation: {state: {params}}} = this.props
-      return <SomeComponent {...params} {...this.props} {...screenProps} />
-    }
-  });
+class Navigator extends Component {
+  render = () => {
+    const { navigationState, dispatch } = this.props;
+    return (
+      <NavigationStack
+        screenProps={{...this.props}}
+        navigation={addNavigationHelpers({ dispatch, state: navigationState })}
+      />
+    );
+  }
 }
 
-let Nav = StackNavigator({
-  Splash: { screen: SplashScreen },
-  Mood: { screen: map(MoodScreen) },
-  Play: { screen: map(PlayScreen) },
-  Settings: { screen: map(SettingsScreen) },
-  initialRouteName: {
-    screen: SplashScreen
-  }
-},{
-  headerMode: 'none'
-});
+const mapStateToProps = state => {
+  return {
+    navigationState: state.NavigationReducer
+  };
+};
 
-export default React.createClass({
-    render: function() {
-      return <Nav screenProps={{...this.props}}/>;
-    }
-});
+export default connect(mapStateToProps)(Navigator);
