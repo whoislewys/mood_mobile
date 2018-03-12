@@ -1,8 +1,7 @@
 import React from 'react';
 import { DeviceEventEmitter } from 'react-native';
 
-import { Provider } from 'react-redux'
-import store from './components/redux/store.js'
+// import store from './components/redux/store.js'
 import Navigator from './components/main-components/navigator'
 
 import _ from 'lodash';
@@ -213,37 +212,34 @@ export default class Main extends React.Component {
 
   render = () => {
     return (
-      <Provider store={store}>
-        <Navigator
-          // Track info
-          currentTrack={this.state.currentTrack}
-          playing={this.state.playing}
-          currentTime={this.state.currentTime}
-          playQueue={this.state.playQueue}
-          duration={this.state.duration}
-          liked={this.state.liked}
+      <Navigator
+        // Track info
+        currentTrack={this.state.currentTrack}
+        playing={this.state.playing}
+        currentTime={this.state.currentTime}
+        playQueue={this.state.playQueue}
+        duration={this.state.duration}
+        liked={this.state.liked}
 
-          // Queue mutations
-          shuffle={this.state.shuffle}
-          repeat={this.state.repeat}
+        // Queue mutations
+        shuffle={this.state.shuffle}
+        repeat={this.state.repeat}
 
+        // Trash
+        added={this.state.added}
+        more={this.state.more}
 
-          // Trash
-          added={this.state.added}
-          more={this.state.more}
-
-          // Functions
-          nextTrack={this.nextTrack}
-          previousTrack={this.previousTrack}
-          handlePlayPress={this.handlePlayPress}
-          setTime={this.setTime}
-          toggleShuffle={this.toggleShuffle}
-          toggleRepeat={this.toggleRepeat}
-          setCurrentTime={this.setCurrentTime}
-          setPlayQueue={this.setPlayQueue}
-          addToPlayQueue={this.addToPlayQueue}
-        />
-      </Provider>
+        // Functions
+        nextTrack={this.nextTrack}
+        previousTrack={this.previousTrack}
+        handlePlayPress={this.handlePlayPress}
+        setTime={this.setTime}
+        toggleShuffle={this.toggleShuffle}
+        toggleRepeat={this.toggleRepeat}
+        setCurrentTime={this.setCurrentTime}
+        setPlayQueue={this.setPlayQueue}
+        addToPlayQueue={this.addToPlayQueue}
+      />
     );
   }
 }

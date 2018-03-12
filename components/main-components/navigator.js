@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { connect, Provider } from 'react-redux';
 import { addNavigationHelpers } from 'react-navigation';
 import NavigationStack from './navigation-stack';
+import appReducer from '../redux/reducers/reducers';
+
+import {
+  createReduxBoundAddListener,
+  createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers';
+
+const middleware = createReactNavigationReduxMiddleware(
+  "root",
+  state => state.nav,
+);
+const addListener = createReduxBoundAddListener("root");
 
 class Navigator extends Component {
   render = () => {
@@ -9,16 +22,34 @@ class Navigator extends Component {
     return (
       <NavigationStack
         screenProps={{...this.props}}
-        navigation={addNavigationHelpers({ dispatch, state: navigationState })}
+        navigation={ addNavigationHelpers({
+                        dispatch: this.props.dispatch,
+                        state: this.props.nav,
+                        addListener,
+                      })
+                    }
       />
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    navigationState: state.NavigationReducer
-  };
-};
+const mapStateToProps = (state) => ({
+  nav: state.nav
+});
 
-export default connect(mapStateToProps)(Navigator);
+const AppWithNavigationState = connect(mapStateToProps)(Navigator);
+
+const store = createStore(
+  appReducer,
+  applyMiddleware(middleware),
+);
+
+export default class extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AppWithNavigationState {...this.props} />
+      </Provider>
+    );
+  }
+}
