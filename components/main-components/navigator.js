@@ -39,15 +39,30 @@ const mapStateToProps = (state) => ({
 
 const AppWithNavigationState = connect(mapStateToProps)(Navigator);
 
-const store = createStore(
-  appReducer,
-  applyMiddleware(middleware),
-);
+function configureStore() {
+  const store = createStore(
+    appReducer,
+    applyMiddleware(middleware),
+  );
+
+  if (module.hot) {
+    module.hot.accept(() => {
+      const nextRootReducer = combineReducers(require('../redux/reducers/reducers'));
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  return store;
+}
 
 export default class extends React.Component {
+  state = {
+    store: configureStore()
+  }
+
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={this.state.store}>
         <AppWithNavigationState {...this.props} />
       </Provider>
     );

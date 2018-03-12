@@ -46,6 +46,16 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
     paddingTop: 10
   },
+  bugsButton: {
+    flex: 1,
+    resizeMode: 'contain',
+    position: 'absolute',
+    opacity: 0.4,
+    right: 56,
+    width: 26,
+    height: 45,
+    top: 8
+  },
   settingsButton: {
     flex: 1,
     resizeMode: 'contain',
@@ -76,13 +86,16 @@ export default class MoodList extends React.Component {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerText}>
-            How do you feel?
+            {/* how do you feel? */}
           </Text>
+          <TouchableOpacity onPress={this._settings}>
+            <Image source={Images.bugIcon} style={styles.bugsButton}/>
+          </TouchableOpacity>
           <TouchableOpacity onPress={this._settings}>
             <Image source={Images.settingsGear} style={styles.settingsButton}/>
           </TouchableOpacity>
         </View>
-        <Image source={Images.headerDivider} style={styles.headerDivider}/>
+        {/* <Image source={Images.headerDivider} style={styles.headerDivider}/> */}
       </View>
     );
   }
