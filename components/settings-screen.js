@@ -156,18 +156,18 @@ export default class SettingsScreen extends React.Component {
               </Text>
             </View>
           </View>
-          <View style={[styles.section, styles.sectionOne]}>
+          {/* <View style={[styles.section, styles.sectionOne]}>
             <Text style={styles.headText}>
               Report a Bug
             </Text>
             <Text style={styles.bodyText}>
-              If you encounter a bug on our website, please report it on our &nbsp;
+              If you encounter a bug, please report it on our &nbsp;
               <Text style={[styles.bodyText, styles.link]}
                     onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
                 bug report page.
               </Text>
             </Text>
-          </View>
+          </View> */}
           <View style={[styles.section]}>
             <Text style={styles.headText}>
               Legal

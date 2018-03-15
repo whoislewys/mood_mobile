@@ -6,7 +6,8 @@ import {
   Dimensions,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Linking
 } from 'react-native';
 
 import Images from '@assets/images.js';
@@ -39,18 +40,19 @@ const styles = StyleSheet.create({
   },
   headerText: {
     flex: 1,
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#666',
     fontSize: 32,
     fontWeight: '300',
-    paddingBottom: 25,
-    paddingTop: 10
+    paddingBottom: 0,
+    paddingTop: 10,
+    paddingLeft: 25
   },
   bugsButton: {
     flex: 1,
     resizeMode: 'contain',
     position: 'absolute',
-    opacity: 0.4,
+    opacity: 0.3,
     right: 56,
     width: 26,
     height: 45,
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'contain',
     position: 'absolute',
-    right: 15,
+    right: 22,
     width: 26,
     top: 8
   },
@@ -86,9 +88,9 @@ export default class MoodList extends React.Component {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerText}>
-            {/* how do you feel? */}
+            mood
           </Text>
-          <TouchableOpacity onPress={this._settings}>
+          <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={this._settings}>

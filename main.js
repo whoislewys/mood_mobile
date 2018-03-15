@@ -19,6 +19,7 @@ export default class Main extends React.Component {
     currentTime: 0,
     duration: -1,
     playQueue: [],
+    oldQueue: [], //Used to hold the unmutated queue
     playStatus: 'STOPPED'
   };
 
@@ -30,30 +31,30 @@ export default class Main extends React.Component {
 
   componentDidMount = () => {
     this.subscription = DeviceEventEmitter.addListener('RNAudioStreamerStatusChanged', this._statusChanged)
-    MusicControl.enableControl('play', true);
-    MusicControl.enableControl('pause', true);
-    MusicControl.enableControl('nextTrack', true);
-    MusicControl.enableControl('previousTrack', true);
-    MusicControl.enableControl('seekForward', false);
-    MusicControl.enableControl('seekBackward', false);
-
-    MusicControl.enableBackgroundMode(true);
-
-    MusicControl.on('play', (() => {
-      if(!this.state.playing) {
-        this.startPlayback();
-      }
-    }).bind(this))
-
-    MusicControl.on('pause', (() => {
-      if(this.state.playing) {
-        this.pausePlayback();
-      }
-    }).bind(this))
-
-    MusicControl.on('nextTrack', this.nextTrack)
-
-    MusicControl.on('previousTrack', this.previousTrack)
+    // MusicControl.enableControl('play', true);
+    // MusicControl.enableControl('pause', true);
+    // MusicControl.enableControl('nextTrack', true);
+    // MusicControl.enableControl('previousTrack', true);
+    // MusicControl.enableControl('seekForward', false);
+    // MusicControl.enableControl('seekBackward', false);
+    //
+    // MusicControl.enableBackgroundMode(true);
+    //
+    // MusicControl.on('play', (() => {
+    //   if(!this.state.playing) {
+    //     this.startPlayback();
+    //   }
+    // }).bind(this))
+    //
+    // MusicControl.on('pause', (() => {
+    //   if(this.state.playing) {
+    //     this.pausePlayback();
+    //   }
+    // }).bind(this))
+    //
+    // MusicControl.on('nextTrack', this.nextTrack)
+    //
+    // MusicControl.on('previousTrack', this.previousTrack)
   }
 
   // Control Functions
@@ -84,21 +85,26 @@ export default class Main extends React.Component {
   }
 
   toggleShuffle = () => {
-    this.setState({shuffle: !this.state.shuffle})
-    // if(this.state.liked != 1) {
-    //   this.setState({liked: 1});
-    // } else {
-    //   this.setState({liked: 0});
-    // }
+    if(this.state.shuffle) {
+      this.setState({shuffle: false, playQueue: this.state.oldQueue, oldQueue: []});
+    } else {
+      this.pausePlayback();
+
+      let newState = this.state.playQueue;
+      [newState[0], newState[this.state.currentTrack]] = [newState[this.state.currentTrack], newState[0]];
+
+      for (let i = newState.length - 1; i > 1; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newState[i], newState[j]] = [newState[j], newState[i]];
+      }
+
+      this.setState({oldQueue: this.state.playQueue, playQueue: newState, shuffle: true, currentTrack: 0}, this.startPlayback);
+    }
   }
 
   toggleRepeat = () => {
     this.setState({repeat: !this.state.repeat})
-    // if(this.state.liked != -1) {
-    //   this.setState({liked: -1});
-    // } else {
-    //   this.setState({liked: 0});
-    // }
+
   }
 
   setCurrentTime = (time) => {
@@ -122,9 +128,9 @@ export default class Main extends React.Component {
     Sound2.pause();
     clearInterval(this.interval);
     this.setState({ playing: false }, () => {
-      MusicControl.updatePlayback({
-        state: MusicControl.STATE_PAUSED,
-      });
+      // MusicControl.updatePlayback({
+      //   state: MusicControl.STATE_PAUSED,
+      // });
     });
   }
 
@@ -133,10 +139,10 @@ export default class Main extends React.Component {
 
     this.interval = setInterval(() => {
       Sound2.currentTime((err, seconds) => {
-        MusicControl.updatePlayback({
-          elapsedTime: seconds,
-          duration: this.state.duration
-        });
+        // MusicControl.updatePlayback({
+        //   elapsedTime: seconds,
+        //   duration: this.state.duration
+        // });
         if(this.state.duration == -1) {
           this.getDuration();
         }
@@ -148,15 +154,15 @@ export default class Main extends React.Component {
 
     const trackInfo = this.state.playQueue[this.state.currentTrack];
 
-    MusicControl.setNowPlaying({
-      title: trackInfo.name,
-      artwork: trackInfo.art_url, // URL or RN's image require()
-      artist: trackInfo.artist,
-      album: trackInfo.album_name,
-      duration: this.state.duration, // (Seconds)
-      description: '', // Android Only
-      color: 0xFFFFFF // Notification Color - Android Only
-    });
+    // MusicControl.setNowPlaying({
+    //   title: trackInfo.name,
+    //   artwork: trackInfo.art_url, // URL or RN's image require()
+    //   artist: trackInfo.artist,
+    //   album: trackInfo.album_name,
+    //   duration: this.state.duration, // (Seconds)
+    //   description: '', // Android Only
+    //   color: 0xFFFFFF // Notification Color - Android Only
+    // });
   }
 
   //Other
