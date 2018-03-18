@@ -89,12 +89,6 @@ export default class PlayScreen extends React.Component {
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
             <TouchableOpacity onPress={this.navBack}>
-              {/* <Icon
-                name='arrow-left'
-                color='white'
-                style={{backgroundColor: 'transparent'}}
-                size={25}
-              /> */}
               <Image source={Images.dropdownArrow} style={styles.backButton} />
             </TouchableOpacity>
             {/* <TouchableOpacity onPress={this.navBack}>
@@ -112,9 +106,8 @@ export default class PlayScreen extends React.Component {
             skipForward={this.props.nextTrack}
             skipBack={this.props.previousTrack}
             track={this.props.playQueue[this.props.currentTrack]}
-            duration={this.props.duration}
-            currentTime={this.props.currentTime}
             setTime={this.props.setTime}
+            currentTime={this.props.currentTime}
           />
           <PlayControls
             shuffle={this.props.shuffle}

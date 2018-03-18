@@ -44,7 +44,8 @@ const images = {
 	gradientHeading: require('./img/gradient-heading.png'),
 	playButtonWhite: require('./img/play-button-white.png'),
 	pauseButtonWhite: require('./img/pause-button-white.png'),
-	bugIcon: require('./img/alert.png')
+	bugIcon: require('./img/alert.png'),
+	moodLogoBlack: require('./img/mood-logo-black.png')
 };
 
 export default images;

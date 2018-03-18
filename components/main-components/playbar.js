@@ -108,15 +108,15 @@ export default class PlayBar extends React.Component {
           <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Text
               style={[styles.albumInfoText, {
-                maxWidth: width * 0.32,
-                textAlign: 'right'
+                maxWidth: width * 0.7,
+                textAlign: 'center'
               }]}
               numberOfLines={1}
               ellipsizeMode="tail"
               >
               { track.name }
             </Text>
-            <Text
+            {/* <Text
               style={[styles.albumInfoText, {
                 maxWidth: width * 0.03,
                 textAlign: 'center'
@@ -133,7 +133,7 @@ export default class PlayBar extends React.Component {
               ellipsizeMode="tail"
               >
               { track.artist }
-            </Text>
+            </Text> */}
           </View>
           {/* <View style={styles.subInfo}>
             <Text

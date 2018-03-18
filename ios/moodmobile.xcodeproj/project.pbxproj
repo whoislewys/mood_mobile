@@ -14,20 +14,25 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* moodmobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* moodmobileTests.m */; };
 		05FF0012B19F42C8A3CFD0B0 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A0E775BF3744CFE9767FB00 /* RobotoCondensed-Bold.ttf */; };
+		0B1D9EF37AE04A47AA751D7D /* pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF449B3C5C147D5BBCC9CE2 /* pause-button.png */; };
 		0B672D85AA4342C0B501A303 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D00EF11117914AB489F106E4 /* FontAwesome.ttf */; };
 		0BC8D8EE7DDA4856883E819B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 639B2DBB58B445EEA59891A5 /* Zocial.ttf */; };
 		0CBA0683F0ED48399E090799 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAFACF612197419588441382 /* Ionicons.ttf */; };
 		0DA6F932EC0741CDAB39CD7E /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DED83C881C544E26A3AAD834 /* Roboto-MediumItalic.ttf */; };
+		0E47610C38294D87AA598AB0 /* selected-dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 135A6556A8394CA88819E311 /* selected-dot.png */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1BA0107DEB8544E198FEB665 /* hurt2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F12A3C59C0406E96CF43B2 /* hurt2.png */; };
 		1BE9C4008CEE468B87A07E0D /* RobotoCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E20BED09372478097374809 /* RobotoCondensed-LightItalic.ttf */; };
+		21143571F0B847F3BF481353 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 233AF588F7BC45E89B435F06 /* settings.png */; };
 		23F0747386F34295948D92FB /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BE1D149C8E048498966B3BA /* Roboto-BoldItalic.ttf */; };
+		2C1682F1DC1C42BB93BC7F19 /* splash-screen@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 813A2E04166C45A18E0244D9 /* splash-screen@2x.jpg */; };
+		2C63BAC97FAE4109A2E320DA /* header-divider.png in Resources */ = {isa = PBXBuildFile; fileRef = 43E47175AF8B44EAB973F01E /* header-divider.png */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -40,35 +45,80 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* moodmobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* moodmobileTests.m */; };
+		2FB77BECE22741A0B421E892 /* dropdown-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 19BC5EFC5D5649B39B7CBEB0 /* dropdown-arrow.png */; };
 		3067233072134A57B1E702DA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47340FCF6C3240F293E43FDA /* MaterialCommunityIcons.ttf */; };
+		3363354992AC4062BE151B0B /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = 6944EBE9DE4E4D459849D333 /* alert.png */; };
+		37FC56F02FA24B2BA5B7CA46 /* bothered.png in Resources */ = {isa = PBXBuildFile; fileRef = 75F27F306D004FB38B887DFE /* bothered.png */; };
+		3975B4398B254430A69AD926 /* back-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F6CB0CDEFD24212B87FEFB1 /* back-arrow.png */; };
+		3E2EDA1BD83641F88CEA33A4 /* mood-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CDDED9226344EDFB79C58C6 /* mood-logo.png */; };
+		3F466AF35A8C4212B7661192 /* more-button-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B7FBE2C4C44949B58E4F7D15 /* more-button-selected.png */; };
 		400A15A885844F7CBBFFEC03 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE2DF22605AF4E35956A4893 /* Octicons.ttf */; };
+		41C218DD5865458D9E848576 /* mood-background-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 8916621E5D8C440DA06CF5FB /* mood-background-overlay.png */; };
 		44085DFADB9B4F39BE89B377 /* libMusicControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2815B76A0F4927969D38ED /* libMusicControl.a */; };
+		4499AD435D644175AE75D67A /* hurt.png in Resources */ = {isa = PBXBuildFile; fileRef = 360ACC29BD3E43299CAAA237 /* hurt.png */; };
 		46048BFE7FC34365AF9AB14A /* RobotoCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 362C4C5EB0F043D1AB03A1D9 /* RobotoCondensed-BoldItalic.ttf */; };
 		5742DFB3B1B944E19351E193 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7DD11B779D81490B9E65B7AF /* EvilIcons.ttf */; };
+		5B5988DCF01840FC9372FBD6 /* gradient-heading.png in Resources */ = {isa = PBXBuildFile; fileRef = 26C18738464C492AAEF2A825 /* gradient-heading.png */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		5EF9383062A94F40B778B35B /* shuffle-button-unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 810AD95B8E2C4DD08C340E93 /* shuffle-button-unselected.png */; };
+		607ACDD9CE6E431FB0204052 /* mood-header.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C03C35810F14C4FA5F9D397 /* mood-header.png */; };
 		61D418B1739B43048C60E821 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D44D624C311425994F54173 /* Roboto-LightItalic.ttf */; };
 		6997453FA287447984363294 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0A3283DC444F8F863DDA95 /* Roboto-ThinItalic.ttf */; };
-		7439B7061E56DDDD00795E6A /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7439B7051E56DDBD00795E6A /* libRNSound.a */; };
+		6FCC4B1C13A84531884D0AE0 /* add-song-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 9818C3A922E94FFD92919F1B /* add-song-selected.png */; };
+		7441ADF202A242A792F2A836 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E7B21ACFC9CF49B28513D2CE /* play-button.png */; };
+		744ADE9E205A6B90009BCE9D /* libReactNativeAudioToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 744ADE98205A6B72009BCE9D /* libReactNativeAudioToolkit.a */; };
+		74B73882205D8C5400E997FA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		74B73884205DADBC00E997FA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74B73883205DADBC00E997FA /* Launch Screen.storyboard */; };
+		825590E9F9A645D484D691A0 /* pause-button-noring.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F669E0DE694236B5AB5BA8 /* pause-button-noring.png */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		85D71EB4024A4D75BBEA9318 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A24EA9F8E04524999AD43F /* libRNVectorIcons.a */; };
+		8770E133A69E4AFF868B136A /* unselected-dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AB76DB6D98248A5BB85F926 /* unselected-dot.png */; };
+		889C921216BD42759C6E9E79 /* young.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BA46A4E1CC14A4AA650A9E5 /* young.png */; };
 		8AA857009A394B93931CAC88 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 030B1A2673C845938F791607 /* Roboto-Regular.ttf */; };
 		8DF51201F876403E8BDA4806 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAD6040BA36644FFBE069D2B /* Roboto-Italic.ttf */; };
 		8E154EA7139A44CF96BFC040 /* libRNAudioStreamer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 904D2E0555FC4E13AD3ADA74 /* libRNAudioStreamer.a */; };
+		921A8355FC8C4671A7F79839 /* album-blurred@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44F7299172F5452EB5B4C6A7 /* album-blurred@2x.png */; };
+		92AE6F5A48B5469AA3666CD9 /* mood-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6525FF10515B484FB9575E4D /* mood-circle.png */; };
 		969C2838AD6541D3ABBC8C81 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90CEF5C9E7254C668714D9CF /* SimpleLineIcons.ttf */; };
+		97308ED750B24D78BD24650D /* alive.png in Resources */ = {isa = PBXBuildFile; fileRef = D57275804EBF48658BA640E6 /* alive.png */; };
+		99917E71A42F410A83FDC0E4 /* back-arrow-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 605976885FCD4F60A34E8918 /* back-arrow-dark.png */; };
+		A248E559DFDE47ADA19B39FD /* more-button-unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 141E9EA7E79948C9808E6CC4 /* more-button-unselected.png */; };
+		A3B831F769424D26AB9AE0DF /* excited.png in Resources */ = {isa = PBXBuildFile; fileRef = A894B0E51F1840749B4E462E /* excited.png */; };
+		A5E5BB02EDF34CA6BD20C21F /* go-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C421B33C0E645B7AA8F79D7 /* go-arrow.png */; };
 		AD07B639A70D48E0B36D8A1F /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7879A46AD8EA483887B45920 /* Roboto-Medium.ttf */; };
 		ADD884DB892B4539BA1A06AA /* RobotoCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 445EFE9FDC9246B493D88FFA /* RobotoCondensed-Light.ttf */; };
 		B4BF7A558AC7400CA260F03D /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 005D1C6406F74333A97E6683 /* Roboto-Black.ttf */; };
+		B5D6268402F442D5AE4D3E89 /* play-button-white.png in Resources */ = {isa = PBXBuildFile; fileRef = B3A40C13859E43CB8C0B3E2F /* play-button-white.png */; };
+		BA0A81F7A3A04991B1E39AEF /* repeat-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = E581B470BAF141CD97D8B86B /* repeat-selected.png */; };
 		BE47F79C663C41D499B6011D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4B6BFD257834DAF8C133389 /* Foundation.ttf */; };
+		BF33AC7A0BBA4AB3B6A28F4A /* shuffle-button-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F44D09B1EAB468EA1DBF4E1 /* shuffle-button-selected.png */; };
 		C0DDBE01B4354F1B99B44D3F /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FF674B3BE3F4E01981FAC13 /* RobotoCondensed-Regular.ttf */; };
 		C36F5C75336D4921ADFC116A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 419A4D71B00E470EB81481E5 /* MaterialIcons.ttf */; };
+		C5889C1042C04936BF51378D /* mood-header-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A646A83F1D40B9B883B40F /* mood-header-overlay.png */; };
 		C97683FBE84C4E7CACEFDE2E /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C915C6DEF344DEEBC211723 /* Roboto-Thin.ttf */; };
+		C99EF3A6E9E0439CBBE5EBD3 /* splash-screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9898031701ED49F8A1CDA12D /* splash-screen@2x.png */; };
 		CA8F5352F9B54DA8933067A6 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91E9A7F2C4DA484EA3E10622 /* Roboto-Light.ttf */; };
+		CB14827F6B5B4FFF86D5E86A /* pause-button-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 71CFD5CB1B9045549EF43AC2 /* pause-button-white.png */; };
+		CBE4BC68DF5D49F5805CE34F /* dropdown-arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = A04B3C364EBB486087595222 /* dropdown-arrow-right.png */; };
 		CCD80D5ED276493F83BFB31F /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6992F6C91BCD4D7193C5D143 /* libRNSound.a */; };
+		D27D4C23975C43CD8138B1CF /* repeat-unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 832D28DC3E994D94BB2BD68D /* repeat-unselected.png */; };
+		D619CB08759A4C69A07412BD /* mood-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3E26ED26094BD99A9AA483 /* mood-overlay.png */; };
+		D77A455E57014981912ECE43 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9588D5F103EA4151B9CFF653 /* libSplashScreen.a */; };
+		D8A82A14FFE64A58AA156A95 /* time-bar-tick.png in Resources */ = {isa = PBXBuildFile; fileRef = F6F87AE1E859489697551E39 /* time-bar-tick.png */; };
+		DA667CD7BAE441C085191E72 /* hr.png in Resources */ = {isa = PBXBuildFile; fileRef = E17A5C36868647F98D070981 /* hr.png */; };
 		DF3DAC5B788345C38C6B1A04 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BE9EB11261408A8177F660 /* Entypo.ttf */; };
 		E0DF531FBB95484DB4B1B77A /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6320E9D4D564048A8F4DB6F /* Roboto-BlackItalic.ttf */; };
+		E141E622BF2F480989B20985 /* add-song-unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8770C4F09B644E1286D3620F /* add-song-unselected.png */; };
+		E3CED339D7C14110B08C8F96 /* play-button-noring.png in Resources */ = {isa = PBXBuildFile; fileRef = C8945FE70E934856A9121099 /* play-button-noring.png */; };
+		E778AC902C904337B39AA023 /* powerful.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2247306F94D72B6F3A494 /* powerful.png */; };
 		E9D49FA089A547B2B327E142 /* RobotoCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D76DBCF38FF24E6191EB487F /* RobotoCondensed-Italic.ttf */; };
+		EE2DAC895D7F4BA4BB4C973E /* slider-button.png in Resources */ = {isa = PBXBuildFile; fileRef = A21B8D9ED6CF493CB6051F1D /* slider-button.png */; };
+		EE5897D7C8D04432956EB8FA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D78937A1B29047508237CA27 /* icon.png */; };
+		EF11A096C50B4C3295ABEE7D /* background-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 113E30293FD54560A59D8C46 /* background-overlay.png */; };
 		F074DA910D05412094D8F887 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD9F51E3A2684F9FBC219A11 /* Roboto-Bold.ttf */; };
-		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		F6D747478C054427973DC31A /* mood-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9116A57703BF4DC6A1A7EE16 /* mood-background@2x.png */; };
+		FC01707037184E288796ADB0 /* broken.png in Resources */ = {isa = PBXBuildFile; fileRef = FEEC1CDB6BA24CCEB6E8701C /* broken.png */; };
+		FCE2CF3503ED4706A25DBA79 /* nav-arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A89F0A8AE740528FAF5B26 /* nav-arrow-left.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,6 +339,83 @@
 			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
 			remoteInfo = RNSound;
 		};
+		744ADE80205A6B72009BCE9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADD01A681E09402E00F6D226;
+			remoteInfo = "RCTBlob-tvOS";
+		};
+		744ADE92205A6B72009BCE9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DBE0D001F3B181A0099AA32;
+			remoteInfo = fishhook;
+		};
+		744ADE94205A6B72009BCE9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DBE0D0D1F3B181C0099AA32;
+			remoteInfo = "fishhook-tvOS";
+		};
+		744ADE97205A6B72009BCE9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 744ADE76205A6B72009BCE9D /* ReactNativeAudioToolkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5E8FD9831D269F5D00CF68CC;
+			remoteInfo = ReactNativeAudioToolkit;
+		};
+		74B73833205D884C00E997FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
+			remoteInfo = "third-party";
+		};
+		74B73835205D884C00E997FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
+			remoteInfo = "third-party-tvOS";
+		};
+		74B73837205D884C00E997FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
+			remoteInfo = "double-conversion";
+		};
+		74B73839205D884C00E997FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
+			remoteInfo = "double-conversion-tvOS";
+		};
+		74B7383B205D884C00E997FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9936F3131F5F2E4B0010BF04;
+			remoteInfo = privatedata;
+		};
+		74B7383D205D884C00E997FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
+			remoteInfo = "privatedata-tvOS";
+		};
+		74B738C4205DB5A200E997FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E9C25A5D9EE042A493099167 /* SplashScreen.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D7682761D8E76B80014119E;
+			remoteInfo = SplashScreen;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -324,8 +451,12 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* moodmobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moodmobileTests.m; sourceTree = "<group>"; };
 		030B1A2673C845938F791607 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		0BA46A4E1CC14A4AA650A9E5 /* young.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = young.png; path = ../assets/img/young.png; sourceTree = "<group>"; };
+		0C03C35810F14C4FA5F9D397 /* mood-header.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mood-header.png"; path = "../assets/img/mood-header.png"; sourceTree = "<group>"; };
 		0C915C6DEF344DEEBC211723 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../assets/roboto/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		0FF674B3BE3F4E01981FAC13 /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Regular.ttf"; path = "../assets/roboto/RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
+		113E30293FD54560A59D8C46 /* background-overlay.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "background-overlay.png"; path = "../assets/img/background-overlay.png"; sourceTree = "<group>"; };
+		135A6556A8394CA88819E311 /* selected-dot.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-dot.png"; path = "../assets/img/selected-dot.png"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* moodmobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moodmobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,46 +465,95 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = moodmobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = moodmobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = moodmobile/main.m; sourceTree = "<group>"; };
+		141E9EA7E79948C9808E6CC4 /* more-button-unselected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "more-button-unselected.png"; path = "../assets/img/more-button-unselected.png"; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		15A24EA9F8E04524999AD43F /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		19BC5EFC5D5649B39B7CBEB0 /* dropdown-arrow.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "dropdown-arrow.png"; path = "../assets/img/dropdown-arrow.png"; sourceTree = "<group>"; };
+		1C421B33C0E645B7AA8F79D7 /* go-arrow.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "go-arrow.png"; path = "../assets/img/go-arrow.png"; sourceTree = "<group>"; };
+		233AF588F7BC45E89B435F06 /* settings.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = settings.png; path = ../assets/img/settings.png; sourceTree = "<group>"; };
+		26C18738464C492AAEF2A825 /* gradient-heading.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "gradient-heading.png"; path = "../assets/img/gradient-heading.png"; sourceTree = "<group>"; };
+		27F12A3C59C0406E96CF43B2 /* hurt2.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = hurt2.png; path = ../assets/img/hurt2.png; sourceTree = "<group>"; };
+		2AB76DB6D98248A5BB85F926 /* unselected-dot.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "unselected-dot.png"; path = "../assets/img/unselected-dot.png"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* moodmobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moodmobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* moodmobile-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "moodmobile-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED9BD54FDBF4611BB9A7DA2 /* MusicControl.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = MusicControl.xcodeproj; path = "../node_modules/react-native-music-control/ios/MusicControl.xcodeproj"; sourceTree = "<group>"; };
+		360ACC29BD3E43299CAAA237 /* hurt.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = hurt.png; path = ../assets/img/hurt.png; sourceTree = "<group>"; };
 		362C4C5EB0F043D1AB03A1D9 /* RobotoCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-BoldItalic.ttf"; path = "../assets/roboto/RobotoCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		38F669E0DE694236B5AB5BA8 /* pause-button-noring.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "pause-button-noring.png"; path = "../assets/img/pause-button-noring.png"; sourceTree = "<group>"; };
 		3BE1D149C8E048498966B3BA /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../assets/roboto/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
 		3F0A3283DC444F8F863DDA95 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../assets/roboto/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		3FF449B3C5C147D5BBCC9CE2 /* pause-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "pause-button.png"; path = "../assets/img/pause-button.png"; sourceTree = "<group>"; };
 		419A4D71B00E470EB81481E5 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		43E47175AF8B44EAB973F01E /* header-divider.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "header-divider.png"; path = "../assets/img/header-divider.png"; sourceTree = "<group>"; };
 		445EFE9FDC9246B493D88FFA /* RobotoCondensed-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Light.ttf"; path = "../assets/roboto/RobotoCondensed-Light.ttf"; sourceTree = "<group>"; };
+		44F7299172F5452EB5B4C6A7 /* album-blurred@2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "album-blurred@2x.png"; path = "../assets/img/album-blurred@2x.png"; sourceTree = "<group>"; };
 		47340FCF6C3240F293E43FDA /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		49BE9EB11261408A8177F660 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		4F44D09B1EAB468EA1DBF4E1 /* shuffle-button-selected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "shuffle-button-selected.png"; path = "../assets/img/shuffle-button-selected.png"; sourceTree = "<group>"; };
+		5BC2247306F94D72B6F3A494 /* powerful.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = powerful.png; path = ../assets/img/powerful.png; sourceTree = "<group>"; };
+		5CDDED9226344EDFB79C58C6 /* mood-logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mood-logo.png"; path = "../assets/img/mood-logo.png"; sourceTree = "<group>"; };
 		5D2815B76A0F4927969D38ED /* libMusicControl.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libMusicControl.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		605976885FCD4F60A34E8918 /* back-arrow-dark.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "back-arrow-dark.png"; path = "../assets/img/back-arrow-dark.png"; sourceTree = "<group>"; };
 		639B2DBB58B445EEA59891A5 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		644E65140EAA4D17A96956E8 /* RNSound.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		6525FF10515B484FB9575E4D /* mood-circle.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mood-circle.png"; path = "../assets/img/mood-circle.png"; sourceTree = "<group>"; };
+		6944EBE9DE4E4D459849D333 /* alert.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = alert.png; path = ../assets/img/alert.png; sourceTree = "<group>"; };
 		6992F6C91BCD4D7193C5D143 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSound.a; sourceTree = "<group>"; };
 		6E20BED09372478097374809 /* RobotoCondensed-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-LightItalic.ttf"; path = "../assets/roboto/RobotoCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
+		71CFD5CB1B9045549EF43AC2 /* pause-button-white.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "pause-button-white.png"; path = "../assets/img/pause-button-white.png"; sourceTree = "<group>"; };
 		7439B7001E56DDBD00795E6A /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		744ADE76205A6B72009BCE9D /* ReactNativeAudioToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioToolkit.xcodeproj; path = "../node_modules/react-native-audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit.xcodeproj"; sourceTree = "<group>"; };
+		74B73883205DADBC00E997FA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		75F27F306D004FB38B887DFE /* bothered.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = bothered.png; path = ../assets/img/bothered.png; sourceTree = "<group>"; };
 		7879A46AD8EA483887B45920 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7DD11B779D81490B9E65B7AF /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		7F6CB0CDEFD24212B87FEFB1 /* back-arrow.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "back-arrow.png"; path = "../assets/img/back-arrow.png"; sourceTree = "<group>"; };
+		810AD95B8E2C4DD08C340E93 /* shuffle-button-unselected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "shuffle-button-unselected.png"; path = "../assets/img/shuffle-button-unselected.png"; sourceTree = "<group>"; };
+		813A2E04166C45A18E0244D9 /* splash-screen@2x.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "splash-screen@2x.jpg"; path = "../assets/img/splash-screen@2x.jpg"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		832D28DC3E994D94BB2BD68D /* repeat-unselected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "repeat-unselected.png"; path = "../assets/img/repeat-unselected.png"; sourceTree = "<group>"; };
+		84A89F0A8AE740528FAF5B26 /* nav-arrow-left.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "nav-arrow-left.png"; path = "../assets/img/nav-arrow-left.png"; sourceTree = "<group>"; };
+		8770C4F09B644E1286D3620F /* add-song-unselected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "add-song-unselected.png"; path = "../assets/img/add-song-unselected.png"; sourceTree = "<group>"; };
+		8916621E5D8C440DA06CF5FB /* mood-background-overlay.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mood-background-overlay.png"; path = "../assets/img/mood-background-overlay.png"; sourceTree = "<group>"; };
 		8A0E775BF3744CFE9767FB00 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Bold.ttf"; path = "../assets/roboto/RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
 		8D44D624C311425994F54173 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/roboto/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		904D2E0555FC4E13AD3ADA74 /* libRNAudioStreamer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAudioStreamer.a; sourceTree = "<group>"; };
 		90CEF5C9E7254C668714D9CF /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		9116A57703BF4DC6A1A7EE16 /* mood-background@2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mood-background@2x.png"; path = "../assets/img/mood-background@2x.png"; sourceTree = "<group>"; };
 		91E9A7F2C4DA484EA3E10622 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../assets/roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		9588D5F103EA4151B9CFF653 /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		9818C3A922E94FFD92919F1B /* add-song-selected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "add-song-selected.png"; path = "../assets/img/add-song-selected.png"; sourceTree = "<group>"; };
+		9898031701ED49F8A1CDA12D /* splash-screen@2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "splash-screen@2x.png"; path = "../assets/img/splash-screen@2x.png"; sourceTree = "<group>"; };
+		98A646A83F1D40B9B883B40F /* mood-header-overlay.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mood-header-overlay.png"; path = "../assets/img/mood-header-overlay.png"; sourceTree = "<group>"; };
+		9D3E26ED26094BD99A9AA483 /* mood-overlay.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mood-overlay.png"; path = "../assets/img/mood-overlay.png"; sourceTree = "<group>"; };
+		A04B3C364EBB486087595222 /* dropdown-arrow-right.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "dropdown-arrow-right.png"; path = "../assets/img/dropdown-arrow-right.png"; sourceTree = "<group>"; };
+		A21B8D9ED6CF493CB6051F1D /* slider-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "slider-button.png"; path = "../assets/img/slider-button.png"; sourceTree = "<group>"; };
+		A894B0E51F1840749B4E462E /* excited.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = excited.png; path = ../assets/img/excited.png; sourceTree = "<group>"; };
+		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		B3A40C13859E43CB8C0B3E2F /* play-button-white.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "play-button-white.png"; path = "../assets/img/play-button-white.png"; sourceTree = "<group>"; };
+		B7FBE2C4C44949B58E4F7D15 /* more-button-selected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "more-button-selected.png"; path = "../assets/img/more-button-selected.png"; sourceTree = "<group>"; };
 		BE2DF22605AF4E35956A4893 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		C4B6BFD257834DAF8C133389 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		C8945FE70E934856A9121099 /* play-button-noring.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "play-button-noring.png"; path = "../assets/img/play-button-noring.png"; sourceTree = "<group>"; };
 		D00EF11117914AB489F106E4 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		D1CACE4F843C47F0BF02D4CD /* RNAudioStreamer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAudioStreamer.xcodeproj; path = "../node_modules/react-native-audio-streamer/ios/RNAudioStreamer.xcodeproj"; sourceTree = "<group>"; };
+		D57275804EBF48658BA640E6 /* alive.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = alive.png; path = ../assets/img/alive.png; sourceTree = "<group>"; };
 		D6320E9D4D564048A8F4DB6F /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../assets/roboto/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		D76DBCF38FF24E6191EB487F /* RobotoCondensed-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Italic.ttf"; path = "../assets/roboto/RobotoCondensed-Italic.ttf"; sourceTree = "<group>"; };
+		D78937A1B29047508237CA27 /* icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icon.png; path = ../assets/img/icon.png; sourceTree = "<group>"; };
 		DAD6040BA36644FFBE069D2B /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../assets/roboto/Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		DAFACF612197419588441382 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		DD2A381836684F58ACAA2959 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		DD9F51E3A2684F9FBC219A11 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		DED83C881C544E26A3AAD834 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../assets/roboto/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
-		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		E17A5C36868647F98D070981 /* hr.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = hr.png; path = ../assets/img/hr.png; sourceTree = "<group>"; };
+		E581B470BAF141CD97D8B86B /* repeat-selected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "repeat-selected.png"; path = "../assets/img/repeat-selected.png"; sourceTree = "<group>"; };
+		E7B21ACFC9CF49B28513D2CE /* play-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "play-button.png"; path = "../assets/img/play-button.png"; sourceTree = "<group>"; };
+		E9C25A5D9EE042A493099167 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
+		F6F87AE1E859489697551E39 /* time-bar-tick.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "time-bar-tick.png"; path = "../assets/img/time-bar-tick.png"; sourceTree = "<group>"; };
+		FEEC1CDB6BA24CCEB6E8701C /* broken.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = broken.png; path = ../assets/img/broken.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -389,6 +569,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				744ADE9E205A6B90009BCE9D /* libReactNativeAudioToolkit.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -404,6 +585,7 @@
 				CCD80D5ED276493F83BFB31F /* libRNSound.a in Frameworks */,
 				8E154EA7139A44CF96BFC040 /* libRNAudioStreamer.a in Frameworks */,
 				85D71EB4024A4D75BBEA9318 /* libRNVectorIcons.a in Frameworks */,
+				D77A455E57014981912ECE43 /* libSplashScreen.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +687,8 @@
 			children = (
 				139FDEF41B06529B00C62182 /* libRCTWebSocket.a */,
 				3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */,
+				744ADE93205A6B72009BCE9D /* libfishhook.a */,
+				744ADE95205A6B72009BCE9D /* libfishhook-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -518,6 +702,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				74B73883205DADBC00E997FA /* Launch Screen.storyboard */,
 			);
 			name = moodmobile;
 			sourceTree = "<group>";
@@ -533,7 +718,12 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				3DAD3EA31DF850E9000B6D8A /* libReact-tvOS.a */,
+				74B73834205D884C00E997FA /* libthird-party.a */,
+				74B73836205D884C00E997FA /* libthird-party.a */,
+				74B73838205D884C00E997FA /* libdouble-conversion.a */,
+				74B7383A205D884C00E997FA /* libdouble-conversion.a */,
+				74B7383C205D884C00E997FA /* libprivatedata.a */,
+				74B7383E205D884C00E997FA /* libprivatedata-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -569,6 +759,55 @@
 				BE2DF22605AF4E35956A4893 /* Octicons.ttf */,
 				90CEF5C9E7254C668714D9CF /* SimpleLineIcons.ttf */,
 				639B2DBB58B445EEA59891A5 /* Zocial.ttf */,
+				9818C3A922E94FFD92919F1B /* add-song-selected.png */,
+				8770C4F09B644E1286D3620F /* add-song-unselected.png */,
+				44F7299172F5452EB5B4C6A7 /* album-blurred@2x.png */,
+				6944EBE9DE4E4D459849D333 /* alert.png */,
+				D57275804EBF48658BA640E6 /* alive.png */,
+				605976885FCD4F60A34E8918 /* back-arrow-dark.png */,
+				7F6CB0CDEFD24212B87FEFB1 /* back-arrow.png */,
+				113E30293FD54560A59D8C46 /* background-overlay.png */,
+				75F27F306D004FB38B887DFE /* bothered.png */,
+				FEEC1CDB6BA24CCEB6E8701C /* broken.png */,
+				A04B3C364EBB486087595222 /* dropdown-arrow-right.png */,
+				19BC5EFC5D5649B39B7CBEB0 /* dropdown-arrow.png */,
+				A894B0E51F1840749B4E462E /* excited.png */,
+				1C421B33C0E645B7AA8F79D7 /* go-arrow.png */,
+				26C18738464C492AAEF2A825 /* gradient-heading.png */,
+				43E47175AF8B44EAB973F01E /* header-divider.png */,
+				E17A5C36868647F98D070981 /* hr.png */,
+				360ACC29BD3E43299CAAA237 /* hurt.png */,
+				27F12A3C59C0406E96CF43B2 /* hurt2.png */,
+				D78937A1B29047508237CA27 /* icon.png */,
+				8916621E5D8C440DA06CF5FB /* mood-background-overlay.png */,
+				9116A57703BF4DC6A1A7EE16 /* mood-background@2x.png */,
+				6525FF10515B484FB9575E4D /* mood-circle.png */,
+				98A646A83F1D40B9B883B40F /* mood-header-overlay.png */,
+				0C03C35810F14C4FA5F9D397 /* mood-header.png */,
+				5CDDED9226344EDFB79C58C6 /* mood-logo.png */,
+				9D3E26ED26094BD99A9AA483 /* mood-overlay.png */,
+				B7FBE2C4C44949B58E4F7D15 /* more-button-selected.png */,
+				141E9EA7E79948C9808E6CC4 /* more-button-unselected.png */,
+				84A89F0A8AE740528FAF5B26 /* nav-arrow-left.png */,
+				38F669E0DE694236B5AB5BA8 /* pause-button-noring.png */,
+				71CFD5CB1B9045549EF43AC2 /* pause-button-white.png */,
+				3FF449B3C5C147D5BBCC9CE2 /* pause-button.png */,
+				C8945FE70E934856A9121099 /* play-button-noring.png */,
+				B3A40C13859E43CB8C0B3E2F /* play-button-white.png */,
+				E7B21ACFC9CF49B28513D2CE /* play-button.png */,
+				5BC2247306F94D72B6F3A494 /* powerful.png */,
+				E581B470BAF141CD97D8B86B /* repeat-selected.png */,
+				832D28DC3E994D94BB2BD68D /* repeat-unselected.png */,
+				135A6556A8394CA88819E311 /* selected-dot.png */,
+				233AF588F7BC45E89B435F06 /* settings.png */,
+				4F44D09B1EAB468EA1DBF4E1 /* shuffle-button-selected.png */,
+				810AD95B8E2C4DD08C340E93 /* shuffle-button-unselected.png */,
+				A21B8D9ED6CF493CB6051F1D /* slider-button.png */,
+				813A2E04166C45A18E0244D9 /* splash-screen@2x.jpg */,
+				9898031701ED49F8A1CDA12D /* splash-screen@2x.png */,
+				F6F87AE1E859489697551E39 /* time-bar-tick.png */,
+				2AB76DB6D98248A5BB85F926 /* unselected-dot.png */,
+				0BA46A4E1CC14A4AA650A9E5 /* young.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -623,6 +862,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		744ADE77205A6B72009BCE9D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				744ADE98205A6B72009BCE9D /* libReactNativeAudioToolkit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		744ADE9D205A6B90009BCE9D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		74AAD86E1F8172EF00DB7FDA /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,8 +884,17 @@
 				6992F6C91BCD4D7193C5D143 /* libRNSound.a */,
 				904D2E0555FC4E13AD3ADA74 /* libRNAudioStreamer.a */,
 				15A24EA9F8E04524999AD43F /* libRNVectorIcons.a */,
+				9588D5F103EA4151B9CFF653 /* libSplashScreen.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		74B738C1205DB5A200E997FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74B738C5205DB5A200E997FA /* libSplashScreen.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -646,6 +909,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				744ADE76205A6B72009BCE9D /* ReactNativeAudioToolkit.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -662,6 +926,7 @@
 				644E65140EAA4D17A96956E8 /* RNSound.xcodeproj */,
 				D1CACE4F843C47F0BF02D4CD /* RNAudioStreamer.xcodeproj */,
 				DD2A381836684F58ACAA2959 /* RNVectorIcons.xcodeproj */,
+				E9C25A5D9EE042A493099167 /* SplashScreen.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -685,6 +950,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				4C9EC4E84831445D9E03F321 /* Resources */,
 				74AAD86E1F8172EF00DB7FDA /* Recovered References */,
+				744ADE9D205A6B90009BCE9D /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -706,6 +972,7 @@
 			isa = PBXGroup;
 			children = (
 				ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */,
+				744ADE81205A6B72009BCE9D /* libRCTBlob-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -877,20 +1144,28 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 74291CE91EF5F01C00D7901C /* Products */;
-					ProjectRef = D1CACE4F843C47F0BF02D4CD /* RNAudioStreamer.xcodeproj */;
+					ProductGroup = 744ADE77205A6B72009BCE9D /* Products */;
+					ProjectRef = 744ADE76205A6B72009BCE9D /* ReactNativeAudioToolkit.xcodeproj */;
 				},
 				{
-					ProductGroup = 740D572D1EE46C9600DEC480 /* Products */;
-					ProjectRef = 644E65140EAA4D17A96956E8 /* RNSound.xcodeproj */;
+					ProductGroup = 74291CE91EF5F01C00D7901C /* Products */;
+					ProjectRef = D1CACE4F843C47F0BF02D4CD /* RNAudioStreamer.xcodeproj */;
 				},
 				{
 					ProductGroup = 7439B7011E56DDBD00795E6A /* Products */;
 					ProjectRef = 7439B7001E56DDBD00795E6A /* RNSound.xcodeproj */;
 				},
 				{
+					ProductGroup = 740D572D1EE46C9600DEC480 /* Products */;
+					ProjectRef = 644E65140EAA4D17A96956E8 /* RNSound.xcodeproj */;
+				},
+				{
 					ProductGroup = 7436CE861F17346100E276D2 /* Products */;
 					ProjectRef = DD2A381836684F58ACAA2959 /* RNVectorIcons.xcodeproj */;
+				},
+				{
+					ProductGroup = 74B738C1205DB5A200E997FA /* Products */;
+					ProjectRef = E9C25A5D9EE042A493099167 /* SplashScreen.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1002,10 +1277,10 @@
 			remoteRef = 3DAD3E981DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3DAD3EA31DF850E9000B6D8A /* libReact-tvOS.a */ = {
+		3DAD3EA31DF850E9000B6D8A /* libReact.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libReact-tvOS.a";
+			path = libReact.a;
 			remoteRef = 3DAD3EA21DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1107,6 +1382,83 @@
 			remoteRef = 7439B7041E56DDBD00795E6A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		744ADE81205A6B72009BCE9D /* libRCTBlob-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTBlob-tvOS.a";
+			remoteRef = 744ADE80205A6B72009BCE9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		744ADE93205A6B72009BCE9D /* libfishhook.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libfishhook.a;
+			remoteRef = 744ADE92205A6B72009BCE9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		744ADE95205A6B72009BCE9D /* libfishhook-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libfishhook-tvOS.a";
+			remoteRef = 744ADE94205A6B72009BCE9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		744ADE98205A6B72009BCE9D /* libReactNativeAudioToolkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeAudioToolkit.a;
+			remoteRef = 744ADE97205A6B72009BCE9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B73834205D884C00E997FA /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 74B73833205D884C00E997FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B73836205D884C00E997FA /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 74B73835205D884C00E997FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B73838205D884C00E997FA /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 74B73837205D884C00E997FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B7383A205D884C00E997FA /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 74B73839205D884C00E997FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B7383C205D884C00E997FA /* libprivatedata.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprivatedata.a;
+			remoteRef = 74B7383B205D884C00E997FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B7383E205D884C00E997FA /* libprivatedata-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libprivatedata-tvOS.a";
+			remoteRef = 74B7383D205D884C00E997FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74B738C5205DB5A200E997FA /* libSplashScreen.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSplashScreen.a;
+			remoteRef = 74B738C4205DB5A200E997FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1142,7 +1494,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				74B73882205D8C5400E997FA /* Images.xcassets in Resources */,
 				B4BF7A558AC7400CA260F03D /* Roboto-Black.ttf in Resources */,
 				E0DF531FBB95484DB4B1B77A /* Roboto-BlackItalic.ttf in Resources */,
 				F074DA910D05412094D8F887 /* Roboto-Bold.ttf in Resources */,
@@ -1160,6 +1512,7 @@
 				E9D49FA089A547B2B327E142 /* RobotoCondensed-Italic.ttf in Resources */,
 				ADD884DB892B4539BA1A06AA /* RobotoCondensed-Light.ttf in Resources */,
 				1BE9C4008CEE468B87A07E0D /* RobotoCondensed-LightItalic.ttf in Resources */,
+				74B73884205DADBC00E997FA /* Launch Screen.storyboard in Resources */,
 				C0DDBE01B4354F1B99B44D3F /* RobotoCondensed-Regular.ttf in Resources */,
 				DF3DAC5B788345C38C6B1A04 /* Entypo.ttf in Resources */,
 				5742DFB3B1B944E19351E193 /* EvilIcons.ttf in Resources */,
@@ -1171,6 +1524,55 @@
 				400A15A885844F7CBBFFEC03 /* Octicons.ttf in Resources */,
 				969C2838AD6541D3ABBC8C81 /* SimpleLineIcons.ttf in Resources */,
 				0BC8D8EE7DDA4856883E819B /* Zocial.ttf in Resources */,
+				6FCC4B1C13A84531884D0AE0 /* add-song-selected.png in Resources */,
+				E141E622BF2F480989B20985 /* add-song-unselected.png in Resources */,
+				921A8355FC8C4671A7F79839 /* album-blurred@2x.png in Resources */,
+				3363354992AC4062BE151B0B /* alert.png in Resources */,
+				97308ED750B24D78BD24650D /* alive.png in Resources */,
+				99917E71A42F410A83FDC0E4 /* back-arrow-dark.png in Resources */,
+				3975B4398B254430A69AD926 /* back-arrow.png in Resources */,
+				EF11A096C50B4C3295ABEE7D /* background-overlay.png in Resources */,
+				37FC56F02FA24B2BA5B7CA46 /* bothered.png in Resources */,
+				FC01707037184E288796ADB0 /* broken.png in Resources */,
+				CBE4BC68DF5D49F5805CE34F /* dropdown-arrow-right.png in Resources */,
+				2FB77BECE22741A0B421E892 /* dropdown-arrow.png in Resources */,
+				A3B831F769424D26AB9AE0DF /* excited.png in Resources */,
+				A5E5BB02EDF34CA6BD20C21F /* go-arrow.png in Resources */,
+				5B5988DCF01840FC9372FBD6 /* gradient-heading.png in Resources */,
+				2C63BAC97FAE4109A2E320DA /* header-divider.png in Resources */,
+				DA667CD7BAE441C085191E72 /* hr.png in Resources */,
+				4499AD435D644175AE75D67A /* hurt.png in Resources */,
+				1BA0107DEB8544E198FEB665 /* hurt2.png in Resources */,
+				EE5897D7C8D04432956EB8FA /* icon.png in Resources */,
+				41C218DD5865458D9E848576 /* mood-background-overlay.png in Resources */,
+				F6D747478C054427973DC31A /* mood-background@2x.png in Resources */,
+				92AE6F5A48B5469AA3666CD9 /* mood-circle.png in Resources */,
+				C5889C1042C04936BF51378D /* mood-header-overlay.png in Resources */,
+				607ACDD9CE6E431FB0204052 /* mood-header.png in Resources */,
+				3E2EDA1BD83641F88CEA33A4 /* mood-logo.png in Resources */,
+				D619CB08759A4C69A07412BD /* mood-overlay.png in Resources */,
+				3F466AF35A8C4212B7661192 /* more-button-selected.png in Resources */,
+				A248E559DFDE47ADA19B39FD /* more-button-unselected.png in Resources */,
+				FCE2CF3503ED4706A25DBA79 /* nav-arrow-left.png in Resources */,
+				825590E9F9A645D484D691A0 /* pause-button-noring.png in Resources */,
+				CB14827F6B5B4FFF86D5E86A /* pause-button-white.png in Resources */,
+				0B1D9EF37AE04A47AA751D7D /* pause-button.png in Resources */,
+				E3CED339D7C14110B08C8F96 /* play-button-noring.png in Resources */,
+				B5D6268402F442D5AE4D3E89 /* play-button-white.png in Resources */,
+				7441ADF202A242A792F2A836 /* play-button.png in Resources */,
+				E778AC902C904337B39AA023 /* powerful.png in Resources */,
+				BA0A81F7A3A04991B1E39AEF /* repeat-selected.png in Resources */,
+				D27D4C23975C43CD8138B1CF /* repeat-unselected.png in Resources */,
+				0E47610C38294D87AA598AB0 /* selected-dot.png in Resources */,
+				21143571F0B847F3BF481353 /* settings.png in Resources */,
+				BF33AC7A0BBA4AB3B6A28F4A /* shuffle-button-selected.png in Resources */,
+				5EF9383062A94F40B778B35B /* shuffle-button-unselected.png in Resources */,
+				EE2DAC895D7F4BA4BB4C973E /* slider-button.png in Resources */,
+				2C1682F1DC1C42BB93BC7F19 /* splash-screen@2x.jpg in Resources */,
+				C99EF3A6E9E0439CBBE5EBD3 /* splash-screen@2x.png in Resources */,
+				D8A82A14FFE64A58AA156A95 /* time-bar-tick.png in Resources */,
+				8770E133A69E4AFF868B136A /* unselected-dot.png in Resources */,
+				889C921216BD42759C6E9E79 /* young.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1287,12 +1689,14 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-audio-streamer/ios/RNAudioStreamer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = moodmobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1319,12 +1723,14 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-audio-streamer/ios/RNAudioStreamer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = moodmobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1344,7 +1750,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 343H7RTVF7;
@@ -1354,6 +1759,7 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-audio-streamer/ios/RNAudioStreamer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = moodmobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1374,7 +1780,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 343H7RTVF7;
 				HEADER_SEARCH_PATHS = (
@@ -1383,6 +1788,7 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-audio-streamer/ios/RNAudioStreamer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = moodmobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1417,11 +1823,13 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-audio-streamer/ios/RNAudioStreamer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "moodmobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1458,11 +1866,13 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-audio-streamer/ios/RNAudioStreamer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "moodmobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1501,6 +1911,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.moodmobile-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1525,6 +1936,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

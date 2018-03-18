@@ -50,6 +50,10 @@ export default class MoodScreen extends React.Component {
     StatusBar.setBarStyle('dark-content', true);
   }
 
+  componentDidMount = () => {
+    this.props.appLoaded();
+  }
+
   navigateToPlayScreen = (params) => {
     const navigate = NavigationActions.navigate({
       routeName: 'Play',

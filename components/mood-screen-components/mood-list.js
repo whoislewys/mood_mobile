@@ -46,16 +46,16 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     paddingBottom: 0,
     paddingTop: 10,
-    paddingLeft: 25
+    paddingLeft: 22
   },
   bugsButton: {
     flex: 1,
     resizeMode: 'contain',
     position: 'absolute',
     opacity: 0.3,
-    right: 56,
+    right: 64,
     width: 26,
-    height: 45,
+    height: 44,
     top: 8
   },
   settingsButton: {
@@ -66,6 +66,14 @@ const styles = StyleSheet.create({
     width: 26,
     top: 8
   },
+  logo: {
+    flex: 1,
+    resizeMode: 'contain',
+    height: 50,
+    width: 80,
+    marginTop: 10,
+    marginLeft: 20
+  }
 });
 
 export default class MoodList extends React.Component {
@@ -88,7 +96,8 @@ export default class MoodList extends React.Component {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerText}>
-            mood
+            {/* <Image source={Images.moodLogoBlack} style={styles.logo}/> */}
+            Mood.
           </Text>
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>

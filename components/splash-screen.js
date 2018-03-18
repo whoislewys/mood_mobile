@@ -49,8 +49,8 @@ export default class Splash extends React.Component {
   render = () => {
     return (
       <View style={styles.container}>
-        <Image source={Images.splashScreen} style={styles.bgImage}>
-        </Image>
+        {/* <Image source={Images.splashScreen} style={styles.bgImage}>
+        </Image> */}
       </View>
     );
   }

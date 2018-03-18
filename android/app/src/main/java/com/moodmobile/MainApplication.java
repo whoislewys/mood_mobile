@@ -3,6 +3,7 @@ package com.moodmobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import fm.indiecast.rnaudiostreamer.RNAudioStreamerPackage;
 import com.tanguyantoine.react.MusicControl;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new VectorIconsPackage(),
             new RNAudioStreamerPackage(),
             new MusicControl(),
