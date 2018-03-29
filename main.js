@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter, Image } from 'react-native';
 
 // import store from './components/redux/store.js'
 import Navigator from './components/main-components/navigator'
@@ -12,10 +12,6 @@ import {
 
 import SplashScreen from 'react-native-splash-screen'
 
-// import Sound from 'react-native-sound';
-// import Sound2 from 'react-native-audio-streamer';
-// import MusicControl from 'react-native-music-control';
-
 export default class Main extends React.Component {
   // Lifecycle Functions
   state = {
@@ -26,7 +22,10 @@ export default class Main extends React.Component {
     currentTime: 0,
     updateCurrentTime: true,
     playQueue: [],
-    oldQueue: []
+    oldQueue: [],
+    moodList: [],
+    mood: -1,
+    loading: false
   };
 
   // Lifecycle functions
@@ -133,13 +132,16 @@ export default class Main extends React.Component {
 
   startPlayback = () => {
     let player = this.state.playQueue[this.state.currentTrack].player;
-    if(player.canPlay) player.play(this._playingStarted);
+    if(player.canPlay) {
+      player.play(this._playingStarted);
+      player.on('ended', this._songEndCallback)
+    }
   }
 
   stopPlayback = () => {
-    let player = this.state.playQueue[this.state.currentTrack].player;
-    if(player.canStop) {
-      player.stop(this._playingStopped);
+    let track = this.state.playQueue[this.state.currentTrack];
+    if(track && track.player && track.player.canStop) {
+      track.player.stop(this._playingStopped);
       this.setState({currentTime: 0});
     }
   }
@@ -158,6 +160,11 @@ export default class Main extends React.Component {
     this._stopInterval();
     this.setState({playing: false});
     console.log("Paused");
+  }
+
+  _songEndCallback = () => {
+    this.stopPlayback();
+    this.nextTrack();
   }
 
   _startInterval = () => {
@@ -180,6 +187,66 @@ export default class Main extends React.Component {
 
     this.setState({currentTime: 0, currentTrack: index}, this.startPlayback);
   }
+  /////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////
+  // Mood list functions
+
+  _setMoodList = (list, callback) => {
+    callback = callback || noop;
+    this.setState({moodList: list}, callback);
+  }
+
+  _setMood = (mood) => {
+    this.stopPlayback();
+    this.setState({mood: mood}, this._loadMoodSongs);
+  }
+
+  _loadMoodSongs = () => {
+    this.setState({loading: true});
+    let url = `http://api.moodindustries.com/api/v1/moods/${this.state.moodList[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
+    // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
+
+    fetch(url)
+      .then((responseJson) => {
+        return responseJson.json();
+      })
+      .then((json) => {
+        let list = Object.keys(json).map(function (key) { return json[key]; });
+        this.setPlayQueue(list);
+
+        const art_url = list[0].art_url;
+
+        const prefetchTask = Image.prefetch(art_url);
+        prefetchTask.then(() => {
+          console.log(`✔ First Prefetch OK - ${list[0].album_name}`);
+          this.setState({loading: false});
+          this.navigateToPlayScreen();
+        }, () => {
+          console.log(`✘ Prefetch failed - ${list[0].album_name}`);
+          this.setState({loading: false});
+          this.navigateToPlayScreen();
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  /////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////
+  // Navigation functions
+
+  navigateToPlayScreen = (params) => {
+    // const navigate = NavigationActions.navigate({
+    //   routeName: 'Play',
+    //   params: { ...params }
+    // });
+    //
+    // this.props.navigation.dispatch(navigate);
+  };
+
   /////////////////////////////////////////////////////////////
 
   //Misc. functions
@@ -210,18 +277,6 @@ export default class Main extends React.Component {
     SplashScreen.hide();
   }
 
-  // shuffle = (arr) => {
-  //   let a = arr;
-  //   let j, x, i;
-  //
-  //   for (i = a.length - 1; i > 0; i--) {
-  //       j = Math.floor(Math.random() * (i + 1));
-  //       [a[i], a[j]] = [a[j], a[i]];
-  //   }
-  //
-  //   return a;
-  // }
-
   render = () => {
     return (
       <Navigator
@@ -234,6 +289,14 @@ export default class Main extends React.Component {
         // Queue mutations
         shuffle={this.state.shuffle}
         repeat={this.state.repeat}
+
+        //Mood functions/data (mostly used by mood screen)
+        setMoodList={this._setMoodList}
+        setMood={this._setMood}
+        loading={this.loading}
+
+        mood={this.state.mood}
+        moodList={this.state.moodList}
 
         // Functions
         nextTrack={this.nextTrack}

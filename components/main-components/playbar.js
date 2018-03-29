@@ -28,8 +28,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     flex: 1,
     marginLeft: 25,
-    width: 25,
-    transform: [{ rotateX: '180deg' }]
+    width: 13,
+    height: 25,
+    opacity: 0.8,
+    // transform: [{ rotateX: '0' }]
   },
   art: {
     flex: 20,
@@ -61,8 +63,8 @@ const styles = StyleSheet.create({
     fontWeight: '300'
   },
   playPauseButton: {
-    width: 35,
-    height: 35,
+    width: 30,
+    height: 30,
     backgroundColor: 'transparent'
   }
 });
@@ -91,7 +93,7 @@ export default class PlayBar extends React.Component {
 
   albumArt = () => {
     return (
-      <Image source={Images.dropdownArrow} style={styles.arrow}/>
+      <Image source={Images.goArrow} style={styles.arrow}/>
       // <Image source={{uri: this.props.track.art_url}} style={styles.albumArt}/>
     );
   }
@@ -108,7 +110,7 @@ export default class PlayBar extends React.Component {
           <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Text
               style={[styles.albumInfoText, {
-                maxWidth: width * 0.7,
+                maxWidth: width * 0.63,
                 textAlign: 'center'
               }]}
               numberOfLines={1}
@@ -116,38 +118,7 @@ export default class PlayBar extends React.Component {
               >
               { track.name }
             </Text>
-            {/* <Text
-              style={[styles.albumInfoText, {
-                maxWidth: width * 0.03,
-                textAlign: 'center'
-              }]}
-              >
-                -
-            </Text>
-            <Text
-              style={[styles.albumInfoText, {
-                maxWidth: width * 0.32,
-                textAlign: 'left'
-              }]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              >
-              { track.artist }
-            </Text> */}
           </View>
-          {/* <View style={styles.subInfo}>
-            <Text
-              style={[styles.albumInfoSubText, {
-                maxWidth: width * 0.6
-              }]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              >
-              { track.artist }
-              &nbsp;-&nbsp;
-              { track.album_name }
-            </Text>
-          </View> */}
         </TouchableOpacity>
         <View style={styles.controls}>
           {this.playButton()}

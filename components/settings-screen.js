@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   },
   arrow: {
     resizeMode: 'stretch',
-    width: 12,
-    height: 18,
+    width: 10,
+    height: 20,
     marginLeft: 5,
     marginBottom: 2,
     tintColor: 'black',

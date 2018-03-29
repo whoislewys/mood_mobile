@@ -34,7 +34,7 @@ export default class InfoText extends React.Component {
           <Text style={[styles.albumInfoSubText, {
             marginHorizontal: 2
           }]}>
-            -
+          { album.album_name ? '-' : '' }
           </Text>
           <Text
             style={[styles.albumInfoSubText, {

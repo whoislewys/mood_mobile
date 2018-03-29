@@ -1,12 +1,11 @@
-import NavigationStack from "../../main-components/navigation-stack.js";
+import NavigationStack from '../../main-components/navigation-stack';
+import { NavigationActions } from 'react-navigation';
 
 const initialState = NavigationStack.router.getStateForAction(
-  NavigationStack.router.getActionForPathAndParams('Splash')
+  NavigationActions.navigate({ routeName: "Splash" })
 );
 
-const navigationReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   const newState = NavigationStack.router.getStateForAction(action, state);
   return newState || state;
 };
-
-export default navigationReducer;

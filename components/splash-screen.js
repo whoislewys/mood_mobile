@@ -29,7 +29,7 @@ export default class Splash extends React.Component {
         }
         Promise.all(imagePrefetch).then(results => {
             console.log("All images prefetched in parallel");
-            this.navigateToMoodScreen({moods: list});
+            this.props.setMoodList(list, this.navigateToMoodScreen);
         });
       })
       .catch((error) => {

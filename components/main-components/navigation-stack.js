@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 import PlayScreen from '../play-screen';
 import MoodScreen from '../mood-screen'
@@ -17,8 +17,8 @@ const map = (SomeComponent) => {
   }
 }
 
-export default NavigationStack = StackNavigator({
-  Splash: { screen: SplashScreen },
+export default createStackNavigator({
+  Splash: { screen: map(SplashScreen) },
   Mood: { screen: map(MoodScreen) },
   Play: { screen: map(PlayScreen) },
   Settings: { screen: map(SettingsScreen) }

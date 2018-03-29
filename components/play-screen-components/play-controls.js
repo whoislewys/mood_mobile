@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   playButton: {
-    width: 85,
-    height: 85,
+    width: 75,
+    height: 75,
   },
   toggleShuffle: {
     flex: 1,
@@ -30,6 +30,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start'
+  },
+  shuffleIcon: {
+    height: 35,
+    width: 35,
+    resizeMode: 'contain'
+  },
+  repeatIcon: {
+    height: 26,
+    width: 26,
+    resizeMode: 'contain'
   }
 });
 
@@ -50,6 +60,7 @@ export default class PlayControls extends React.Component {
             iconSelected={Images.shuffleButtonSelected}
             iconUnselected={Images.shuffleButtonUnselected}
             onPress={this.props.toggleShuffle}
+            iconStyle={styles.shuffleIcon}
           />
         </View>
         {/* <ToggleButton
@@ -104,6 +115,7 @@ export default class PlayControls extends React.Component {
             iconSelected={Images.repeatButtonSelected}
             iconUnselected={Images.repeatButtonUnselected}
             onPress={this.props.toggleRepeat}
+            iconStyle={styles.repeatIcon}
           />
         </View>
 

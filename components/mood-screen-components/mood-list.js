@@ -22,8 +22,9 @@ const styles = StyleSheet.create({
   header: {
     flex: 10,
     padding: 15,
-    paddingTop: 35,
-    alignItems: 'center'
+    paddingTop: 45,
+    alignItems: 'center',
+    paddingBottom: 25
   },
   headerContent: {
     flexDirection: 'row'
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'contain',
     position: 'absolute',
-    opacity: 0.3,
+    opacity: 0.35,
     right: 64,
     width: 26,
     height: 44,
@@ -64,7 +65,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 22,
     width: 26,
-    top: 8
+    height: 44,
+    top: 8,
+    opacity: 0.4,
+
   },
   logo: {
     flex: 1,

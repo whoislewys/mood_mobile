@@ -1,30 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import { addNavigationHelpers } from 'react-navigation';
-import NavigationStack from './navigation-stack';
-import appReducer from '../redux/reducers/reducers';
+import { createLogger } from 'redux-logger';
 
 import {
   createReduxBoundAddListener,
   createReactNavigationReduxMiddleware,
 } from 'react-navigation-redux-helpers';
 
-const middleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.nav,
-);
-const addListener = createReduxBoundAddListener("root");
+import appReducer from '../redux/reducers/reducers';
+import NavigationStack from './navigation-stack';
 
-class Navigator extends Component {
+class Navigator extends React.Component {
   render = () => {
-    const { navigationState, dispatch } = this.props;
+    const { dispatch, nav } = this.props;
+    const addListener = createReduxBoundAddListener("root");
+
+
     return (
       <NavigationStack
         screenProps={{...this.props}}
         navigation={ addNavigationHelpers({
                         dispatch: this.props.dispatch,
-                        state: this.props.nav,
+                        state: nav,
                         addListener,
                       })
                     }
@@ -39,25 +38,29 @@ const mapStateToProps = (state) => ({
 
 const AppWithNavigationState = connect(mapStateToProps)(Navigator);
 
-function configureStore() {
-  const store = createStore(
-    appReducer,
-    applyMiddleware(middleware),
-  );
+const reduxMiddleware = createReactNavigationReduxMiddleware(
+  "root",
+  state => state.nav,
+);
 
-  if (module.hot) {
-    module.hot.accept(() => {
-      const nextRootReducer = combineReducers(require('../redux/reducers/reducers'));
-      store.replaceReducer(nextRootReducer);
-    });
-  }
+const loggerMiddleware = createLogger();
+const middleware = [reduxMiddleware, loggerMiddleware]
 
-  return store;
-}
+const store = createStore(
+  appReducer,
+  applyMiddleware(reduxMiddleware),
+);
+
+// if (module.hot) {
+//   module.hot.accept(() => {
+//     const nextRootReducer = combineReducers(require('../redux/reducers/reducers'));
+//     store.replaceReducer(nextRootReducer);
+//   });
+// }
 
 export default class extends React.Component {
   state = {
-    store: configureStore()
+    store: store
   }
 
   render() {

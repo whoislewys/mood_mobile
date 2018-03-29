@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   StatusBar,
+  Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -40,11 +41,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backButton: {
-    width: 25,
-    height: 13,
-    marginTop: 8,
-    marginLeft: 0.02 * width,
+    width: 13,
+    height: 23,
+    position: 'absolute',
+    top: -10,
+    left: 0.02 * width,
+    opacity: 0.8,
     resizeMode: 'stretch',
+    transform: [{ rotateY: '180deg' }],
   },
 });
 
@@ -65,18 +69,6 @@ export default class PlayScreen extends React.Component {
   }
 
   navBack = () => {
-    // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    //   .then((responseJson) => {
-    //     return responseJson.json();
-    //   })
-    //   .then((json) => {
-    //     let list = Object.keys(json).map(function (key) { return json[key]; });
-    //     this.props.navigation.navigate('Mood', {moods: list})
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     this.props.navigation.dispatch(NavigationActions.back())
   }
 
@@ -89,18 +81,15 @@ export default class PlayScreen extends React.Component {
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
             <TouchableOpacity onPress={this.navBack}>
-              <Image source={Images.dropdownArrow} style={styles.backButton} />
+              <Image source={Images.goArrow} style={styles.backButton} />
             </TouchableOpacity>
-            {/* <TouchableOpacity onPress={this.navBack}>
-              <Icon
-                name='playlist-plus'
-                color='white'
-                style={{backgroundColor: 'transparent'}}
-                size={25}
-              />
-              <Image source={Images.backArrow} style={styles.backButton} />
-            </TouchableOpacity> */}
-            {/* <Text style={styles.moodText}>{this.props.mood.name}</Text> */}
+
+          <Text style={styles.header}>
+            {}
+          </Text>
+
+            {/* Add centered mood name to give balance to the top bar */}
+
           </View>
           <TrackInfo
             skipForward={this.props.nextTrack}

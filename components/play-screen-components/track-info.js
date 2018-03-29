@@ -17,11 +17,11 @@ export default class TrackInfo extends React.Component {
   render = () => {
     // TODO: Rather than divide the props by 1000,
     //       update the TimeBar component to handle milliseconds
-    let player = this.props.track;
+    let player = this.props.track.player;
     let duration = 180;
 
-    if(player.canPlay) {
-      duration = track.player.duration / 1000;
+    if(player.duration >= 0) {
+      duration = player.duration / 1000;
     }
 
     return (

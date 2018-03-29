@@ -72,50 +72,12 @@ export default class MoodScreen extends React.Component {
     this.props.navigation.dispatch(navigate);
   };
 
-  state = {
-    mood: -1,
-    loading: false
-  };
-
   setMood = (index) => {
-    this.setState({ mood: index }, () => {
-      this._onGo(index);
-    });
-  }
-
-  _onGo = (index) => {
-    this.setState({loading: true});
-    let url = `http://api.moodindustries.com/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
-    // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
-
-    fetch(url)
-      .then((responseJson) => {
-        return responseJson.json();
-      })
-      .then((json) => {
-        let list = Object.keys(json).map(function (key) { return json[key]; });
-        this.props.setPlayQueue(list);
-
-        const art_url = list[0].art_url;
-
-        const prefetchTask = Image.prefetch(art_url);
-        prefetchTask.then(() => {
-          console.log(`✔ First Prefetch OK - ${list[0].album_name}`);
-          this.setState({loading: false});
-          this.navigateToPlayScreen({mood: this.props.moods[this.state.mood]});
-        }, () => {
-          console.log(`✘ Prefetch failed - ${list[0].album_name}`);
-          this.setState({loading: false});
-          this.navigateToPlayScreen({mood: this.props.moods[this.state.mood]});
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.props.setMood(index);
   }
 
   _playbarGo = () => {
-    this.navigateToPlayScreen({mood: this.props.moods[this.state.mood]})
+    this.navigateToPlayScreen();
   }
 
   _getMusicBar = () => {
@@ -134,8 +96,8 @@ export default class MoodScreen extends React.Component {
   }
 
   _getContent = () => {
-    if(!this.state.loading) {
-      return <MoodList moods={this.props.moods} setMood={this.setMood} selected={this.state.mood} navigate={this.navigateToSettingsScreen}/>;
+    if(!this.props.loading) {
+      return <MoodList moods={this.props.moodList} setMood={this.setMood} selected={this.props.mood} navigate={this.navigateToSettingsScreen}/>;
     } else {
       return (
         <ActivityIndicator color={'black'} size={'large'} animating={true} style={{flex: 10}}/>
