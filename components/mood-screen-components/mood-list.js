@@ -90,6 +90,7 @@ export default class MoodList extends React.Component {
       mood={item}
       key={index}
       setMood={this.props.setMood}
+      playscreen={this.props.playscreen}
       selected={this.props.selected}
       id={index}
     />
@@ -100,7 +101,6 @@ export default class MoodList extends React.Component {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerText}>
-            {/* <Image source={Images.moodLogoBlack} style={styles.logo}/> */}
             Mood.
           </Text>
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
@@ -110,14 +110,12 @@ export default class MoodList extends React.Component {
             <Image source={Images.settingsGear} style={styles.settingsButton}/>
           </TouchableOpacity>
         </View>
-        {/* <Image source={Images.headerDivider} style={styles.headerDivider}/> */}
       </View>
     );
   }
 
   _settings = () => {
-    console.log('Linked');
-    this.props.navigate();
+    this.props.settings();
   }
 
   render = () => {
@@ -128,11 +126,7 @@ export default class MoodList extends React.Component {
         renderItem={this._renderItem}
         ListHeaderComponent={this._renderHeader}
         >
-
       </FlatList>
-      // <View style={styles.container}>
-      //   { this.mapMoodsToList(this.props.moods) }
-      // </View>
     );
   }
 }

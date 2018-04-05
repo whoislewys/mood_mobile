@@ -12,18 +12,24 @@ import {
 import appReducer from '../redux/reducers/reducers';
 import NavigationStack from './navigation-stack';
 
+const reduxMiddleware = createReactNavigationReduxMiddleware(
+  "root",
+  state => state.nav,
+);
+
+const loggerMiddleware = createLogger();
+const middleware = [reduxMiddleware, loggerMiddleware]
+
 class Navigator extends React.Component {
   render = () => {
-    const { dispatch, nav } = this.props;
     const addListener = createReduxBoundAddListener("root");
-
 
     return (
       <NavigationStack
         screenProps={{...this.props}}
         navigation={ addNavigationHelpers({
                         dispatch: this.props.dispatch,
-                        state: nav,
+                        state: this.props.nav,
                         addListener,
                       })
                     }
@@ -38,29 +44,25 @@ const mapStateToProps = (state) => ({
 
 const AppWithNavigationState = connect(mapStateToProps)(Navigator);
 
-const reduxMiddleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.nav,
-);
+function configureStore() {
+  const store = createStore(
+    appReducer,
+    applyMiddleware(...middleware),
+  );
 
-const loggerMiddleware = createLogger();
-const middleware = [reduxMiddleware, loggerMiddleware]
+  if (module.hot) {
+    module.hot.accept(() => {
+      const nextRootReducer = combineReducers(require('../redux/reducers/reducers'));
+      store.replaceReducer(nextRootReducer);
+    });
+  }
 
-const store = createStore(
-  appReducer,
-  applyMiddleware(reduxMiddleware),
-);
-
-// if (module.hot) {
-//   module.hot.accept(() => {
-//     const nextRootReducer = combineReducers(require('../redux/reducers/reducers'));
-//     store.replaceReducer(nextRootReducer);
-//   });
-// }
+  return store;
+}
 
 export default class extends React.Component {
   state = {
-    store: store
+    store: configureStore()
   }
 
   render() {

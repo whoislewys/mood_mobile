@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import navigationReducer from './navigation-reducer';
+import NavigationReducer from './navigation-reducer';
+import Mood from './mood-reducer';
 
 export default combineReducers({
-  nav: navigationReducer
+  nav: NavigationReducer,
+  Mood
 });

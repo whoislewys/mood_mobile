@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 
 import AlbumArt from './album-art.js';
-import Images from '@assets/images.js';
 import InfoText from './info-text';
 import TimeBar from './time-bar';
 

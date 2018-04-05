@@ -71,14 +71,9 @@ export default class Main extends React.Component {
     if(this.state.shuffle) {
       this.setState({playQueue: this.state.oldQueue, oldQueue: [], shuffle: false});
     } else {
-      let a = this.state.playQueue;
-      [a[this.state.currentTrack], a[0]] = [a[0], a[this.state.currentTrack]];
-      let shuffled = this.shuffle(a);
-
+      let shuffled = this.shuffle(this.state.playQueue, this.state.currentTrack);
       this.setState({oldQueue: this.state.playQueue, playQueue: shuffled, shuffle: true});
     }
-
-    console.log(this.state.playQueue);
   }
 
   toggleRepeat = () => {
@@ -87,6 +82,8 @@ export default class Main extends React.Component {
 
   // Cycle the currentTrack in the direction/amount defined
   cycleSong = (direction) => {
+    if(this.state.loading) return;
+
     let end = this.state.playQueue.length - 1;
     let next = this.state.currentTrack + direction;
 
@@ -103,10 +100,6 @@ export default class Main extends React.Component {
     }
 
     this.setNewSong(next);
-
-    console.log("Current: " + this.state.currentTrack);
-    console.log("Direction: " + direction);
-    console.log("New: " + next + "\n\n");
   }
   /////////////////////////////////////////////////////////////
 
@@ -152,14 +145,11 @@ export default class Main extends React.Component {
   _playingStarted = () => {
     this.setState({playing: true, updateCurrentTime: true});
     this._startInterval();
-
-    console.log("Playing!");
   }
 
   _playingStopped = () => {
     this._stopInterval();
     this.setState({playing: false});
-    console.log("Paused");
   }
 
   _songEndCallback = () => {
@@ -187,6 +177,25 @@ export default class Main extends React.Component {
 
     this.setState({currentTime: 0, currentTrack: index}, this.startPlayback);
   }
+
+  _setLoadingInterval = () => {
+    if(!this.state.loading) {
+      this.setState({loading: setInterval(() => {
+        let player = this.state.playQueue[this.state.currentTrack].player;
+
+        if(player.canPlay) {
+          this._clearLoadingInterval();
+        }
+      }, 1000)});
+    }
+  }
+
+  _clearLoadingInterval = () => {
+    if(this.state.loading) {
+      clearInterval(this.state.loading);
+      this.setState({loading: false});
+    }
+  }
   /////////////////////////////////////////////////////////////
 
   /////////////////////////////////////////////////////////////
@@ -197,12 +206,15 @@ export default class Main extends React.Component {
     this.setState({moodList: list}, callback);
   }
 
-  _setMood = (mood) => {
+  _setMood = (mood, callback) => {
+    let func = callback;
+    if(typeof callback != 'function') func = this.noop;
+
     this.stopPlayback();
-    this.setState({mood: mood}, this._loadMoodSongs);
+    this.setState({mood: mood}, this._loadMoodSongs.bind(null, func));
   }
 
-  _loadMoodSongs = () => {
+  _loadMoodSongs = (callback) => {
     this.setState({loading: true});
     let url = `http://api.moodindustries.com/api/v1/moods/${this.state.moodList[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
     // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
@@ -220,12 +232,14 @@ export default class Main extends React.Component {
         const prefetchTask = Image.prefetch(art_url);
         prefetchTask.then(() => {
           console.log(`✔ First Prefetch OK - ${list[0].album_name}`);
+
           this.setState({loading: false});
-          this.navigateToPlayScreen();
+          callback();
         }, () => {
           console.log(`✘ Prefetch failed - ${list[0].album_name}`);
+
           this.setState({loading: false});
-          this.navigateToPlayScreen();
+          callback();
         });
       })
       .catch((error) => {
@@ -235,46 +249,42 @@ export default class Main extends React.Component {
 
   /////////////////////////////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////
-  // Navigation functions
-
-  navigateToPlayScreen = (params) => {
-    // const navigate = NavigationActions.navigate({
-    //   routeName: 'Play',
-    //   params: { ...params }
-    // });
-    //
-    // this.props.navigation.dispatch(navigate);
-  };
-
-  /////////////////////////////////////////////////////////////
-
   //Misc. functions
   mod = (n, m) => {
     return ((n % m) + m) % m;
   }
 
-  shuffle = (array) => {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+  noop = () => {
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+  }
 
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+  shuffle = (arr, curr) => {
+    let array = arr.slice();
+    let id = arr[curr].id;
+    let m = array.length, t, i;
+
+    // While there remain elements to shuffle…
+    while (m) {
+
+      // Pick a remaining element…
+      i = Math.floor(Math.random() * m--);
 
       // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
     }
+
+    let index = array.findIndex(k => k.id == id);
+    // array = array.slice(index).concat(array.slice(0, index));
+    [array[this.state.currentTrack], array[index]] = [array[index], array[this.state.currentTrack]]
 
     return array;
   }
 
-  appLoaded = () => {
-    SplashScreen.hide();
+  appLoaded = (loaded) => {
+    if(loaded) SplashScreen.hide();
+    else SplashScreen.show();
   }
 
   render = () => {
@@ -293,7 +303,8 @@ export default class Main extends React.Component {
         //Mood functions/data (mostly used by mood screen)
         setMoodList={this._setMoodList}
         setMood={this._setMood}
-        loading={this.loading}
+        loading={this.state.loading}
+        setLoading={this._setLoadingInterval}
 
         mood={this.state.mood}
         moodList={this.state.moodList}
@@ -303,6 +314,7 @@ export default class Main extends React.Component {
         previousTrack={this.previousTrack}
 
         handlePlayPress={this.handlePlayPress}
+        stopPlayback={this.stopPlayback}
 
         setTime={this.setTime}
 

@@ -27,11 +27,10 @@ const styles = StyleSheet.create({
   arrow: {
     resizeMode: 'contain',
     flex: 1,
-    marginLeft: 25,
-    width: 13,
-    height: 25,
+    marginLeft: 24,
+    width: 22,
+    height: 11,
     opacity: 0.8,
-    // transform: [{ rotateX: '0' }]
   },
   art: {
     flex: 20,
@@ -39,7 +38,6 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 88,
-    // paddingLeft: 10
   },
   subInfo: {
     flexDirection: 'row',
@@ -49,6 +47,7 @@ const styles = StyleSheet.create({
   },
   albumInfoText: {
     flexDirection: 'row',
+    paddingLeft: width * 0.02,
     width: 280,
     color: '#fff',
     fontSize: 18,
@@ -74,12 +73,6 @@ export default class PlayBar extends React.Component {
     if (this.props.playing) {
       return (
         <TouchableOpacity onPress={this.props.handlePlayPress}>
-          {/* <Icon
-            name='pause-circle-outline'
-            color='white'
-            style={{backgroundColor: 'transparent'}}
-            size={45}
-          /> */}
           <Image source={Images.pauseButtonWhite} style={styles.playPauseButton} />
         </TouchableOpacity>
       );
@@ -93,8 +86,7 @@ export default class PlayBar extends React.Component {
 
   albumArt = () => {
     return (
-      <Image source={Images.goArrow} style={styles.arrow}/>
-      // <Image source={{uri: this.props.track.art_url}} style={styles.albumArt}/>
+      <Image source={Images.arrowUpWhite} style={styles.arrow}/>
     );
   }
 
@@ -110,7 +102,7 @@ export default class PlayBar extends React.Component {
           <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Text
               style={[styles.albumInfoText, {
-                maxWidth: width * 0.63,
+                maxWidth: width * 0.61,
                 textAlign: 'center'
               }]}
               numberOfLines={1}

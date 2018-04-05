@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Text,
-  Image
+  Image,
+  NetInfo
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';
@@ -12,6 +13,14 @@ import Background from './background';
 import Images from '@assets/images';
 
 export default class Splash extends React.Component {
+  state = {
+    internetCheck: null
+  };
+
+  componentWillMount = () => {
+    NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
+  }
+
   componentDidMount = () => {
     fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
     // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
@@ -27,6 +36,7 @@ export default class Splash extends React.Component {
         for (let mood of list) {
             imagePrefetch.push(Image.prefetch(mood.file));
         }
+
         Promise.all(imagePrefetch).then(results => {
             console.log("All images prefetched in parallel");
             this.props.setMoodList(list, this.navigateToMoodScreen);
@@ -35,6 +45,19 @@ export default class Splash extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  handleConnectivityChange = (isConnected) => {
+    console.log(isConnected);
+    if(!isConnected) {
+      NetInfo.isConnected.removeEventListener(
+        'connectionChange',
+        this.handleConnectivityChange,
+      );
+
+      this.props.stopPlayback();
+      this.navigateToErrorScreen();
+    }
   }
 
   navigateToMoodScreen = (params) => {
@@ -46,11 +69,19 @@ export default class Splash extends React.Component {
     this.props.navigation.dispatch(navigate);
   };
 
+  navigateToErrorScreen = (params) => {
+    const navigate = NavigationActions.navigate({
+      routeName: 'Error',
+      params: { ...params }
+    });
+
+    this.props.navigation.dispatch(navigate);
+  };
+
   render = () => {
     return (
       <View style={styles.container}>
-        {/* <Image source={Images.splashScreen} style={styles.bgImage}>
-        </Image> */}
+
       </View>
     );
   }
@@ -60,10 +91,4 @@ let styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  bgImage: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'cover'
-  }
 });

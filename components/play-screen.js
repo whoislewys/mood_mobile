@@ -30,42 +30,57 @@ const styles = StyleSheet.create({
     flex: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginLeft: 0.01 * width,
     marginRight: 0.02 * width,
     marginTop: 20
   },
   moodText: {
+    flex: 1,
     backgroundColor: 'transparent',
-    color: 'white',
-    justifyContent: 'center',
+    textAlign: 'center',
+    color: '#ccc',
+
+    paddingTop: 0,
+    marginTop: -4,
+
+    fontSize: 25,
+    fontFamily: 'Roboto',
+    fontWeight: '300',
   },
   backButton: {
-    width: 13,
-    height: 23,
+    width: 23,
+    height: 14,
     position: 'absolute',
-    top: -10,
+    top: -7,
     left: 0.02 * width,
-    opacity: 0.8,
+    opacity: 0.5,
     resizeMode: 'stretch',
-    transform: [{ rotateY: '180deg' }],
+    transform: [{ rotateX: '180deg'}],
   },
+  touchable: {
+    zIndex: 2
+  }
 });
 
 export default class PlayScreen extends React.Component {
   componentWillMount = () => {
-    for (let i = 1; i < this.props.playQueue.length; i += 1) {
-      const url = this.props.playQueue[i].art_url;
+    //Prefetch album art in parallel
+    var imagePrefetch = [];
 
-      const prefetchTask = Image.prefetch(url);
-      prefetchTask.then(() => {
-        console.log(`✔ Prefetch OK - ${this.props.playQueue[i].album_name}`);
-      }, () => {
-        console.log(`✘ Prefetch failed - ${this.props.playQueue[i].album_name}`);
-      });
+    for (let song of this.props.playQueue) {
+        imagePrefetch.push(Image.prefetch(song.art_url));
     }
 
+    Promise.all(imagePrefetch).then(results => {
+        console.log("All album art prefetched in parallel");
+    });
+
     StatusBar.setBarStyle('light-content', true);
+
+    if(!this.props.playQueue[this.props.currentTrack].player.canPlay) {
+      this.props.setLoading();
+    }
   }
 
   navBack = () => {
@@ -73,6 +88,8 @@ export default class PlayScreen extends React.Component {
   }
 
   render = () => {
+    let mood = this.props.moodList[this.props.mood];
+
     return (
       <Background
         image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
@@ -80,13 +97,13 @@ export default class PlayScreen extends React.Component {
       >
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
-            <TouchableOpacity onPress={this.navBack}>
-              <Image source={Images.goArrow} style={styles.backButton} />
+            <TouchableOpacity onPress={this.navBack} style={styles.touchable}>
+              <Image source={Images.arrowUpWhite} style={styles.backButton} />
             </TouchableOpacity>
 
-          <Text style={styles.header}>
-            {}
-          </Text>
+            <Text style={styles.moodText}>
+              { mood.name.toLowerCase() }
+            </Text>
 
             {/* Add centered mood name to give balance to the top bar */}
 
@@ -106,6 +123,8 @@ export default class PlayScreen extends React.Component {
 
             playing={this.props.playing}
             handlePlayPress={this.props.handlePlayPress}
+
+            loading={this.props.loading}
           />
         </View>
       </Background>
