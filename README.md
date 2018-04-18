@@ -2,7 +2,8 @@
 ## Running Simulation in IOS
 1. Download project from Github
 2. Open `mood_mobile/ios/moodmobile.xcodeproj` in Xcode
-3. Click the play button in the top left of the screen
+3. Follow the instructions in https://github.com/SamRond/mood_mobile/issues/14
+4. Click the play button in the top left of the screen
 
 ## Branches
 master - This branch will always reflect the code in the most recent iTunes Connect build
