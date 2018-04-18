@@ -6,11 +6,14 @@ import {
   TouchableOpacity,
   StatusBar,
   Linking,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationActions } from 'react-navigation';
 import Images from '@assets/images.js';
+
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +25,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 15,
   },
   body: {
     flex: 95,
@@ -34,19 +38,13 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     paddingBottom: 25,
     zIndex: 3,
-
-    // elevation: 2,
-    // shadowOpacity: 0.75,
-    // shadowRadius: 5,
-    // shadowColor: '#bbb',
-    // shadowOffset: { height: 0, width: 0 },
-    marginBottom: 5,
+    marginBottom: 15,
     marginTop: 15,
   },
   headerText: {
     flex: 1,
     color: '#555',
-    fontSize: 23,
+    fontSize: 30,
     fontWeight: '600',
     alignSelf: 'center',
     textAlign: 'center',
@@ -61,7 +59,10 @@ const styles = StyleSheet.create({
     marginLeft: 20
   },
   sectionOne: {
-    borderBottomWidth: 1
+    // flexDirection: 'row',
+    paddingLeft: 0,
+    paddingBottom: 0,
+    alignItems: 'center'
   },
   headText: {
     fontWeight: '600',
@@ -90,18 +91,24 @@ const styles = StyleSheet.create({
   },
   arrow: {
     resizeMode: 'stretch',
-    width: 12,
-    height: 18,
-    marginLeft: 5,
+    width: 15,
+    height: 19,
+    marginLeft: 20,
     marginBottom: 2,
     tintColor: 'black',
-    opacity: 0.9
+    opacity: 0.7
   },
   gradientHeading: {
     flex: 1,
     resizeMode: 'stretch',
     maxHeight: 1.5,
-    overflow: 'hidden'
+    maxWidth: width,
+    marginLeft: 0
+  },
+  bigButton: {
+    resizeMode: 'contain',
+    width: width * 0.54,
+    height: 117
   }
 });
 
@@ -111,18 +118,6 @@ export default class SettingsScreen extends React.Component {
   }
 
   _return = () => {
-    // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    //   .then((responseJson) => {
-    //     return responseJson.json();
-    //   })
-    //   .then((json) => {
-    //     let list = Object.keys(json).map(function (key) { return json[key]; });
-    //     this.props.navigation.navigate('Mood', {moods: list})
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     this.props.navigation.dispatch(NavigationActions.back())
   }
 
@@ -132,7 +127,7 @@ export default class SettingsScreen extends React.Component {
         <View style={styles.shadow}>
           <View style={styles.header}>
             <TouchableOpacity onPress={this._return} style={{alignSelf: 'center', width: 25, marginRight: 10}}>
-              <Image source={Images.navArrowLeft} style={styles.arrow} />
+              <Image source={Images.arrowLeftWhite} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>
           </View>
@@ -140,43 +135,22 @@ export default class SettingsScreen extends React.Component {
         <Image source={Images.gradientHeading} style={styles.gradientHeading} />
         <View style={styles.body}>
           <View style={[styles.section, styles.sectionOne]}>
-            <Text style={styles.headText}>
-              Rate & Review
-            </Text>
-            <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-              <Text style={styles.bodyText}>
-                Please tap &nbsp;
-              {/* </Text> */}
-              <Text style={[styles.bodyText, styles.link]}
-                    onPress={() => Linking.openURL('https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk')}>
-                this link
-              </Text>
-              {/* <Text style={styles.bodyText}> */}
-                 &nbsp; to give us your thoughts. We always love your feedback!
-              </Text>
-            </View>
+            <TouchableOpacity onPress={() => Linking.openURL('https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk')}>
+              <Image source={Images.reviewButton} style={styles.bigButton} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/privacy.pdf')}>
+              <Image source={Images.termsButton} style={styles.bigButton} />
+            </TouchableOpacity>
           </View>
-          {/* <View style={[styles.section, styles.sectionOne]}>
-            <Text style={styles.headText}>
-              Report a Bug
-            </Text>
-            <Text style={styles.bodyText}>
-              If you encounter a bug, please report it on our &nbsp;
-              <Text style={[styles.bodyText, styles.link]}
-                    onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
-                bug report page.
-              </Text>
-            </Text>
-          </View> */}
           <View style={[styles.section]}>
-            <Text style={styles.headText}>
+            {/* <Text style={styles.headText}>
               Legal
+            </Text> */}
+            <Text style={styles.textRow}>
+              © 2017 Mood Industries LLC, all rights reserved.
             </Text>
-              <Text style={styles.textRow}>
-                © 2017 Mood Industries LLC, all rights reserved.
-              </Text>
 
-              <Text style={styles.textRow}>
+              {/* <Text style={styles.textRow}>
                 All intellectual property developed by Mood Industries LLC,
                 including but not limited to any/all design and software development
                 is protected by United States federal law and the proper legal structures.
@@ -186,15 +160,12 @@ export default class SettingsScreen extends React.Component {
                 All media used and distributed by Mood Industries LLC on the Mood.
                 app was provided by artists and parties with their consent alongside permission
                 to use their submitted media for commercial purposes.
-              </Text>
+              </Text> */}
 
-              <Text style={[styles.textRow, styles.link]}
+              {/* <Text style={[styles.textRow, styles.link]}
                     onPress={() => Linking.openURL('http://moodindustries.com/privacy.pdf')}>
                 Privacy Policy
-              </Text>
-          </View>
-          <View style={styles.section}>
-
+              </Text> */}
           </View>
         </View>
       </View>

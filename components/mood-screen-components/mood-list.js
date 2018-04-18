@@ -22,8 +22,9 @@ const styles = StyleSheet.create({
   header: {
     flex: 10,
     padding: 15,
-    paddingTop: 35,
-    alignItems: 'center'
+    paddingTop: 45,
+    alignItems: 'center',
+    paddingBottom: 25
   },
   headerContent: {
     flexDirection: 'row'
@@ -46,16 +47,16 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     paddingBottom: 0,
     paddingTop: 10,
-    paddingLeft: 25
+    paddingLeft: 22
   },
   bugsButton: {
     flex: 1,
     resizeMode: 'contain',
     position: 'absolute',
-    opacity: 0.3,
-    right: 56,
+    opacity: 0.35,
+    right: 64,
     width: 26,
-    height: 45,
+    height: 44,
     top: 8
   },
   settingsButton: {
@@ -64,8 +65,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 22,
     width: 26,
-    top: 8
+    height: 44,
+    top: 8,
+    opacity: 0.4,
+
   },
+  logo: {
+    flex: 1,
+    resizeMode: 'contain',
+    height: 50,
+    width: 80,
+    marginTop: 10,
+    marginLeft: 20
+  }
 });
 
 export default class MoodList extends React.Component {
@@ -78,6 +90,7 @@ export default class MoodList extends React.Component {
       mood={item}
       key={index}
       setMood={this.props.setMood}
+      playscreen={this.props.playscreen}
       selected={this.props.selected}
       id={index}
     />
@@ -88,7 +101,7 @@ export default class MoodList extends React.Component {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerText}>
-            mood
+            Mood.
           </Text>
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>
@@ -97,14 +110,12 @@ export default class MoodList extends React.Component {
             <Image source={Images.settingsGear} style={styles.settingsButton}/>
           </TouchableOpacity>
         </View>
-        {/* <Image source={Images.headerDivider} style={styles.headerDivider}/> */}
       </View>
     );
   }
 
   _settings = () => {
-    console.log('Linked');
-    this.props.navigate();
+    this.props.settings();
   }
 
   render = () => {
@@ -115,11 +126,7 @@ export default class MoodList extends React.Component {
         renderItem={this._renderItem}
         ListHeaderComponent={this._renderHeader}
         >
-
       </FlatList>
-      // <View style={styles.container}>
-      //   { this.mapMoodsToList(this.props.moods) }
-      // </View>
     );
   }
 }

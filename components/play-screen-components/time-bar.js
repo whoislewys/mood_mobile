@@ -97,7 +97,7 @@ export default class TimeBar extends React.Component {
 
   handleRelease = (e) => {
     this.setState({dragging: false});
-    this.props.setTime(this.pxToSeconds(this.state.x));
+    this.props.setTime(this.pxToSeconds(this.state.x) * 1000);
   }
 
   pxToSeconds = (pixels) => {

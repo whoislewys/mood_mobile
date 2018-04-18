@@ -14,7 +14,7 @@ const width = Dimensions.get('window').width;
 
 export default class Mood extends React.Component {
   _handlePress = () => {
-    this.props.setMood(this.props.id);
+    this.props.setMood(this.props.id, this.props.playscreen);
   }
 
   render = () => {
@@ -32,25 +32,14 @@ let styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'flex-start',
     flexDirection: 'row',
     marginTop: 10,
     marginBottom: 30,
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#eee',
-
-    // borderTopWidth: 1,
-    // borderTopColor: '#eee',
-    // height: 90
   },
   moodArt: {
     resizeMode: 'contain',
     width: width * 0.8,
     height: width * 0.8,
-    // width: 370,
-    // height: 370,
   },
   tile: {
     flex: 1,

@@ -9,12 +9,20 @@ import {
 } from 'react-native';
 
 import AlbumArt from './album-art.js';
-import Images from '@assets/images.js';
 import InfoText from './info-text';
 import TimeBar from './time-bar';
 
 export default class TrackInfo extends React.Component {
   render = () => {
+    // TODO: Rather than divide the props by 1000,
+    //       update the TimeBar component to handle milliseconds
+    let player = this.props.track.player;
+    let duration = 180;
+
+    if(player.duration >= 0) {
+      duration = player.duration / 1000;
+    }
+
     return (
       <View style={styles.albumContainer}>
         <AlbumArt
@@ -24,8 +32,8 @@ export default class TrackInfo extends React.Component {
         />
         <View style={[styles.albumInfo]}>
           <TimeBar
-            currentTime={this.props.currentTime}
-            totalTime={this.props.duration}
+            currentTime={this.props.currentTime / 1000}
+            totalTime={duration}
             setTime={this.props.setTime}
           />
           <InfoText track={this.props.track} />
