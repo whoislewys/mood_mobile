@@ -5,9 +5,15 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
-  Linking
+  Linking,
+  Image,
+  Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { NavigationActions } from 'react-navigation';
+import Images from '@assets/images.js';
+
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +24,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 15,
   },
   body: {
     flex: 95,
@@ -30,121 +38,137 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     paddingBottom: 25,
     zIndex: 3,
-
-    elevation: 2,
-    shadowOpacity: 0.75,
-    shadowRadius: 5,
-    shadowColor: '#bbb',
-    shadowOffset: { height: 0, width: 0 },
+    marginBottom: 15,
+    marginTop: 15,
   },
   headerText: {
     flex: 1,
-    color: '#222',
-    fontSize: 20,
-    fontWeight: '500',
+    color: '#555',
+    fontSize: 30,
+    fontWeight: '600',
     alignSelf: 'center',
-    paddingBottom: 4
+    textAlign: 'center',
+    paddingBottom: 4,
+    marginRight: 35,
   },
 
   section: {
     borderColor: '#bbb',
-    padding: 20
-
+    padding: 20,
+    paddingLeft: 10,
+    marginLeft: 20
   },
   sectionOne: {
-    borderBottomWidth: 1
+    // flexDirection: 'row',
+    paddingLeft: 0,
+    paddingBottom: 0,
+    alignItems: 'center'
   },
   headText: {
-    fontWeight: '400',
-    fontSize: 18,
-    color: 'black',
+    fontWeight: '600',
+    fontSize: 14,
+    color: '#333',
     fontFamily: 'Roboto',
-    marginBottom: 8
+    marginBottom: 8,
   },
   bodyText: {
     fontWeight: '400',
     fontSize: 16,
     color: '#555',
     fontFamily: 'Roboto',
+  },
+  textRow: {
+    fontWeight: '400',
+    fontSize: 16,
+    color: '#555',
+    fontFamily: 'Roboto',
+    marginTop: 10,
+    marginBottom: 10
+  },
+  link: {
+    color: '#0B0080',
+    textDecorationLine: 'underline'
+  },
+  arrow: {
+    resizeMode: 'stretch',
+    width: 15,
+    height: 19,
+    marginLeft: 20,
+    marginBottom: 2,
+    tintColor: 'black',
+    opacity: 0.7
+  },
+  gradientHeading: {
+    flex: 1,
+    resizeMode: 'stretch',
+    maxHeight: 1.5,
+    maxWidth: width,
+    marginLeft: 0
+  },
+  bigButton: {
+    resizeMode: 'contain',
+    width: width * 0.54,
+    height: 117
   }
 });
 
-export default React.createClass({
-  componentWillMount() {
+export default class SettingsScreen extends React.Component {
+  componentWillMount = () => {
     StatusBar.setBarStyle('dark-content', true);
-  },
-  _return() {
-    // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    //   .then((responseJson) => {
-    //     return responseJson.json();
-    //   })
-    //   .then((json) => {
-    //     let list = Object.keys(json).map(function (key) { return json[key]; });
-    //     this.props.navigation.navigate('Mood', {moods: list})
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    this.props.navigation.goBack();
-  },
-  render() {
+  }
+
+  _return = () => {
+    this.props.navigation.dispatch(NavigationActions.back())
+  }
+
+  render = () => {
     return (
       <View style={styles.container}>
         <View style={styles.shadow}>
           <View style={styles.header}>
             <TouchableOpacity onPress={this._return} style={{alignSelf: 'center', width: 25, marginRight: 10}}>
-              <Icon
-                name='arrow-left'
-                color='black'
-                style={{backgroundColor: 'transparent'}}
-                size={25}
-              />
+              <Image source={Images.arrowLeftWhite} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>
           </View>
         </View>
+        <Image source={Images.gradientHeading} style={styles.gradientHeading} />
         <View style={styles.body}>
           <View style={[styles.section, styles.sectionOne]}>
-            <Text style={styles.headText}>
-              Rate & Review
-            </Text>
-            <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-              <Text style={styles.bodyText}>
-                Please tap &nbsp;
-              {/* </Text> */}
-              <Text style={[styles.bodyText, {color: '#222', textDecorationLine: 'underline'}]}
-                    onPress={() => Linking.openURL('http://google.com')}>
-                this link
-              </Text>
-              {/* <Text style={styles.bodyText}> */}
-                 &nbsp; to give us your thoughts. We always love your feedback!
-              </Text>
-            </View>
+            <TouchableOpacity onPress={() => Linking.openURL('https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk')}>
+              <Image source={Images.reviewButton} style={styles.bigButton} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/privacy.pdf')}>
+              <Image source={Images.termsButton} style={styles.bigButton} />
+            </TouchableOpacity>
           </View>
-          <View style={[styles.section, styles.sectionOne]}>
-            <Text style={styles.headText}>
-              Header One
-            </Text>
-            <Text style={styles.bodyText}>
-              This is some settings text, lorem ipsum dolor sit amet
-            </Text>
-          </View>
-          <View style={[styles.section, styles.sectionOne]}>
-            <Text style={styles.headText}>
+          <View style={[styles.section]}>
+            {/* <Text style={styles.headText}>
               Legal
+            </Text> */}
+            <Text style={styles.textRow}>
+              © 2017 Mood Industries LLC, all rights reserved.
             </Text>
-            <Text style={styles.bodyText}>
-              All intellectual property developed by Mood Industries LLC,
-              including but not limited to any/all design and software development
-              is protected by United States federal law and the proper legal structures.
-            </Text>
-          </View>
-          <View style={styles.section}>
 
+              {/* <Text style={styles.textRow}>
+                All intellectual property developed by Mood Industries LLC,
+                including but not limited to any/all design and software development
+                is protected by United States federal law and the proper legal structures.
+              </Text>
+
+              <Text style={styles.textRow}>
+                All media used and distributed by Mood Industries LLC on the Mood.
+                app was provided by artists and parties with their consent alongside permission
+                to use their submitted media for commercial purposes.
+              </Text> */}
+
+              {/* <Text style={[styles.textRow, styles.link]}
+                    onPress={() => Linking.openURL('http://moodindustries.com/privacy.pdf')}>
+                Privacy Policy
+              </Text> */}
           </View>
         </View>
       </View>
     );
-  },
-});
+  }
+}

@@ -24,13 +24,20 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     flex: 1,
   },
+  arrow: {
+    resizeMode: 'contain',
+    flex: 1,
+    marginLeft: 24,
+    width: 22,
+    height: 11,
+    opacity: 0.8,
+  },
   art: {
-    flex: 24,
+    flex: 20,
     justifyContent: 'flex-start'
   },
   info: {
-    flex: 80,
-    paddingLeft: 10
+    flex: 88,
   },
   subInfo: {
     flexDirection: 'row',
@@ -39,50 +46,51 @@ const styles = StyleSheet.create({
     flex: 20,
   },
   albumInfoText: {
+    flexDirection: 'row',
+    paddingLeft: width * 0.02,
+    width: 280,
     color: '#fff',
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: 'Roboto',
-    fontWeight: '500'
+    fontWeight: '300',
+    textAlign: 'center'
   },
   albumInfoSubText: {
     color: '#fff',
     fontSize: 14,
     fontFamily: 'Roboto',
     fontWeight: '300'
+  },
+  playPauseButton: {
+    width: 30,
+    height: 30,
+    backgroundColor: 'transparent'
   }
 });
 
-export default React.createClass({
-  playButton() {
+export default class PlayBar extends React.Component {
+  playButton = () => {
     if (this.props.playing) {
       return (
         <TouchableOpacity onPress={this.props.handlePlayPress}>
-          <Icon
-            name='pause'
-            color='white'
-            style={{backgroundColor: 'transparent'}}
-            size={35}
-          />
+          <Image source={Images.pauseButtonWhite} style={styles.playPauseButton} />
         </TouchableOpacity>
       );
     }
     return (
       <TouchableOpacity onPress={this.props.handlePlayPress}>
-        <Icon
-          name='play'
-          color='white'
-          style={{backgroundColor: 'transparent'}}
-          size={35}
-        />
+        <Image source={Images.playButtonWhite} style={styles.playPauseButton} />
       </TouchableOpacity>
     );
-  },
-  albumArt() {
+  }
+
+  albumArt = () => {
     return (
-      <Image source={{uri: this.props.track.art_url}} style={styles.albumArt}/>
+      <Image source={Images.arrowUpWhite} style={styles.arrow}/>
     );
-  },
-  render() {
+  }
+
+  render = () => {
     const track = this.props.track;
 
     return (
@@ -91,28 +99,16 @@ export default React.createClass({
           {this.albumArt()}
         </TouchableOpacity>
         <TouchableOpacity onPress={this.props.go} style={styles.info}>
-          <View>
+          <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Text
               style={[styles.albumInfoText, {
-                maxWidth: width * 0.45
+                maxWidth: width * 0.61,
+                textAlign: 'center'
               }]}
               numberOfLines={1}
               ellipsizeMode="tail"
               >
               { track.name }
-            </Text>
-          </View>
-          <View style={styles.subInfo}>
-            <Text
-              style={[styles.albumInfoSubText, {
-                maxWidth: width * 0.6
-              }]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              >
-              { track.artist }
-              &nbsp;-&nbsp;
-              { track.album_name }
             </Text>
           </View>
         </TouchableOpacity>
@@ -121,5 +117,5 @@ export default React.createClass({
         </View>
       </View>
     );
-  },
-});
+  }
+}

@@ -6,9 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
   StatusBar,
+  Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { NavigationActions } from 'react-navigation';
 
 import Images from '@assets/images.js';
 import PlayControls from './play-screen-components/play-controls';
@@ -28,56 +30,66 @@ const styles = StyleSheet.create({
     flex: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginLeft: 0.01 * width,
     marginRight: 0.02 * width,
     marginTop: 20
   },
   moodText: {
+    flex: 1,
     backgroundColor: 'transparent',
-    color: 'white',
-    justifyContent: 'center',
+    textAlign: 'center',
+    color: '#ccc',
+
+    paddingTop: 0,
+    marginTop: -4,
+
+    fontSize: 25,
+    fontFamily: 'Roboto',
+    fontWeight: '300',
   },
   backButton: {
-    // width: 10,
-    // height: 20,
-    // marginTop: 15,
-    // marginLeft: 0.02 * width,
-    // resizeMode: 'stretch',
+    width: 23,
+    height: 14,
+    position: 'absolute',
+    top: -7,
+    left: 0.02 * width,
+    opacity: 0.5,
+    resizeMode: 'stretch',
+    transform: [{ rotateX: '180deg'}],
   },
+  touchable: {
+    zIndex: 2
+  }
 });
 
-const Playscreen = React.createClass({
-  componentWillMount() {
-    for (let i = 1; i < this.props.playQueue.length; i += 1) {
-      const url = this.props.playQueue[i].art_url;
+export default class PlayScreen extends React.Component {
+  componentWillMount = () => {
+    //Prefetch album art in parallel
+    var imagePrefetch = [];
 
-      const prefetchTask = Image.prefetch(url);
-      prefetchTask.then(() => {
-        console.log(`✔ Prefetch OK - ${this.props.playQueue[i].album_name}`);
-      }, () => {
-        console.log(`✘ Prefetch failed - ${this.props.playQueue[i].album_name}`);
-      });
+    for (let song of this.props.playQueue) {
+        imagePrefetch.push(Image.prefetch(song.art_url));
     }
 
+    Promise.all(imagePrefetch).then(results => {
+        console.log("All album art prefetched in parallel");
+    });
+
     StatusBar.setBarStyle('light-content', true);
-  },
-  navBack() {
-    // fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    // // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    //   .then((responseJson) => {
-    //     return responseJson.json();
-    //   })
-    //   .then((json) => {
-    //     let list = Object.keys(json).map(function (key) { return json[key]; });
-    //     this.props.navigation.navigate('Mood', {moods: list})
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    this.props.navigation.goBack();
-  },
-  render() {
+
+    if(!this.props.playQueue[this.props.currentTrack].player.canPlay) {
+      this.props.setLoading();
+    }
+  }
+
+  navBack = () => {
+    this.props.navigation.dispatch(NavigationActions.back())
+  }
+
+  render = () => {
+    let mood = this.props.moodList[this.props.mood];
+
     return (
       <Background
         image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
@@ -85,46 +97,37 @@ const Playscreen = React.createClass({
       >
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
-            <TouchableOpacity onPress={this.navBack}>
-              <Icon
-                name='arrow-left'
-                color='white'
-                style={{backgroundColor: 'transparent'}}
-                size={25}
-              />
-              {/* <Image source={Images.backArrow} style={styles.backButton} /> */}
+            <TouchableOpacity onPress={this.navBack} style={styles.touchable}>
+              <Image source={Images.arrowUpWhite} style={styles.backButton} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.navBack}>
-              <Icon
-                name='playlist-plus'
-                color='white'
-                style={{backgroundColor: 'transparent'}}
-                size={25}
-              />
-              {/* <Image source={Images.backArrow} style={styles.backButton} /> */}
-            </TouchableOpacity>
-            {/* <Text style={styles.moodText}>{this.props.mood.name}</Text> */}
+
+            <Text style={styles.moodText}>
+              { mood.name.toLowerCase() }
+            </Text>
+
+            {/* Add centered mood name to give balance to the top bar */}
+
           </View>
           <TrackInfo
             skipForward={this.props.nextTrack}
             skipBack={this.props.previousTrack}
             track={this.props.playQueue[this.props.currentTrack]}
-            duration={this.props.duration}
-            currentTime={this.props.currentTime}
             setTime={this.props.setTime}
+            currentTime={this.props.currentTime}
           />
           <PlayControls
-            liked={this.props.liked}
-            toggleLike={this.props.toggleLike}
-            toggleDislike={this.props.toggleDislike}
+            shuffle={this.props.shuffle}
+            repeat={this.props.repeat}
+            toggleShuffle={this.props.toggleShuffle}
+            toggleRepeat={this.props.toggleRepeat}
 
             playing={this.props.playing}
             handlePlayPress={this.props.handlePlayPress}
+
+            loading={this.props.loading}
           />
         </View>
       </Background>
     );
-  },
-});
-
-export default Playscreen;
+  }
+}

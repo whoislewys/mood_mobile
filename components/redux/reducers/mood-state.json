@@ -1,0 +1,15 @@
+{
+  "moods": [
+    {
+      "id": 0,
+      "name": "sad",
+      "file": "images.google.com/image"
+    },
+    {
+      "id": 1,
+      "name": "sad",
+      "file": "images.google.com/image"
+    }
+  ],
+  "selected_mood": 1
+}
