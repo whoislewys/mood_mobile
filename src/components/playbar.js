@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PlayBar extends React.Component {
+export default class PlayBar extends Component {
   playButton = () => {
     if (this.props.playing) {
       return (

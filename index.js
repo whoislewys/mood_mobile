@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import Main from './main';
+import App from './App';
 
-AppRegistry.registerComponent('moodmobile', () => Main);
+AppRegistry.registerComponent('moodmobile', () => App);

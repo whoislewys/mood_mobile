@@ -6,7 +6,22 @@ import {
 } from 'react-native';
 import Images from '@assets/images.js';
 
-export default class Background extends React.Component {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  bgImage: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    resizeMode: 'cover'
+  }
+});
+
+export default class Background extends Component {
   render = () => {
     return (
       <View style={styles.container}>
@@ -34,18 +49,3 @@ export default class Background extends React.Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  bgImage: {
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    resizeMode: 'cover'
-  }
-});

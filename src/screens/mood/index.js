@@ -52,21 +52,17 @@ export default class MoodScreen extends React.Component {
   }
 
   navigateToPlayScreen = (params) => {
-    const navigate = NavigationActions.navigate({
+    this.props.navigation.navigate({
       routeName: 'Play',
       params: { ...params }
     });
-
-    this.props.navigation.dispatch(navigate);
   };
 
   navigateToSettingsScreen = (params = {}) => {
-    const navigate = NavigationActions.navigate({
+    this.props.navigation.navigate({
       routeName: 'Settings',
       params: { ...params }
     });
-
-    this.props.navigation.dispatch(navigate);
   };
 
   _playbarGo = () => {

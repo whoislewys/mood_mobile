@@ -83,10 +83,6 @@ export default class PlayScreen extends React.Component {
     }
   }
 
-  navBack = () => {
-    this.props.navigation.dispatch(NavigationActions.back())
-  }
-
   render = () => {
     let mood = this.props.moodList[this.props.mood];
 
@@ -97,7 +93,7 @@ export default class PlayScreen extends React.Component {
       >
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
-            <TouchableOpacity onPress={this.navBack} style={styles.touchable}>
+            <TouchableOpacity onPress={this.props.navigation.goBack} style={styles.touchable}>
               <Image source={Images.arrowUpWhite} style={styles.backButton} />
             </TouchableOpacity>
 
