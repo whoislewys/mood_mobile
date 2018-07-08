@@ -3,13 +3,6 @@ package com.moodmobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.avishayil.rnrestart.ReactNativeRestartPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import fm.indiecast.rnaudiostreamer.RNAudioStreamerPackage;
-import com.tanguyantoine.react.MusicControl;
-import com.zmxv.RNSound.RNSoundPackage;
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -29,13 +22,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new ReactNativeRestartPackage(),
-            new SplashScreenReactPackage(),
-            new VectorIconsPackage(),
-            new RNAudioStreamerPackage(),
-            new MusicControl(),
-            new RNSoundPackage()
+          new MainReactPackage()
       );
     }
 
