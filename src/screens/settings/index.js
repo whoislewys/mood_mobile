@@ -117,16 +117,12 @@ export default class SettingsScreen extends React.Component {
     StatusBar.setBarStyle('dark-content', true);
   }
 
-  _return = () => {
-    this.props.navigation.dispatch(NavigationActions.back())
-  }
-
   render = () => {
     return (
       <View style={styles.container}>
         <View style={styles.shadow}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={this._return} style={{alignSelf: 'center', width: 25, marginRight: 10}}>
+            <TouchableOpacity onPress={this.props.navigation.goBack} style={{alignSelf: 'center', width: 25, marginRight: 10}}>
               <Image source={Images.arrowLeftWhite} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>

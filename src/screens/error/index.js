@@ -47,12 +47,10 @@ export default class ErrorScreen extends React.Component {
   }
 
   navigateToSplashScreen = (params) => {
-    const navigate = NavigationActions.navigate({
+    this.props.navigation.navigate({
       routeName: 'Splash',
       params: { ...params }
     });
-
-    this.props.navigation.dispatch(navigate);
   }
 
   render = () => {

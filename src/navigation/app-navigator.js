@@ -2,11 +2,11 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Easing, Animated } from 'react-native';
 
-import PlayScreen from '../play-screen';
-import MoodScreen from '../mood-screen'
-import SplashScreen from '../splash-screen';
-import SettingsScreen from '../settings-screen';
-import ErrorScreen from '../error-screen';
+import PlayScreen from '../screens/play';
+import MoodScreen from '../screens/mood'
+import SplashScreen from '../screens/splash';
+import SettingsScreen from '../screens/settings';
+import ErrorScreen from '../screens/error';
 
 const map = (SomeComponent) => {
   return class SomeClass extends React.Component {
@@ -19,7 +19,7 @@ const map = (SomeComponent) => {
   }
 }
 
-export default NavigationStack = createStackNavigator({
+export default createStackNavigator({
   Splash: { screen: map(SplashScreen) },
   Mood: { screen: map(MoodScreen) },
   Play: { screen: map(PlayScreen) },

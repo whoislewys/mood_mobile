@@ -61,21 +61,17 @@ export default class Splash extends React.Component {
   }
 
   navigateToMoodScreen = (params) => {
-    const navigate = NavigationActions.navigate({
+    this.props.navigation.navigate({
       routeName: 'Mood',
       params: { ...params }
     });
-
-    this.props.navigation.dispatch(navigate);
   };
 
   navigateToErrorScreen = (params) => {
-    const navigate = NavigationActions.navigate({
+    this.props.navigation.navigate({
       routeName: 'Error',
       params: { ...params }
     });
-
-    this.props.navigation.dispatch(navigate);
   };
 
   render = () => {
