@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,12 @@ import {
   Dimensions
 } from 'react-native';
 
-export default class AlbumArt extends React.Component {
-  state = {
-    x: 0
+export default class AlbumArt extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      x: 0
+    }
   }
 
   setPosition = (e) => {

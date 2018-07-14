@@ -3,11 +3,9 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   NetInfo
 } from 'react-native';
 
-import { NavigationActions } from 'react-navigation';
 import RNRestart from 'react-native-restart';
 import Images from '@assets/images';
 
@@ -27,10 +25,13 @@ let styles = StyleSheet.create({
   }
 });
 
-export default class ErrorScreen extends React.Component {
-  state = {
-    internetCheck: false
-  };
+export default class ErrorScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      internetCheck: false
+    }
+  }
 
   componentDidMount = () => {
     this.setState({internetCheck:

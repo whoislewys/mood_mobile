@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,32 @@ import {
 
 const width = Dimensions.get('window').width;
 
-export default class InfoText extends React.Component {
+let styles = StyleSheet.create({
+  albumInfoText: {
+    flex: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent'
+  },
+  albumInfoMain: {
+    color: 'white',
+    maxWidth: width * 0.5,
+    fontSize: 18,
+    fontFamily: 'Roboto',
+    fontWeight: '400'
+  },
+  albumInfoSubRow: {
+    flexDirection: 'row'
+  },
+  albumInfoSubText: {
+    color: '#ddd',
+    fontSize: 14,
+    fontFamily: 'Roboto',
+    fontWeight: '300'
+  }
+});
+
+export default class InfoText extends Component {
   render = () => {
     let album = this.props.track;
 
@@ -50,28 +75,3 @@ export default class InfoText extends React.Component {
     );
   }
 }
-
-let styles = StyleSheet.create({
-  albumInfoText: {
-    flex: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent'
-  },
-  albumInfoMain: {
-    color: 'white',
-    maxWidth: width * 0.5,
-    fontSize: 18,
-    fontFamily: 'Roboto',
-    fontWeight: '400'
-  },
-  albumInfoSubRow: {
-    flexDirection: 'row'
-  },
-  albumInfoSubText: {
-    color: '#ddd',
-    fontSize: 14,
-    fontFamily: 'Roboto',
-    fontWeight: '300'
-  }
-});

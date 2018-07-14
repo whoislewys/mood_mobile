@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import Images from '@assets/images.js';
-import ToggleButton from '../toggle-button';
+import ToggleButton from './toggle-button';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const width = Dimensions.get('window').width;
