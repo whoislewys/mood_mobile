@@ -14,7 +14,6 @@ import Images from '@assets/images.js';
 import Mood from './mood';
 const width = Dimensions.get('window').width;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -82,13 +81,12 @@ const styles = StyleSheet.create({
 
 export default class MoodList extends React.Component {
   _keyExtractor = (mood, index) => {
-    return index;
+    return mood.name;
   }
 
   _renderItem = ({item, index}) => {
     return <Mood
       mood={item}
-      key={index}
       setMood={this.props.setMood}
       playscreen={this.props.playscreen}
       selected={this.props.selected}

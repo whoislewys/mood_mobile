@@ -1,8 +1,9 @@
 import React from 'react';
 import { DeviceEventEmitter, Image } from 'react-native';
+import { Provider } from 'react-redux';
 
-// import store from './components/redux/store.js'
-import Navigator from './components/main-components/navigator'
+import store from './src/redux/store';
+import Navigator from './src/navigation/app-navigator';
 
 import _ from 'lodash';
 import {
@@ -13,26 +14,22 @@ import {
 import SplashScreen from 'react-native-splash-screen'
 
 export default class Main extends React.Component {
-  // Lifecycle Functions
-  state = {
-    currentTrack: 0,
-    playing: false,
-    shuffle: false,
-    repeat: false,
-    currentTime: 0,
-    updateCurrentTime: true,
-    playQueue: [],
-    oldQueue: [],
-    moodList: [],
-    mood: -1,
-    loading: false
-  };
-
-  // Lifecycle functions
-  componentWillMount = () => {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentTrack: 0,
+      playing: false,
+      shuffle: false,
+      repeat: false,
+      currentTime: 0,
+      updateCurrentTime: true,
+      playQueue: [],
+      oldQueue: [],
+      loading: false
+    }
   }
 
+  // Lifecycle functions
   componentDidMount = () => {
 
   }
@@ -289,42 +286,44 @@ export default class Main extends React.Component {
 
   render = () => {
     return (
-      <Navigator
-        // Track info
-        currentTrack={this.state.currentTrack}
-        playing={this.state.playing}
-        playQueue={this.state.playQueue}
-        currentTime={this.state.currentTime}
+      <Provider store={store}>
+        <Navigator
+          // Track info
+          currentTrack={this.state.currentTrack}
+          playing={this.state.playing}
+          playQueue={this.state.playQueue}
+          currentTime={this.state.currentTime}
 
-        // Queue mutations
-        shuffle={this.state.shuffle}
-        repeat={this.state.repeat}
+          // Queue mutations
+          shuffle={this.state.shuffle}
+          repeat={this.state.repeat}
 
-        //Mood functions/data (mostly used by mood screen)
-        setMoodList={this._setMoodList}
-        setMood={this._setMood}
-        loading={this.state.loading}
-        setLoading={this._setLoadingInterval}
+          //Mood functions/data (mostly used by mood screen)
+          setMoodList={this._setMoodList}
+          setMood={this._setMood}
+          loading={this.state.loading}
+          setLoading={this._setLoadingInterval}
 
-        mood={this.state.mood}
-        moodList={this.state.moodList}
+          mood={this.state.mood}
+          moodList={this.state.moodList}
 
-        // Functions
-        nextTrack={this.nextTrack}
-        previousTrack={this.previousTrack}
+          // Functions
+          nextTrack={this.nextTrack}
+          previousTrack={this.previousTrack}
 
-        handlePlayPress={this.handlePlayPress}
-        stopPlayback={this.stopPlayback}
+          handlePlayPress={this.handlePlayPress}
+          stopPlayback={this.stopPlayback}
 
-        setTime={this.setTime}
+          setTime={this.setTime}
 
-        toggleShuffle={this.toggleShuffle}
-        toggleRepeat={this.toggleRepeat}
+          toggleShuffle={this.toggleShuffle}
+          toggleRepeat={this.toggleRepeat}
 
-        setPlayQueue={this.setPlayQueue}
+          setPlayQueue={this.setPlayQueue}
 
-        appLoaded={this.appLoaded}
-      />
+          appLoaded={this.appLoaded}
+        />
+      </Provider>
     );
   }
 }

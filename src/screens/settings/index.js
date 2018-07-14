@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
   Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavigationActions } from 'react-navigation';
+
 import Images from '@assets/images.js';
 
 const width = Dimensions.get('window').width;
@@ -112,12 +112,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class SettingsScreen extends React.Component {
-  componentWillMount = () => {
-    StatusBar.setBarStyle('dark-content', true);
-  }
-
+export default class SettingsScreen extends Component {
   render = () => {
+    StatusBar.setBarStyle('dark-content', true);
+    
     return (
       <View style={styles.container}>
         <View style={styles.shadow}>

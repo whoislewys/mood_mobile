@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,12 +10,10 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { NavigationActions } from 'react-navigation';
-
 import Images from '@assets/images.js';
-import PlayControls from './play-screen-components/play-controls';
-import TrackInfo from './play-screen-components/track-info';
-import Background from './background';
+import PlayControls from './components/play-controls';
+import TrackInfo from './components/track-info';
+import Background from '../../components/background';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -63,8 +61,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PlayScreen extends React.Component {
-  componentWillMount = () => {
+export default class PlayScreen extends Component {
+  componentDidMount = () => {
     //Prefetch album art in parallel
     var imagePrefetch = [];
 

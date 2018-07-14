@@ -1,50 +1,33 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
-  Text,
-  Image,
   NetInfo
 } from 'react-native';
+import { connect } from 'react-redux';
 
-import { NavigationActions } from 'react-navigation';
+import { loadMoods } from '../../redux/modules/mood';
 
-import Background from './background';
+import Background from '../../components/background';
 import Images from '@assets/images';
 
-export default class Splash extends React.Component {
-  state = {
-    internetCheck: null
-  };
+class SplashScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      internetCheck: null
+    }
 
-  componentWillMount = () => {
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
   }
 
   componentDidMount = () => {
-    fetch('http://api.moodindustries.com/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-    // fetch('http://localhost:3000/api/v1/moods/?t=EXVbAWTqbGFl7BKuqUQv')
-      .then((responseJson) => {
-        return responseJson.json();
-      })
-      .then((json) => {
-        let list = Object.keys(json).map(function (key) { return json[key]; });
-        console.log(list);
+    this.props.loadMoods();
+  }
 
-        //Prefetch mood art
-        var imagePrefetch = [];
-        for (let mood of list) {
-            imagePrefetch.push(Image.prefetch(mood.file));
-        }
-
-        Promise.all(imagePrefetch).then(results => {
-            console.log("All images prefetched in parallel");
-            this.props.setMoodList(list, this.navigateToMoodScreen);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  componentDidUpdate = () => {
+    if(this.props.moods.length > 0) {
+      this.navigateToMoodScreen();
+    }
   }
 
   handleConnectivityChange = (isConnected) => {
@@ -76,15 +59,23 @@ export default class Splash extends React.Component {
 
   render = () => {
     return (
-      <View style={styles.container}>
+      <View style={{flex: 1}}>
 
       </View>
     );
   }
 }
 
-let styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-});
+const mapStateToProps = state => {
+  return {
+    moods: state.mood.moods,
+    loading: state.mood.loading,
+    error: state.mood.error
+  };
+};
+
+const mapDispatchToProps = {
+  loadMoods
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -9,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Images from '@assets/images.js';
-import ToggleButton from '../toggle-button';
+import ToggleButton from '../../../components/toggle-button';
 
 const styles = StyleSheet.create({
   playControls: {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PlayControls extends React.Component {
+export default class PlayControls extends Component {
   render = () => {
     return (
       <View style={styles.playControls}>

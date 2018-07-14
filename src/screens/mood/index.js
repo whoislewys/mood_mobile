@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,14 +8,17 @@ import {
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { NavigationActions } from 'react-navigation';
+import SplashScreen from 'react-native-splash-screen'
 
-import Background from './background';
-import MoodList from './mood-screen-components/mood-list';
-import Mood from './mood-screen-components/mood';
-import Playbar from './main-components/playbar';
+import { setMood } from '../../redux/modules/mood';
+
+import Background from '../../components/background';
+import MoodList from './components/mood-list';
+import Mood from './components/mood';
+import Playbar from '../../components/playbar';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,13 +45,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class MoodScreen extends React.Component {
-  componentWillMount = () => {
-    StatusBar.setBarStyle('dark-content', true);
-  }
-
+class MoodScreen extends Component {
   componentDidMount = () => {
-    this.props.appLoaded(true);
+    StatusBar.setBarStyle('dark-content', true);
+    // this.props.appLoaded(true);
   }
 
   navigateToPlayScreen = (params) => {
@@ -70,25 +70,25 @@ export default class MoodScreen extends React.Component {
   }
 
   _getMusicBar = () => {
-    if(this.props.playQueue.length > 0) {
-      return (
-        <View style={styles.footer}>
-          <Playbar
-            track={this.props.playQueue[this.props.currentTrack]}
-            handlePlayPress={this.props.handlePlayPress}
-            playing={this.props.playing}
-            go={this._playbarGo}
-          />
-        </View>
-      );
-    }
+    // if(this.props.playQueue.length > 0) {
+    //   return (
+    //     <View style={styles.footer}>
+    //       <Playbar
+    //         track={this.props.playQueue[this.props.currentTrack]}
+    //         handlePlayPress={this.props.handlePlayPress}
+    //         playing={this.props.playing}
+    //         go={this._playbarGo}
+    //       />
+    //     </View>
+    //   );
+    // }
   }
 
   _getContent = () => {
     if(!this.props.loading) {
       return (
           <MoodList
-            moods={this.props.moodList}
+            moods={this.props.moods}
             setMood={this.props.setMood}
             selected={this.props.mood}
             settings={this.navigateToSettingsScreen}
@@ -113,3 +113,16 @@ export default class MoodScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    moods: state.mood.moods,
+    mood: state.mood.selected
+  };
+};
+
+const mapDispatchToProps = {
+  setMood
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoodScreen);

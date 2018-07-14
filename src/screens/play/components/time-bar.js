@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,12 +11,43 @@ import moment from 'moment';
 import Images from '@assets/images';
 const width = Dimensions.get('window').width * 0.8;
 
-export default class TimeBar extends React.Component {
-  state = {
-    x: 0,
-    dragging: false,
-    totalTime: 180
-  };
+let styles = StyleSheet.create({
+  timeBar: {
+    flex: 10,
+    width: width,
+    marginHorizontal: 10,
+    marginTop: 15,
+    flexDirection: 'row',
+    position: 'relative'
+  },
+  tick: {
+    position: 'absolute'
+  },
+  tickContainer: {
+    position: 'absolute',
+    top: -9,
+    width: 40,
+    height: 40
+  },
+  time: {
+    backgroundColor: 'transparent',
+    color: 'white',
+    fontSize: 14,
+    fontFamily: 'Roboto',
+    fontWeight: '400',
+    position: 'absolute'
+  }
+});
+
+export default class TimeBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      x: 0,
+      dragging: false,
+      totalTime: 180
+    }
+  }
 
   componentWillReceiveProps = (nextProps) => {
     if(nextProps.totalTime != -1) this.setState({totalTime: nextProps.totalTime});
@@ -138,31 +169,3 @@ export default class TimeBar extends React.Component {
     );
   }
 }
-
-let styles = StyleSheet.create({
-  timeBar: {
-    flex: 10,
-    width: width,
-    marginHorizontal: 10,
-    marginTop: 15,
-    flexDirection: 'row',
-    position: 'relative'
-  },
-  tick: {
-    position: 'absolute'
-  },
-  tickContainer: {
-    position: 'absolute',
-    top: -9,
-    width: 40,
-    height: 40
-  },
-  time: {
-    backgroundColor: 'transparent',
-    color: 'white',
-    fontSize: 14,
-    fontFamily: 'Roboto',
-    fontWeight: '400',
-    position: 'absolute'
-  }
-});
