@@ -1,19 +1,13 @@
-import React from 'react';
-import { DeviceEventEmitter, Image } from 'react-native';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
+
+import { Player } from 'react-native-audio-toolkit';
 
 import store from './src/redux/store';
 import Navigator from './src/navigation/app-navigator';
 
-import _ from 'lodash';
-import {
-    Player,
-    MediaStates
-} from 'react-native-audio-toolkit';
-
-import SplashScreen from 'react-native-splash-screen'
-
-export default class Main extends React.Component {
+export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,8 +19,8 @@ export default class Main extends React.Component {
       updateCurrentTime: true,
       playQueue: [],
       oldQueue: [],
-      loading: false
-    }
+      loading: false,
+    };
   }
 
   // Lifecycle functions
@@ -34,16 +28,16 @@ export default class Main extends React.Component {
 
   }
 
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
   // Queue control functions
 
   // set the playQueue, adding a 'player' element to each song
   setPlayQueue = (queue) => {
-    let newQueue = queue.map((song, i) => {
-      let newSong = song;
+    const newQueue = queue.map((song) => {
+      const newSong = song;
 
-      newSong.player = new Player(song['file'], {
-        autoDestroy: false
+      newSong.player = new Player(song.file, {
+        autoDestroy: false,
       }).prepare((err) => {
         if (err) {
           console.log(err);
@@ -53,7 +47,7 @@ export default class Main extends React.Component {
       return newSong;
     });
 
-    this.setState({playQueue: queue});
+    this.setState({ playQueue: queue });
   }
 
   nextTrack = () => {
@@ -65,42 +59,40 @@ export default class Main extends React.Component {
   }
 
   toggleShuffle = () => {
-    if(this.state.shuffle) {
-      this.setState({playQueue: this.state.oldQueue, oldQueue: [], shuffle: false});
+    if (this.state.shuffle) {
+      this.setState({ playQueue: this.state.oldQueue, oldQueue: [], shuffle: false });
     } else {
-      let shuffled = this.shuffle(this.state.playQueue, this.state.currentTrack);
-      this.setState({oldQueue: this.state.playQueue, playQueue: shuffled, shuffle: true});
+      const shuffled = this.shuffle(this.state.playQueue, this.state.currentTrack);
+      this.setState({ oldQueue: this.state.playQueue, playQueue: shuffled, shuffle: true });
     }
   }
 
   toggleRepeat = () => {
-    this.setState({repeat: !this.state.repeat})
+    this.setState({ repeat: !this.state.repeat });
   }
 
   // Cycle the currentTrack in the direction/amount defined
   cycleSong = (direction) => {
-    if(this.state.loading) return;
+    if (this.state.loading) return;
 
-    let end = this.state.playQueue.length - 1;
+    const end = this.state.playQueue.length - 1;
     let next = this.state.currentTrack + direction;
 
-    if(this.state.repeat) {
-      if(next < 0 || next > end) {
+    if (this.state.repeat) {
+      if (next < 0 || next > end) {
         next = this.mod(next, end + 1);
       }
-    } else {
-      if(next < 0 ) {
-        next = 0;
-      } else if(next > end) {
-        next = end;
-      }
+    } else if (next < 0) {
+      next = 0;
+    } else if (next > end) {
+      next = end;
     }
 
     this.setNewSong(next);
   }
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
   // Playback functions
   handlePlayPress = () => {
     if (this.state.playing) {
@@ -112,157 +104,147 @@ export default class Main extends React.Component {
 
   setTime = (time) => {
     this.state.playQueue[this.state.currentTrack].player.seek(time);
-    this.setState({updateCurrentTime: this.state.playing, currentTime: time});
-    //Only prevent update to current time if the song is currently playing
+    this.setState({ updateCurrentTime: this.state.playing, currentTime: time });
+    // Only prevent update to current time if the song is currently playing
   }
 
   pausePlayback = () => {
-    this.state.playQueue[this.state.currentTrack].player.pause(this._playingStopped);
+    this.state.playQueue[this.state.currentTrack].player.pause(this.playingStopped);
   }
 
   startPlayback = () => {
-    let player = this.state.playQueue[this.state.currentTrack].player;
-    if(player.canPlay) {
-      player.play(this._playingStarted);
-      player.on('ended', this._songEndCallback)
+    const [player] = this.state.playQueue[this.state.currentTrack];
+    if (player.canPlay) {
+      player.play(this.playingStarted);
+      player.on('ended', this.songEndCallback);
     }
   }
 
   stopPlayback = () => {
-    let track = this.state.playQueue[this.state.currentTrack];
-    if(track && track.player && track.player.canStop) {
-      track.player.stop(this._playingStopped);
-      this.setState({currentTime: 0});
+    const track = this.state.playQueue[this.state.currentTrack];
+    if (track && track.player && track.player.canStop) {
+      track.player.stop(this.playingStopped);
+      this.setState({ currentTime: 0 });
     }
   }
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
   // State change functions
-  _playingStarted = () => {
-    this.setState({playing: true, updateCurrentTime: true});
-    this._startInterval();
+  playingStarted = () => {
+    this.setState({ playing: true, updateCurrentTime: true });
+    this.startInterval();
   }
 
-  _playingStopped = () => {
-    this._stopInterval();
-    this.setState({playing: false});
+  playingStopped = () => {
+    this.stopInterval();
+    this.setState({ playing: false });
   }
 
-  _songEndCallback = () => {
+  songEndCallback = () => {
     this.stopPlayback();
     this.nextTrack();
   }
 
-  _startInterval = () => {
+  startInterval = () => {
     this.interval = setInterval(() => {
       if (!this.state.playing || !this.state.updateCurrentTime) return;
-      let track = this.state.playQueue[this.state.currentTrack];
-      this.setState({currentTime: track.player.currentTime});
+      const track = this.state.playQueue[this.state.currentTrack];
+      this.setState({ currentTime: track.player.currentTime });
     }, 500);
   }
 
-  _stopInterval = () => {
+  stopInterval = () => {
     clearInterval(this.interval);
   }
 
   setNewSong = (index) => {
-    if(this.state.playing) {
+    if (this.state.playing) {
       this.stopPlayback();
       this.state.playQueue[this.state.currentTrack].player.stop();
     }
 
-    this.setState({currentTime: 0, currentTrack: index}, this.startPlayback);
+    this.setState({ currentTime: 0, currentTrack: index }, this.startPlayback);
   }
 
-  _setLoadingInterval = () => {
-    if(!this.state.loading) {
-      this.setState({loading: setInterval(() => {
-        let player = this.state.playQueue[this.state.currentTrack].player;
+  setLoadingInterval = () => {
+    if (!this.state.loading) {
+      this.setState({
+        loading: setInterval(() => {
+          const [player] = this.state.playQueue[this.state.currentTrack];
 
-        if(player.canPlay) {
-          this._clearLoadingInterval();
-        }
-      }, 1000)});
+          if (player.canPlay) {
+            this.clearLoadingInterval();
+          }
+        }, 1000),
+      });
     }
   }
 
-  _clearLoadingInterval = () => {
-    if(this.state.loading) {
+  clearLoadingInterval = () => {
+    if (this.state.loading) {
       clearInterval(this.state.loading);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   }
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
   // Mood list functions
 
-  _setMoodList = (list, callback) => {
-    callback = callback || noop;
-    this.setState({moodList: list}, callback);
-  }
+  // setMood = (mood) => {
+  //   this.stopPlayback();
+  //   this.setState({ mood }, this.loadMoodSongs.bind(null, func));
+  // }
 
-  _setMood = (mood, callback) => {
-    let func = callback;
-    if(typeof callback != 'function') func = this.noop;
+  // loadMoodSongs = (callback) => {
+  //   this.setState({ loading: true });
+  //   const url = `http://api.moodindustries.com/api/v1/moods/${this.state.moodList[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
+  //   // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
+  //
+  //   fetch(url)
+  //     .then(responseJson => responseJson.json())
+  //     .then((json) => {
+  //       const list = Object.keys(json).map(key => json[key]);
+  //       this.setPlayQueue(list);
+  //
+  //       const art_url = list[0].art_url;
+  //
+  //       const prefetchTask = Image.prefetch(art_url);
+  //       prefetchTask.then(() => {
+  //         console.log(`✔ First Prefetch OK - ${list[0].album_name}`);
+  //
+  //         this.setState({ loading: false });
+  //         callback();
+  //       }, () => {
+  //         console.log(`✘ Prefetch failed - ${list[0].album_name}`);
+  //
+  //         this.setState({ loading: false });
+  //         callback();
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
-    this.stopPlayback();
-    this.setState({mood: mood}, this._loadMoodSongs.bind(null, func));
-  }
+  // ///////////////////////////////////////////////////////////
 
-  _loadMoodSongs = (callback) => {
-    this.setState({loading: true});
-    let url = `http://api.moodindustries.com/api/v1/moods/${this.state.moodList[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
-    // let url = `http://localhost:3000/api/v1/moods/${this.props.moods[this.state.mood].id}/songs/?t=EXVbAWTqbGFl7BKuqUQv`;
-
-    fetch(url)
-      .then((responseJson) => {
-        return responseJson.json();
-      })
-      .then((json) => {
-        let list = Object.keys(json).map(function (key) { return json[key]; });
-        this.setPlayQueue(list);
-
-        const art_url = list[0].art_url;
-
-        const prefetchTask = Image.prefetch(art_url);
-        prefetchTask.then(() => {
-          console.log(`✔ First Prefetch OK - ${list[0].album_name}`);
-
-          this.setState({loading: false});
-          callback();
-        }, () => {
-          console.log(`✘ Prefetch failed - ${list[0].album_name}`);
-
-          this.setState({loading: false});
-          callback();
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  /////////////////////////////////////////////////////////////
-
-  //Misc. functions
-  mod = (n, m) => {
-    return ((n % m) + m) % m;
-  }
+  // Misc. functions
+  mod = (n, m) => ((n % m) + m) % m
 
   noop = () => {
 
   }
 
   shuffle = (arr, curr) => {
-    let array = arr.slice();
-    let id = arr[curr].id;
-    let m = array.length, t, i;
+    const array = arr.slice();
+    const [id] = arr[curr];
+    let m = array.length; let t; let
+      i;
 
     // While there remain elements to shuffle…
     while (m) {
-
       // Pick a remaining element…
       i = Math.floor(Math.random() * m--);
 
@@ -272,20 +254,19 @@ export default class Main extends React.Component {
       array[i] = t;
     }
 
-    let index = array.findIndex(k => k.id == id);
+    const index = array.findIndex(k => k.id === id);
     // array = array.slice(index).concat(array.slice(0, index));
-    [array[this.state.currentTrack], array[index]] = [array[index], array[this.state.currentTrack]]
+    [array[this.state.currentTrack], array[index]] = [array[index], array[this.state.currentTrack]];
 
     return array;
   }
 
   appLoaded = (loaded) => {
-    if(loaded) SplashScreen.hide();
+    if (loaded) SplashScreen.hide();
     else SplashScreen.show();
   }
 
-  render = () => {
-    return (
+  render = () => (
       <Provider store={store}>
         <Navigator
           // Track info
@@ -298,11 +279,11 @@ export default class Main extends React.Component {
           shuffle={this.state.shuffle}
           repeat={this.state.repeat}
 
-          //Mood functions/data (mostly used by mood screen)
-          setMoodList={this._setMoodList}
-          setMood={this._setMood}
+          // Mood functions/data (mostly used by mood screen)
+          setMoodList={this.setMoodList}
+          setMood={this.setMood}
           loading={this.state.loading}
-          setLoading={this._setLoadingInterval}
+          setLoading={this.setLoadingInterval}
 
           mood={this.state.mood}
           moodList={this.state.moodList}
@@ -324,6 +305,5 @@ export default class Main extends React.Component {
           appLoaded={this.appLoaded}
         />
       </Provider>
-    );
-  }
+  )
 }
