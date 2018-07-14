@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import {
   View,
-  NetInfo
+  NetInfo,
 } from 'react-native';
 import { connect } from 'react-redux';
 
 import { loadMoods } from '../../redux/modules/mood';
 
-import Background from '../../components/background';
-import Images from '@assets/images';
-
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      internetCheck: null
-    }
+      internetCheck: null,
+    };
 
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
   }
@@ -25,14 +22,14 @@ class SplashScreen extends Component {
   }
 
   componentDidUpdate = () => {
-    if(this.props.moods.length > 0) {
+    if (this.props.moods.length > 0) {
       this.navigateToMoodScreen();
     }
   }
 
   handleConnectivityChange = (isConnected) => {
     console.log(isConnected);
-    if(!isConnected) {
+    if (!isConnected) {
       NetInfo.isConnected.removeEventListener(
         'connectionChange',
         this.handleConnectivityChange,
@@ -46,36 +43,28 @@ class SplashScreen extends Component {
   navigateToMoodScreen = (params) => {
     this.props.navigation.navigate({
       routeName: 'Mood',
-      params: { ...params }
+      params: { ...params },
     });
   };
 
   navigateToErrorScreen = (params) => {
     this.props.navigation.navigate({
       routeName: 'Error',
-      params: { ...params }
+      params: { ...params },
     });
   };
 
-  render = () => {
-    return (
-      <View style={{flex: 1}}>
-
-      </View>
-    );
-  }
+  render = () => <View style={{ flex: 1 }}></View>
 }
 
-const mapStateToProps = state => {
-  return {
-    moods: state.mood.moods,
-    loading: state.mood.loading,
-    error: state.mood.error
-  };
-};
+const mapStateToProps = state => ({
+  moods: state.mood.moods,
+  loading: state.mood.loading,
+  error: state.mood.error,
+});
 
 const mapDispatchToProps = {
-  loadMoods
+  loadMoods,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);
