@@ -33,19 +33,19 @@ export default class Main extends Component {
 
   // set the playQueue, adding a 'player' element to each song
   setPlayQueue = (queue) => {
-    const newQueue = queue.map((song) => {
-      const newSong = song;
+    // const newQueue = queue.map((song) => {
+    //   const newSong = song;
+    //
+    //   newSong.player = new Player(song.file, {
+    //     autoDestroy: false,
+    //   }).prepare((err) => {
+    //     if (err) {
+    //       console.log(err);
+    //     }
+    //   });
 
-      newSong.player = new Player(song.file, {
-        autoDestroy: false,
-      }).prepare((err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
-
-      return newSong;
-    });
+    //   return newSong;
+    // });
 
     this.setState({ playQueue: queue });
   }
