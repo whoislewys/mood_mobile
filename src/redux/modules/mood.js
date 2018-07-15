@@ -11,7 +11,17 @@ const initialState = {
   ],
   selected: null,
   loading: false,
-  error: null
+  error: null,
+};
+
+export async function preloadImages(list) {
+  const imagePrefetch = [];
+  for (let i = 0; i < list.length; i++) {
+    const mood = list[i];
+    imagePrefetch.push(Image.prefetch(mood.file));
+  }
+
+  await Promise.all(imagePrefetch);
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -20,22 +30,22 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, loading: true };
     case LOAD_MOODS_SUCCESS:
       let data = action.payload.data;
-      data = Object.keys(data).map(function (key) { return data[key]; });
+      data = Object.keys(data).map(key => data[key]);
       preloadImages(data);
 
       return {
         ...state,
         loading: false,
-        moods: data
+        moods: data,
       };
     case LOAD_MOODS_FAIL:
       return {
         ...state,
         loading: false,
-        error: 'Error while fetching moods.'
+        error: 'Error while fetching moods.',
       };
     case SET_MOOD:
-      let newMood = { selected: action.mood }
+      const newMood = { selected: action.mood };
       return { ...state, ...newMood };
     default:
       return state;
@@ -45,29 +55,20 @@ export default function reducer(state = initialState, action = {}) {
 export function setMood(index) {
   return {
     type: SET_MOOD,
-    mood: index
-  }
+    mood: index,
+  };
 }
 
 export function loadMoods() {
   return {
     type: LOAD_MOODS,
     payload: {
-      request:{
-        url:'/moods',
+      request: {
+        url: '/moods',
         params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv'
-        }
-      }
-    }
-  }
-}
-
-export async function preloadImages(list) {
-  var imagePrefetch = [];
-  for (let mood of list) {
-      imagePrefetch.push(Image.prefetch(mood.file));
-  }
-
-  await Promise.all(imagePrefetch);
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        },
+      },
+    },
+  };
 }

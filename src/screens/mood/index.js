@@ -2,22 +2,16 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Image,
-  TouchableOpacity,
-  Text,
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
 
 import { setMood } from '../../redux/modules/mood';
 
-import Background from '../../components/background';
 import MoodList from './components/mood-list';
-import Mood from './components/mood';
 import Playbar from '../../components/playbar';
 
 const styles = StyleSheet.create({
@@ -41,8 +35,8 @@ const styles = StyleSheet.create({
   },
   goArrow: {
     resizeMode: 'stretch',
-    height: 20
-  }
+    height: 20,
+  },
 });
 
 class MoodScreen extends Component {
@@ -54,38 +48,40 @@ class MoodScreen extends Component {
   navigateToPlayScreen = (params) => {
     this.props.navigation.navigate({
       routeName: 'Play',
-      params: { ...params }
+      params: { ...params },
     });
   };
 
   navigateToSettingsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Settings',
-      params: { ...params }
+      params: { ...params },
     });
   };
 
-  _playbarGo = () => {
+  playbarGo = () => {
     this.navigateToPlayScreen();
   }
 
-  _getMusicBar = () => {
-    // if(this.props.playQueue.length > 0) {
-    //   return (
-    //     <View style={styles.footer}>
-    //       <Playbar
-    //         track={this.props.playQueue[this.props.currentTrack]}
-    //         handlePlayPress={this.props.handlePlayPress}
-    //         playing={this.props.playing}
-    //         go={this._playbarGo}
-    //       />
-    //     </View>
-    //   );
-    // }
+  getMusicBar = () => {
+    if (this.props.playQueue.length > 0) {
+      return (
+        <View style={styles.footer}>
+          <Playbar
+            track={this.props.playQueue[this.props.currentTrack]}
+            handlePlayPress={this.props.handlePlayPress}
+            playing={this.props.playing}
+            go={this.playbarGo}
+          />
+        </View>
+      );
+    }
+
+    return <View></View>;
   }
 
-  _getContent = () => {
-    if(!this.props.loading) {
+  getContent = () => {
+    if (!this.props.loading) {
       return (
           <MoodList
             moods={this.props.moods}
@@ -94,35 +90,31 @@ class MoodScreen extends Component {
             settings={this.navigateToSettingsScreen}
             playscreen={this.navigateToPlayScreen}
           />
-        );
-    } else {
-      return (
-        <ActivityIndicator color={'black'} size={'large'} animating={true} style={{flex: 10}}/>
       );
     }
-  }
 
-  render = () => {
     return (
-      <View style={styles.container}>
-        <View style={styles.moodList}>
-          { this._getContent() }
-        </View>
-        { this._getMusicBar() }
-      </View>
+      <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
     );
   }
+
+  render = () => (
+      <View style={styles.container}>
+        <View style={styles.moodList}>
+          { this.getContent() }
+        </View>
+        { this.getMusicBar() }
+      </View>
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-    moods: state.mood.moods,
-    mood: state.mood.selected
-  };
-};
+const mapStateToProps = state => ({
+  moods: state.mood.moods,
+  mood: state.mood.selected,
+});
 
 const mapDispatchToProps = {
-  setMood
+  setMood,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodScreen);

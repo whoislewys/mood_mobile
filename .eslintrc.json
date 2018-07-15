@@ -16,6 +16,9 @@
     "airbnb-base"
   ],
   "rules" : {
-    "arrow-body-style" : "warn"
+    "arrow-body-style" : "warn",
+    "no-plusplus" : "off",
+    "no-case-declarations" : "off",
+    "react/prop-types" : "off"
   }
 }
