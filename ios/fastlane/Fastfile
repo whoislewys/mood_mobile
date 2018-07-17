@@ -26,4 +26,16 @@ platform :ios do
     build_app(scheme: "moodmobile")
     upload_to_testflight
   end
+
+  desc "Deploy a new version to the App Store"
+  lane :release do
+    #capture_screenshots # not yet configured
+    match(
+      type: "appstore",
+      git_url: "https://github.com/SamRond/mood_mobile_certs"
+    )
+    build_app(scheme: "moodmobile")
+    upload_to_app_store
+  end
+
 end
