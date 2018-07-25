@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 class MoodScreen extends Component {
   componentDidMount = () => {
     StatusBar.setBarStyle('dark-content', true);
-    // this.props.appLoaded(true);
+    SplashScreen.hide();
   }
 
   navigateToPlayScreen = (params) => {
@@ -63,22 +63,8 @@ class MoodScreen extends Component {
     this.navigateToPlayScreen();
   }
 
-  getMusicBar = () => {
-    if (this.props.playQueue.length > 0) {
-      return (
-        <View style={styles.footer}>
-          <Playbar
-            track={this.props.playQueue[this.props.currentTrack]}
-            handlePlayPress={this.props.handlePlayPress}
-            playing={this.props.playing}
-            go={this.playbarGo}
-          />
-        </View>
-      );
-    }
+  getMusicBar = () => <View></View>
 
-    return <View></View>;
-  }
 
   getContent = () => {
     if (!this.props.loading) {

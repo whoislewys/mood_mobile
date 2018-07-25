@@ -5,14 +5,12 @@ import {
   TouchableOpacity,
   Image,
   Text,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 
-import Images from '@assets/images.js';
-import ToggleButton from './toggle-button';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Images from '@assets/images';
 
-const width = Dimensions.get('window').width;
+const [width] = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
   },
   art: {
     flex: 20,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   info: {
     flex: 88,
@@ -53,19 +51,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Roboto',
     fontWeight: '300',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   albumInfoSubText: {
     color: '#fff',
     fontSize: 14,
     fontFamily: 'Roboto',
-    fontWeight: '300'
+    fontWeight: '300',
   },
   playPauseButton: {
     width: 30,
     height: 30,
-    backgroundColor: 'transparent'
-  }
+    backgroundColor: 'transparent',
+  },
 });
 
 export default class PlayBar extends Component {
@@ -84,14 +82,12 @@ export default class PlayBar extends Component {
     );
   }
 
-  albumArt = () => {
-    return (
+  albumArt = () => (
       <Image source={Images.arrowUpWhite} style={styles.arrow}/>
-    );
-  }
+  )
 
   render = () => {
-    const track = this.props.track;
+    const [track] = this.props;
 
     return (
       <View style={styles.container}>
@@ -99,11 +95,11 @@ export default class PlayBar extends Component {
           {this.albumArt()}
         </TouchableOpacity>
         <TouchableOpacity onPress={this.props.go} style={styles.info}>
-          <View style={{alignItems: 'center', flexDirection: 'row'}}>
+          <View style={{ alignItems: 'center', flexDirection: 'row' }}>
             <Text
               style={[styles.albumInfoText, {
                 maxWidth: width * 0.61,
-                textAlign: 'center'
+                textAlign: 'center',
               }]}
               numberOfLines={1}
               ellipsizeMode="tail"
