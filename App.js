@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import SplashScreen from 'react-native-splash-screen';
 
-import { Player } from 'react-native-audio-toolkit';
+import Player from './src/components/player';
 
 import store from './src/redux/store';
 import Navigator from './src/navigation/app-navigator';
@@ -261,14 +260,9 @@ export default class Main extends Component {
     return array;
   }
 
-  appLoaded = (loaded) => {
-    if (loaded) SplashScreen.hide();
-    else SplashScreen.show();
-  }
-
   render = () => (
       <Provider store={store}>
-        <Navigator
+        <Player
           // Track info
           currentTrack={this.state.currentTrack}
           playing={this.state.playing}
@@ -280,8 +274,6 @@ export default class Main extends Component {
           repeat={this.state.repeat}
 
           // Mood functions/data (mostly used by mood screen)
-          setMoodList={this.setMoodList}
-          setMood={this.setMood}
           loading={this.state.loading}
           setLoading={this.setLoadingInterval}
 
@@ -301,9 +293,20 @@ export default class Main extends Component {
           toggleRepeat={this.toggleRepeat}
 
           setPlayQueue={this.setPlayQueue}
-
-          appLoaded={this.appLoaded}
         />
       </Provider>
+
+      /*
+      Redux
+       load songs
+       playing/pausing
+
+      Component
+       shuffle
+       repeat
+       song selection
+       skip
+       time
+      */
   )
 }

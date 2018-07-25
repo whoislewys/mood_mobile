@@ -7,18 +7,17 @@ import {
   StatusBar,
   Linking,
   Image,
-  Dimensions
+  Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Images from '@assets/images.js';
+import Images from '@assets/images';
 
-const width = Dimensions.get('window').width;
+const [width] = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   header: {
     flex: 1,
@@ -56,13 +55,13 @@ const styles = StyleSheet.create({
     borderColor: '#bbb',
     padding: 20,
     paddingLeft: 10,
-    marginLeft: 20
+    marginLeft: 20,
   },
   sectionOne: {
     // flexDirection: 'row',
     paddingLeft: 0,
     paddingBottom: 0,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   headText: {
     fontWeight: '600',
@@ -83,11 +82,11 @@ const styles = StyleSheet.create({
     color: '#555',
     fontFamily: 'Roboto',
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   link: {
     color: '#0B0080',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   arrow: {
     resizeMode: 'stretch',
@@ -96,31 +95,31 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 2,
     tintColor: 'black',
-    opacity: 0.7
+    opacity: 0.7,
   },
   gradientHeading: {
     flex: 1,
     resizeMode: 'stretch',
     maxHeight: 1.5,
     maxWidth: width,
-    marginLeft: 0
+    marginLeft: 0,
   },
   bigButton: {
     resizeMode: 'contain',
     width: width * 0.54,
-    height: 117
-  }
+    height: 117,
+  },
 });
 
 export default class SettingsScreen extends Component {
   render = () => {
     StatusBar.setBarStyle('dark-content', true);
-    
+
     return (
       <View style={styles.container}>
         <View style={styles.shadow}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={this.props.navigation.goBack} style={{alignSelf: 'center', width: 25, marginRight: 10}}>
+            <TouchableOpacity onPress={this.props.navigation.goBack} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
               <Image source={Images.arrowLeftWhite} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>
@@ -137,29 +136,9 @@ export default class SettingsScreen extends Component {
             </TouchableOpacity>
           </View>
           <View style={[styles.section]}>
-            {/* <Text style={styles.headText}>
-              Legal
-            </Text> */}
             <Text style={styles.textRow}>
               © 2017 Mood Industries LLC, all rights reserved.
             </Text>
-
-              {/* <Text style={styles.textRow}>
-                All intellectual property developed by Mood Industries LLC,
-                including but not limited to any/all design and software development
-                is protected by United States federal law and the proper legal structures.
-              </Text>
-
-              <Text style={styles.textRow}>
-                All media used and distributed by Mood Industries LLC on the Mood.
-                app was provided by artists and parties with their consent alongside permission
-                to use their submitted media for commercial purposes.
-              </Text> */}
-
-              {/* <Text style={[styles.textRow, styles.link]}
-                    onPress={() => Linking.openURL('http://moodindustries.com/privacy.pdf')}>
-                Privacy Policy
-              </Text> */}
           </View>
         </View>
       </View>

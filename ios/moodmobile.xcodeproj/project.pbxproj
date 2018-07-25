@@ -17,7 +17,6 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -44,6 +43,7 @@
 		6A329768E87F490388689E0F /* gradient-heading.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D2831E8212246EC98A67407 /* gradient-heading.png */; };
 		702A6514937A4141A0A10236 /* pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 7884C0D85F5040BCADE08C1D /* pause-button.png */; };
 		749E263A1782425D9962BF10 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46CD662BFEEF48FE826FCD00 /* libRCTRestart.a */; };
+		74CEFB1620FBCA44009FE2EA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CEFAEC20FBCA44009FE2EA /* Launch Screen.storyboard */; };
 		7A4C09F6E63B4979B4242D30 /* slider-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C4771AADD2849FB90D5792E /* slider-button.png */; };
 		80112737DC214446AAC1D4D5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5349D1768C6543B1BB1FE38D /* Feather.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -393,7 +393,6 @@
 		13B07F961A680F5B00A75B9A /* moodmobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moodmobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = moodmobile/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = moodmobile/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = moodmobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = moodmobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = moodmobile/main.m; sourceTree = "<group>"; };
@@ -415,6 +414,7 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		6ACA45029CE44598B4BC5733 /* play-button-white.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "play-button-white.png"; path = "../src/assets/img/play-button-white.png"; sourceTree = "<group>"; };
 		6E51063DA42D4ADBA093471B /* settings.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = settings.png; path = ../src/assets/img/settings.png; sourceTree = "<group>"; };
+		74CEFAEC20FBCA44009FE2EA /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		7884C0D85F5040BCADE08C1D /* pause-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "pause-button.png"; path = "../src/assets/img/pause-button.png"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7ADC7680A10E4F299FB02B60 /* libReactNativeAudioToolkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeAudioToolkit.a; sourceTree = "<group>"; };
@@ -583,7 +583,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				74CEFAEC20FBCA44009FE2EA /* Launch Screen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = moodmobile;
@@ -1271,7 +1271,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				EFD0F0F92FA84F8F9D89B7AD /* alert.png in Resources */,
 				9F8CB4375B73478282CCDCE8 /* arrow-white-left.png in Resources */,
 				CBF6FBF5B3F44842B0B3B8CC /* arrow-white-up.png in Resources */,
@@ -1295,6 +1294,7 @@
 				544C9FFE9BC94CECA4D5BBC3 /* Ionicons.ttf in Resources */,
 				5F3C905DCC7E4C97BA6D337F /* MaterialCommunityIcons.ttf in Resources */,
 				8F280C8246F54D60AE0FAD1B /* MaterialIcons.ttf in Resources */,
+				74CEFB1620FBCA44009FE2EA /* Launch Screen.storyboard in Resources */,
 				559CB11B3E044638B084CBBB /* Octicons.ttf in Resources */,
 				91F0EBFC129A4043B90788EF /* SimpleLineIcons.ttf in Resources */,
 				90C34AE18E7542098A4FE79E /* Zocial.ttf in Resources */,
@@ -1398,18 +1398,6 @@
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = LaunchScreen.xib;
-			path = moodmobile;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
