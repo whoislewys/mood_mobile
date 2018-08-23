@@ -19,6 +19,7 @@
     "arrow-body-style" : "warn",
     "no-plusplus" : "off",
     "no-case-declarations" : "off",
-    "react/prop-types" : "off"
+    "react/prop-types" : "off",
+    "spaced-comment" : "warn"
   }
 }

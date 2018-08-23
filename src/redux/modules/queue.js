@@ -1,7 +1,6 @@
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
-const SET_PLAYING = 'queue/SET_PLAYING';
 
 const initialState = {
   loading: false,
@@ -9,10 +8,9 @@ const initialState = {
   queue: [
 
   ],
-  playing: false,
 };
 
-export async function loadSongData() {
+export async function loadSongData(list) {
   // const songPrefetch = [];
   // for (let i = 0; i < list.length; i++) {
   //   const song = list[i];
@@ -20,6 +18,8 @@ export async function loadSongData() {
   // }
   //
   // await Promise.all(imagePrefetch);
+
+  return list;
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -29,7 +29,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_SONGS_SUCCESS:
       let data = action.payload.data;
       data = Object.keys(data).map(key => data[key]);
-      loadSongData();
+      data = loadSongData(data);
 
       return {
         ...state,
@@ -45,13 +45,6 @@ export default function reducer(state = initialState, action = {}) {
     default:
       return state;
   }
-}
-
-export function setPlaying(playing) {
-  return {
-    type: SET_PLAYING,
-    playing,
-  };
 }
 
 export function loadSongsForMood(mood) {
