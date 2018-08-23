@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import Player from './src/components/player';
 
 import store from './src/redux/store';
-import Navigator from './src/navigation/app-navigator';
 
 export default class Main extends Component {
   constructor(props) {
@@ -20,11 +19,6 @@ export default class Main extends Component {
       oldQueue: [],
       loading: false,
     };
-  }
-
-  // Lifecycle functions
-  componentDidMount = () => {
-
   }
 
   // ///////////////////////////////////////////////////////////
@@ -129,66 +123,6 @@ export default class Main extends Component {
   // ///////////////////////////////////////////////////////////
 
   // ///////////////////////////////////////////////////////////
-  // State change functions
-  playingStarted = () => {
-    this.setState({ playing: true, updateCurrentTime: true });
-    this.startInterval();
-  }
-
-  playingStopped = () => {
-    this.stopInterval();
-    this.setState({ playing: false });
-  }
-
-  songEndCallback = () => {
-    this.stopPlayback();
-    this.nextTrack();
-  }
-
-  startInterval = () => {
-    this.interval = setInterval(() => {
-      if (!this.state.playing || !this.state.updateCurrentTime) return;
-      const track = this.state.playQueue[this.state.currentTrack];
-      this.setState({ currentTime: track.player.currentTime });
-    }, 500);
-  }
-
-  stopInterval = () => {
-    clearInterval(this.interval);
-  }
-
-  setNewSong = (index) => {
-    if (this.state.playing) {
-      this.stopPlayback();
-      this.state.playQueue[this.state.currentTrack].player.stop();
-    }
-
-    this.setState({ currentTime: 0, currentTrack: index }, this.startPlayback);
-  }
-
-  setLoadingInterval = () => {
-    if (!this.state.loading) {
-      this.setState({
-        loading: setInterval(() => {
-          const [player] = this.state.playQueue[this.state.currentTrack];
-
-          if (player.canPlay) {
-            this.clearLoadingInterval();
-          }
-        }, 1000),
-      });
-    }
-  }
-
-  clearLoadingInterval = () => {
-    if (this.state.loading) {
-      clearInterval(this.state.loading);
-      this.setState({ loading: false });
-    }
-  }
-  // ///////////////////////////////////////////////////////////
-
-  // ///////////////////////////////////////////////////////////
   // Mood list functions
 
   // setMood = (mood) => {
@@ -227,86 +161,9 @@ export default class Main extends Component {
   //     });
   // }
 
-  // ///////////////////////////////////////////////////////////
-
-  // Misc. functions
-  mod = (n, m) => ((n % m) + m) % m
-
-  noop = () => {
-
-  }
-
-  shuffle = (arr, curr) => {
-    const array = arr.slice();
-    const [id] = arr[curr];
-    let m = array.length; let t; let
-      i;
-
-    // While there remain elements to shuffle…
-    while (m) {
-      // Pick a remaining element…
-      i = Math.floor(Math.random() * m--);
-
-      // And swap it with the current element.
-      t = array[m];
-      array[m] = array[i];
-      array[i] = t;
-    }
-
-    const index = array.findIndex(k => k.id === id);
-    // array = array.slice(index).concat(array.slice(0, index));
-    [array[this.state.currentTrack], array[index]] = [array[index], array[this.state.currentTrack]];
-
-    return array;
-  }
-
   render = () => (
       <Provider store={store}>
-        <Player
-          // Track info
-          currentTrack={this.state.currentTrack}
-          playing={this.state.playing}
-          playQueue={this.state.playQueue}
-          currentTime={this.state.currentTime}
-
-          // Queue mutations
-          shuffle={this.state.shuffle}
-          repeat={this.state.repeat}
-
-          // Mood functions/data (mostly used by mood screen)
-          loading={this.state.loading}
-          setLoading={this.setLoadingInterval}
-
-          mood={this.state.mood}
-          moodList={this.state.moodList}
-
-          // Functions
-          nextTrack={this.nextTrack}
-          previousTrack={this.previousTrack}
-
-          handlePlayPress={this.handlePlayPress}
-          stopPlayback={this.stopPlayback}
-
-          setTime={this.setTime}
-
-          toggleShuffle={this.toggleShuffle}
-          toggleRepeat={this.toggleRepeat}
-
-          setPlayQueue={this.setPlayQueue}
-        />
+        <Player />
       </Provider>
-
-      /*
-      Redux
-       load songs
-       playing/pausing
-
-      Component
-       shuffle
-       repeat
-       song selection
-       skip
-       time
-      */
   )
 }
