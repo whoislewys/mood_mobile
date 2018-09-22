@@ -32,6 +32,10 @@ local.properties
 
 # node.js
 #
+*.log
+.nvm
+/bots/node_modules/
+package-lock.json
 node_modules/
 npm-debug.log
 yarn-error.log
@@ -54,3 +58,6 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+# OS X
+.DS_Store
