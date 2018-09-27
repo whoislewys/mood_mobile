@@ -20,6 +20,7 @@
     "no-plusplus" : "off",
     "no-case-declarations" : "off",
     "react/prop-types" : "off",
-    "spaced-comment" : "warn"
+    "spaced-comment" : "warn",
+    "prefer-destructuring": "warn"
   }
 }

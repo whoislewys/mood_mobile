@@ -4,30 +4,31 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  Text
+  Text,
 } from 'react-native';
 import moment from 'moment';
 
 import Images from '@assets/images';
+
 const width = Dimensions.get('window').width * 0.8;
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   timeBar: {
     flex: 10,
-    width: width,
+    width,
     marginHorizontal: 10,
     marginTop: 15,
     flexDirection: 'row',
-    position: 'relative'
+    position: 'relative',
   },
   tick: {
-    position: 'absolute'
+    position: 'absolute',
   },
   tickContainer: {
     position: 'absolute',
     top: -9,
     width: 40,
-    height: 40
+    height: 40,
   },
   time: {
     backgroundColor: 'transparent',
@@ -35,8 +36,8 @@ let styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Roboto',
     fontWeight: '400',
-    position: 'absolute'
-  }
+    position: 'absolute',
+  },
 });
 
 export default class TimeBar extends Component {
@@ -45,37 +46,35 @@ export default class TimeBar extends Component {
     this.state = {
       x: 0,
       dragging: false,
-      totalTime: 180
-    }
+      totalTime: 180,
+    };
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if(nextProps.totalTime != -1) this.setState({totalTime: nextProps.totalTime});
+    if (nextProps.totalTime != -1) this.setState({ totalTime: nextProps.totalTime });
 
-    let x = (nextProps.currentTime / this.state.totalTime) * width;
-    if(!this.state.dragging) this.setState({x});
+    const x = (nextProps.currentTime / this.state.totalTime) * width;
+    if (!this.state.dragging) this.setState({ x });
   }
 
-  getTickBoxStyle = () => {
-    return {
-      left: this.state.x - 17
-    };
-  }
+  getTickBoxStyle = () => ({
+    left: this.state.x - 17,
+  })
 
   getTickStyle = () => {
     let style = {
       width: 9,
       height: 9,
       top: 15,
-      left: 15
+      left: 15,
     };
 
-    if(this.state.dragging) {
+    if (this.state.dragging) {
       style = {
         width: 17,
         height: 17,
         top: 11,
-        left: 11
+        left: 11,
       };
     }
 
@@ -85,11 +84,11 @@ export default class TimeBar extends Component {
   getTime = () => {
     let elem = null;
 
-    if(this.state.dragging) {
+    if (this.state.dragging) {
       elem = (
         <Text style={[styles.time, {
           top: -20,
-          left: this.state.x - 12
+          left: this.state.x - 12,
         }]}>
           { moment(0).seconds(this.pxToSeconds(this.state.x)).format('m:ss') }
         </Text>
@@ -101,25 +100,23 @@ export default class TimeBar extends Component {
 
   _onStartShouldSetResponder = (e) => {
     this.dragging = true;
-    this.setState({dragging: true});
+    this.setState({ dragging: true });
 
     this.drag = {
-      x: e.nativeEvent.pageX
+      x: e.nativeEvent.pageX,
     };
 
     return true;
   }
 
-  _onMoveShouldSetResponder = (e) => {
-    return true;
-  }
+  _onMoveShouldSetResponder = e => true
 
   setPosition = (e) => {
-    let dx = this.state.x + (e.nativeEvent.pageX - this.drag.x);
+    const dx = this.state.x + (e.nativeEvent.pageX - this.drag.x);
 
-    if(dx - 1 > 0 && dx < width) {
+    if (dx - 1 > 0 && dx < width) {
       this.setState({
-        x: this.state.x + (e.nativeEvent.pageX - this.drag.x)
+        x: this.state.x + (e.nativeEvent.pageX - this.drag.x),
       });
 
       this.drag.x = e.nativeEvent.pageX;
@@ -127,24 +124,21 @@ export default class TimeBar extends Component {
   }
 
   handleRelease = (e) => {
-    this.setState({dragging: false});
+    this.setState({ dragging: false });
     this.props.setTime(this.pxToSeconds(this.state.x) * 1000);
   }
 
-  pxToSeconds = (pixels) => {
-    return (this.state.totalTime * pixels) / width;
-  }
+  pxToSeconds = pixels => (this.state.totalTime * pixels) / width
 
-  render = () => {
-    return (
+  render = () => (
       <View style={styles.timeBar}>
         <View style={[
           {
             height: 1,
             width: this.state.x,
             marginTop: 10,
-            backgroundColor: '#fff'
-          }
+            backgroundColor: '#fff',
+          },
         ]}></View>
         { this.getTime() }
         <View style={[
@@ -152,8 +146,8 @@ export default class TimeBar extends Component {
             height: 1,
             width: width - this.state.x,
             marginTop: 10,
-            backgroundColor: '#999'
-          }
+            backgroundColor: '#999',
+          },
         ]}></View>
         <View
           style={[styles.tickContainer, this.getTickBoxStyle()]}
@@ -166,6 +160,5 @@ export default class TimeBar extends Component {
           />
         </View>
       </View>
-    );
-  }
+  )
 }

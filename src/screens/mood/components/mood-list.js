@@ -7,12 +7,13 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Linking
+  Linking,
 } from 'react-native';
 
-import Images from '@assets/images.js';
+import Images from '@assets/images';
 import Mood from './mood';
-const width = Dimensions.get('window').width;
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -23,14 +24,14 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 45,
     alignItems: 'center',
-    paddingBottom: 25
+    paddingBottom: 25,
   },
   headerContent: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   headerDivider: {
     resizeMode: 'contain',
-    width: width * 0.95
+    width: width * 0.95,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     paddingBottom: 0,
     paddingTop: 10,
-    paddingLeft: 22
+    paddingLeft: 22,
   },
   bugsButton: {
     flex: 1,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     right: 64,
     width: 26,
     height: 44,
-    top: 8
+    top: 8,
   },
   settingsButton: {
     flex: 1,
@@ -75,27 +76,22 @@ const styles = StyleSheet.create({
     height: 50,
     width: 80,
     marginTop: 10,
-    marginLeft: 20
-  }
+    marginLeft: 20,
+  },
 });
 
 export default class MoodList extends React.Component {
-  _keyExtractor = (mood, index) => {
-    return mood.name;
-  }
+  keyExtractor = mood => mood.name
 
-  _renderItem = ({item, index}) => {
-    return <Mood
+  renderItem = ({ item, index }) => <Mood
       mood={item}
       setMood={this.props.setMood}
       playscreen={this.props.playscreen}
       selected={this.props.selected}
       id={index}
     />
-  }
 
-  _renderHeader = () => {
-    return (
+  renderHeader = () => (
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerText}>
@@ -104,27 +100,24 @@ export default class MoodList extends React.Component {
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this._settings}>
+          <TouchableOpacity onPress={this.settings}>
             <Image source={Images.settingsGear} style={styles.settingsButton}/>
           </TouchableOpacity>
         </View>
       </View>
-    );
-  }
+  )
 
-  _settings = () => {
+  settings = () => {
     this.props.settings();
   }
 
-  render = () => {
-    return (
+  render = () => (
       <FlatList
         data={this.props.moods}
-        keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
-        ListHeaderComponent={this._renderHeader}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
+        ListHeaderComponent={this.renderHeader}
         >
       </FlatList>
-    );
-  }
+  )
 }

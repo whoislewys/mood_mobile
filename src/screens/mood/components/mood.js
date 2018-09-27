@@ -2,33 +2,14 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 
-import Images from '@assets/images';
+const { width } = Dimensions.get('window');
 
-const width = Dimensions.get('window').width;
-
-export default class Mood extends React.Component {
-  _handlePress = () => {
-    this.props.setMood(this.props.id, this.props.playscreen);
-  }
-
-  render = () => {
-    return (
-      <TouchableOpacity style={styles.container} onPress={this._handlePress} disabled={this.props.selected != -1}>
-        <View style={styles.tile}>
-          <Image style={styles.moodArt} source={{uri: this.props.mood.file}}></Image>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -43,11 +24,11 @@ let styles = StyleSheet.create({
   },
   tile: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   art: {
     flex: 24,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   moodName: {
     color: '#333',
@@ -59,13 +40,31 @@ let styles = StyleSheet.create({
     color: '#555',
     fontSize: 15,
     fontFamily: 'Roboto',
-    fontWeight: '600'
+    fontWeight: '600',
   },
   info: {
     flex: 80,
     paddingLeft: 10,
     justifyContent: 'center',
     height: 65,
-    marginLeft: 10
+    marginLeft: 10,
   },
 });
+
+export default class Mood extends React.Component {
+  _handlePress = () => {
+    this.props.setMood(this.props.id, this.props.playscreen);
+  }
+
+  render = () => (
+      <TouchableOpacity
+        style={styles.container}
+        onPress={this.handlePress}
+        disabled={this.props.selected !== -1}
+        >
+        <View style={styles.tile}>
+          <Image style={styles.moodArt} source={{ uri: this.props.mood.file }}></Image>
+        </View>
+      </TouchableOpacity>
+  )
+}

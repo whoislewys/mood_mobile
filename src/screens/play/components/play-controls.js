@@ -4,11 +4,10 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Images from '@assets/images.js';
+import Images from '@assets/images';
 import ToggleButton from '../../../components/toggle-button';
 
 const styles = StyleSheet.create({
@@ -25,28 +24,27 @@ const styles = StyleSheet.create({
   toggleShuffle: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   toggleRepeat: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   shuffleIcon: {
     height: 31,
     width: 29,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   repeatIcon: {
     height: 26,
     width: 26,
-    resizeMode: 'contain'
-  }
+    resizeMode: 'contain',
+  },
 });
 
 export default class PlayControls extends Component {
-  render = () => {
-    return (
+  render = () => (
       <View style={styles.playControls}>
         <View style={styles.toggleShuffle}>
           <ToggleButton
@@ -56,7 +54,7 @@ export default class PlayControls extends Component {
             iconStyle={styles.shuffleIcon}
           />
         </View>
-        <View style={{alignItems: 'center', flex: 2}}>
+        <View style={{ alignItems: 'center', flex: 2 }}>
           { this.playButton() }
         </View>
         <View style={styles.toggleRepeat}>
@@ -69,8 +67,7 @@ export default class PlayControls extends Component {
           />
         </View>
       </View>
-    );
-  }
+  )
 
   playButton = () => {
     let ret = (
@@ -79,7 +76,7 @@ export default class PlayControls extends Component {
       </TouchableOpacity>
     );
 
-    if(this.props.loading) {
+    if (this.props.loading) {
       ret = (
         <ActivityIndicator color={'white'} size={'large'} animating={true} style={styles.playButton}/>
       );

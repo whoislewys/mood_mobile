@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Easing, Animated } from 'react-native';
 
-import PlayScreen from '../screens/play';
+// import PlayScreen from '../screens/play';
 // import MoodScreen from '../screens/mood';
 import SplashScreen from '../screens/splash';
 // import SettingsScreen from '../screens/settings';

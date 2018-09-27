@@ -8,9 +8,8 @@ import {
   StatusBar,
   Text,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Images from '@assets/images.js';
+import Images from '@assets/images';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 0.01 * width,
     marginRight: 0.02 * width,
-    marginTop: 20
+    marginTop: 20,
   },
   moodText: {
     flex: 1,
@@ -54,35 +53,35 @@ const styles = StyleSheet.create({
     left: 0.02 * width,
     opacity: 0.5,
     resizeMode: 'stretch',
-    transform: [{ rotateX: '180deg'}],
+    transform: [{ rotateX: '180deg' }],
   },
   touchable: {
-    zIndex: 2
-  }
+    zIndex: 2,
+  },
 });
 
 export default class PlayScreen extends Component {
   componentDidMount = () => {
-    //Prefetch album art in parallel
-    var imagePrefetch = [];
+    // Prefetch album art in parallel
+    const imagePrefetch = [];
 
-    for (let song of this.props.playQueue) {
-        imagePrefetch.push(Image.prefetch(song.art_url));
+    for (const song of this.props.playQueue) {
+      imagePrefetch.push(Image.prefetch(song.art_url));
     }
 
-    Promise.all(imagePrefetch).then(results => {
-        console.log("All album art prefetched in parallel");
+    Promise.all(imagePrefetch).then(() => {
+      console.log('All album art prefetched in parallel');
     });
 
     StatusBar.setBarStyle('light-content', true);
 
-    if(!this.props.playQueue[this.props.currentTrack].player.canPlay) {
+    if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
       this.props.setLoading();
     }
   }
 
   render = () => {
-    let mood = this.props.moodList[this.props.mood];
+    const mood = this.props.moodList[this.props.mood];
 
     return (
       <Background
