@@ -76,6 +76,98 @@ class Player extends Component {
       this.setState({ loading: false });
     }
   }
+
+  handlePlayPress = () => {
+    if (this.state.playing) {
+      this.pausePlayback();
+    } else {
+      this.startPlayback();
+    }
+  }
+
+  setTime = (time) => {
+    this.state.playQueue[this.state.currentTrack].player.seek(time);
+    this.setState({ updateCurrentTime: this.state.playing, currentTime: time });
+    // Only prevent update to current time if the song is currently playing
+  }
+
+  pausePlayback = () => {
+    this.state.playQueue[this.state.currentTrack].player.pause(this.playingStopped);
+  }
+
+  startPlayback = () => {
+    const [player] = this.state.playQueue[this.state.currentTrack];
+    if (player.canPlay) {
+      player.play(this.playingStarted);
+      player.on('ended', this.songEndCallback);
+    }
+  }
+
+  stopPlayback = () => {
+    const track = this.state.playQueue[this.state.currentTrack];
+    if (track && track.player && track.player.canStop) {
+      track.player.stop(this.playingStopped);
+      this.setState({ currentTime: 0 });
+    }
+  }
+
+  cycleSong = (direction) => {
+    if (this.state.loading) return;
+
+    const end = this.state.playQueue.length - 1;
+    let next = this.state.currentTrack + direction;
+
+    if (this.state.repeat) {
+      if (next < 0 || next > end) {
+        next = this.mod(next, end + 1);
+      }
+    } else if (next < 0) {
+      next = 0;
+    } else if (next > end) {
+      next = end;
+    }
+
+    this.setNewSong(next);
+  }
+
+  setPlayQueue = (queue) => {
+    // const newQueue = queue.map((song) => {
+    //   const newSong = song;
+    //
+    //   newSong.player = new Player(song.file, {
+    //     autoDestroy: false,
+    //   }).prepare((err) => {
+    //     if (err) {
+    //       console.log(err);
+    //     }
+    //   });
+
+    //   return newSong;
+    // });
+
+    this.setState({ playQueue: queue });
+  }
+
+  nextTrack = () => {
+    this.cycleSong(1);
+  }
+
+  previousTrack = () => {
+    this.cycleSong(-1);
+  }
+
+  toggleShuffle = () => {
+    if (this.state.shuffle) {
+      this.setState({ playQueue: this.state.oldQueue, oldQueue: [], shuffle: false });
+    } else {
+      const shuffled = this.shuffle(this.state.playQueue, this.state.currentTrack);
+      this.setState({ oldQueue: this.state.playQueue, playQueue: shuffled, shuffle: true });
+    }
+  }
+
+  toggleRepeat = () => {
+    this.setState({ repeat: !this.state.repeat });
+  }
   // ////////////////////////////////////////////////////////////////////////////
 
   // Misc. Functions ///////////////////////////////////////////////////////////
@@ -122,16 +214,16 @@ class Player extends Component {
       mood={this.props.selected}
       moodList={this.props.moods}
 
-      nextTrack={() => {}}
-      previousTrack={() => {}}
+      nextTrack={this.nextTrack}
+      previousTrack={this.previousTrack}
 
-      handlePlayPress={() => {}}
-      stopPlayback={() => {}}
+      handlePlayPress={this.handlePlayPress}
+      stopPlayback={this.stopPlayback}
 
-      setTime={() => {}}
+      setTime={this.setTime}
 
-      toggleShuffle={() => {}}
-      toggleRepeat={() => {}}
+      toggleShuffle={this.toggleShuffle}
+      toggleRepeat={this.toggleRepeats}
     />
   )
 }
