@@ -12,7 +12,7 @@ import {
 
 import Images from '@assets/images';
 
-const [width] = Dimensions.get('window');
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {

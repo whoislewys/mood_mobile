@@ -2,11 +2,11 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Easing, Animated } from 'react-native';
 
-// import PlayScreen from '../screens/play';
-// import MoodScreen from '../screens/mood';
+import PlayScreen from '../screens/play';
+import MoodScreen from '../screens/mood';
 import SplashScreen from '../screens/splash';
-// import SettingsScreen from '../screens/settings';
-// import ErrorScreen from '../screens/error';
+import SettingsScreen from '../screens/settings';
+import ErrorScreen from '../screens/error';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     render = () => {
@@ -19,10 +19,10 @@ const map = SomeComponent => class SomeClass extends React.Component {
 
 export default createStackNavigator({
   Splash: { screen: map(SplashScreen) },
-  // Mood: { screen: map(MoodScreen) },
-  // Play: { screen: map(PlayScreen) },
-  // Settings: { screen: map(SettingsScreen) },
-  // Error: { screen: map(ErrorScreen) },
+  Mood: { screen: map(MoodScreen) },
+  Play: { screen: map(PlayScreen) },
+  Settings: { screen: map(SettingsScreen) },
+  Error: { screen: map(ErrorScreen) },
 }, {
   headerMode: 'none',
   navigationOptions: {

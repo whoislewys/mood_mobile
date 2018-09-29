@@ -50,11 +50,14 @@ export default class TimeBar extends Component {
     };
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    if (nextProps.totalTime != -1) this.setState({ totalTime: nextProps.totalTime });
+  static getDerivedStateFromProps = (nextProps) => {
+    const newState = {};
+    if (nextProps.totalTime !== -1) newState.totalTime = nextProps.totalTime;
 
     const x = (nextProps.currentTime / this.state.totalTime) * width;
-    if (!this.state.dragging) this.setState({ x });
+    if (!this.state.dragging) newState.x = x;
+
+    return newState;
   }
 
   getTickBoxStyle = () => ({
@@ -98,7 +101,7 @@ export default class TimeBar extends Component {
     return elem;
   }
 
-  _onStartShouldSetResponder = (e) => {
+  onStartShouldSetResponder = (e) => {
     this.dragging = true;
     this.setState({ dragging: true });
 
@@ -109,7 +112,7 @@ export default class TimeBar extends Component {
     return true;
   }
 
-  _onMoveShouldSetResponder = e => true
+  onMoveShouldSetResponder = () => true
 
   setPosition = (e) => {
     const dx = this.state.x + (e.nativeEvent.pageX - this.drag.x);
@@ -123,7 +126,7 @@ export default class TimeBar extends Component {
     }
   }
 
-  handleRelease = (e) => {
+  handleRelease = () => {
     this.setState({ dragging: false });
     this.props.setTime(this.pxToSeconds(this.state.x) * 1000);
   }
@@ -153,8 +156,8 @@ export default class TimeBar extends Component {
           style={[styles.tickContainer, this.getTickBoxStyle()]}
           onResponderMove={this.setPosition}
           onResponderRelease={this.handleRelease}
-          onStartShouldSetResponder={this._onStartShouldSetResponder}
-          onMoveShouldSetResponder={this._onMoveShouldSetResponder}>
+          onStartShouldSetResponder={this.onStartShouldSetResponder}
+          onMoveShouldSetResponder={this.onMoveShouldSetResponder}>
           <Image source={Images.sliderButton}
             style={[styles.tick, this.getTickStyle()]}
           />

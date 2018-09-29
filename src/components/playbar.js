@@ -10,7 +10,7 @@ import {
 
 import Images from '@assets/images';
 
-const [width] = Dimensions.get('window');
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -84,7 +84,7 @@ export default class PlayBar extends Component {
 
   albumArt = () => (
       <Image source={Images.arrowUpWhite} style={styles.arrow}/>
-  )
+  );
 
   render = () => {
     const [track] = this.props;
