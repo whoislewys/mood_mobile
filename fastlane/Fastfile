@@ -17,25 +17,25 @@ default_platform(:ios)
 
 
 platform :ios do
-  desc "Push a new beta build to TestFlight"
+  desc 'Push a new beta build to TestFlight'
   lane :beta do
     match(
-      type: "appstore",
-      git_url: "https://github.com/SamRond/mood_mobile_certs"
+      type: 'appstore',
+      git_url: 'https://github.com/SamRond/mood_mobile_certs'
     ) # more info: https://codesigning.guide
-    increment_build_number(xcodeproj: "moodmobile.xcodeproj")
-    build_app(scheme: "moodmobile")
-    upload_to_testflight
+    increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
+    gym(scheme: 'mood_mobile', project: './ios/mood_mobile.xcodeproj')
+    # upload_to_testflight
   end
 
-  desc "Deploy a new version to the App Store"
+  desc 'Deploy a new version to the App Store'
   lane :release do
     #capture_screenshots # not yet configured
     match(
-      type: "appstore",
-      git_url: "https://github.com/SamRond/mood_mobile_certs"
+      type: 'appstore',
+      git_url: 'https://github.com/SamRond/mood_mobile_certs'
     )
-    build_app(scheme: "moodmobile")
+    build_app(scheme: 'moodmobile')
     upload_to_app_store
   end
 
