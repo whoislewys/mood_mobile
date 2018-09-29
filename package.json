@@ -42,7 +42,7 @@
   },
   "rnpm": {
     "assets": [
-      "src/assets/roboto",
+      "src/assets/fonts/roboto",
       "src/assets/img"
     ]
   }
