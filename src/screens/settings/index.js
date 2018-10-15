@@ -113,13 +113,14 @@ const styles = StyleSheet.create({
 
 export default class SettingsScreen extends Component {
   render = () => {
+    const { goBack } = this.props.navigation;
     StatusBar.setBarStyle('dark-content', true);
 
     return (
       <View style={styles.container}>
         <View style={styles.shadow}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={this.props.navigation.goBack} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
+            <TouchableOpacity onPress={() => goBack()} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
               <Image source={Images.arrowLeftWhite} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>
