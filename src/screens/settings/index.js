@@ -113,7 +113,10 @@ const styles = StyleSheet.create({
 
 export default class SettingsScreen extends Component {
   render = () => {
-    const { goBack } = this.props.navigation;
+    const { goBack } = this.props.navigation; // TODO: use bind instead
+    /*
+      this.goBack = this.props.navgation.goBack.bind(this);
+    */
     StatusBar.setBarStyle('dark-content', true);
 
     return (
