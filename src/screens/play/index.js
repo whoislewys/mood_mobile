@@ -60,6 +60,10 @@ const styles = StyleSheet.create({
   },
 });
 
+// TODO: fix this!
+// this.props.mood does not exist
+// this.props.currentTrack does not exist
+// these missing props are what causes this playscreen to throw errors when it gets navigated to
 export default class PlayScreen extends Component {
   componentDidMount = () => {
     // Prefetch album art in parallel
@@ -81,6 +85,8 @@ export default class PlayScreen extends Component {
   }
 
   render = () => {
+    const { goBack } = this.props.navigation;
+
     const mood = this.props.moodList[this.props.mood];
 
     return (
@@ -90,7 +96,7 @@ export default class PlayScreen extends Component {
       >
         <View style={styles.container}>
           <View style={styles.menuDropdown}>
-            <TouchableOpacity onPress={this.props.navigation.goBack} style={styles.touchable}>
+            <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
               <Image source={Images.arrowUpWhite} style={styles.backButton} />
             </TouchableOpacity>
 

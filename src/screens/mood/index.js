@@ -46,6 +46,7 @@ class MoodScreen extends Component {
   }
 
   navigateToPlayScreen = (params) => {
+    console.log('attempting to navigate to playscreen!');
     this.props.navigation.navigate({
       routeName: 'Play',
       params: { ...params },
@@ -53,6 +54,7 @@ class MoodScreen extends Component {
   };
 
   navigateToSettingsScreen = (params = {}) => {
+    console.log('attempting to go to settings screen!');
     this.props.navigation.navigate({
       routeName: 'Settings',
       params: { ...params },

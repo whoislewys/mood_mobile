@@ -53,14 +53,18 @@ const styles = StyleSheet.create({
 
 export default class Mood extends React.Component {
   _handlePress = () => {
-    this.props.setMood(this.props.id, this.props.playscreen);
+    console.log('handling mood press!');
+    this.props.setMood(this.props.id, this.props.playscreen); // why are you passing this.props.playscreen here? setMood only takes an index
+    this.props.playscreen(); // TODO: fix this broken navigate to playscreen
   }
 
+  // commented out from touchable opacity
+  // disabled={this.props.selected !== -1}
+  // it was disabling the "touchablility" of the component
   render = () => (
       <TouchableOpacity
         style={styles.container}
-        onPress={this.handlePress}
-        disabled={this.props.selected !== -1}
+        onPress={this._handlePress}
         >
         <View style={styles.tile}>
           <Image style={styles.moodArt} source={{ uri: this.props.mood.file }}></Image>

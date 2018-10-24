@@ -83,7 +83,17 @@ const styles = StyleSheet.create({
 export default class MoodList extends React.Component {
   keyExtractor = mood => mood.name
 
-  renderItem = ({ item, index }) => <Mood
+  settings = () => {
+    this.props.settings();
+  }
+
+  playscreen = () => {
+    this.props.playscreen();
+  }
+
+  // renderItem called when rendering FlatList.
+  // returns a Mood component
+  renderItem_ = ({ item, index }) => <Mood
       mood={item}
       setMood={this.props.setMood}
       playscreen={this.props.playscreen}
@@ -107,15 +117,12 @@ export default class MoodList extends React.Component {
       </View>
   )
 
-  settings = () => {
-    this.props.settings();
-  }
-
+  // renderItem should be a function that returns a component
   render = () => (
       <FlatList
         data={this.props.moods}
         keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
+        renderItem={this.renderItem_}
         ListHeaderComponent={this.renderHeader}
         >
       </FlatList>
