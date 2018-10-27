@@ -199,11 +199,13 @@ class Player extends Component {
     return array;
   }
 
+  // THE NAVIGATOR COMPONENT CREATED BY StackNavigator(...) takes ONLY screenProps
   render = () => (
     <Navigator
       screenProps={ {
         currentTrack: this.state.currentTrack,
         playing: this.props.playing,
+        loadSongsForMood: this.props.loadSongsForMood,
         playQueue: this.state.playQueue,
         currentTime: this.state.currentTime,
         shuffled: this.state.shuffled,

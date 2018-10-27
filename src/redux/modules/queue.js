@@ -5,9 +5,7 @@ const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 const initialState = {
   loading: false,
   errors: null,
-  queue: [
-
-  ],
+  queue: [],
 };
 
 export async function loadSongData(list) {

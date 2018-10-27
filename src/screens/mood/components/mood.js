@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
 
 export default class Mood extends React.Component {
   _handlePress = () => {
-    console.log('handling mood press!');
     this.props.setMood(this.props.id, this.props.playscreen); // why are you passing this.props.playscreen here? setMood only takes an index
+    this.props.loadSongsForMood(this.props.id);
     this.props.playscreen(); // TODO: fix this broken navigate to playscreen
   }
 

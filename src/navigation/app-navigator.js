@@ -2,16 +2,16 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Easing, Animated } from 'react-native';
 
-import PlayScreen from '../screens/play';
-import MoodScreen from '../screens/mood';
 import SplashScreen from '../screens/splash';
+import MoodScreen from '../screens/mood';
+import PlayScreen from '../screens/play';
 import SettingsScreen from '../screens/settings';
 import ErrorScreen from '../screens/error';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     render = () => {
       const screenProps = this.props.screenProps;
-      delete this.props.screenProps;
+      delete this.props.screenProps; // for some reason not working
       const { navigation: { state: { params } } } = this.props;
       return <SomeComponent {...params} {...this.props} {...screenProps} />;
     }

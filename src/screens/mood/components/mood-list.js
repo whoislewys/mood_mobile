@@ -95,6 +95,7 @@ export default class MoodList extends React.Component {
   // returns a Mood component
   renderItem_ = ({ item, index }) => <Mood
       mood={item}
+      loadSongsForMood={this.props.loadSongsForMood}
       setMood={this.props.setMood}
       playscreen={this.props.playscreen}
       selected={this.props.selected}

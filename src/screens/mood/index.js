@@ -46,7 +46,6 @@ class MoodScreen extends Component {
   }
 
   navigateToPlayScreen = (params) => {
-    console.log('attempting to navigate to playscreen!');
     this.props.navigation.navigate({
       routeName: 'Play',
       params: { ...params },
@@ -54,7 +53,6 @@ class MoodScreen extends Component {
   };
 
   navigateToSettingsScreen = (params = {}) => {
-    console.log('attempting to go to settings screen!');
     this.props.navigation.navigate({
       routeName: 'Settings',
       params: { ...params },
@@ -72,6 +70,7 @@ class MoodScreen extends Component {
     if (!this.props.loading) {
       return (
           <MoodList
+            loadSongsForMood={this.props.loadSongsForMood}
             moods={this.props.moods}
             setMood={this.props.setMood}
             selected={this.props.mood}

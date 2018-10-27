@@ -23,13 +23,11 @@ class SplashScreen extends Component {
 
   componentDidUpdate = () => {
     if (this.props.moods.length > 0) {
-      console.log(this.props.moods);
       this.navigateToMoodScreen();
     }
   }
 
   handleConnectivityChange = (isConnected) => {
-    console.log(isConnected);
     if (!isConnected) {
       NetInfo.isConnected.removeEventListener(
         'connectionChange',
@@ -55,7 +53,9 @@ class SplashScreen extends Component {
     });
   };
 
-  render = () => <View style={{ flex: 1 }}></View>
+  render = () => {
+    return (<View style={{ flex: 1 }}></View>);
+  }
 }
 
 const mapStateToProps = state => ({
