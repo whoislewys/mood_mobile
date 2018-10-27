@@ -201,29 +201,25 @@ class Player extends Component {
 
   render = () => (
     <Navigator
-      currentTrack={this.state.currentTrack}
-      playing={this.props.playing}
-      playQueue={this.state.playQueue}
-      currentTime={this.state.currentTime}
-
-      shuffled={this.state.shuffled}
-      repeat={this.state.repeat}
-
-      loading={this.props.loading}
-
-      mood={this.props.selected}
-      moodList={this.props.moods}
-
-      nextTrack={this.nextTrack}
-      previousTrack={this.previousTrack}
-
-      handlePlayPress={this.handlePlayPress}
-      stopPlayback={this.stopPlayback}
-
-      setTime={this.setTime}
-
-      toggleShuffle={this.toggleShuffle}
-      toggleRepeat={this.toggleRepeats}
+      screenProps={ {
+        currentTrack: this.state.currentTrack,
+        playing: this.props.playing,
+        playQueue: this.state.playQueue,
+        currentTime: this.state.currentTime,
+        shuffled: this.state.shuffled,
+        repeat: this.state.repeat,
+        loading: this.props.loading,
+        mood: this.props.selected,
+        moodList: this.props.moods,
+        nextTrack: this.nextTrack,
+        previousTrack: this.previousTrack,
+        handlePlayPress: this.handlePlayPress,
+        stopPlayback: this.stopPlayback,
+        setTime: this.setTime,
+        toggleShuffle: this.toggleShuffle,
+        toggleRepeat: this.toggleRepeats,
+      }
+    }
     />
   )
 }
