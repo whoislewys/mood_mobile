@@ -45,7 +45,7 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   }
 
-  navigateToPlayScreen = (params) => {
+  navigateToPlayScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Play',
       params: { ...params },

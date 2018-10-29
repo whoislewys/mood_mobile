@@ -52,10 +52,8 @@ const styles = StyleSheet.create({
 });
 
 export default class Mood extends React.Component {
-  _handlePress = () => {
-    this.props.setMood(this.props.id, this.props.playscreen); // why are you passing this.props.playscreen here? setMood only takes an index
-    this.props.loadSongsForMood(this.props.id);
-    this.props.playscreen(); // TODO: fix this broken navigate to playscreen
+  handlePress = () => {
+    this.props.onPressItem(this.props.mood.id);
   }
 
   // commented out from touchable opacity
@@ -64,7 +62,7 @@ export default class Mood extends React.Component {
   render = () => (
       <TouchableOpacity
         style={styles.container}
-        onPress={this._handlePress}
+        onPress={this.handlePress}
         >
         <View style={styles.tile}>
           <Image style={styles.moodArt} source={{ uri: this.props.mood.file }}></Image>

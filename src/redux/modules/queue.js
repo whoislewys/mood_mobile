@@ -16,7 +16,6 @@ export async function loadSongData(list) {
   // }
   //
   // await Promise.all(imagePrefetch);
-
   return list;
 }
 
@@ -25,15 +24,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_SONGS:
       return { ...state, loading: true };
     case LOAD_SONGS_SUCCESS:
-      let data = action.payload.data;
-      data = Object.keys(data).map(key => data[key]);
-      data = loadSongData(data);
-
-      return {
-        ...state,
-        loading: false,
-        queue: data,
-      };
+      return { ...state, loading: false, queue: action.payload.data };
     case LOAD_SONGS_FAIL:
       return {
         ...state,
@@ -46,6 +37,7 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function loadSongsForMood(mood) {
+  console.log('loading songs for mood:', mood);
   return {
     type: LOAD_SONGS,
     payload: {

@@ -91,15 +91,23 @@ export default class MoodList extends React.Component {
     this.props.playscreen();
   }
 
+  onPressItem = (id) => {
+    console.log('id of current click: ', id);
+    this.props.setMood(id);
+    this.props.loadSongsForMood(id);
+    this.props.playscreen(this.props.queue); // TODO: fix this broken navigate to playscreen
+  }
+
   // renderItem called when rendering FlatList.
   // returns a Mood component
-  renderItem_ = ({ item, index }) => <Mood
+  renderItem = ({ item, index }) => <Mood
       mood={item}
       loadSongsForMood={this.props.loadSongsForMood}
       setMood={this.props.setMood}
       playscreen={this.props.playscreen}
       selected={this.props.selected}
       id={index}
+      onPressItem={this.onPressItem}
     />
 
   renderHeader = () => (
@@ -123,7 +131,7 @@ export default class MoodList extends React.Component {
       <FlatList
         data={this.props.moods}
         keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem_}
+        renderItem={this.renderItem}
         ListHeaderComponent={this.renderHeader}
         >
       </FlatList>
