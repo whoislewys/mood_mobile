@@ -100,13 +100,13 @@ export default class MoodList extends React.Component {
 
   // renderItem called when rendering FlatList.
   // returns a Mood component
-  renderItem = ({ item, index }) => <Mood
+  renderItem_ = ({ item }) => <Mood
       mood={item}
-      loadSongsForMood={this.props.loadSongsForMood}
+      selectMood={this.props.selectMood}
       setMood={this.props.setMood}
       playscreen={this.props.playscreen}
       selected={this.props.selected}
-      id={index}
+      id={item.id}
       onPressItem={this.onPressItem}
     />
 

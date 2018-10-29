@@ -112,6 +112,25 @@ const styles = StyleSheet.create({
 });
 
 export default class PlayScreen extends Component {
+  componentDidMount = () => {
+    // Prefetch album art in parallel
+    // const imagePrefetch = [];
+    //
+    // for (const song of this.props.playQueue) {
+    //   imagePrefetch.push(Image.prefetch(song.art_url));
+    // }
+    //
+    // Promise.all(imagePrefetch).then(() => {
+    //   console.log('All album art prefetched in parallel');
+    // });
+    //
+    StatusBar.setBarStyle('light-content', true);
+
+    if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
+      this.props.setLoading();
+    }
+  }
+
   render = () => {
     const { goBack } = this.props.navigation; // preferred method from react-navigation docs https://reactnavigation.org/docs/en/navigation-prop.html
     /*

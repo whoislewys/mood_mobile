@@ -205,8 +205,7 @@ class Player extends Component {
       screenProps={ {
         currentTrack: this.state.currentTrack,
         playing: this.props.playing,
-        loadSongsForMood: this.props.loadSongsForMood,
-        queue: this.props.queue,
+        selectMood: this.props.loadSongsForMood,
         playQueue: this.state.playQueue,
         currentTime: this.state.currentTime,
         shuffled: this.state.shuffled,

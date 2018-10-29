@@ -63,16 +63,14 @@ class MoodScreen extends Component {
     this.navigateToPlayScreen();
   }
 
-  getMusicBar = () => <View></View>
-
+  getPlaybar = () => <View></View>
 
   getContent = () => {
     if (!this.props.loading) {
       return (
           <MoodList
-            loadSongsForMood={this.props.loadSongsForMood}
+            selectMood={this.props.selectMood}
             moods={this.props.moods}
-            setMood={this.props.setMood}
             selected={this.props.mood}
             settings={this.navigateToSettingsScreen}
             playscreen={this.navigateToPlayScreen}
@@ -90,7 +88,7 @@ class MoodScreen extends Component {
         <View style={styles.moodList}>
           { this.getContent() }
         </View>
-        { this.getMusicBar() }
+        { this.getPlaybar() }
       </View>
   )
 }
