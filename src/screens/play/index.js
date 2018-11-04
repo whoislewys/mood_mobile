@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -64,9 +65,10 @@ const styles = StyleSheet.create({
 // this.props.mood does not exist
 // this.props.currentTrack does not exist
 // these missing props are what causes this playscreen to throw errors when it gets navigated to
-export default class PlayScreen extends Component {
+class PlayScreen extends Component {
   componentDidMount = () => {
     // Prefetch album art in parallel
+    /*
     const imagePrefetch = [];
     for (const song of this.props.playQueue) {
       imagePrefetch.push(Image.prefetch(song.art_url));
@@ -78,6 +80,9 @@ export default class PlayScreen extends Component {
     // if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
     //   this.props.setLoading();
     // }
+    */
+    this.props.loadSongsForMood(this.props.mood);
+
   }
 
   render = () => {
@@ -131,3 +136,10 @@ export default class PlayScreen extends Component {
   </View>
 </Background>
 */
+const mapStateToProps = state => ({
+  moods: state.mood.moods,
+  mood: state.mood.selected,
+  queue: state.queue,
+});
+
+export default connect(mapStateToProps)(PlayScreen);

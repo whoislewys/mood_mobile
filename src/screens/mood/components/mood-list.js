@@ -95,7 +95,7 @@ export default class MoodList extends React.Component {
     console.log('id of current click: ', id);
     this.props.setMood(id);
     this.props.loadSongsForMood(id);
-    this.props.playscreen(this.props.queue); // TODO: fix this broken navigate to playscreen
+    this.props.playscreen(); // TODO: fix this broken navigate to playscreen
   }
 
   // renderItem called when rendering FlatList.

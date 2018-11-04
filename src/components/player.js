@@ -229,7 +229,7 @@ class Player extends Component {
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
-  queue: state.queue.queue,
+  queue: state.queue,
 
   loading: state.queue.loading,
   errors: state.queue.loading,
