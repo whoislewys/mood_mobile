@@ -68,20 +68,16 @@ export default class PlayScreen extends Component {
   componentDidMount = () => {
     // Prefetch album art in parallel
     const imagePrefetch = [];
-
     for (const song of this.props.playQueue) {
       imagePrefetch.push(Image.prefetch(song.art_url));
     }
-
     Promise.all(imagePrefetch).then(() => {
       console.log('All album art prefetched in parallel');
     });
-
-    StatusBar.setBarStyle('light-content', true);
-
-    if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
-      this.props.setLoading();
-    }
+    // StatusBar.setBarStyle('light-content', true);
+    // if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
+    //   this.props.setLoading();
+    // }
   }
 
   render = () => {
@@ -90,43 +86,48 @@ export default class PlayScreen extends Component {
     const mood = this.props.moodList[this.props.mood];
 
     return (
-      <Background
-        image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
-        blur={50}
-      >
-        <View style={styles.container}>
-          <View style={styles.menuDropdown}>
-            <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
-              <Image source={Images.arrowUpWhite} style={styles.backButton} />
-            </TouchableOpacity>
-
-            <Text style={styles.moodText}>
-              { mood.name.toLowerCase() }
-            </Text>
-
-            {/* Add centered mood name to give balance to the top bar */}
-
-          </View>
-          <TrackInfo
-            skipForward={this.props.nextTrack}
-            skipBack={this.props.previousTrack}
-            track={this.props.playQueue[this.props.currentTrack]}
-            setTime={this.props.setTime}
-            currentTime={this.props.currentTime}
-          />
-          <PlayControls
-            shuffle={this.props.shuffle}
-            repeat={this.props.repeat}
-            toggleShuffle={this.props.toggleShuffle}
-            toggleRepeat={this.props.toggleRepeat}
-
-            playing={this.props.playing}
-            handlePlayPress={this.props.handlePlayPress}
-
-            loading={this.props.loading}
-          />
-        </View>
-      </Background>
+      <Text>{mood.name}</Text>
     );
   }
 }
+
+/*
+// old return
+<Background
+  image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
+  blur={50}
+>
+  <View style={styles.container}>
+    <View style={styles.menuDropdown}>
+      <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
+        <Image source={Images.arrowUpWhite} style={styles.backButton} />
+      </TouchableOpacity>
+
+      <Text style={styles.moodText}>
+        { mood.name.toLowerCase() }
+      </Text>
+
+      {// Add centered mood name to give balance to the top bar }
+
+    </View>
+    <TrackInfo
+      skipForward={this.props.nextTrack}
+      skipBack={this.props.previousTrack}
+      track={this.props.playQueue[this.props.currentTrack]}
+      setTime={this.props.setTime}
+      currentTime={this.props.currentTime}
+    />
+    <PlayControls
+      shuffle={this.props.shuffle}
+      repeat={this.props.repeat}
+      toggleShuffle={this.props.toggleShuffle}
+      toggleRepeat={this.props.toggleRepeat}
+
+      playing={this.props.playing}
+      handlePlayPress={this.props.handlePlayPress}
+
+      loading={this.props.loading}
+    />
+  </View>
+</Background>
+*/
