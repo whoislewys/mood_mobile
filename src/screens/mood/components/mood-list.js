@@ -91,10 +91,9 @@ export default class MoodList extends React.Component {
     this.props.playscreen();
   }
 
-  onPressItem = (id) => {
-    console.log('id of current click: ', id);
-    this.props.setMood(id);
-    this.props.loadSongsForMood(id);
+  onPressItem = (moodObj) => {
+    this.props.setMood(moodObj);
+    //this.props.loadSongsForMoodId(moodObj.id);
     this.props.playscreen(); // TODO: fix this broken navigate to playscreen
   }
 
@@ -102,11 +101,10 @@ export default class MoodList extends React.Component {
   // returns a Mood component
   _renderItem = ({ item }) => <Mood
       mood={item}
-      loadSongsForMood={this.props.loadSongsForMood}
+      loadSongsForMoodId={this.props.loadSongsForMoodId}
       setMood={this.props.setMood}
       playscreen={this.props.playscreen}
       selected={this.props.selected}
-      id={item.id}
       onPressItem={this.onPressItem}
     />
 

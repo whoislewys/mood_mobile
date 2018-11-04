@@ -71,7 +71,7 @@ class PlayScreen extends Component {
     this.props.queue.queue = [{
       id: 127, name: 'Really Love', artist: 'Dawson bailey', album_name: '', art_url: 'https://i1.sndcdn.com/artworks-000306722370-p33yx5-t500x500.jpg', file: 'https://production-test-songs.s3.amazonaws.com/songs/files/000/000/127/original/song165.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHMBOKA2QJ7MVUIA%2F20181104%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20181104T095814Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=4d437043958864bbc4ba2feaad02e1d5e3b6637e9cf4491a0222404e029f6ece', mood_id: 1,
     }];
-    this.props.loadSongsForMood(this.props.mood);
+    this.props.loadSongsForMoodId(this.props.selected.id);
 
     // Prefetch album art in parallel
     // const imagePrefetch = [];
@@ -97,6 +97,7 @@ class PlayScreen extends Component {
       };
       TrackPlayer.add(track).then(() => { }); // TODO: find scalable way to do this
       // TrackPlayer documentation: https://github.com/react-native-kit/react-native-track-player/wiki/API
+      console.log("queue in playscreen!: ",this.props.queue.queue);
     }
 
     // if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
@@ -110,8 +111,7 @@ class PlayScreen extends Component {
 
   render = () => {
     const { goBack } = this.props.navigation;
-
-    const mood = this.props.moodList[this.props.mood];
+    // const mood = this.props.moodList[this.props.selected];
     console.log('props for playscreen: ', this.props);
     // TODO: implement player
     return (
@@ -126,10 +126,10 @@ class PlayScreen extends Component {
           </TouchableOpacity>
 
           <Text style={styles.moodText}>
-            { mood.name.toLowerCase() }
+            { this.props.selected.name.toLowerCase() }
           </Text>
-
         </View>
+
         <PlayControls
           shuffle={this.props.shuffle}
           repeat={this.props.repeat}
@@ -142,7 +142,8 @@ class PlayScreen extends Component {
           loading={this.props.loading}
         />
       </View>
-    </Background>
+      </Background>
+
     );
   }
 }
@@ -189,7 +190,7 @@ class PlayScreen extends Component {
 */
 const mapStateToProps = state => ({
   moods: state.mood.moods,
-  mood: state.mood.selected,
+  selected: state.mood.selected,
   queue: state.queue,
 });
 

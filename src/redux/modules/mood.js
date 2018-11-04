@@ -52,10 +52,11 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function setMood(index) {
+export function setMood(moodObj) {
+  console.log('setting mood!', moodObj);
   return {
     type: SET_MOOD,
-    mood: index,
+    mood: moodObj,
   };
 }
 

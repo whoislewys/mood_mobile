@@ -36,13 +36,13 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function loadSongsForMood(mood) {
-  console.log('loading songs for mood:', mood);
+export function loadSongsForMoodId(moodId) {
+  console.log('loading songs for mood:', moodId);
   return {
     type: LOAD_SONGS,
     payload: {
       request: {
-        url: `/moods/${mood}/songs`,
+        url: `/moods/${moodId}/songs`,
         params: {
           t: 'EXVbAWTqbGFl7BKuqUQv',
         },
