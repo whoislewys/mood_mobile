@@ -19,6 +19,7 @@
     "arrow-body-style" : "warn",
     "no-plusplus" : "off",
     "no-case-declarations" : "off",
+    "no-underscore_dangle" : "off",
     "react/prop-types" : "off",
     "spaced-comment" : "warn",
     "prefer-destructuring": "warn"
