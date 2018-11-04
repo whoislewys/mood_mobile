@@ -37,7 +37,6 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function loadSongsForMoodId(moodId) {
-  console.log('loading songs for mood:', moodId);
   return {
     type: LOAD_SONGS,
     payload: {

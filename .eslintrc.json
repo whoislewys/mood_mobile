@@ -17,6 +17,7 @@
   ],
   "rules" : {
     "arrow-body-style" : "warn",
+    "no-lonely-if": "warn",
     "no-plusplus" : "off",
     "no-case-declarations" : "off",
     "no-underscore-dangle" : "off",

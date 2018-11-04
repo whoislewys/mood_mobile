@@ -93,7 +93,7 @@ export default class MoodList extends React.Component {
 
   onPressItem = (moodObj) => {
     this.props.setMood(moodObj);
-    //this.props.loadSongsForMoodId(moodObj.id);
+    this.props.loadSongsForMoodId(moodObj.id);
     this.props.playscreen(); // TODO: fix this broken navigate to playscreen
   }
 

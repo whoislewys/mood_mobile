@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Navigator from '../navigation/app-navigator';
 import { loadSongsForMoodId } from '../redux/modules/queue';
 
