@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Navigator from '../navigation/app-navigator';
-import { loadSongsForMood } from '../redux/modules/queue';
+import { loadSongsForMoodId } from '../redux/modules/queue';
 
 class Player extends Component {
   constructor(props) {
@@ -204,7 +204,7 @@ class Player extends Component {
       screenProps={ {
         currentTrack: this.state.currentTrack,
         playing: this.props.playing,
-        loadSongsForMood: this.props.loadSongsForMood,
+        loadSongsForMoodId: this.props.loadSongsForMoodId,
         setMood: this.props.setMood,
         playQueue: this.state.playQueue,
         currentTime: this.state.currentTime,
@@ -236,7 +236,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadSongsForMood,
+  loadSongsForMoodId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

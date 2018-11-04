@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 export default class Mood extends React.Component {
   handlePress = () => {
-    this.props.onPressItem(this.props.mood.id);
+    this.props.onPressItem(this.props.mood);
   }
 
   // commented out from touchable opacity
