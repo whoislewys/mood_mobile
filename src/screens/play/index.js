@@ -9,11 +9,11 @@ import {
   StatusBar,
   Text,
 } from 'react-native';
-
-import Images from '@assets/images';
+import TrackPlayer from 'react-native-track-player';
 import PlayControls from './components/play-controls';
-import TrackInfo from './components/track-info';
+// import TrackInfo from './components/track-info';
 import Background from '../../components/background';
+import Images from '@assets/images';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -74,22 +74,38 @@ class PlayScreen extends Component {
     this.props.loadSongsForMood(this.props.mood);
 
     // Prefetch album art in parallel
-    const imagePrefetch = [];
-    for (const song of this.props.queue.queue) {
-      imagePrefetch.push(Image.prefetch(song.art_url));
+    // const imagePrefetch = [];
+    // for (const song of this.props.queue.queue) {
+    //   imagePrefetch.push(Image.prefetch(song.art_url));
+    // }
+    // Promise.all(imagePrefetch).then(() => {
+    //   console.log('All album art prefetched in parallel');
+    // });
+    StatusBar.setBarStyle('light-content', true);
+
+    TrackPlayer.setupPlayer().then(() => { }); // promise resolves when player inits
+
+    // fill player with tracks
+    for (let i = 0; i < this.props.queue.queue.size; i++) {
+      const track = {
+        id: this.props.queue.queue[i].id,
+        url: this.props.queue.queue[i].file,
+        title: this.props.queue.queue[i].name,
+        artist: this.props.queue.queue[i].artist,
+        album: this.props.queue.queue[i].album_name,
+        artwork: this.props.queue.queue[i].art_url,
+      };
+      TrackPlayer.add(track).then(() => { }); // TODO: find scalable way to do this
+      // TrackPlayer documentation: https://github.com/react-native-kit/react-native-track-player/wiki/API
     }
-    Promise.all(imagePrefetch).then(() => {
-      console.log('All album art prefetched in parallel');
-    });
-    // StatusBar.setBarStyle('light-content', true);
+
     // if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
     //   this.props.setLoading();
     // }
   }
 
   componentDidMount = () => {
-
-
+    TrackPlayer.play();
   }
 
   render = () => {
