@@ -21,6 +21,14 @@ class SplashScreen extends Component {
     this.props.loadMoods();
   }
 
+  shouldComponentUpdate = () => {
+    let shouldUpdate = true;
+    if (this.props.moods != null && this.props.moods.length > 0) {
+      shouldUpdate = false;
+    }
+    return shouldUpdate;
+  }
+
   componentDidUpdate = () => {
     if (this.props.moods.length > 0) {
       this.navigateToMoodScreen();

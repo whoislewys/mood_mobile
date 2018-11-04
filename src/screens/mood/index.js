@@ -69,7 +69,8 @@ class MoodScreen extends Component {
     if (!this.props.loading) {
       return (
           <MoodList
-            selectMood={this.props.selectMood}
+            loadSongsForMood={this.props.loadSongsForMood}
+            setMood={this.props.setMood}
             moods={this.props.moods}
             selected={this.props.mood}
             settings={this.navigateToSettingsScreen}

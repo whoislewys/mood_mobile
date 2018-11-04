@@ -1,129 +1,82 @@
 import React, { Component } from 'react';
 import {
-  View,
   StyleSheet,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-  Linking,
+  View,
   Image,
   Dimensions,
+  TouchableOpacity,
+  StatusBar,
+  Text,
 } from 'react-native';
 
 import Images from '@assets/images';
+import PlayControls from './components/play-controls';
+import TrackInfo from './components/track-info';
+import Background from '../../components/background';
 
 const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    marginHorizontal: width * 0.03,
+    marginVertical: height * 0.03,
   },
-  header: {
-    flex: 1,
+  menuDropdown: {
+    flex: 8,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 15,
+    justifyContent: 'center',
+    marginLeft: 0.01 * width,
+    marginRight: 0.02 * width,
+    marginTop: 20,
   },
-  body: {
-    flex: 95,
-  },
-  shadow: {
+  moodText: {
     flex: 1,
-    height: 50,
-    padding: 15,
-    paddingTop: 55,
-    paddingBottom: 25,
-    zIndex: 3,
-    marginBottom: 15,
-    marginTop: 15,
-  },
-  headerText: {
-    flex: 1,
-    color: '#555',
-    fontSize: 30,
-    fontWeight: '600',
-    alignSelf: 'center',
+    backgroundColor: 'transparent',
     textAlign: 'center',
-    paddingBottom: 4,
-    marginRight: 35,
-  },
+    color: '#ccc',
 
-  section: {
-    borderColor: '#bbb',
-    padding: 20,
-    paddingLeft: 10,
-    marginLeft: 20,
-  },
-  sectionOne: {
-    // flexDirection: 'row',
-    paddingLeft: 0,
-    paddingBottom: 0,
-    alignItems: 'center',
-  },
-  headText: {
-    fontWeight: '600',
-    fontSize: 14,
-    color: '#333',
+    paddingTop: 0,
+    marginTop: -4,
+
+    fontSize: 25,
     fontFamily: 'Roboto',
-    marginBottom: 8,
+    fontWeight: '300',
   },
-  bodyText: {
-    fontWeight: '400',
-    fontSize: 16,
-    color: '#555',
-    fontFamily: 'Roboto',
-  },
-  textRow: {
-    fontWeight: '400',
-    fontSize: 16,
-    color: '#555',
-    fontFamily: 'Roboto',
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  link: {
-    color: '#0B0080',
-    textDecorationLine: 'underline',
-  },
-  arrow: {
+  backButton: {
+    width: 23,
+    height: 14,
+    position: 'absolute',
+    top: -7,
+    left: 0.02 * width,
+    opacity: 0.5,
     resizeMode: 'stretch',
-    width: 15,
-    height: 19,
-    marginLeft: 20,
-    marginBottom: 2,
-    tintColor: 'black',
-    opacity: 0.7,
+    transform: [{ rotateX: '180deg' }],
   },
-  gradientHeading: {
-    flex: 1,
-    resizeMode: 'stretch',
-    maxHeight: 1.5,
-    maxWidth: width,
-    marginLeft: 0,
-  },
-  bigButton: {
-    resizeMode: 'contain',
-    width: width * 0.54,
-    height: 117,
+  touchable: {
+    zIndex: 2,
   },
 });
 
+// TODO: fix this!
+// this.props.mood does not exist
+// this.props.currentTrack does not exist
+// these missing props are what causes this playscreen to throw errors when it gets navigated to
 export default class PlayScreen extends Component {
   componentDidMount = () => {
     // Prefetch album art in parallel
-    // const imagePrefetch = [];
-    //
-    // for (const song of this.props.playQueue) {
-    //   imagePrefetch.push(Image.prefetch(song.art_url));
-    // }
-    //
-    // Promise.all(imagePrefetch).then(() => {
-    //   console.log('All album art prefetched in parallel');
-    // });
-    //
+    const imagePrefetch = [];
+
+    for (const song of this.props.playQueue) {
+      imagePrefetch.push(Image.prefetch(song.art_url));
+    }
+
+    Promise.all(imagePrefetch).then(() => {
+      console.log('All album art prefetched in parallel');
+    });
+
     StatusBar.setBarStyle('light-content', true);
 
     if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
@@ -132,39 +85,48 @@ export default class PlayScreen extends Component {
   }
 
   render = () => {
-    const { goBack } = this.props.navigation; // preferred method from react-navigation docs https://reactnavigation.org/docs/en/navigation-prop.html
-    /*
-      this.goBack = this.props.navgation.goBack.bind(this);
-    */
-    StatusBar.setBarStyle('dark-content', true);
+    const { goBack } = this.props.navigation;
+
+    const mood = this.props.moodList[this.props.mood];
 
     return (
-      <View style={styles.container}>
-        <View style={styles.shadow}>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={() => goBack()} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
-              <Image source={Images.arrowLeftWhite} style={styles.arrow} />
+      <Background
+        image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
+        blur={50}
+      >
+        <View style={styles.container}>
+          <View style={styles.menuDropdown}>
+            <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
+              <Image source={Images.arrowUpWhite} style={styles.backButton} />
             </TouchableOpacity>
-            <Text style={styles.headerText}>Settings</Text>
-          </View>
-        </View>
-        <Image source={Images.gradientHeading} style={styles.gradientHeading} />
-        <View style={styles.body}>
-          <View style={[styles.section, styles.sectionOne]}>
-            <TouchableOpacity onPress={() => Linking.openURL('https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk')}>
-              <Image source={Images.reviewButton} style={styles.bigButton} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/privacy.pdf')}>
-              <Image source={Images.termsButton} style={styles.bigButton} />
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.section]}>
-            <Text style={styles.textRow}>
-              © 2017 Mood Industries LLC, all rights reserved.
+
+            <Text style={styles.moodText}>
+              { mood.name.toLowerCase() }
             </Text>
+
+            {/* Add centered mood name to give balance to the top bar */}
+
           </View>
+          <TrackInfo
+            skipForward={this.props.nextTrack}
+            skipBack={this.props.previousTrack}
+            track={this.props.playQueue[this.props.currentTrack]}
+            setTime={this.props.setTime}
+            currentTime={this.props.currentTime}
+          />
+          <PlayControls
+            shuffle={this.props.shuffle}
+            repeat={this.props.repeat}
+            toggleShuffle={this.props.toggleShuffle}
+            toggleRepeat={this.props.toggleRepeat}
+
+            playing={this.props.playing}
+            handlePlayPress={this.props.handlePlayPress}
+
+            loading={this.props.loading}
+          />
         </View>
-      </View>
+      </Background>
     );
   }
 }
