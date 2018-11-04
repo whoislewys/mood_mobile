@@ -66,11 +66,16 @@ const styles = StyleSheet.create({
 // this.props.currentTrack does not exist
 // these missing props are what causes this playscreen to throw errors when it gets navigated to
 class PlayScreen extends Component {
-  componentDidMount = () => {
+  constructor(props) {
+    super(props);
+    this.props.queue.queue = [{
+      id: 127, name: 'Really Love', artist: 'Dawson bailey', album_name: '', art_url: 'https://i1.sndcdn.com/artworks-000306722370-p33yx5-t500x500.jpg', file: 'https://production-test-songs.s3.amazonaws.com/songs/files/000/000/127/original/song165.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHMBOKA2QJ7MVUIA%2F20181104%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20181104T095814Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=4d437043958864bbc4ba2feaad02e1d5e3b6637e9cf4491a0222404e029f6ece', mood_id: 1,
+    }];
+    this.props.loadSongsForMood(this.props.mood);
+
     // Prefetch album art in parallel
-    /*
     const imagePrefetch = [];
-    for (const song of this.props.playQueue) {
+    for (const song of this.props.queue.queue) {
       imagePrefetch.push(Image.prefetch(song.art_url));
     }
     Promise.all(imagePrefetch).then(() => {
@@ -80,8 +85,10 @@ class PlayScreen extends Component {
     // if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
     //   this.props.setLoading();
     // }
-    */
-    this.props.loadSongsForMood(this.props.mood);
+  }
+
+  componentDidMount = () => {
+
 
   }
 
@@ -89,9 +96,37 @@ class PlayScreen extends Component {
     const { goBack } = this.props.navigation;
 
     const mood = this.props.moodList[this.props.mood];
-
+    console.log('props for playscreen: ', this.props);
+    // TODO: implement player
     return (
-      <Text>{mood.name}</Text>
+      <Background
+        image={{ uri: this.props.queue.queue[this.props.currentTrack].art_url }}
+        blur={50}
+      >
+      <View style={styles.container}>
+        <View style={styles.menuDropdown}>
+          <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
+            <Image source={Images.arrowUpWhite} style={styles.backButton} />
+          </TouchableOpacity>
+
+          <Text style={styles.moodText}>
+            { mood.name.toLowerCase() }
+          </Text>
+
+        </View>
+        <PlayControls
+          shuffle={this.props.shuffle}
+          repeat={this.props.repeat}
+          toggleShuffle={this.props.toggleShuffle}
+          toggleRepeat={this.props.toggleRepeat}
+
+          playing={this.props.playing}
+          handlePlayPress={this.props.handlePlayPress}
+
+          loading={this.props.loading}
+        />
+      </View>
+    </Background>
     );
   }
 }

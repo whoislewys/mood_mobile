@@ -35,12 +35,12 @@ export default class TrackInfo extends Component {
   render = () => {
     // TODO: Rather than divide the props by 1000,
     //       update the TimeBar component to handle milliseconds
-    const player = this.props.track.player;
+    // const player = this.props.track.player;
     let duration = 180;
 
-    if (player.duration >= 0) {
-      duration = player.duration / 1000;
-    }
+    // if (player.duration >= 0) {
+    //   duration = player.duration / 1000;
+    // }
 
     return (
       <View style={styles.albumContainer}>

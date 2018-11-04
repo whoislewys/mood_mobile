@@ -17,6 +17,7 @@
     "react-native-audio-toolkit": "^1.0.6",
     "react-native-restart": "0.0.6",
     "react-native-splash-screen": "^3.0.6",
+    "react-native-track-player": "^1.0.0",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.2.0",
     "react-navigation-redux-helpers": "^1.0.3",
