@@ -14,6 +14,7 @@ import PlayControls from './components/play-controls';
 // import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import Images from '@assets/images';
+import AlbumArt from './components/album-art'
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -148,7 +149,7 @@ togglePlayback = async () => {
           </Text>
         </View>
 
-        <Image source={ this.props.queue.queue[this.props.currentTrack].art_url }/>
+        <AlbumArt url={ this.props.queue.queue[this.props.currentTrack].art_url }/>
 
         <PlayControls
           shuffle={this.props.shuffle}
@@ -177,7 +178,7 @@ togglePlayback = async () => {
   <View style={styles.container}>
     <View style={styles.menuDropdown}>
       <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
-        <Image source={Images.arrowUpWhite} style={styles.backButton} />
+        <AlbumArt url={Images.arrowUpWhite} style={styles.backButton} />
       </TouchableOpacity>
 
       <Text style={styles.moodText}>
