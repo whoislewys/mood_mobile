@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Navigator from '../navigation/app-navigator';
 import { loadSongsForMoodId } from '../redux/modules/queue';
+import { setMood } from '../redux/modules/mood';
 
 class Player extends Component {
   constructor(props) {
@@ -204,7 +205,6 @@ class Player extends Component {
         currentTrack: this.state.currentTrack,
         playing: this.props.playing,
         loadSongsForMoodId: this.props.loadSongsForMoodId,
-        setMood: this.props.setMood,
         currentTime: this.state.currentTime,
         shuffled: this.state.shuffled,
         repeat: this.state.repeat,
@@ -233,6 +233,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadSongsForMoodId,
+  setMood,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

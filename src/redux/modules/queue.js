@@ -16,13 +16,28 @@ export async function loadSongData(list) {
   // }
   //
   // await Promise.all(imagePrefetch);
+
+  const track = {
+    id: 'unique track id',
+
+    url: 'http://example.com/avaritia.mp3', // Load media from the network
+
+    title: 'Avaritia',
+    artist: 'deadmau5',
+    album: 'while(1<2)',
+    genre: 'Progressive House, Electro House',
+    date: '2014-05-20T07:00:00+00:00', // RFC 3339
+
+    artwork: 'http://example.com/avaritia.png', // Load artwork from the network
+  };
+
   return list;
 }
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_SONGS:
-      return { ...state, loading: true };
+      return { ...state, loading: true, queue: [] };
     case LOAD_SONGS_SUCCESS:
       return { ...state, loading: false, queue: action.payload.data };
     case LOAD_SONGS_FAIL:

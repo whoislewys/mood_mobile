@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   StatusBar,
   Text,
+  ActivityIndicator,
 } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
+import Images from '@assets/images';
 import PlayControls from './components/play-controls';
 // import TrackInfo from './components/track-info';
 import Background from '../../components/background';
-import Images from '@assets/images';
-import AlbumArt from './components/album-art'
+import AlbumArt from './components/album-art';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -75,7 +76,7 @@ class PlayScreen extends Component {
 
     // TODO:  init queue to avoid queue not found error. this is hacky. need a better way to expose queue to TrackPlayer
 
-    //this.props.loadSongsForMoodId(this.props.selected.id);
+    // this.props.loadSongsForMoodId(this.props.selected.id);
 
     // const state = TrackPlayer.getState();
     // console.log('track player state: ', state);
@@ -99,70 +100,72 @@ class PlayScreen extends Component {
   }
 
 togglePlayback = async () => {
-  const currentTrack = await TrackPlayer.getCurrentTrack();
-  if (currentTrack == null) {
-    await TrackPlayer.reset();
-    // fill player with tracks
-    for (let i = 0; i < this.props.queue.length; i++) {
-      const idStr = this.props.queue[i].id.toString();
-      const track = {
-        id: idStr,
-        url: this.props.queue[i].file,
-        title: this.props.queue[i].name,
-        artist: this.props.queue[i].artist,
-        album: this.props.queue[i].album_name,
-        artwork: this.props.queue[i].art_url,
-      };
-      console.log('created track: ', track);
-      await TrackPlayer.add(track); // TODO: add songs to queue and TrackPlayer properly
-      // TrackPlayer documentation: https://github.com/react-native-kit/react-native-track-player/wiki/API
-    } // done adding songs to TrackPlayer
-    await TrackPlayer.play();
-  } else {
-    if (PlayerStore.playbackState === TrackPlayer.STATE_PAUSED) { // TODO: update with our state. this is example from docs. https://github.com/react-native-kit/react-native-track-player/blob/dev/example/react/screens/PlaylistScreen.js
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.pause();
-    }
-  }
+  // const currentTrack = await TrackPlayer.getCurrentTrack();
+  // if (currentTrack == null) {
+  //   await TrackPlayer.reset();
+  //   // fill player with tracks
+  //   for (let i = 0; i < this.props.queue.length; i++) {
+  //     const idStr = this.props.queue[i].id.toString();
+  //     const track = {
+  //       id: idStr,
+  //       url: this.props.queue[i].file,
+  //       title: this.props.queue[i].name,
+  //       artist: this.props.queue[i].artist,
+  //       album: this.props.queue[i].album_name,
+  //       artwork: this.props.queue[i].art_url,
+  //     };
+  //     console.log('created track: ', track);
+  //     await TrackPlayer.add(track); // TODO: add songs to queue and TrackPlayer properly
+  //     // TrackPlayer documentation: https://github.com/react-native-kit/react-native-track-player/wiki/API
+  //   } // done adding songs to TrackPlayer
+  //   await TrackPlayer.play();
+  // } else if (PlayerStore.playbackState === TrackPlayer.STATE_PAUSED) { // TODO: update with our state. this is example from docs. https://github.com/react-native-kit/react-native-track-player/blob/dev/example/react/screens/PlaylistScreen.js
+  //   await TrackPlayer.play();
+  // } else {
+  //   await TrackPlayer.pause();
+  // }
 }
 
   render = () => {
     const { goBack } = this.props.navigation;
     // const mood = this.props.moodList[this.props.selected];
     // TODO: implement player
-    return (
-      <Background
-        image={{ uri: this.props.queue[this.props.currentTrack].art_url }}
-        blur={50}
-      >
-      <View style={styles.container}>
-        <View style={styles.menuDropdown}>
-          <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
-            <Image source={Images.arrowUpWhite} style={styles.backButton} />
-          </TouchableOpacity>
 
-          <Text style={styles.moodText}>
-            { this.props.selected.name.toLowerCase() }
-          </Text>
-        </View>
+    // If the queue is not loaded show a spinner, otherwise show the screen
+    return (this.props.queue.length
+      ? (
+        <Background
+          image={{ uri: this.props.queue[this.props.currentTrack].art_url }}
+          blur={50}
+        >
+          <View style={styles.container}>
+            <View style={styles.menuDropdown}>
+              <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
+                <Image source={Images.arrowUpWhite} style={styles.backButton} />
+              </TouchableOpacity>
 
-        <AlbumArt url={ this.props.queue[this.props.currentTrack].art_url }/>
+              <Text style={styles.moodText}>
+                { this.props.selected ? this.props.selected.name.toLowerCase() : '' }
+              </Text>
+            </View>
 
-        <PlayControls
-          shuffle={this.props.shuffle}
-          repeat={this.props.repeat}
-          toggleShuffle={this.props.toggleShuffle}
-          toggleRepeat={this.props.toggleRepeat}
+            <AlbumArt url={ this.props.queue[this.props.currentTrack].art_url } />
 
-          playing={this.props.playing}
-          handlePlayPress={this.togglePlayback}
+            <PlayControls
+              shuffle={this.props.shuffle}
+              repeat={this.props.repeat}
+              toggleShuffle={this.props.toggleShuffle}
+              toggleRepeat={this.props.toggleRepeat}
 
-          loading={this.props.loading}
-        />
-      </View>
-      </Background>
+              playing={this.props.playing}
+              handlePlayPress={this.togglePlayback}
 
+              loading={this.props.loading}
+            />
+          </View>
+        </Background>
+      )
+      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
     );
   }
 }
@@ -210,6 +213,7 @@ togglePlayback = async () => {
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
+  queue: state.queue.queue,
 });
 
 export default connect(mapStateToProps)(PlayScreen);
