@@ -74,9 +74,7 @@ class PlayScreen extends Component {
     // other TODO's are symptoms of poor handling of queue data
 
     // TODO:  init queue to avoid queue not found error. this is hacky. need a better way to expose queue to TrackPlayer
-    this.props.queue.queue = [{
-      id: 127, name: 'Really Love', artist: 'Dawson bailey', album_name: '', art_url: 'https://i1.sndcdn.com/artworks-000306722370-p33yx5-t500x500.jpg', file: 'https://production-test-songs.s3.amazonaws.com/songs/files/000/000/127/original/song165.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHMBOKA2QJ7MVUIA%2F20181104%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20181104T095814Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=4d437043958864bbc4ba2feaad02e1d5e3b6637e9cf4491a0222404e029f6ece', mood_id: 1,
-    }];
+
     //this.props.loadSongsForMoodId(this.props.selected.id);
 
     // const state = TrackPlayer.getState();
@@ -105,15 +103,15 @@ togglePlayback = async () => {
   if (currentTrack == null) {
     await TrackPlayer.reset();
     // fill player with tracks
-    for (let i = 0; i < this.props.queue.queue.length; i++) {
-      const idStr = this.props.queue.queue[i].id.toString();
+    for (let i = 0; i < this.props.queue.length; i++) {
+      const idStr = this.props.queue[i].id.toString();
       const track = {
         id: idStr,
-        url: this.props.queue.queue[i].file,
-        title: this.props.queue.queue[i].name,
-        artist: this.props.queue.queue[i].artist,
-        album: this.props.queue.queue[i].album_name,
-        artwork: this.props.queue.queue[i].art_url,
+        url: this.props.queue[i].file,
+        title: this.props.queue[i].name,
+        artist: this.props.queue[i].artist,
+        album: this.props.queue[i].album_name,
+        artwork: this.props.queue[i].art_url,
       };
       console.log('created track: ', track);
       await TrackPlayer.add(track); // TODO: add songs to queue and TrackPlayer properly
@@ -135,7 +133,7 @@ togglePlayback = async () => {
     // TODO: implement player
     return (
       <Background
-        image={{ uri: this.props.queue.queue[this.props.currentTrack].art_url }}
+        image={{ uri: this.props.queue[this.props.currentTrack].art_url }}
         blur={50}
       >
       <View style={styles.container}>
@@ -149,7 +147,7 @@ togglePlayback = async () => {
           </Text>
         </View>
 
-        <AlbumArt url={ this.props.queue.queue[this.props.currentTrack].art_url }/>
+        <AlbumArt url={ this.props.queue[this.props.currentTrack].art_url }/>
 
         <PlayControls
           shuffle={this.props.shuffle}
@@ -212,7 +210,6 @@ togglePlayback = async () => {
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
-  queue: state.queue,
 });
 
 export default connect(mapStateToProps)(PlayScreen);

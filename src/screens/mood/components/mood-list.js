@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-
+import axios from 'axios';
 import Images from '@assets/images';
 import Mood from './mood';
 
@@ -92,9 +92,22 @@ export default class MoodList extends React.Component {
   }
 
   onPressItem = (moodObj) => {
+
     this.props.setMood(moodObj);
-    this.props.loadSongsForMoodId(moodObj.id);
-    this.props.playscreen(); // TODO: fix this broken navigate to playscreen
+
+    let queueObj = { queue: [] };
+    // this.props.loadSongsForMoodId(moodObj.id); this async reducer makes songs load at an unpredictable time
+    // just load the songs synchronously here
+    const moodId = moodObj.id;
+    console.log('loading songs from moodlist');
+    const t = 'EXVbAWTqbGFl7BKuqUQv';
+    axios.get(`http://api.moodindustries.com/api/v1/moods/${moodId}/songs/?t=${t}`)
+      .then((response) => {
+        queueObj.queue = response.data;
+        console.log('navigating into playscreen with: ', queueObj);
+        this.props.playscreen(queueObj);
+      });
+    // this.props.playscreen(); // TODO: fix this broken navigate to playscreen
   }
 
   // renderItem called when rendering FlatList.

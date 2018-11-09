@@ -205,7 +205,6 @@ class Player extends Component {
         playing: this.props.playing,
         loadSongsForMoodId: this.props.loadSongsForMoodId,
         setMood: this.props.setMood,
-        playQueue: this.state.playQueue,
         currentTime: this.state.currentTime,
         shuffled: this.state.shuffled,
         repeat: this.state.repeat,
@@ -228,8 +227,6 @@ class Player extends Component {
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
-  queue: state.queue,
-
   loading: state.queue.loading,
   errors: state.queue.loading,
 });
