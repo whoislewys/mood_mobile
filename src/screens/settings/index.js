@@ -9,8 +9,9 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-
 import Images from '@assets/images';
+import { connect } from 'react-redux';
+import Playbar from '../../components/playbar';
 
 const width = Dimensions.get('window').width;
 
@@ -111,7 +112,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class SettingsScreen extends Component {
+class SettingsScreen extends Component {
+  getPlaybar = () => {
+    // TODO: make playbar render at the right time
+    console.log('get playbar called with this queue: ', this.props.queue);
+    return (this.props.queue && this.props.queue.queue.length
+      ? (
+        <Playbar
+        track={this.props.queue.queue[this.props.currentTrack]}
+        playscreen={this.navigateToPlayScreen}
+        handlePlayPress={() => console.log('YOU CLICKED PLAY :)')}/>
+      )
+      : <Text>PLAYBAR PLACEHOLDER :)</Text>
+    );
+  }
+
   render = () => {
     const { goBack } = this.props.navigation; // preferred method from react-navigation docs https://reactnavigation.org/docs/en/navigation-prop.html
     /*
@@ -145,7 +160,16 @@ export default class SettingsScreen extends Component {
             </Text>
           </View>
         </View>
+
+        { this.getPlaybar() }
+
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  queue: state.queue,
+});
+
+export default connect(mapStateToProps)(SettingsScreen);

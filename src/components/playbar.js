@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
-    flex: 1,
+    flex: 6,
     backgroundColor: '#222222',
   },
   albumArt: {
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   arrow: {
+    resizeMode: 'contain',
     flex: 1,
     marginLeft: 24,
     width: 22,
