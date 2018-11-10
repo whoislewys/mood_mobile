@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
   StyleSheet,
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
-
 import SplashScreen from 'react-native-splash-screen';
-
 import { setMood } from '../../redux/modules/mood';
-
 import MoodList from './components/mood-list';
 import Playbar from '../../components/playbar';
 
@@ -59,11 +57,19 @@ class MoodScreen extends Component {
     });
   };
 
-  playbarGo = () => {
-    this.navigateToPlayScreen();
+  getPlaybar = () => {
+    // TODO: make playbar render at the right time
+    console.log('get playbar called with this queue: ', this.props.queue);
+    return (this.props.queue && this.props.queue.queue.length
+      ? (
+        <Playbar
+        track={this.props.queue.queue[this.props.currentTrack]}
+        playscreen={this.navigateToPlayScreen}
+        handlePlayPress={() => console.log('YOU CLICKED PLAY :)')}/>
+      )
+      : <Text>PLAYBAR PLACEHOLDER :)</Text>
+    );
   }
-
-  getPlaybar = () => <View></View>
 
   getContent = () => {
     if (!this.props.loading) {
@@ -97,6 +103,7 @@ class MoodScreen extends Component {
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
+  queue: state.queue,
 });
 
 const mapDispatchToProps = {

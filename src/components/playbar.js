@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
+    backgroundColor: '#222222',
   },
   albumArt: {
     resizeMode: 'cover',
     flex: 1,
   },
   arrow: {
-    resizeMode: 'contain',
     flex: 1,
     marginLeft: 24,
     width: 22,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class PlayBar extends Component {
+export default class Playbar extends Component {
   playButton = () => {
     if (this.props.playing) {
       return (
@@ -87,14 +87,12 @@ export default class PlayBar extends Component {
   );
 
   render = () => {
-    const [track] = this.props;
-
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.art} onPress={this.props.go}>
+        <TouchableOpacity style={styles.art} onPress={this.props.playscreen}>
           {this.albumArt()}
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.go} style={styles.info}>
+        <TouchableOpacity onPress={this.props.playscreen} style={styles.info}>
           <View style={{ alignItems: 'center', flexDirection: 'row' }}>
             <Text
               style={[styles.albumInfoText, {
@@ -104,7 +102,7 @@ export default class PlayBar extends Component {
               numberOfLines={1}
               ellipsizeMode="tail"
               >
-              { track.name }
+              { this.props.track.title }
             </Text>
           </View>
         </TouchableOpacity>

@@ -15,7 +15,6 @@ import Images from '@assets/images';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
-import AlbumArt from './components/album-art';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
