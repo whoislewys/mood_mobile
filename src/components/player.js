@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import Navigator from '../navigation/app-navigator';
 import { loadSongsForMoodId } from '../redux/modules/queue';
@@ -16,6 +17,8 @@ class Player extends Component {
       shuffled: false,
       playing: false,
     };
+
+    StatusBar.setBarStyle('light-content', true);
   }
 
   // ///////////////////////////////////////////////////////////

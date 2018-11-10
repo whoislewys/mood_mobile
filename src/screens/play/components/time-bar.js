@@ -50,14 +50,14 @@ export default class TimeBar extends Component {
     };
   }
 
-  static getDerivedStateFromProps = (nextProps) => {
-    const newState = {};
-    if (nextProps.totalTime !== -1) newState.totalTime = nextProps.totalTime;
-
-    const x = (nextProps.currentTime / this.state.totalTime) * width;
-    if (!this.state.dragging) newState.x = x;
-
-    return newState;
+  static getDerivedStateFromProps = (props) => {
+    // const newState = {};
+    // if (props.totalTime !== -1) newState.totalTime = props.totalTime;
+    //
+    // const x = (props.currentTime / this.state.totalTime) * width;
+    // if (!this.state.dragging) newState.x = x;
+    //
+    // return newState;
   }
 
   getTickBoxStyle = () => ({

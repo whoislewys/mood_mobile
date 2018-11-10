@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 export default class InfoText extends Component {
   render = () => {
-    const album = this.props.track;
+    const { track } = this.props;
 
     return (
       <View style={styles.albumInfoText}>
@@ -44,7 +44,7 @@ export default class InfoText extends Component {
           numberOfLines={1}
           ellipsizeMode="tail"
           >
-          { album.name }
+          { track.title }
         </Text>
         <View style={styles.albumInfoSubRow}>
           <Text
@@ -54,12 +54,12 @@ export default class InfoText extends Component {
             numberOfLines={1}
             ellipsizeMode="tail"
             >
-            { album.artist }
+            { track.artist }
           </Text>
           <Text style={[styles.albumInfoSubText, {
             marginHorizontal: 2,
           }]}>
-          { album.album_name ? '-' : '' }
+          { track.album ? '-' : '' }
           </Text>
           <Text
             style={[styles.albumInfoSubText, {
@@ -68,7 +68,7 @@ export default class InfoText extends Component {
             numberOfLines={1}
             ellipsizeMode="tail"
             >
-            { album.album_name }
+            { track.album }
           </Text>
         </View>
       </View>

@@ -13,7 +13,7 @@ import {
 import TrackPlayer from 'react-native-track-player';
 import Images from '@assets/images';
 import PlayControls from './components/play-controls';
-// import TrackInfo from './components/track-info';
+import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import AlbumArt from './components/album-art';
 
@@ -74,7 +74,8 @@ class PlayScreen extends Component {
     // TODO: implement proper playing. example app is here https://github.com/react-native-kit/react-native-track-player/tree/dev/example
     // other TODO's are symptoms of poor handling of queue data
 
-    // TODO:  init queue to avoid queue not found error. this is hacky. need a better way to expose queue to TrackPlayer
+    // TODO:  init queue to avoid queue not found error. this is hacky.
+    //        need a better way to expose queue to TrackPlayer
 
     // this.props.loadSongsForMoodId(this.props.selected.id);
 
@@ -109,10 +110,10 @@ togglePlayback = async () => {
   //     const track = {
   //       id: idStr,
   //       url: this.props.queue[i].file,
-  //       title: this.props.queue[i].name,
+  //       title: this.props.queue[i].title,
   //       artist: this.props.queue[i].artist,
   //       album: this.props.queue[i].album_name,
-  //       artwork: this.props.queue[i].art_url,
+  //       artwork: this.props.queue[i].artwork,
   //     };
   //     console.log('created track: ', track);
   //     await TrackPlayer.add(track); // TODO: add songs to queue and TrackPlayer properly
@@ -135,7 +136,7 @@ togglePlayback = async () => {
     return (this.props.queue.length
       ? (
         <Background
-          image={{ uri: this.props.queue[this.props.currentTrack].art_url }}
+          image={{ uri: this.props.queue[this.props.currentTrack].artwork }}
           blur={50}
         >
           <View style={styles.container}>
@@ -148,9 +149,13 @@ togglePlayback = async () => {
                 { this.props.selected ? this.props.selected.name.toLowerCase() : '' }
               </Text>
             </View>
-
-            <AlbumArt url={ this.props.queue[this.props.currentTrack].art_url } />
-
+            <TrackInfo
+              skipForward={this.props.nextTrack}
+              skipBack={this.props.previousTrack}
+              track={this.props.queue[this.props.currentTrack]}
+              setTime={this.props.setTime}
+              currentTime={this.props.currentTime}
+            />
             <PlayControls
               shuffle={this.props.shuffle}
               repeat={this.props.repeat}
@@ -158,7 +163,7 @@ togglePlayback = async () => {
               toggleRepeat={this.props.toggleRepeat}
 
               playing={this.props.playing}
-              handlePlayPress={this.togglePlayback}
+              handlePlayPress={this.props.handlePlayPress}
 
               loading={this.props.loading}
             />
@@ -172,43 +177,7 @@ togglePlayback = async () => {
 
 /*
 // old return
-<Background
-  image={{ uri: this.props.playQueue[this.props.currentTrack].art_url }}
-  blur={50}
->
-  <View style={styles.container}>
-    <View style={styles.menuDropdown}>
-      <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
-        <AlbumArt url={Images.arrowUpWhite} style={styles.backButton} />
-      </TouchableOpacity>
 
-      <Text style={styles.moodText}>
-        { mood.name.toLowerCase() }
-      </Text>
-
-      {// Add centered mood name to give balance to the top bar }
-
-    </View>
-    <TrackInfo
-      skipForward={this.props.nextTrack}
-      skipBack={this.props.previousTrack}
-      track={this.props.playQueue[this.props.currentTrack]}
-      setTime={this.props.setTime}
-      currentTime={this.props.currentTime}
-    />
-    <PlayControls
-      shuffle={this.props.shuffle}
-      repeat={this.props.repeat}
-      toggleShuffle={this.props.toggleShuffle}
-      toggleRepeat={this.props.toggleRepeat}
-
-      playing={this.props.playing}
-      handlePlayPress={this.props.handlePlayPress}
-
-      loading={this.props.loading}
-    />
-  </View>
-</Background>
 */
 const mapStateToProps = state => ({
   moods: state.mood.moods,
