@@ -129,9 +129,7 @@ class SettingsScreen extends Component {
 
   render = () => {
     const { goBack } = this.props.navigation; // preferred method from react-navigation docs https://reactnavigation.org/docs/en/navigation-prop.html
-    /*
-      this.goBack = this.props.navgation.goBack.bind(this);
-    */
+
     StatusBar.setBarStyle('dark-content', true);
 
     return (

@@ -36,19 +36,27 @@ export default createStackNavigator({
     },
     screenInterpolator: (sceneProps) => {
       const { layout, position, scene } = sceneProps;
-      const { index } = scene;
-
+      const { index, route } = scene;
+      const last = index - 1;
       const height = layout.initHeight;
-      const translateY = position.interpolate({
-        inputRange: [index - 1, index, index + 1],
-        outputRange: [height, 0, 0],
-      });
+      const width = layout.initWidth;
 
       const opacity = position.interpolate({
         inputRange: [index - 1, index - 0.99, index],
         outputRange: [0, 1, 1],
       });
 
+      const translateY = position.interpolate({
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [width, 0, 0],
+      });
+
+      const translateX = position.interpolate({
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [width, 0, 0],
+      });
+
+      if (route.routeName === 'Settings') return { opacity, transform: [{ translateX }] };
       return { opacity, transform: [{ translateY }] };
     },
   }),
