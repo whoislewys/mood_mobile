@@ -16,6 +16,7 @@ class Player extends Component {
       playQueue: [],
       shuffled: false,
       playing: false,
+      interval: null,
     };
 
     StatusBar.setBarStyle('light-content', true);
