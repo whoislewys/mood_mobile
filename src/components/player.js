@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
+import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
 import { loadSongsForMoodId } from '../redux/modules/queue';
 import { setMood } from '../redux/modules/mood';
@@ -20,6 +21,19 @@ class Player extends Component {
     };
 
     StatusBar.setBarStyle('light-content', true);
+  }
+
+  componentDidMount = () => {
+    TrackPlayer.setupPlayer();
+    TrackPlayer.updateOptions({
+      stopWithApp: true,
+      capabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+      ],
+    });
   }
 
   // ///////////////////////////////////////////////////////////

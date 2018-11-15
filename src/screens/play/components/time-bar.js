@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   Text,
 } from 'react-native';
 import moment from 'moment';
+import TrackPlayer from 'react-native-track-player';
 
 import Images from '@assets/images';
 
@@ -40,28 +41,27 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TimeBar extends Component {
+export default class TimeBar extends TrackPlayer.ProgressComponent {
   constructor(props) {
     super(props);
     this.state = {
       x: 0,
       dragging: false,
-      totalTime: 180,
     };
   }
 
-  static getDerivedStateFromProps = (props, state) => {
-    const newState = state;
-
-    if (props !== undefined) {
-      if (props.totalTime !== -1) newState.totalTime = props.totalTime;
-
-      const x = (props.currentTime / state.totalTime) * width; // this is the error dumbass
-      if (!state.dragging) newState.x = x;
-    }
-
-    return newState;
-  }
+  // static getDerivedStateFromProps = (props, state) => {
+  //   const newState = state;
+  //
+  //   if (props !== undefined) {
+  //     if (props.totalTime !== -1) newState.totalTime = props.totalTime;
+  //
+  //     const x = (props.currentTime / state.totalTime) * width;
+  //     if (!state.dragging) newState.x = x;
+  //   }
+  //
+  //   return newState;
+  // }
 
   getTickBoxStyle = () => ({
     left: this.state.x - 17,
@@ -134,7 +134,7 @@ export default class TimeBar extends Component {
     this.props.setTime(this.pxToSeconds(this.state.x) * 1000);
   }
 
-  pxToSeconds = pixels => (this.state.totalTime * pixels) / width
+  pxToSeconds = pixels => (this.state.duration * pixels) / width
 
   render = () => (
       <View style={styles.timeBar}>
