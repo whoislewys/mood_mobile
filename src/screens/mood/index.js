@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   ActivityIndicator,
   StatusBar,
@@ -67,7 +66,7 @@ class MoodScreen extends Component {
         playscreen={this.navigateToPlayScreen}
         handlePlayPress={() => console.log('YOU CLICKED PLAY :)')}/>
       )
-      : <Text>PLAYBAR PLACEHOLDER :)</Text>
+      : null
     );
   }
 

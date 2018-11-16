@@ -32,17 +32,7 @@ const styles = StyleSheet.create({
 });
 
 export default class TrackInfo extends Component {
-  render = () => {
-    // TODO: Rather than divide the props by 1000,
-    //       update the TimeBar component to handle milliseconds
-    // const player = this.props.track.player;
-    const duration = 180;
-
-    // if (player.duration >= 0) {
-    //   duration = player.duration / 1000;
-    // }
-
-    return (
+  render = () => (
       <View style={styles.albumContainer}>
         <AlbumArt
           url={this.props.track.artwork}
@@ -51,13 +41,10 @@ export default class TrackInfo extends Component {
         />
         <View style={[styles.albumInfo]}>
           <TimeBar
-            currentTime={this.props.currentTime / 1000}
-            totalTime={duration}
             setTime={this.props.setTime}
           />
           <InfoText track={this.props.track} />
         </View>
       </View>
-    );
-  }
+  )
 }

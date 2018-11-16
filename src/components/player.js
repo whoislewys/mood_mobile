@@ -17,7 +17,6 @@ class Player extends Component {
       playQueue: [],
       shuffled: false,
       playing: false,
-      interval: null,
     };
 
     StatusBar.setBarStyle('light-content', true);
@@ -38,68 +37,16 @@ class Player extends Component {
 
   // ///////////////////////////////////////////////////////////
   // State change functions
-  playingStarted = () => {
-    this.setState({ playing: true, updateCurrentTime: true });
-    this.startInterval();
-  }
-
-  playingStopped = () => {
-    this.stopInterval();
-    this.setState({ playing: false });
-  }
-
-  songEndCallback = () => {
-    this.stopPlayback();
-    this.nextTrack();
-  }
-
-  startInterval = () => {
-    this.interval = setInterval(() => {
-      if (!this.state.playing || !this.state.updateCurrentTime) return;
-      const track = this.state.playQueue[this.state.currentTrack];
-      this.setState({ currentTime: track.player.currentTime });
-    }, 500);
-  }
-
-  stopInterval = () => {
-    clearInterval(this.interval);
-  }
-
-  setNewSong = (index) => {
-    if (this.state.playing) {
-      this.stopPlayback();
-      this.state.playQueue[this.state.currentTrack].player.stop();
-    }
-
-    this.setState({ currentTime: 0, currentTrack: index }, this.startPlayback);
-  }
-
-  setLoadingInterval = () => {
-    if (!this.state.loading) {
-      this.setState({
-        loading: setInterval(() => {
-          const [player] = this.state.playQueue[this.state.currentTrack];
-
-          if (player.canPlay) {
-            this.clearLoadingInterval();
-          }
-        }, 1000),
-      });
-    }
-  }
-
-  clearLoadingInterval = () => {
-    if (this.state.loading) {
-      clearInterval(this.state.loading);
-      this.setState({ loading: false });
-    }
-  }
-
-  handlePlayPress = () => {
-    if (this.state.playing) {
-      this.pausePlayback();
+  handlePlayPress = async () => {
+    const currentTrack = this.props.track;
+    if (currentTrack == null) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add(this.props.queue);
+      await TrackPlayer.play();
+    } else if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
     } else {
-      this.startPlayback();
+      await TrackPlayer.pause();
     }
   }
 
@@ -110,42 +57,15 @@ class Player extends Component {
   }
 
   pausePlayback = () => {
-    this.state.playQueue[this.state.currentTrack].player.pause(this.playingStopped);
+
   }
 
   startPlayback = () => {
-    const [player] = this.state.playQueue[this.state.currentTrack];
-    if (player.canPlay) {
-      player.play(this.playingStarted);
-      player.on('ended', this.songEndCallback);
-    }
+
   }
 
   stopPlayback = () => {
-    const track = this.state.playQueue[this.state.currentTrack];
-    if (track && track.player && track.player.canStop) {
-      track.player.stop(this.playingStopped);
-      this.setState({ currentTime: 0 });
-    }
-  }
 
-  cycleSong = (direction) => {
-    if (this.state.loading) return;
-
-    const end = this.state.playQueue.length - 1;
-    let next = this.state.currentTrack + direction;
-
-    if (this.state.repeat) {
-      if (next < 0 || next > end) {
-        next = this.mod(next, end + 1);
-      }
-    } else if (next < 0) {
-      next = 0;
-    } else if (next > end) {
-      next = end;
-    }
-
-    this.setNewSong(next);
   }
 
   setPlayQueue = (queue) => {
@@ -166,12 +86,16 @@ class Player extends Component {
     this.setState({ playQueue: queue });
   }
 
-  nextTrack = () => {
-    this.cycleSong(1);
+  skipToNext = async () => {
+    try {
+      await TrackPlayer.skipToNext();
+    } catch (_) {}
   }
 
-  previousTrack = () => {
-    this.cycleSong(-1);
+  skipToPrevious = async () => {
+    try {
+      await TrackPlayer.skipToPrevious();
+    } catch (_) {}
   }
 
   toggleShuffle = () => {
@@ -247,6 +171,9 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   loading: state.queue.loading,
   errors: state.queue.loading,
+  playbackState: state.queue.playback,
+  track: state.queue.track,
+  queue: state.queue.queue,
 });
 
 const mapDispatchToProps = {

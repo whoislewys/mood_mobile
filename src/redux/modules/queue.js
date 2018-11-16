@@ -1,13 +1,18 @@
-import { Image } from 'react-native';
+// import { Image } from 'react-native';
 
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
+const PLAYBACK_STATE = 'playback/STATE';
+const PLAYBACK_TRACK = 'playback/TRACK';
+
 const initialState = {
   loading: false,
   errors: null,
   queue: [],
+  playback: null,
+  track: null,
 };
 
 export function loadSongData(list) {
@@ -66,6 +71,16 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
       };
+    case PLAYBACK_STATE:
+      return {
+        ...state,
+        playback: action.state,
+      };
+    case PLAYBACK_TRACK:
+      return {
+        ...state,
+        track: action.track,
+      };
     default:
       return state;
   }
@@ -82,5 +97,19 @@ export function loadSongsForMoodId(moodId) {
         },
       },
     },
+  };
+}
+
+export function playbackState(state) {
+  return {
+    type: PLAYBACK_STATE,
+    state,
+  };
+}
+
+export function playbackTrack(track) {
+  return {
+    type: PLAYBACK_TRACK,
+    track,
   };
 }

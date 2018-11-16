@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -41,27 +41,57 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TimeBar extends TrackPlayer.ProgressComponent {
+export default class TimeBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       x: 0,
       dragging: false,
+      duration: 180,
+      position: 0,
     };
   }
 
-  // static getDerivedStateFromProps = (props, state) => {
-  //   const newState = state;
-  //
-  //   if (props !== undefined) {
-  //     if (props.totalTime !== -1) newState.totalTime = props.totalTime;
-  //
-  //     const x = (props.currentTime / state.totalTime) * width;
-  //     if (!state.dragging) newState.x = x;
-  //   }
-  //
-  //   return newState;
-  // }
+  componentDidMount() {
+    this._progressUpdates = true;
+    this._updateProgress();
+    this._timer = setInterval(this._updateProgress.bind(this), 300);
+  }
+
+  componentWillUnmount() {
+    this._progressUpdates = false;
+    clearInterval(this._timer);
+  }
+
+  async _updateProgress() {
+    try {
+      const data = {
+        position: await TrackPlayer.getPosition(),
+        bufferedPosition: await TrackPlayer.getBufferedPosition(),
+        duration: await TrackPlayer.getDuration(),
+      };
+
+      if (this._progressUpdates) {
+        this.setState(data);
+      }
+    } catch (e) {
+      // The player is probably not initialized yet, we'll just ignore it
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    console.log(`Prev Position: ${prevState.position}`);
+    console.log(`Current Position: ${this.state.position}`);
+
+    // console.log(prevProps);
+    // console.log(prevState);
+    // console.log(test);
+
+    if (prevState.position !== this.state.position || prevState.duration !== this.state.duration) {
+      const x = (this.state.progress / this.state.duration) * width;
+      if (!this.state.dragging) this.setState({ x });
+    }
+  }
 
   getTickBoxStyle = () => ({
     left: this.state.x - 17,
@@ -134,7 +164,7 @@ export default class TimeBar extends TrackPlayer.ProgressComponent {
     this.props.setTime(this.pxToSeconds(this.state.x) * 1000);
   }
 
-  pxToSeconds = pixels => (this.state.duration * pixels) / width
+  pxToSeconds = pixels => (this.state.position * pixels) / width
 
   render = () => (
       <View style={styles.timeBar}>
