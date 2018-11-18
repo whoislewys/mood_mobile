@@ -10,13 +10,9 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTrack: 0,
       repeat: false,
-      currentTime: 0,
-      updateCurrentTime: true,
       playQueue: [],
       shuffled: false,
-      playing: false,
     };
 
     StatusBar.setBarStyle('light-content', true);
@@ -51,21 +47,9 @@ class Player extends Component {
   }
 
   setTime = (time) => {
-    this.state.playQueue[this.state.currentTrack].player.seek(time);
-    this.setState({ updateCurrentTime: this.state.playing, currentTime: time });
+    // this.state.playQueue[this.state.currentTrack].player.seek(time);
+    // this.setState({ updateCurrentTime: this.state.playing, currentTime: time });
     // Only prevent update to current time if the song is currently playing
-  }
-
-  pausePlayback = () => {
-
-  }
-
-  startPlayback = () => {
-
-  }
-
-  stopPlayback = () => {
-
   }
 
   setPlayQueue = (queue) => {
@@ -83,7 +67,7 @@ class Player extends Component {
     //   return newSong;
     // });
 
-    this.setState({ playQueue: queue });
+    // this.setState({ playQueue: queue });
   }
 
   skipToNext = async () => {
@@ -99,12 +83,13 @@ class Player extends Component {
   }
 
   toggleShuffle = () => {
-    if (this.state.shuffle) {
-      this.setState({ playQueue: this.state.oldQueue, oldQueue: [], shuffle: false });
-    } else {
-      const shuffled = this.shuffle(this.state.playQueue, this.state.currentTrack);
-      this.setState({ oldQueue: this.state.playQueue, playQueue: shuffled, shuffle: true });
-    }
+    // if (this.state.shuffle) {
+    //   this.setState({ playQueue: this.state.oldQueue, oldQueue: [], shuffle: false });
+    // } else {
+    //   const shuffled = this.shuffle(this.state.playQueue, this.state.currentTrack);
+    //   this.setState({ oldQueue: this.state.playQueue, playQueue: shuffled, shuffle: true });
+    // }
+    this.setState({ shuffled: !this.state.shuffled });
   }
 
   toggleRepeat = () => {
@@ -144,19 +129,15 @@ class Player extends Component {
   render = () => (
     <Navigator
       screenProps={ {
-        currentTrack: this.state.currentTrack,
-        playing: this.props.playing,
+        currentTrack: TrackPlayer.getTrack(this.props.track),
+        playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
         loadSongsForMoodId: this.props.loadSongsForMoodId,
-        currentTime: this.state.currentTime,
         shuffled: this.state.shuffled,
         repeat: this.state.repeat,
         loading: this.props.loading,
         mood: this.props.selected,
         moodList: this.props.moods,
-        nextTrack: this.nextTrack,
-        previousTrack: this.previousTrack,
         handlePlayPress: this.handlePlayPress,
-        stopPlayback: this.stopPlayback,
         setTime: this.setTime,
         toggleShuffle: this.toggleShuffle,
         toggleRepeat: this.toggleRepeats,
