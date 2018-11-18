@@ -1,2 +1,0 @@
-# Dev
-Sample data files.
