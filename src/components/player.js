@@ -46,29 +46,29 @@ class Player extends Component {
     }
   }
 
-  setTime = (time) => {
-    // this.state.playQueue[this.state.currentTrack].player.seek(time);
-    // this.setState({ updateCurrentTime: this.state.playing, currentTime: time });
-    // Only prevent update to current time if the song is currently playing
-  }
+  // setTime = (time) => {
+  //   this.state.playQueue[this.state.currentTrack].player.seek(time);
+  //   this.setState({ updateCurrentTime: this.state.playing, currentTime: time });
+  //   // Only prevent update to current time if the song is currently playing
+  // }
 
-  setPlayQueue = (queue) => {
-    // const newQueue = queue.map((song) => {
-    //   const newSong = song;
-    //
-    //   newSong.player = new Player(song.file, {
-    //     autoDestroy: false,
-    //   }).prepare((err) => {
-    //     if (err) {
-    //       console.log(err);
-    //     }
-    //   });
-
-    //   return newSong;
-    // });
-
-    // this.setState({ playQueue: queue });
-  }
+  // setPlayQueue = (queue) => {
+  //   const newQueue = queue.map((song) => {
+  //     const newSong = song;
+  //
+  //     newSong.player = new Player(song.file, {
+  //       autoDestroy: false,
+  //     }).prepare((err) => {
+  //       if (err) {
+  //         console.log(err);
+  //       }
+  //     });
+  //
+  //     return newSong;
+  //   });
+  //
+  //   this.setState({ playQueue: queue });
+  // }
 
   skipToNext = async () => {
     try {
@@ -126,25 +126,29 @@ class Player extends Component {
     return array;
   }
 
-  render = () => (
-    <Navigator
-      screenProps={ {
-        currentTrack: TrackPlayer.getTrack(this.props.track),
-        playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
-        loadSongsForMoodId: this.props.loadSongsForMoodId,
-        shuffled: this.state.shuffled,
-        repeat: this.state.repeat,
-        loading: this.props.loading,
-        mood: this.props.selected,
-        moodList: this.props.moods,
-        handlePlayPress: this.handlePlayPress,
-        setTime: this.setTime,
-        toggleShuffle: this.toggleShuffle,
-        toggleRepeat: this.toggleRepeats,
-      }
-    }
-    />
-  )
+  render = () => {
+    let track = this.props.queue.find(e => (e.id === this.props.track));
+    if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
+
+    return (
+      <Navigator
+        screenProps={{
+          currentTrack: track,
+          playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
+          loadSongsForMoodId: this.props.loadSongsForMoodId,
+          shuffled: this.state.shuffled,
+          repeat: this.state.repeat,
+          loading: this.props.loading,
+          mood: this.props.selected,
+          moodList: this.props.moods,
+          handlePlayPress: this.handlePlayPress,
+          // setTime: this.setTime,
+          toggleShuffle: this.toggleShuffle,
+          toggleRepeat: this.toggleRepeat,
+        }}
+      />
+    );
+  }
 }
 
 const mapStateToProps = state => ({

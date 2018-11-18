@@ -135,7 +135,7 @@ togglePlayback = async () => {
     return (this.props.queue.length
       ? (
         <Background
-          image={{ uri: this.props.queue[this.props.currentTrack].artwork }}
+          image={{ uri: this.props.currentTrack.artwork }}
           blur={50}
         >
           <View style={styles.container}>
@@ -151,12 +151,12 @@ togglePlayback = async () => {
             <TrackInfo
               skipForward={this.props.nextTrack}
               skipBack={this.props.previousTrack}
-              track={this.props.queue[this.props.currentTrack]}
+              track={this.props.currentTrack}
               setTime={this.props.setTime}
               currentTime={this.props.currentTime}
             />
             <PlayControls
-              shuffle={this.props.shuffle}
+              shuffle={this.props.shuffled}
               repeat={this.props.repeat}
               toggleShuffle={this.props.toggleShuffle}
               toggleRepeat={this.props.toggleRepeat}

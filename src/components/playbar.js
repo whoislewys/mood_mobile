@@ -87,8 +87,7 @@ export default class Playbar extends Component {
       <Image source={Images.arrowUpWhite} style={styles.arrow}/>
   );
 
-  render = () => {
-    return (
+  render = () => (
       <View style={styles.container}>
         <TouchableOpacity style={styles.art} onPress={this.props.playscreen}>
           {this.albumArt()}
@@ -111,6 +110,5 @@ export default class Playbar extends Component {
           {this.playButton()}
         </View>
       </View>
-    );
-  }
+  )
 }

@@ -56,19 +56,17 @@ class MoodScreen extends Component {
     });
   };
 
-  getPlaybar = () => {
-    // TODO: make playbar render at the right time
-    console.log('get playbar called with this queue: ', this.props.queue);
-    return (this.props.queue && this.props.queue.queue.length
-      ? (
+  getPlaybar = () => (this.props.queue && this.props.queue.queue.length
+    ? (
         <Playbar
-        track={this.props.queue.queue[this.props.currentTrack]}
+        track={this.props.currentTrack}
+        playing={this.props.playing}
         playscreen={this.navigateToPlayScreen}
-        handlePlayPress={() => console.log('YOU CLICKED PLAY :)')}/>
-      )
-      : null
-    );
-  }
+        handlePlayPress={this.props.handlePlayPress}/>
+    )
+    : null
+  )
+
 
   getContent = () => {
     if (!this.props.loading) {
