@@ -65,10 +65,13 @@ export default class TimeBar extends Component {
 
   async _updateProgress() {
     try {
+      let duration = await TrackPlayer.getDuration();
+      duration = (duration === 0 ? 180 : duration); // Stops duration of 0
+
       const data = {
         position: await TrackPlayer.getPosition(),
         bufferedPosition: await TrackPlayer.getBufferedPosition(),
-        duration: await TrackPlayer.getDuration(),
+        duration,
       };
 
       if (this._progressUpdates) {
@@ -88,7 +91,7 @@ export default class TimeBar extends Component {
     // console.log(test);
 
     if (prevState.position !== this.state.position || prevState.duration !== this.state.duration) {
-      const x = (this.state.progress / this.state.duration) * width;
+      const x = (this.state.position / this.state.duration) * width;
       if (!this.state.dragging) this.setState({ x });
     }
   }
@@ -161,10 +164,10 @@ export default class TimeBar extends Component {
 
   handleRelease = () => {
     this.setState({ dragging: false });
-    this.props.setTime(this.pxToSeconds(this.state.x) * 1000);
+    this.props.setTime(this.pxToSeconds(this.state.x));
   }
 
-  pxToSeconds = pixels => (this.state.position * pixels) / width
+  pxToSeconds = pixels => (pixels / width) * this.state.duration;
 
   render = () => (
       <View style={styles.timeBar}>

@@ -142,9 +142,11 @@ class Player extends Component {
           mood: this.props.selected,
           moodList: this.props.moods,
           handlePlayPress: this.handlePlayPress,
-          // setTime: this.setTime,
+          setTime: TrackPlayer.seekTo,
           toggleShuffle: this.toggleShuffle,
           toggleRepeat: this.toggleRepeat,
+          nextTrack: TrackPlayer.skipToNext,
+          previousTrack: TrackPlayer.skipToPrevious,
         }}
       />
     );

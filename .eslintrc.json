@@ -23,6 +23,7 @@
     "no-underscore-dangle" : "off",
     "react/prop-types" : "off",
     "spaced-comment" : "warn",
-    "prefer-destructuring": "warn"
+    "prefer-destructuring": "warn",
+    "no-empty" : "warn"
   }
 }
