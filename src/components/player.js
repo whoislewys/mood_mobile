@@ -98,7 +98,9 @@ class Player extends Component {
   // ////////////////////////////////////////////////////////////////////////////
 
   // Misc. Functions ///////////////////////////////////////////////////////////
-  // I don't know why I had to create this one, but I'm sure it's necessary
+
+  // When I wrote this, only me and God knew the purpose of this function
+  // Now, only God knows
   mod = (n, m) => ((n % m) + m) % m
 
   // Shuffle the playqueue, maintaining the selected track, and return new arr
@@ -126,6 +128,11 @@ class Player extends Component {
     return array;
   }
 
+  loadSongsForMood = (id) => {
+    TrackPlayer.reset();
+    this.props.loadSongsForMoodId(id);
+  }
+
   render = () => {
     let track = this.props.queue.find(e => (e.id === this.props.track));
     if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
@@ -135,7 +142,7 @@ class Player extends Component {
         screenProps={{
           currentTrack: track,
           playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
-          loadSongsForMoodId: this.props.loadSongsForMoodId,
+          loadSongsForMoodId: this.loadSongsForMood,
           shuffled: this.state.shuffled,
           repeat: this.state.repeat,
           loading: this.props.loading,
