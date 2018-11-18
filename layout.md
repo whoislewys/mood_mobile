@@ -15,15 +15,18 @@ This directory, as suggested by the name, contains the main part of the project 
 This is for all files, helpers, etc., related to interacting with the API
 
 ### assets/
-As the name suggests, this contains static assets. I haven't needed it yet, but on
-previous projects I've used a file like images.js to import all static images as constants, so
-images don't have to be individually imported into every component that uses them.
+As the name suggests, this contains static assets.
+It includes a manifest file that imports all images before they're needed.
 
 ### components/
 This directory is for shared components that are used by more than one screen.
 
 ### navigation/
 This is for all react-navigation navigators, the files that describe the layout of navigation between screens.
+
+### redux/
+This contains all the redux logic for the project, structured using the DUCKS format.
+[DUCKS project page](https://github.com/erikras/ducks-modular-redux)
 
 ### screens/
 Each directory within this one represents a single screen. Each screen has an internal structure:
