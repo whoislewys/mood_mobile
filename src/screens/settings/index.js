@@ -119,7 +119,7 @@ class SettingsScreen extends Component {
         <Playbar
         track={this.props.currentTrack}
         playing={this.props.playing}
-        playscreen={this.navigateToPlayScreen}
+        playscreen={this.props.playscreen}
         handlePlayPress={this.props.handlePlayPress}/>
       )
       : null

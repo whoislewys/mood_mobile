@@ -16,53 +16,40 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
-    flex: 6,
-    backgroundColor: '#222222',
-  },
-  albumArt: {
-    resizeMode: 'cover',
-    flex: 1,
+    height: 44,
+    width,
+    backgroundColor: '#666666',
   },
   arrow: {
     resizeMode: 'contain',
-    flex: 1,
-    marginLeft: 24,
-    width: 22,
-    height: 11,
+    marginLeft: 15,
+    width: 20,
+    height: 10,
     opacity: 0.8,
-  },
-  art: {
-    flex: 20,
     justifyContent: 'flex-start',
   },
   info: {
-    flex: 88,
-  },
-  subInfo: {
     flexDirection: 'row',
+    alignItems: 'center',
+    flex: 100,
   },
-  controls: {
-    flex: 20,
-  },
-  albumInfoText: {
-    flexDirection: 'row',
-    paddingLeft: width * 0.02,
-    width: 280,
-    color: '#fff',
-    fontSize: 18,
-    fontFamily: 'Roboto',
-    fontWeight: '300',
-    textAlign: 'center',
-  },
-  albumInfoSubText: {
+  songInfo: {
+    width: 300,
     color: '#fff',
     fontSize: 14,
     fontFamily: 'Roboto',
     fontWeight: '300',
+    textAlign: 'center',
+    paddingLeft: 17,
+    paddingRight: 20,
+  },
+  songArtist: {
+    color: '#bfbfbf',
   },
   playPauseButton: {
-    width: 30,
-    height: 30,
+    marginRight: 17,
+    width: 28,
+    height: 28,
     backgroundColor: 'transparent',
   },
 });
@@ -83,28 +70,26 @@ export default class Playbar extends Component {
     );
   }
 
-  albumArt = () => (
+  arrowUp = () => (
       <Image source={Images.arrowUpWhite} style={styles.arrow}/>
   );
 
   render = () => (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.art} onPress={this.props.playscreen}>
-          {this.albumArt()}
+        <TouchableOpacity onPress={this.props.playscreen}>
+          {this.arrowUp()}
         </TouchableOpacity>
         <TouchableOpacity onPress={this.props.playscreen} style={styles.info}>
-          <View style={{ alignItems: 'center', flexDirection: 'row' }}>
             <Text
-              style={[styles.albumInfoText, {
-                maxWidth: width * 0.61,
-                textAlign: 'center',
-              }]}
+              style= {styles.songInfo}
               numberOfLines={1}
               ellipsizeMode="tail"
               >
               { this.props.track.title }
+              <Text style={styles.songArtist}>
+                { ' - ' + this.props.track.artist }
+              </Text>
             </Text>
-          </View>
         </TouchableOpacity>
         <View style={styles.controls}>
           {this.playButton()}
