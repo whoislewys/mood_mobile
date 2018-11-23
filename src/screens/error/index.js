@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   subText: {
     fontWeight: '400',
     fontSize: 16,
+    textAlign: 'center',
   },
 });
 

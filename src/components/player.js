@@ -34,14 +34,20 @@ class Player extends Component {
   // ///////////////////////////////////////////////////////////
   // State change functions
   handlePlayPress = async () => {
-    const currentTrack = this.props.track;
-    if (currentTrack == null) {
+    const { track } = this.props;
+    if (track == null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(this.props.queue);
       await TrackPlayer.play();
     } else if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
       await TrackPlayer.play();
     } else {
+      await TrackPlayer.pause();
+    }
+  }
+
+  stopPlayback = async () => {
+    if (!(this.props.track == null || this.props.playbackState === TrackPlayer.STATE_PAUSED)) {
       await TrackPlayer.pause();
     }
   }
@@ -154,6 +160,7 @@ class Player extends Component {
           toggleRepeat: this.toggleRepeat,
           nextTrack: TrackPlayer.skipToNext,
           previousTrack: TrackPlayer.skipToPrevious,
+          stopPlayback: this.stopPlayback,
         }}
       />
     );
