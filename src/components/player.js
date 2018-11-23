@@ -52,30 +52,6 @@ class Player extends Component {
     }
   }
 
-  // setTime = (time) => {
-  //   this.state.playQueue[this.state.currentTrack].player.seek(time);
-  //   this.setState({ updateCurrentTime: this.state.playing, currentTime: time });
-  //   // Only prevent update to current time if the song is currently playing
-  // }
-
-  // setPlayQueue = (queue) => {
-  //   const newQueue = queue.map((song) => {
-  //     const newSong = song;
-  //
-  //     newSong.player = new Player(song.file, {
-  //       autoDestroy: false,
-  //     }).prepare((err) => {
-  //       if (err) {
-  //         console.log(err);
-  //       }
-  //     });
-  //
-  //     return newSong;
-  //   });
-  //
-  //   this.setState({ playQueue: queue });
-  // }
-
   skipToNext = async () => {
     try {
       await TrackPlayer.skipToNext();

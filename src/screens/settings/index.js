@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
 
 class SettingsScreen extends Component {
   getPlaybar = () => {
-    // TODO: make playbar render at the right time
     console.log('get playbar called with this queue: ', this.props.queue);
     return (this.props.queue && this.props.queue.queue.length
       ? (

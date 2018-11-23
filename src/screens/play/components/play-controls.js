@@ -48,7 +48,7 @@ export default class PlayControls extends Component {
       <View style={styles.playControls}>
         <View style={styles.toggleShuffle}>
           <ToggleButton
-            active={this.props.shuffle}
+            active={this.props.shuffled}
             iconUnselected={Images.shuffleButtonUnselected}
             onPress={this.props.toggleShuffle}
             iconStyle={styles.shuffleIcon}

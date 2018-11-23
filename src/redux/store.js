@@ -14,8 +14,6 @@ const axiosConfig = {
       ({ getState, dispatch, getSourceAction }, req) => {
         console.log('Interception!!');
         console.log(req); // contains information about request object
-        // newReq = req;
-        // newReq.url = req.url +
         return req;
       },
     ],

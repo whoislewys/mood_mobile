@@ -92,24 +92,11 @@ export default class MoodList extends React.Component {
   }
 
   onPressItem = (moodObj) => {
-    // let queueObj = { queue: [] };
     this.props.loadSongsForMoodId(moodObj.id);
     this.props.playscreen();
-    // just load the songs synchronously here
-    // const moodId = moodObj.id;
-    // console.log('loading songs from moodlist');
-    // const t = 'EXVbAWTqbGFl7BKuqUQv';
-    // axios.get(`http://api.moodindustries.com/api/v1/moods/${moodId}/songs/?t=${t}`)
-    //   .then((response) => {
-    //     queueObj.queue = response.data;
-    //     console.log('navigating into playscreen with: ', queueObj);
-    //     this.props.playscreen(queueObj);
-    //   });
-    // this.props.playscreen(); // TODO: fix this broken navigate to playscreen
   }
 
-  // renderItem called when rendering FlatList.
-  // returns a Mood component
+  // renderItem called when rendering FlatList. returns a Mood component
   _renderItem = ({ item }) => <Mood
       mood={item}
       playscreen={this.props.playscreen}

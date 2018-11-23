@@ -41,8 +41,6 @@ class SplashScreen extends Component {
         'connectionChange',
         this.handleConnectivityChange,
       );
-
-      this.props.stopPlayback();
       this.navigateToErrorScreen();
     }
   }

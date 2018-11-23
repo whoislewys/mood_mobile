@@ -83,9 +83,8 @@ export default class TimeBar extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    console.log(`Prev Position: ${prevState.position}`);
-    console.log(`Current Position: ${this.state.position}`);
-
+    // console.log(`Prev Position: ${prevState.position}`);
+    // console.log(`Current Position: ${this.state.position}`);
     // console.log(prevProps);
     // console.log(prevState);
     // console.log(test);

@@ -62,69 +62,17 @@ const styles = StyleSheet.create({
   },
 });
 
-// TODO: fix this!
-// this.props.mood does not exist
-// this.props.currentTrack does not exist
-// these missing props are what causes this playscreen to throw errors when it gets navigated to
 class PlayScreen extends Component {
   constructor(props) {
     super(props);
-
-    // TODO: implement proper playing. example app is here https://github.com/react-native-kit/react-native-track-player/tree/dev/example
-    // other TODO's are symptoms of poor handling of queue data
-
-    // TODO:  init queue to avoid queue not found error. this is hacky.
-    //        need a better way to expose queue to TrackPlayer
-
-    // this.props.loadSongsForMoodId(this.props.selected.id);
-
-    // const state = TrackPlayer.getState();
-    // console.log('track player state: ', state);
-    // TrackPlayer documentation: https://github.com/react-native-kit/react-native-track-player/wiki/API
     StatusBar.setBarStyle('light-content', true);
   }
-  // if (!this.props.playQueue[this.props.currentTrack].player.canPlay) {
-  //   this.props.setLoading();
-  // }
-
-  componentDidMount = () => {
-
-  }
-
-togglePlayback = async () => {
-  // const currentTrack = await TrackPlayer.getCurrentTrack();
-  // if (currentTrack == null) {
-  //   await TrackPlayer.reset();
-  //   // fill player with tracks
-  //   for (let i = 0; i < this.props.queue.length; i++) {
-  //     const idStr = this.props.queue[i].id.toString();
-  //     const track = {
-  //       id: idStr,
-  //       url: this.props.queue[i].file,
-  //       title: this.props.queue[i].title,
-  //       artist: this.props.queue[i].artist,
-  //       album: this.props.queue[i].album_name,
-  //       artwork: this.props.queue[i].artwork,
-  //     };
-  //     console.log('created track: ', track);
-  //     await TrackPlayer.add(track); // TODO: add songs to queue and TrackPlayer properly
-  //     // TrackPlayer documentation: https://github.com/react-native-kit/react-native-track-player/wiki/API
-  //   } // done adding songs to TrackPlayer
-  //   await TrackPlayer.play();
-  // } else if (PlayerStore.playbackState === TrackPlayer.STATE_PAUSED) { // TODO: update with our state. this is example from docs. https://github.com/react-native-kit/react-native-track-player/blob/dev/example/react/screens/PlaylistScreen.js
-  //   await TrackPlayer.play();
-  // } else {
-  //   await TrackPlayer.pause();
-  // }
-}
 
   render = () => {
     const { goBack } = this.props.navigation;
-    // const mood = this.props.moodList[this.props.selected];
-    // TODO: implement player
 
-    // If the queue is not loaded show a spinner, otherwise show the screen
     return (this.props.queue.length
+      // return playscreen if queue has 1 or more songs
       ? (
         <Background
           image={{ uri: this.props.currentTrack.artwork }}
@@ -148,7 +96,7 @@ togglePlayback = async () => {
               currentTime={this.props.currentTime}
             />
             <PlayControls
-              shuffle={this.props.shuffled}
+              shuffled={this.props.shuffled}
               repeat={this.props.repeat}
               toggleShuffle={this.props.toggleShuffle}
               toggleRepeat={this.props.toggleRepeat}
@@ -161,6 +109,7 @@ togglePlayback = async () => {
           </View>
         </Background>
       )
+      // return a spinner if queue is empty
       : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
     );
   }
