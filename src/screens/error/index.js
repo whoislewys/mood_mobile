@@ -40,7 +40,7 @@ export default class ErrorScreen extends Component {
   }
 
   checkConnectivity = async () => {
-    const isConnected = await fetch('https://www.google.com').catch((error) => {});
+    const isConnected = await fetch('https://www.google.com').catch(() => {});
     if (isConnected) {
       clearInterval(this.state.internetCheck);
       RNRestart.Restart();

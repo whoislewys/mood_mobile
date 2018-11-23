@@ -86,29 +86,29 @@ class Player extends Component {
   mod = (n, m) => ((n % m) + m) % m
 
   // Shuffle the playqueue, maintaining the selected track, and return new arr
-  shuffle = (arr, curr) => {
-    const array = arr.slice();
-    const [id] = arr[curr];
-    let m = array.length; let t; let
-      i;
-
-    // While there remain elements to shuffle…
-    while (m) {
-      // Pick a remaining element…
-      i = Math.floor(Math.random() * m--);
-
-      // And swap it with the current element.
-      t = array[m];
-      array[m] = array[i];
-      array[i] = t;
-    }
-
-    const index = array.findIndex(k => k.id === id);
-    // array = array.slice(index).concat(array.slice(0, index));
-    [array[this.state.currentTrack], array[index]] = [array[index], array[this.state.currentTrack]];
-
-    return array;
-  }
+  // shuffle = (arr, curr) => {
+  //   const array = arr.slice();
+  //   const [id] = arr[curr];
+  //   let m = array.length; let t; let
+  //     i;
+  //
+  //   // While there remain elements to shuffle…
+  //   while (m) {
+  //     // Pick a remaining element…
+  //     i = Math.floor(Math.random() * m--);
+  //
+  //     // And swap it with the current element.
+  //     t = array[m];
+  //     array[m] = array[i];
+  //     array[i] = t;
+  //   }
+  //
+  //   const index = array.findIndex(k => k.id === id);
+  //   // array = array.slice(index).concat(array.slice(0, index));
+  //   [array[this.state.currentTrack], array[index]] = [array[index], array[this.state.currentTrack]];
+  //
+  //   return array;
+  // }
 
   loadSongsForMood = (id) => {
     TrackPlayer.reset();

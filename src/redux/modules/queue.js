@@ -1,4 +1,5 @@
 // import { Image } from 'react-native';
+import shuffle from '../util';
 
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
@@ -24,7 +25,7 @@ export function loadSongData(list) {
 
   // await Promise.all(songPrefetch);
 
-  return list.map(t => ({
+  return shuffle(list.map(t => ({
     id: t.id.toString(),
     url: t.file,
     title: t.name,
@@ -32,7 +33,7 @@ export function loadSongData(list) {
     album: t.album_name,
     artwork: t.art_url,
     mood_id: t.mood_id,
-  }));
+  })), 'artist', 'album');
 
   // const track = {
   //   id: 'unique track id',

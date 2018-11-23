@@ -24,6 +24,7 @@
     "react/prop-types" : "off",
     "spaced-comment" : "warn",
     "prefer-destructuring": "warn",
-    "no-empty" : "warn"
+    "no-empty" : "warn",
+    "prefer-const" : "warn"
   }
 }
