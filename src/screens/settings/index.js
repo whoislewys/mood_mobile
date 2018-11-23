@@ -114,15 +114,15 @@ const styles = StyleSheet.create({
 
 class SettingsScreen extends Component {
   getPlaybar = () => {
-    console.log('get playbar called with this queue: ', this.props.queue);
     return (this.props.queue && this.props.queue.queue.length
       ? (
         <Playbar
-        track={this.props.queue.queue[this.props.currentTrack]}
+        track={this.props.currentTrack}
+        playing={this.props.playing}
         playscreen={this.navigateToPlayScreen}
-        handlePlayPress={() => console.log('YOU CLICKED PLAY :)')}/>
+        handlePlayPress={this.props.handlePlayPress}/>
       )
-      : <Text>PLAYBAR PLACEHOLDER :)</Text>
+      : null
     );
   }
 

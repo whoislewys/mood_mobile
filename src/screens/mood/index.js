@@ -76,6 +76,9 @@ class MoodScreen extends Component {
             setMood={this.props.setMood}
             moods={this.props.moods}
             selected={this.props.mood}
+            track={this.props.currentTrack}
+            playing={this.props.playing}
+            handlePlayPress={this.props.handlePlayPress}
             settings={this.navigateToSettingsScreen}
             playscreen={this.navigateToPlayScreen}
           />
