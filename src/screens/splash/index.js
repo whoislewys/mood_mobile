@@ -41,6 +41,8 @@ class SplashScreen extends Component {
         'connectionChange',
         this.handleConnectivityChange,
       );
+
+      this.props.stopPlayback();
       this.navigateToErrorScreen();
     }
   }
@@ -59,9 +61,7 @@ class SplashScreen extends Component {
     });
   };
 
-  render = () => {
-    return (<View style={{ flex: 1 }}></View>);
-  }
+  render = () => (<View style={{ flex: 1 }}></View>)
 }
 
 const mapStateToProps = state => ({

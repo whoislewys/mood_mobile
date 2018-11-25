@@ -33,7 +33,7 @@ export function loadSongData(list) {
     album: t.album_name,
     artwork: t.art_url,
     mood_id: t.mood_id,
-  })), 'artist', 'album');
+  })), 'artist');
 
   // const track = {
   //   id: 'unique track id',

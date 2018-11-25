@@ -1,8 +1,12 @@
 // Sorts array elements into a list of sub-arrays based on field
 const sort = (arr, field) => {
-  const newArr = [];
+  const newArr = {};
   arr.map((e) => {
-    newArr[e[field]] = e;
+    if (newArr[e[field]] === undefined) {
+      newArr[e[field]] = [e];
+    } else {
+      newArr[e[field]].push(e);
+    }
   });
 
   return newArr;
@@ -11,15 +15,21 @@ const sort = (arr, field) => {
 const find = (arr, elem) => arr.findIndex(x => (x.name === elem.name && x.i === elem.i));
 
 // Generates a visual of the sort for debugging purposes
-const generateVisual = (sublist, inOrderList, len) => {
+const generateVisual = (list, inOrderList, len) => {
   let visString = '';
-  sublist.map((sub) => {
-    const arr = Array(len).fill('O');
-    sub.map((e) => {
-      const index = find(arr, e);
-      arr[index] = 'X';
+  const keys = [];
+
+  list.forEach((value, key) => {
+    const arr = Array(len).fill(' O ');
+    keys.map((e) => {
+      arr[e] = ' | ';
     });
-    visString += `\n${arr.join('')}`;
+    value.map((e) => {
+      const index = find(inOrderList, e);
+      arr[index] = ' * ';
+      keys.push(index);
+    });
+    visString += `\n${arr.join('')}\t${key}\n`;
   });
 
   return visString;
@@ -29,15 +39,18 @@ const generateVisual = (sublist, inOrderList, len) => {
 // You can read more online, but the idea is that it evenly spreads each artist
 // over the list, and then recursively calls the algorithm on albums for extra shuffle
 export default function ditherShuffle(arr, field, field2) {
-  const len = arr.length();
+  const len = arr.length;
   const sortedArr = [];
-  const list = sort(arr, field);
+  const list = new Map(Object.entries(sort(arr, field)));
 
-  list.map((sublist) => {
-    let sortedList = sublist;
+  console.log('Begin dithering!');
+  console.log(list);
+
+  list.forEach((value, key) => {
+    let sortedList = value;
     if (field2 !== undefined) sortedList = ditherShuffle(sortedList, field2);
     return sortedList.map((e, index) => {
-      e.i = index * (len / sortedList.length()) + Math.random();
+      e.i = index * (len / sortedList.length) + Math.random();
       sortedArr.push(e);
 
       return e;
