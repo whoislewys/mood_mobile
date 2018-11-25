@@ -3,9 +3,9 @@ package com.mood_mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.guichaguri.trackplayer.TrackPlayer;
 import com.oblador.vectoricons.VectorIconsPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.futurice.rctaudiotoolkit.AudioPackage;
 import com.facebook.react.ReactNativeHost;
@@ -28,9 +28,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new TrackPlayer(),
             new VectorIconsPackage(),
-            new SplashScreenReactPackage(),
             new ReactNativeRestartPackage(),
             new AudioPackage()
       );
