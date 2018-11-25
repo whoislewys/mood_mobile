@@ -65,12 +65,6 @@ class Player extends Component {
   }
 
   toggleShuffle = () => {
-    // if (this.state.shuffle) {
-    //   this.setState({ playQueue: this.state.oldQueue, oldQueue: [], shuffle: false });
-    // } else {
-    //   const shuffled = this.shuffle(this.state.playQueue, this.state.currentTrack);
-    //   this.setState({ oldQueue: this.state.playQueue, playQueue: shuffled, shuffle: true });
-    // }
     this.setState({ shuffled: !this.state.shuffled });
   }
 
@@ -84,31 +78,6 @@ class Player extends Component {
   // When I wrote this, only me and God knew the purpose of this function
   // Now, only God knows
   mod = (n, m) => ((n % m) + m) % m
-
-  // Shuffle the playqueue, maintaining the selected track, and return new arr
-  // shuffle = (arr, curr) => {
-  //   const array = arr.slice();
-  //   const [id] = arr[curr];
-  //   let m = array.length; let t; let
-  //     i;
-  //
-  //   // While there remain elements to shuffle…
-  //   while (m) {
-  //     // Pick a remaining element…
-  //     i = Math.floor(Math.random() * m--);
-  //
-  //     // And swap it with the current element.
-  //     t = array[m];
-  //     array[m] = array[i];
-  //     array[i] = t;
-  //   }
-  //
-  //   const index = array.findIndex(k => k.id === id);
-  //   // array = array.slice(index).concat(array.slice(0, index));
-  //   [array[this.state.currentTrack], array[index]] = [array[index], array[this.state.currentTrack]];
-  //
-  //   return array;
-  // }
 
   loadSongsForMood = (id) => {
     TrackPlayer.reset();

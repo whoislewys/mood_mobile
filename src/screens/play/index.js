@@ -115,10 +115,6 @@ class PlayScreen extends Component {
   }
 }
 
-/*
-// old return
-
-*/
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
