@@ -32,14 +32,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   shuffleIcon: {
-    height: 31,
-    width: 29,
+    height: 26,
+    width: 26,
     resizeMode: 'contain',
+    opacity: 0.8,
   },
   repeatIcon: {
     height: 26,
     width: 26,
     resizeMode: 'contain',
+    opacity: 0.8,
+    transform: [{ rotateY: '180deg' }],
   },
 });
 
@@ -47,24 +50,17 @@ export default class PlayControls extends Component {
   render = () => (
       <View style={styles.playControls}>
         <View style={styles.toggleShuffle}>
-          <ToggleButton
-            active={this.props.shuffled}
-            iconUnselected={Images.shuffleButtonUnselected}
-            onPress={this.props.toggleShuffle}
-            iconStyle={styles.shuffleIcon}
-          />
+          <TouchableOpacity onPress={this.props.skipBack}>
+            <Image source={Images.skip1} style={styles.shuffleIcon} />
+          </TouchableOpacity>
         </View>
         <View style={{ alignItems: 'center', flex: 2 }}>
           { this.playButton() }
         </View>
         <View style={styles.toggleRepeat}>
-          <ToggleButton
-            style={styles.toggleRepeat}
-            active={this.props.repeat}
-            iconUnselected={Images.repeatButtonUnselected}
-            onPress={this.props.toggleRepeat}
-            iconStyle={styles.repeatIcon}
-          />
+          <TouchableOpacity onPress={this.props.skipForward}>
+            <Image source={Images.skip1} style={styles.repeatIcon} />
+          </TouchableOpacity>
         </View>
       </View>
   )

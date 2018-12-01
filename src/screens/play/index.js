@@ -101,6 +101,9 @@ class PlayScreen extends Component {
               toggleShuffle={this.props.toggleShuffle}
               toggleRepeat={this.props.toggleRepeat}
 
+              skipForward={this.props.nextTrack}
+              skipBack={this.props.previousTrack}
+
               playing={this.props.playing}
               handlePlayPress={this.props.handlePlayPress}
 

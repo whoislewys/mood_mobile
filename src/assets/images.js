@@ -13,7 +13,8 @@ const images = {
   pauseButtonWhite: require('./img/pause-button-white.png'),
   bugIcon: require('./img/alert.png'),
   reviewButton: require('./img/rate-review-button.png'),
-  termsButton: require('./img/term-use-button.png')
+  termsButton: require('./img/term-use-button.png'),
+  skip1: require('./img/skip.png'),
 };
 
 export default images;
