@@ -10,8 +10,8 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import TrackPlayer from 'react-native-track-player';
 import Images from '@assets/images';
+import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 class PlayScreen extends Component {
   constructor(props) {
     super(props);
@@ -78,6 +79,7 @@ class PlayScreen extends Component {
           image={{ uri: this.props.currentTrack.artwork }}
           blur={50}
         >
+          <PlayOnOpen playByDefault={this.props.handlePlayPress}/>
           <View style={styles.container}>
             <View style={styles.menuDropdown}>
               <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
