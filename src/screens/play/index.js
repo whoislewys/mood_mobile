@@ -79,7 +79,10 @@ class PlayScreen extends Component {
           image={{ uri: this.props.currentTrack.artwork }}
           blur={50}
         >
-          <PlayOnOpen playByDefault={this.props.handlePlayPress}/>
+          <PlayOnOpen playing={this.props.playing}
+          playByDefault={this.props.handlePlayPress}
+          parentScreen={this.props.parentScreen}
+          />
           <View style={styles.container}>
             <View style={styles.menuDropdown}>
               <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
@@ -95,7 +98,6 @@ class PlayScreen extends Component {
               skipBack={this.props.previousTrack}
               track={this.props.currentTrack}
               setTime={this.props.setTime}
-              currentTime={this.props.currentTime}
             />
             <PlayControls
               shuffled={this.props.shuffled}

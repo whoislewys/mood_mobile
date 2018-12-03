@@ -87,7 +87,7 @@ export default class Playbar extends Component {
               >
               { this.props.track.title }
               <Text style={styles.songArtist}>
-                { ' - ' + this.props.track.artist }
+                { ` - ${this.props.track.artist}` }
               </Text>
             </Text>
         </TouchableOpacity>

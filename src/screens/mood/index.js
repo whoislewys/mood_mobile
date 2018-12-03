@@ -42,17 +42,26 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   }
 
-  navigateToPlayScreen = (params = {}) => {
+  navigateToPlayScreenFromMoodScreen = (params = {}) => {
+    const currentScreenName = 'MoodScreen';
     this.props.navigation.navigate({
       routeName: 'Play',
-      params: { ...params },
+      params: { ...params, parentScreen: currentScreenName },
+    });
+  };
+
+  navigateToPlayScreenFromPlaybar = (params = {}) => {
+    const currentScreenName = 'Playbar';
+    this.props.navigation.navigate({
+      routeName: 'Play',
+      params: { ...params, parentScreen: currentScreenName },
     });
   };
 
   navigateToSettingsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Settings',
-      params: { ...params, playscreen: this.navigateToPlayScreen },
+      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar },
     });
   };
 
@@ -61,7 +70,7 @@ class MoodScreen extends Component {
         <Playbar
         track={this.props.currentTrack}
         playing={this.props.playing}
-        playscreen={this.navigateToPlayScreen}
+        playscreen={this.navigateToPlayScreenFromPlaybar}
         handlePlayPress={this.props.handlePlayPress}/>
     )
     : null
@@ -80,7 +89,7 @@ class MoodScreen extends Component {
             playing={this.props.playing}
             handlePlayPress={this.props.handlePlayPress}
             settings={this.navigateToSettingsScreen}
-            playscreen={this.navigateToPlayScreen}
+            playscreen={this.navigateToPlayScreenFromMoodScreen}
           />
       );
     }
