@@ -103,8 +103,8 @@ class Player extends Component {
           setTime: TrackPlayer.seekTo,
           toggleShuffle: this.toggleShuffle,
           toggleRepeat: this.toggleRepeat,
-          nextTrack: TrackPlayer.skipToNext,
-          previousTrack: TrackPlayer.skipToPrevious,
+          nextTrack: () => TrackPlayer.skipToNext(),
+          previousTrack: () => TrackPlayer.skipToPrevious(),
           stopPlayback: this.stopPlayback,
         }}
       />
