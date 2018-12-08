@@ -1,0 +1,42 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+
+platform :ios do
+  desc 'Push a new beta build to TestFlight'
+  lane :beta do
+    match(
+      type: 'appstore',
+      git_url: 'https://github.com/SamRond/mood_mobile_certs'
+    ) # more info: https://codesigning.guide
+    increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
+    gym(scheme: 'mood_mobile', project: './ios/mood_mobile.xcodeproj')
+    # upload_to_testflight
+  end
+
+  desc 'Deploy a new version to the App Store'
+  lane :release do
+    #capture_screenshots # not yet configured
+    match(
+      type: 'appstore',
+      git_url: 'https://github.com/SamRond/mood_mobile_certs'
+    )
+    gym(scheme: 'mood_mobile', project: './ios/mood_mobile.xcodeproj')
+    upload_to_app_store
+  end
+
+end
