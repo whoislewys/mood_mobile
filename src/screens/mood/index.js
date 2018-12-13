@@ -41,33 +41,38 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   }
 
+  navigateToMoodScreen = (params = {}) => {
+    this.props.navigation.navigate({
+      routeName: 'Mood',
+      params: { ...params, visible: true },
+    });
+  }
+
   navigateToPlayScreenFromMoodScreen = (params = {}) => {
     const currentScreenName = 'MoodScreen';
+    // this.props.navigation.setParams({ visible: false });
     this.props.navigation.navigate({
       routeName: 'Play',
-      params: { ...params, parentScreen: currentScreenName },
-    });
-  };
-
-  navigateToPlayScreenFromPlaybar = (params = {}) => {
-    const currentScreenName = 'Playbar';
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: { ...params, parentScreen: currentScreenName },
+      params: {
+        ...params,
+        parentScreen: currentScreenName,
+        visible: false,
+        moodscreen: this.navigateToMoodScreen,
+      },
     });
   };
 
   navigateToSettingsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Settings',
-      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar },
+      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar, visible: true },
     });
   };
 
   navigateToLeaderboardScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Leaderboard',
-      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar },
+      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar, visible: true },
     });
   };
 

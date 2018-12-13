@@ -16,7 +16,7 @@ import TabBar from './components/TabBar';
 const map = SomeComponent => class SomeClass extends React.Component {
     render = () => {
       const screenProps = this.props.screenProps;
-      delete this.props.screenProps; // for some reason not working
+      // delete this.props.screenProps; // for some reason not working
       const { navigation: { state: { params } } } = this.props;
       return <SomeComponent {...params} {...this.props} {...screenProps} />;
     }

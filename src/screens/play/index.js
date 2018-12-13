@@ -71,7 +71,7 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    const { goBack } = this.props.navigation;
+    // const { goBack } = this.props.navigation;
 
     return (this.props.queue.length
       // return playscreen if queue has 1 or more songs
@@ -87,7 +87,7 @@ class PlayScreen extends Component {
           />
           <View style={styles.container}>
             <View style={styles.menuDropdown}>
-              <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
+              <TouchableOpacity onPress={this.props.moodscreen} style={styles.touchable}>
                 <Image source={Images.arrowUpWhite} style={styles.backButton} />
               </TouchableOpacity>
 

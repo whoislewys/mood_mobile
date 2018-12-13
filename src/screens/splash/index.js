@@ -50,7 +50,7 @@ class SplashScreen extends Component {
   navigateToMoodScreen = (params) => {
     this.props.navigation.navigate({
       routeName: 'Mood',
-      params: { ...params },
+      params: { ...params, visible: true },
     });
   };
 
