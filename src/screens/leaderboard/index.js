@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
-import Playbar from '../../components/playbar';
 import LeaderboardRow from './components/leaderboardRow';
 
 const width = Dimensions.get('window').width;

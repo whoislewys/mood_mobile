@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
 import MoodList from './components/mood-list';
-import Playbar from '../../components/playbar';
 
 const styles = StyleSheet.create({
   container: {
@@ -72,17 +71,6 @@ class MoodScreen extends Component {
     });
   };
 
-  getPlaybar = () => (this.props.queue && this.props.queue.queue.length
-    ? (
-        <Playbar
-        track={this.props.currentTrack}
-        playing={this.props.playing}
-        playscreen={this.navigateToPlayScreenFromPlaybar}
-        handlePlayPress={this.props.handlePlayPress}/>
-    )
-    : null
-  )
-
   getContent = () => {
     if (!this.props.loading) {
       return (
@@ -110,7 +98,6 @@ class MoodScreen extends Component {
         <View style={styles.moodList}>
           { this.getContent() }
         </View>
-        { this.getPlaybar() }
       </View>
   )
 }

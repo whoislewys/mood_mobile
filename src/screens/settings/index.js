@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
-import Playbar from '../../components/playbar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -132,17 +131,6 @@ const styles = StyleSheet.create({
 });
 
 class SettingsScreen extends Component {
-  getPlaybar = () => (this.props.queue && this.props.queue.queue.length
-    ? (
-        <Playbar
-        track={this.props.currentTrack}
-        playing={this.props.playing}
-        playscreen={this.props.playscreen}
-        handlePlayPress={this.props.handlePlayPress}/>
-    )
-    : null
-  )
-
   _keyExtractor = item => item.text;
 
   renderListItem = elem => (<TouchableOpacity style={styles.button} onPress={() => Linking.openURL(elem.item.url)}>
@@ -187,9 +175,6 @@ class SettingsScreen extends Component {
             </FlatList>
           </View>
         </View>
-
-        { this.getPlaybar() }
-
       </View>
     );
   }

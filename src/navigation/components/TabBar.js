@@ -50,7 +50,7 @@ const TabBar = class TabBar extends Component {
     // navigationStateIndex = null;
 
     playButton = () => {
-      if (this.props.playing) {
+      if (this.props.playbackState === 'playing') {
         return (
           <TouchableOpacity onPress={this.props.screenProps.handlePlayPress}>
             <Image source={Images.pauseButtonWhite} style={styles.playPauseButton} />
