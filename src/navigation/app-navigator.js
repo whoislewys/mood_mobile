@@ -25,36 +25,23 @@ const map = SomeComponent => class SomeClass extends React.Component {
 const TabBarComponent = props => <TabBar {...props} />;
 
 export default createBottomTabNavigator({
-  Splash: {
-    screen: map(SplashScreen),
-    // navigationOptions: () => ({
-    //   tabBarIcon: () => (
-    //     <Text></Text>
-    //   ),
-    //   tabBarLabel: () => (
-    //     <Text></Text>
-    //   ),
-    // }),
-  },
+  Splash: { screen: map(SplashScreen) },
   Error: { screen: map(ErrorScreen) },
   Settings: { screen: map(SettingsScreen) },
   Mood: { screen: map(MoodScreen) },
-  Play: {
-    screen: map(PlayScreen),
-    // TODO: send alert onPress PlayScreen about no songs being loaded
-  },
+  Play: { screen: map(PlayScreen) },
   Events: { screen: map(EventsScreen) },
-  Leaderboard: {
-    screen: map(LeaderboardScreen),
-    // TODO: somehow call loadLeaderboardSongs() on pressing this tabBarButton
-  },
+  Leaderboard: { screen: map(LeaderboardScreen) },
 }, {
+  swipeEnabled: false,
+  tabBarOptions: {
+    activeTintColor: 'rgba(255,255,255,.99)',
+    inactiveTintColor: 'rgba(255,255,255,.2)',
+    activeBackgroundColor: 'red',
+  },
   tabBarComponent: props => <TabBarComponent
   {...props}
-/>,
-},
-{
-  swipeEnabled: false,
+  />,
 });
 
-//supply this with a custom tabbar component https://stackoverflow.com/questions/47533940/can-react-navigation-add-costom-button-on-the-tab-navigator-like-the-pictures
+// supply this with a custom tabbar component https://stackoverflow.com/questions/47533940/can-react-navigation-add-costom-button-on-the-tab-navigator-like-the-pictures
