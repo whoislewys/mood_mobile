@@ -11,7 +11,6 @@ import {
   Animated,
 } from 'react-native';
 import { NavigationRoute } from 'react-navigation';
-import { BottomTabBar } from 'react-navigation-tabs';
 import Images from '@assets/images';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 
@@ -22,12 +21,14 @@ https://medium.com/@sxia/how-to-customize-tab-bar-in-react-navigation-a0dc6d4d7e
 ****
 */
 
-const TAB_BAR_OFFSET = 200;
+const TAB_BAR_OFFSET = 44;
+const SLIDE_DURATION = 100;
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   tabBar: {
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     height: 44,
     width,
@@ -36,6 +37,13 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
+    elevation: 1,
+    shadowOpacity: 0.5,
+    shadowRadius: 0.9,
+    shadowOffset: {
+      width: 0,
+      height: -1.5,
+    },
   },
   playPauseButton: {
     width: 32,
@@ -44,7 +52,7 @@ const styles = StyleSheet.create({
   },
   tabBarButton: {
     flex: 1,
-    height: 50,
+    height: 55,
   },
   tabBarButtonText: {
     paddingTop: 22,
@@ -57,7 +65,7 @@ const TabBar = class TabBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      offset: new Animated.Value(0),
+      offset: new Animated.Value(44),
       fadeAnim: new Animated.Value(1),
     };
   }
@@ -65,8 +73,6 @@ const TabBar = class TabBar extends Component {
   componentDidUpdate(prevProps) {
     const prevRoute = prevProps.navigation.state.routes[prevProps.navigation.state.index];
     const newRoute = this.props.navigation.state.routes[this.props.navigation.state.index];
-    console.log('prevRoute: ', prevRoute);
-    console.log('newRoute: ', newRoute);
     if (prevRoute !== newRoute) {
       const prevParams = prevRoute.params;
       const wasVisible = !prevParams || prevParams.visible;
@@ -75,13 +81,11 @@ const TabBar = class TabBar extends Component {
       const isVisible = !newParams || newParams.visible;
 
       if (wasVisible && !isVisible) {
-        console.log('animating down!');
-        Animated.timing(this.state.offset, { toValue: TAB_BAR_OFFSET, duration: 200 }).start();
-        // Animated.timing(this.state.fadeAnim, { toValue: 0, duration: 10000 }).start();
+        // console.log('animating down!');
+        Animated.timing(this.state.offset, { toValue: 0, duration: SLIDE_DURATION }).start();
       } else if (isVisible && !wasVisible) {
-        console.log('animating up!');
-        Animated.timing(this.state.offset, { toValue: 0, duration: 200 }).start();
-        // Animated.timing(this.state.offset, { toValue: 1, duration: 10000 }).start();
+        // console.log('animating up!');
+        Animated.timing(this.state.offset, { toValue: TAB_BAR_OFFSET, duration: SLIDE_DURATION }).start();
       }
     }
   }
@@ -102,7 +106,7 @@ const TabBar = class TabBar extends Component {
   }
 
   renderTabBarButton = (route: NavigationRoute, navIndex) => {
-    // makes a button for each route
+    // This function makes a button for each specified route
     const {
       navigation,
       renderIcon,
@@ -115,7 +119,6 @@ const TabBar = class TabBar extends Component {
     const tintColor = focused ? activeTintColor : inactiveTintColor;
     const color = currentIndex === navIndex ? activeTintColor : inactiveTintColor;
     const label = getLabelText({ route, focused: currentIndex === navIndex, index: navIndex });
-    // you find more! https://github.com/react-navigation/react-navigation/issues/1059
     return (
       <TouchableOpacity
         key={route.key}
@@ -160,8 +163,6 @@ const TabBar = class TabBar extends Component {
     for (let i = 3; i < navigation.state.routes.length; i++) {
       tabBarButtons.push(this.renderTabBarButton(navigation.state.routes[i], i));
       if (i === 4) {
-        // TODO: render usable playbutton here, then tabBarButtons.push(playButton);
-        // see here for more https://itnext.io/react-native-tab-bar-is-customizable-c3c37dcf711f
         tabBarButtons.push(
           <View key='the-play-button'>
             {this.playButton()}
@@ -169,21 +170,11 @@ const TabBar = class TabBar extends Component {
         );
       }
     }
-    // console.log('offset: ', this.state.offset);
-    const animationStyle = {
-      transform: [{ translateY: this.state.offset }],
-    };
     return (
-      <Animated.View {...this.props} style={[styles.tabBar, style, animationStyle]}>
+      <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset }]}>
         {tabBarButtons}
       </Animated.View>
     );
-
-    // return (
-    //   <Animated.View style={[styles.tabBar, { bottom: this.state.offset }]}>
-    //     <BottomTabBar {...this.props}/>
-    //   </Animated.View>
-    // );
   }
 };
 
