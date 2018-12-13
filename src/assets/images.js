@@ -15,6 +15,8 @@ const images = {
   reviewButton: require('./img/rate-review-button.png'),
   termsButton: require('./img/term-use-button.png'),
   skip1: require('./img/skip.png'),
+  star: require('./img/star-rounded.png'),
+  starOutline: require('./img/star-rounded-outline.png'),
 };
 
 export default images;

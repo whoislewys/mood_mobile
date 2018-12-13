@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
+import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import MoodList from './components/mood-list';
 import Playbar from '../../components/playbar';
 
@@ -65,6 +66,13 @@ class MoodScreen extends Component {
     });
   };
 
+  navigateToLeaderboardScreen = (params = {}) => {
+    this.props.navigation.navigate({
+      routeName: 'Leaderboard',
+      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar },
+    });
+  };
+
   getPlaybar = () => (this.props.queue && this.props.queue.queue.length
     ? (
         <Playbar
@@ -76,13 +84,13 @@ class MoodScreen extends Component {
     : null
   )
 
-
   getContent = () => {
     if (!this.props.loading) {
       return (
           <MoodList
             loadSongsForMoodId={this.props.loadSongsForMoodId}
             setMood={this.props.setMood}
+            loadLeaderboardSongs={this.props.loadLeaderboardSongs}
             moods={this.props.moods}
             selected={this.props.mood}
             track={this.props.currentTrack}
@@ -90,6 +98,7 @@ class MoodScreen extends Component {
             handlePlayPress={this.props.handlePlayPress}
             settings={this.navigateToSettingsScreen}
             playscreen={this.navigateToPlayScreenFromMoodScreen}
+            leaderboard={this.navigateToLeaderboardScreen}
           />
       );
     }
@@ -111,12 +120,13 @@ class MoodScreen extends Component {
 
 const mapStateToProps = state => ({
   moods: state.mood.moods,
-  selected: state.mood.selected,
-  queue: state.queue,
+  selected: state.mood.selected, // state.mood.selected gets the selected prop from the state of the mood reducer's action
+  queue: state.queue, // state.queue gets the entire state of the queue reducer's action
 });
 
 const mapDispatchToProps = {
   setMood,
+  loadLeaderboardSongs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodScreen);

@@ -49,6 +49,16 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 22,
   },
+  leaderboardButton: {
+    flex: 1,
+    resizeMode: 'contain',
+    position: 'absolute',
+    opacity: 0.35,
+    right: 106,
+    width: 26,
+    height: 44,
+    top: 8,
+  },
   bugsButton: {
     flex: 1,
     resizeMode: 'contain',
@@ -83,6 +93,11 @@ const styles = StyleSheet.create({
 export default class MoodList extends React.Component {
   keyExtractor = mood => mood.name
 
+  leaderboard = () => {
+    this.props.loadLeaderboardSongs();
+    this.props.leaderboard();
+  }
+
   settings = () => {
     this.props.settings();
   }
@@ -110,6 +125,9 @@ export default class MoodList extends React.Component {
           <Text style={styles.headerText}>
             Mood.
           </Text>
+          <TouchableOpacity onPress={this.leaderboard}>
+            <Image source={Images.bugIcon} style={styles.leaderboardButton}/>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>
           </TouchableOpacity>

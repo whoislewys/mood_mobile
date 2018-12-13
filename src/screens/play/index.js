@@ -15,6 +15,7 @@ import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
+import ClapButton from '../../components/medium-star';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -74,6 +75,7 @@ class PlayScreen extends Component {
 
     return (this.props.queue.length
       // return playscreen if queue has 1 or more songs
+      // remember adjacent things should be wrapped in upper level view tag
       ? (
         <Background
           image={{ uri: this.props.currentTrack.artwork }}
@@ -114,6 +116,7 @@ class PlayScreen extends Component {
               loading={this.props.loading}
             />
           </View>
+          <ClapButton/>
         </Background>
       )
       // return a spinner if queue is empty
