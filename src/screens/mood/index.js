@@ -8,7 +8,6 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
-import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import MoodList from './components/mood-list';
 import Playbar from '../../components/playbar';
 
@@ -90,7 +89,6 @@ class MoodScreen extends Component {
           <MoodList
             loadSongsForMoodId={this.props.loadSongsForMoodId}
             setMood={this.props.setMood}
-            loadLeaderboardSongs={this.props.loadLeaderboardSongs}
             moods={this.props.moods}
             selected={this.props.mood}
             track={this.props.currentTrack}
@@ -98,7 +96,6 @@ class MoodScreen extends Component {
             handlePlayPress={this.props.handlePlayPress}
             settings={this.navigateToSettingsScreen}
             playscreen={this.navigateToPlayScreenFromMoodScreen}
-            leaderboard={this.navigateToLeaderboardScreen}
           />
       );
     }
@@ -126,7 +123,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setMood,
-  loadLeaderboardSongs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodScreen);

@@ -12,7 +12,6 @@ import EventsScreen from '../screens/events';
 import SettingsScreen from '../screens/settings';
 import ErrorScreen from '../screens/error';
 import TabBar from './components/TabBar';
-import { loadLeaderboardSongs } from '../redux/modules/leaderboard';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     render = () => {

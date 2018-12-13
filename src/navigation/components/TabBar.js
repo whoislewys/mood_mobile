@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
   View,
@@ -7,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { NavigationRoute } from 'react-navigation';
+import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 
 /*
 ****
@@ -37,7 +39,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TabBar extends Component {
+const TabBar = class TabBar extends Component {
     navigationStateIndex = null;
 
     renderTabBarButton = (route: NavigationRoute, navIndex) => {
@@ -60,7 +62,8 @@ export default class TabBar extends Component {
               const navRouteName = navigation.state.routes[navIndex].routeName;
               console.log('navigating to route ', navRouteName);
               if (navRouteName === 'Leaderboard') {
-                // loadLeaderboardSongs();
+                console.log('loading leaderboard songs');
+                this.props.loadLeaderboardSongs();
               }
               navigation.navigate(route.routeName);
             }
@@ -96,15 +99,10 @@ export default class TabBar extends Component {
         </View>
       );
     }
-}
-// Possible extension with redux
-// function mapStateToProps(state: any) {
-//    return {
-//        ....,
-//    }
-// }
-// function mapDispatchToProps(dispatch) {
-//     return bindActionCreators(..., dispatch);
-// }
-// const _TabBar = connect(mapStateToProps, mapDispatchToProps)(TabBar);
-// export { _TabBar as TabBar };
+};
+
+const mapDispatchToProps = {
+  loadLeaderboardSongs,
+};
+
+export default connect(null, mapDispatchToProps)(TabBar);

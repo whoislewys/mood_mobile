@@ -93,11 +93,6 @@ const styles = StyleSheet.create({
 export default class MoodList extends React.Component {
   keyExtractor = mood => mood.name
 
-  leaderboard = () => {
-    this.props.loadLeaderboardSongs();
-    this.props.leaderboard();
-  }
-
   settings = () => {
     this.props.settings();
   }
@@ -125,9 +120,6 @@ export default class MoodList extends React.Component {
           <Text style={styles.headerText}>
             Mood.
           </Text>
-          <TouchableOpacity onPress={this.leaderboard}>
-            <Image source={Images.bugIcon} style={styles.leaderboardButton}/>
-          </TouchableOpacity>
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>
           </TouchableOpacity>
