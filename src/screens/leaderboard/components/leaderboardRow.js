@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     width: 120,
     marginLeft: 11,
     backgroundColor: '#FFFFFF',
-    marginTop: -30,
+    marginTop: -3,
   },
   songName: {
     fontFamily: fonts.primary,
