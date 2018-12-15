@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     marginBottom: 15,
+    borderRadius: 10,
     elevation: 1,
     backgroundColor: '#FFFFFF',
     shadowOffset: {
@@ -38,6 +39,8 @@ const styles = StyleSheet.create({
   detailsContainer: {
     width: 120,
     marginLeft: 11,
+    backgroundColor: '#FFFFFF',
+    marginTop: -30,
   },
   songName: {
     fontFamily: fonts.primary,
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
   },
   starsContainer: {
     flexDirection: 'row',
-    marginLeft: 19,
+    marginLeft: 25,
   },
   starCount: {
     fontFamily: fonts.primaryLight,
@@ -85,7 +88,7 @@ const LeaderboardRow = ({ leaderboardSong }) => {
         <Text style={styles.artistName}>{artist}</Text>
       </View>
       <View style={styles.starsContainer}>
-        <Image source={Images.leaderboardStar} />
+        <Image source={Images.leaderboardStar}/>
         <Text style={styles.starCount}>{stars}</Text>
       </View>
     </View>

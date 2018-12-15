@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 const Header = ({ headerText }) => {
   return (
     <View style={styles.headerStyle}>
-      <Image source={Images.moodLogo} style={styles.moodLogo}/>
+      <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10}/>
       <Text style={styles.headerText}>Leaderboard</Text>
       <Text style={styles.headerSubText}>Songs</Text>
     </View>
