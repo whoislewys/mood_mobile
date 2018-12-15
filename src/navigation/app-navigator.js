@@ -1,9 +1,7 @@
 /* eslint react/display-name: 0, import/no-extraneous-dependencies: 0 */
 
 import React from 'react';
-import { Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
-import { BottomTabBar } from 'react-navigation-tabs';
 import SplashScreen from '../screens/splash';
 import MoodScreen from '../screens/mood';
 import PlayScreen from '../screens/play';
@@ -35,8 +33,8 @@ export default createBottomTabNavigator({
 }, {
   swipeEnabled: false,
   tabBarOptions: {
-    activeTintColor: 'rgba(255,255,255,.99)',
-    inactiveTintColor: 'rgba(255,255,255,.2)',
+    activeTintColor: 'rgba(0,0,0,.99)',
+    inactiveTintColor: 'rgba(0,0,0,.2)',
     activeBackgroundColor: 'red',
   },
   tabBarComponent: props => <TabBarComponent

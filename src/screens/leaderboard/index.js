@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
+  View,
+  Text,
   ActivityIndicator,
   Dimensions,
   FlatList,
@@ -8,9 +9,20 @@ import {
 import Images from '@assets/images';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
+import Header from './components/header';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+const styles = {
+  background: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    marginLeft: 21,
+    marginRight: 21,
+  },
+};
 
 class LeaderboardScreen extends Component {
   // when you press the leaderboard button,
@@ -23,19 +35,27 @@ class LeaderboardScreen extends Component {
   >
     </LeaderboardRow>
 
-  render = () => {
-    return (this.props.leaderboardSongs.length
-      ? (
-        <FlatList
-          data={this.props.leaderboardSongs}
-          renderItem={this._renderItem}
-          keyExtractor={this.keyExtractor}
-          >
-        </FlatList>
-      )
-      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+  getLeaderBoard = () => {
+    return (
+      this.props.leaderboardSongs.length
+        ? (
+          <FlatList
+            data={this.props.leaderboardSongs}
+            renderItem={this._renderItem}
+            keyExtractor={this.keyExtractor}
+            >
+          </FlatList>
+        )
+        : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
     );
   }
+
+  render = () => (
+    <View style={styles.background}>
+      <Header/>
+      {this.getLeaderBoard()}
+    </View>
+  )
 }
 
 const mapStateToProps = state => ({

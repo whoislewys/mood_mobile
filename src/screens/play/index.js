@@ -40,10 +40,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     textAlign: 'center',
     color: '#ccc',
-
     paddingTop: 0,
     marginTop: -4,
-
     fontSize: 25,
     fontFamily: 'Roboto',
     fontWeight: '300',
@@ -80,6 +78,8 @@ class PlayScreen extends Component {
         <Background
           image={{ uri: this.props.currentTrack.artwork }}
           blur={50}
+          height={height}
+          bottom={0}
         >
           <PlayOnOpen playing={this.props.playing}
           playByDefault={this.props.handlePlayPress}

@@ -1,3 +1,4 @@
+// adapted from: https://medium.com/@sxia/how-to-customize-tab-bar-in-react-navigation-a0dc6d4d7e61
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -14,41 +15,34 @@ import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 
-/*
-****
-adapted from:
-https://medium.com/@sxia/how-to-customize-tab-bar-in-react-navigation-a0dc6d4d7e61
-****
-*/
-
-const TAB_BAR_OFFSET = 44;
+const TAB_BAR_OFFSET = 81;
 const SLIDE_DURATION = 100;
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   tabBar: {
-    alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'row',
-    height: 44,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    height: TAB_BAR_OFFSET,
     width,
-    backgroundColor: '#666666',
+    backgroundColor: '#FFFFFF',
     bottom: 0,
     top: 0,
     left: 0,
     right: 0,
     elevation: 1,
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.14,
     shadowRadius: 0.9,
     shadowOffset: {
       width: 0,
-      height: -1.5,
+      height: -0.3,
     },
   },
   playPauseButton: {
-    width: 32,
-    height: 32,
-    backgroundColor: 'transparent',
+    marginTop: 11,
+    width: 33,
+    height: 33,
   },
   tabBarButton: {
     flex: 1,
@@ -65,7 +59,7 @@ const TabBar = class TabBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      offset: new Animated.Value(44),
+      offset: new Animated.Value(TAB_BAR_OFFSET),
       fadeAnim: new Animated.Value(1),
     };
   }
@@ -94,13 +88,13 @@ const TabBar = class TabBar extends Component {
     if (this.props.playbackState === 'playing') {
       return (
         <TouchableOpacity onPress={this.props.screenProps.handlePlayPress}>
-          <Image source={Images.pauseButtonWhite} style={styles.playPauseButton} />
+          <Image source={Images.pauseButtonSmall} style={styles.playPauseButton} />
         </TouchableOpacity>
       );
     }
     return (
       <TouchableOpacity onPress={this.props.screenProps.handlePlayPress}>
-        <Image source={Images.playButtonWhite} style={styles.playPauseButton} />
+        <Image source={Images.playButtonSmall} style={styles.playPauseButton} />
       </TouchableOpacity>
     );
   }

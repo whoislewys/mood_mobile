@@ -4,17 +4,10 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Platform,
   StyleSheet,
   Animated,
 } from 'react-native';
 import Images from '@assets/images';
-
-/*
-image names
-Images.star
-Images.starOutline
-*/
 
 const styles = StyleSheet.create({
   clapButton: {
@@ -150,7 +143,6 @@ export default class ClapButton extends Component {
 
   render = () => {
     // todo: make the star icon switch to filled star icon when count > 0
-    console.log('count in clapbutton: ', this.state.count > 0);
     let clapIcon = (this.state.count <= 1) ? (
       <Image source={Images.starOutline} style={styles.star}/>
     )
