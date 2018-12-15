@@ -15,7 +15,7 @@ import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 
-const TAB_BAR_OFFSET = 81;
+const TAB_BAR_OFFSET = 69;
 const SLIDE_DURATION = 100;
 const { width } = Dimensions.get('window');
 
@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    paddingLeft: 13.5,
+    paddingRight: 13.5,
     height: TAB_BAR_OFFSET,
     width,
     backgroundColor: '#FFFFFF',
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     elevation: 1,
-    shadowOpacity: 0.14,
+    shadowOpacity: 0.40,
     shadowRadius: 0.9,
     shadowOffset: {
       width: 0,
@@ -40,18 +42,26 @@ const styles = StyleSheet.create({
     },
   },
   playPauseButton: {
-    marginTop: 11,
-    width: 33,
-    height: 33,
+    height: 40,
+    width: 40,
+    marginTop: -8.5,
+    marginLeft: 22,
+    marginRight: 22,
   },
   tabBarButton: {
     flex: 1,
+    marginTop: 23,
     height: 55,
   },
   tabBarButtonText: {
     paddingTop: 22,
     fontSize: 12,
     textAlign: 'center',
+  },
+  icon: {
+    height: 23,
+    width: 23,
+    alignSelf: 'center',
   },
 });
 
@@ -99,11 +109,27 @@ const TabBar = class TabBar extends Component {
     );
   }
 
+  renderIcon = ({ tintColor, label }) => {
+    if (label === 'Mood') {
+      return <Image source={Images.discover} style={[styles.icon, { tintColor }]} />;
+    }
+    if (label === 'Play') {
+      return <Image source={Images.player} style={[styles.icon, { tintColor }]} />;
+    }
+    if (label === 'Leaderboard') {
+      return <Image source={Images.leaderboard} style={[styles.icon, { tintColor }]} />;
+    }
+    if (label === 'Events') {
+      return <Image source={Images.events} style={[styles.icon, { tintColor }]} />;
+    }
+    return <View />;
+  };
+
   renderTabBarButton = (route: NavigationRoute, navIndex) => {
     // This function makes a button for each specified route
     const {
       navigation,
-      renderIcon,
+      // renderIcon,
       activeTintColor,
       inactiveTintColor,
       getLabelText,
@@ -111,7 +137,6 @@ const TabBar = class TabBar extends Component {
     const currentIndex = navigation.state.index;
     const focused = navIndex === currentIndex;
     const tintColor = focused ? activeTintColor : inactiveTintColor;
-    const color = currentIndex === navIndex ? activeTintColor : inactiveTintColor;
     const label = getLabelText({ route, focused: currentIndex === navIndex, index: navIndex });
     return (
       <TouchableOpacity
@@ -136,15 +161,13 @@ const TabBar = class TabBar extends Component {
           }
         }}
       >
-        {renderIcon({
-          route,
+        {this.renderIcon({
           tintColor,
-          focused,
-          index: navIndex,
+          label,
         })}
-        <Text style={[styles.tabBarButtonText, { color }]}>
+        {/* <Text style={[styles.tabBarButtonText, { color }]}>
           {label}
-        </Text>
+        </Text> */}
       </TouchableOpacity>
     );
   }

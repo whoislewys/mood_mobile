@@ -1,6 +1,6 @@
 /* eslint react/display-name: 0, import/no-extraneous-dependencies: 0 */
 
-import React from 'react';
+import React from 'react'
 import { createBottomTabNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
 import MoodScreen from '../screens/mood';
@@ -28,8 +28,8 @@ export default createBottomTabNavigator({
   Settings: { screen: map(SettingsScreen) },
   Mood: { screen: map(MoodScreen) },
   Play: { screen: map(PlayScreen) },
-  Events: { screen: map(EventsScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
+  Events: { screen: map(EventsScreen) },
 }, {
   swipeEnabled: false,
   tabBarOptions: {

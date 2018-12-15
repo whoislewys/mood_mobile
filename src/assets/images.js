@@ -2,9 +2,9 @@
 const images = {
   bgOverlay: require('./img/background-overlay.png'),
   repeatButtonUnselected: require('./img/repeat-unselected.png'),
+  shuffleButtonUnselected: require('./img/shuffle-button-unselected.png'),
   playButton: require('./img/round-play_circle_outline.png'),
   pauseButton: require('./img/round-pause_circle_outline.png'),
-  shuffleButtonUnselected: require('./img/shuffle-button-unselected.png'),
   sliderButton: require('./img/slider-button.png'),
   arrowLeftWhite: require('./img/arrow-white-left.png'),
   settingsGear: require('./img/settings.png'),
@@ -20,6 +20,10 @@ const images = {
   starOutline: require('./img/star-rounded-outline.png'),
   leaderboardStar: require('./img/round-stars-1.png'),
   moodLogo: require('./img/Color-Mood-Logo.png'),
+  discover: require('./img/selected-round-discover.png'),
+  player: require('./img/selected-round-media-player.png'),
+  leaderboard: require('./img/selected-round-format-leaderboard.png'),
+  events: require('./img/selected-round-events.png'),
 };
 
 export default images;
