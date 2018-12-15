@@ -15,7 +15,7 @@ export const colors = {
   purple: '#5856D6',
   pink: '#FF377E',
   yellow: '#FFCC00',
-  headline: 'rgba(0, 0, 0, 0.87)',
+  header: 'rgba(0, 0, 0, 0.87)',
   subHeader: 'rgba(0, 0, 0, 0.60)',
   body: 'rgba(0, 0, 0, 0.60)',
 };
@@ -33,7 +33,7 @@ export const fonts = {
   primary: 'Quicksand-Medium',
   primaryLight: 'Quicksand-Regular',
   primaryThin: 'Quicksand-Light',
-  headline: 34,
+  header: 34,
   subHeader: 16.92,
   body: 14,
 };

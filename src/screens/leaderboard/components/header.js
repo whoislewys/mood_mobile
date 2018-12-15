@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
   headerText: {
     marginTop: 18,
     fontFamily: fonts.primary,
-    fontSize: fonts.headline,
-    color: colors.headline,
+    fontSize: fonts.header,
+    color: colors.header,
   },
   headerSubText: {
     fontFamily: fonts.primary,
