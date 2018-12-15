@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   albumArt: {
     width: 60,
     height: 60,
+    borderRadius: 2,
   },
   detailsContainer: {
     width: 120,
