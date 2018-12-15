@@ -26,14 +26,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const Header = ({ headerText }) => {
-  return (
+const Header = () => (
     <View style={styles.headerStyle}>
       <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10}/>
       <Text style={styles.headerText}>Leaderboard</Text>
       <Text style={styles.headerSubText}>Songs</Text>
     </View>
-  );
-};
+);
 
 export default Header;

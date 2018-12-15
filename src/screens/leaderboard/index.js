@@ -43,6 +43,7 @@ class LeaderboardScreen extends Component {
             data={this.props.leaderboardSongs}
             renderItem={this._renderItem}
             keyExtractor={this.keyExtractor}
+            ListHeaderComponent={Header}
             >
           </FlatList>
         )
@@ -52,7 +53,6 @@ class LeaderboardScreen extends Component {
 
   render = () => (
     <View style={styles.background}>
-      <Header/>
       {this.getLeaderBoard()}
     </View>
   )
