@@ -85,10 +85,16 @@ const TabBar = class TabBar extends Component {
 
       if (wasVisible && !isVisible) {
         // console.log('animating down!');
-        Animated.timing(this.state.offset, { toValue: 0, duration: SLIDE_DURATION }).start();
+        Animated.parallel([
+          Animated.timing(this.state.offset, { toValue: 0, duration: SLIDE_DURATION }),
+          Animated.timing(this.state.fadeAnim, { toValue: 0, duration: SLIDE_DURATION * 0.33 }),
+        ]).start();
       } else if (isVisible && !wasVisible) {
         // console.log('animating up!');
-        Animated.timing(this.state.offset, { toValue: TAB_BAR_OFFSET, duration: SLIDE_DURATION }).start();
+        Animated.parallel([
+          Animated.timing(this.state.offset, { toValue: TAB_BAR_OFFSET, duration: SLIDE_DURATION }),
+          Animated.timing(this.state.fadeAnim, { toValue: 1, duration: SLIDE_DURATION * 0.33 }),
+        ]).start();
       }
     }
   }
@@ -185,7 +191,7 @@ const TabBar = class TabBar extends Component {
       }
     }
     return (
-      <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset }]}>
+      <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset, opacity: this.state.fadeAnim }]}>
         {tabBarButtons}
       </Animated.View>
     );
