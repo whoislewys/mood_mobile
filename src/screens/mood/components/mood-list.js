@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   FlatList,
-  Dimensions,
   Text,
   Image,
   TouchableOpacity,
@@ -12,8 +11,7 @@ import {
 import axios from 'axios';
 import Images from '@assets/images';
 import Mood from './mood';
-
-const { width } = Dimensions.get('window');
+import { dimensions, fonts, colors } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +29,7 @@ const styles = StyleSheet.create({
   },
   headerDivider: {
     resizeMode: 'contain',
-    width: width * 0.95,
+    width: dimensions.width * 0.95,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -43,8 +41,8 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'left',
     color: '#666',
-    fontFamily: 'Quicksand',
-    fontSize: 32,
+    fontFamily: fonts.primary,
+    fontSize: fonts.header,
     fontWeight: '300',
     paddingBottom: 0,
     paddingTop: 10,

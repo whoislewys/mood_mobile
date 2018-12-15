@@ -88,13 +88,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   arrow: {
-    resizeMode: 'stretch',
-    width: 15,
-    height: 19,
+    width: 15.22,
+    height: 25,
     marginLeft: 20,
     marginBottom: 2,
     tintColor: 'black',
     opacity: 0.7,
+    transform: [{ rotateX: '180deg' }],
   },
   gradientHeading: {
     flex: 1,
@@ -152,8 +152,8 @@ class SettingsScreen extends Component {
       <View style={styles.container}>
         <View style={styles.shadow}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => goBack()} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
-              <Image source={Images.arrowLeftWhite} style={styles.arrow} />
+            <TouchableOpacity onPress={() => goBack()} style={{ alignSelf: 'center', width: 25, marginRight: 10, transform: [{ rotateX: '180deg' }] }}>
+              <Image source={Images.arrowDown} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>
           </View>

@@ -4,35 +4,41 @@ import {
   StyleSheet,
   View,
   Image,
-  Dimensions,
   TouchableOpacity,
   StatusBar,
   Text,
   ActivityIndicator,
 } from 'react-native';
-import Images from '@assets/images';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import ClapButton from '../../components/medium-star';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+import { fonts, dimensions } from '../../assets/styles';
+import Images from '@assets/images';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: width * 0.03,
-    marginVertical: height * 0.03,
+    marginHorizontal: dimensions.width * 0.03,
+    marginVertical: dimensions.height * 0.03,
+  },
+  backButton: {
+    width: 23,
+    height: 14,
+    position: 'absolute',
+    top: -7,
+    left: 0.02 * dimensions.width,
+    opacity: 0.5,
+    resizeMode: 'stretch',
   },
   menuDropdown: {
     flex: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 0.01 * width,
-    marginRight: 0.02 * width,
+    marginLeft: 0.01 * dimensions.width,
+    marginRight: 0.02 * dimensions.width,
     marginTop: 20,
   },
   moodText: {
@@ -42,19 +48,9 @@ const styles = StyleSheet.create({
     color: '#ccc',
     paddingTop: 0,
     marginTop: -4,
-    fontSize: 25,
-    fontFamily: 'Roboto',
+    fontSize: fonts.subHeader,
+    fontFamily: fonts.primaryBold,
     fontWeight: '300',
-  },
-  backButton: {
-    width: 23,
-    height: 14,
-    position: 'absolute',
-    top: -7,
-    left: 0.02 * width,
-    opacity: 0.5,
-    resizeMode: 'stretch',
-    transform: [{ rotateX: '180deg' }],
   },
   touchable: {
     zIndex: 2,
@@ -77,8 +73,8 @@ class PlayScreen extends Component {
       ? (
         <Background
           image={{ uri: this.props.currentTrack.artwork }}
-          blur={50}
-          height={height}
+          blur={25}
+          height={dimensions.height}
           bottom={0}
         >
           <PlayOnOpen playing={this.props.playing}
@@ -88,12 +84,9 @@ class PlayScreen extends Component {
           <View style={styles.container}>
             <View style={styles.menuDropdown}>
               <TouchableOpacity onPress={this.props.moodscreen} style={styles.touchable}>
-                <Image source={Images.arrowUpWhite} style={styles.backButton} />
+                <Image source={Images.arrowDown} style={styles.backButton} />
               </TouchableOpacity>
-
-              <Text style={styles.moodText}>
-                { this.props.selected ? this.props.selected.name.toLowerCase() : '' }
-              </Text>
+              <View style={styles.moodText}/>
             </View>
             <TrackInfo
               skipForward={this.props.nextTrack}
@@ -106,13 +99,10 @@ class PlayScreen extends Component {
               repeat={this.props.repeat}
               toggleShuffle={this.props.toggleShuffle}
               toggleRepeat={this.props.toggleRepeat}
-
               skipForward={this.props.nextTrack}
               skipBack={this.props.previousTrack}
-
               playing={this.props.playing}
               handlePlayPress={this.props.handlePlayPress}
-
               loading={this.props.loading}
             />
           </View>

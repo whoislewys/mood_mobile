@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 
 import AlbumArt from './album-art';
 import InfoText from './info-text';
 import TimeBar from './time-bar';
-
-const width = Dimensions.get('window').width;
+import { dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumContainer: {
@@ -19,7 +17,7 @@ const styles = StyleSheet.create({
   },
   timeBar: {
     flex: 10,
-    width: width * 0.8,
+    width: dimensions.width * 0.8,
     marginHorizontal: 10,
     marginTop: 15,
     flexDirection: 'row',

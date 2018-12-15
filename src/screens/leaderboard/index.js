@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   ActivityIndicator,
-  Dimensions,
   FlatList,
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 
 const styles = {
   background: {

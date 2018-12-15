@@ -33,8 +33,8 @@ export default createBottomTabNavigator({
 }, {
   swipeEnabled: false,
   tabBarOptions: {
-    activeTintColor: 'rgba(0,0,0,.99)',
-    inactiveTintColor: 'rgba(0,0,0,.2)',
+    activeTintColor: 'rgba(0, 0, 0, 1)',
+    inactiveTintColor: 'rgba(0, 0, 0, 0.21)',
     activeBackgroundColor: 'red',
   },
   tabBarComponent: props => <TabBarComponent

@@ -3,10 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
-
-const width = Dimensions.get('window').width;
+import { fonts, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumInfoText: {
@@ -16,20 +14,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   albumInfoMain: {
-    color: 'white',
-    maxWidth: width * 0.5,
-    fontSize: 18,
-    fontFamily: 'Roboto',
-    fontWeight: '400',
+    color: '#FFFFFF',
+    maxWidth: dimensions.width * 0.5,
+    fontFamily: fonts.primaryBold,
+    fontSize: fonts.subHeader,
   },
   albumInfoSubRow: {
     flexDirection: 'row',
   },
   albumInfoSubText: {
-    color: '#ddd',
-    fontSize: 14,
-    fontFamily: 'Roboto',
-    fontWeight: '300',
+    color: 'rgba(255, 255, 255, 0.87)',
+    fontFamily: fonts.primary,
+    fontSize: fonts.body,
   },
 });
 
@@ -49,7 +45,7 @@ export default class InfoText extends Component {
         <View style={styles.albumInfoSubRow}>
           <Text
             style={[styles.albumInfoSubText, {
-              maxWidth: width * 0.45,
+              maxWidth: dimensions.width * 0.45,
             }]}
             numberOfLines={1}
             ellipsizeMode="tail"
@@ -63,7 +59,7 @@ export default class InfoText extends Component {
           </Text>
           <Text
             style={[styles.albumInfoSubText, {
-              maxWidth: width * 0.45,
+              maxWidth: dimensions.width * 0.45,
             }]}
             numberOfLines={1}
             ellipsizeMode="tail"

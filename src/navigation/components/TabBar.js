@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Text,
   View,
   Image,
   TouchableOpacity,
@@ -15,7 +14,7 @@ import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 
-const TAB_BAR_OFFSET = 69;
+const TAB_BAR_OFFSET = 77;
 const SLIDE_DURATION = 100;
 const { width } = Dimensions.get('window');
 
@@ -42,8 +41,8 @@ const styles = StyleSheet.create({
     },
   },
   playPauseButton: {
-    height: 40,
-    width: 40,
+    height: 33,
+    width: 33,
     marginTop: -8.5,
     marginLeft: 22,
     marginRight: 22,
@@ -98,13 +97,13 @@ const TabBar = class TabBar extends Component {
     if (this.props.playbackState === 'playing') {
       return (
         <TouchableOpacity onPress={this.props.screenProps.handlePlayPress}>
-          <Image source={Images.pauseButtonSmall} style={styles.playPauseButton} />
+          <Image source={Images.navPauseButton} style={styles.playPauseButton} />
         </TouchableOpacity>
       );
     }
     return (
       <TouchableOpacity onPress={this.props.screenProps.handlePlayPress}>
-        <Image source={Images.playButtonSmall} style={styles.playPauseButton} />
+        <Image source={Images.navPlayButton} style={styles.playPauseButton} />
       </TouchableOpacity>
     );
   }
@@ -174,8 +173,6 @@ const TabBar = class TabBar extends Component {
 
   render = () => {
     const { navigation, style } = this.props;
-    // const tabBarButtons = navigation.state.routes.map(this.renderTabBarButton.bind(this));
-    // ^ is there a way to just map from 3:end so we dont have to for loop? ^
     const tabBarButtons = [];
     for (let i = 3; i < navigation.state.routes.length; i++) {
       tabBarButtons.push(this.renderTabBarButton(navigation.state.routes[i], i));
