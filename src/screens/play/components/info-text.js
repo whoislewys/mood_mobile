@@ -8,7 +8,7 @@ import { fonts, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumInfoText: {
-    marginTop: '12.5%',
+    marginTop: '10.5%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',

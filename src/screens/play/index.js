@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     width: 30,
     opacity: 0.5,
   },
-  touchable: {
-
+  playControlsContainer: {
+    marginBottom: '24.5%',
   },
 });
 
@@ -76,17 +76,19 @@ class PlayScreen extends Component {
               track={this.props.currentTrack}
               setTime={this.props.setTime}
             />
-            <PlayControls
-              shuffled={this.props.shuffled}
-              repeat={this.props.repeat}
-              toggleShuffle={this.props.toggleShuffle}
-              toggleRepeat={this.props.toggleRepeat}
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
-              playing={this.props.playing}
-              handlePlayPress={this.props.handlePlayPress}
-              loading={this.props.loading}
-            />
+            <View style={styles.playControlsContainer}>
+              <PlayControls
+                shuffled={this.props.shuffled}
+                repeat={this.props.repeat}
+                toggleShuffle={this.props.toggleShuffle}
+                toggleRepeat={this.props.toggleRepeat}
+                skipForward={this.props.nextTrack}
+                skipBack={this.props.previousTrack}
+                playing={this.props.playing}
+                handlePlayPress={this.props.handlePlayPress}
+                loading={this.props.loading}
+              />
+            </View>
           </View>
         </Background>
       )

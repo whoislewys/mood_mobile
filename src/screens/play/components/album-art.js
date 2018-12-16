@@ -20,10 +20,9 @@ const styles = StyleSheet.create({
     },
   },
   albumArt: {
-    width: width - (0.13 * width),
-    height: width - (0.13 * width),
+    width: width - (0.1 * width),
+    height: width - (0.1 * width),
     borderRadius: 4,
-    marginBottom: 10,
   },
 });
 

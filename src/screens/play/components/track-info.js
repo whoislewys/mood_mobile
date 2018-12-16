@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   timeBar: {
     width: '100%',
     alignSelf: 'stretch',
-    marginTop: '4.6%',
+    marginTop: '4.2%',
     backgroundColor: 'transparent',
   },
   albumInfo: {
