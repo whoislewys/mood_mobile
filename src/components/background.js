@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     resizeMode: 'cover',
+    opacity: 0.5,
   },
 });
 

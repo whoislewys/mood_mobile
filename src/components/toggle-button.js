@@ -7,7 +7,7 @@ import {
 
 export default class ToggleButton extends Component {
   render = () => {
-    const opacity = this.props.active ? 1 : 0.5;
+    const opacity = this.props.active ? 1 : 0.6;
 
     return (
       <TouchableOpacity onPress={this.props.onPress}>

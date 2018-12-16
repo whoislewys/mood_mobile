@@ -29,7 +29,7 @@ export const padding = {
 };
 
 export const fonts = {
-  bold: 'Quicksand-Bold',
+  primaryBold: 'Quicksand-Bold',
   primary: 'Quicksand-Medium',
   primaryLight: 'Quicksand-Regular',
   primaryThin: 'Quicksand-Light',

@@ -8,7 +8,6 @@ import { fonts, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumInfoText: {
-    flex: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
@@ -26,6 +25,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.87)',
     fontFamily: fonts.primary,
     fontSize: fonts.body,
+    maxWidth: dimensions.width * 0.45,
   },
 });
 
@@ -44,9 +44,7 @@ export default class InfoText extends Component {
         </Text>
         <View style={styles.albumInfoSubRow}>
           <Text
-            style={[styles.albumInfoSubText, {
-              maxWidth: dimensions.width * 0.45,
-            }]}
+            style={styles.albumInfoSubText}
             numberOfLines={1}
             ellipsizeMode="tail"
             >
@@ -58,9 +56,7 @@ export default class InfoText extends Component {
           { track.album ? '-' : '' }
           </Text>
           <Text
-            style={[styles.albumInfoSubText, {
-              maxWidth: dimensions.width * 0.45,
-            }]}
+            style={styles.albumInfoSubText}
             numberOfLines={1}
             ellipsizeMode="tail"
             >

@@ -12,9 +12,7 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+import { dimensions, fonts } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,7 +43,8 @@ const styles = StyleSheet.create({
   headerText: {
     flex: 1,
     color: '#555',
-    fontSize: 30,
+    fontSize: fonts.header,
+    fontFamily: fonts.primary,
     fontWeight: '500',
     alignSelf: 'center',
     textAlign: 'center',
@@ -65,20 +64,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
     color: '#333',
-    fontFamily: 'Roboto',
+    fontFamily: fonts.primary,
     marginBottom: 8,
   },
   bodyText: {
-    fontWeight: '400',
-    fontSize: 16,
+    fontFamily: fonts.primary,
+    fontSize: fonts.subHeader,
     color: '#555',
-    fontFamily: 'Roboto',
   },
   textRow: {
-    fontWeight: '400',
-    fontSize: 16,
+    fontFamily: fonts.primary,
+    fontSize: fonts.subHeader,
     color: '#555',
-    fontFamily: 'Roboto',
     marginTop: 20,
     marginBottom: 10,
     textAlign: 'center',
@@ -94,18 +91,18 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     tintColor: 'black',
     opacity: 0.7,
-    transform: [{ rotateX: '180deg' }],
+    resizeMode: 'contain',
   },
   gradientHeading: {
     flex: 1,
     resizeMode: 'stretch',
     maxHeight: 1.5,
-    maxWidth: width,
+    maxWidth: dimensions.width,
     marginLeft: 0,
   },
   bigButton: {
     resizeMode: 'contain',
-    width: width * 0.54,
+    width: dimensions.width * 0.54,
     height: 117,
   },
   button: {
@@ -152,8 +149,8 @@ class SettingsScreen extends Component {
       <View style={styles.container}>
         <View style={styles.shadow}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => goBack()} style={{ alignSelf: 'center', width: 25, marginRight: 10, transform: [{ rotateX: '180deg' }] }}>
-              <Image source={Images.arrowDown} style={styles.arrow} />
+            <TouchableOpacity onPress={() => goBack()} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
+              <Image source={Images.arrowLeft} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>
           </View>

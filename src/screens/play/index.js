@@ -6,31 +6,25 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
-  Text,
   ActivityIndicator,
 } from 'react-native';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
-import ClapButton from '../../components/medium-star';
 import { fonts, dimensions } from '../../assets/styles';
 import Images from '@assets/images';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: dimensions.width * 0.03,
-    marginVertical: dimensions.height * 0.03,
+    alignItems: 'center',
   },
   backButton: {
-    width: 23,
-    height: 14,
-    position: 'absolute',
-    top: -7,
-    left: 0.02 * dimensions.width,
+    marginLeft: 29.8,
+    marginBottom: 25.25,
+    marginTop: 20.14,
     opacity: 0.5,
-    resizeMode: 'stretch',
   },
   menuDropdown: {
     flex: 8,
@@ -106,7 +100,6 @@ class PlayScreen extends Component {
               loading={this.props.loading}
             />
           </View>
-          <ClapButton/>
         </Background>
       )
       // return a spinner if queue is empty

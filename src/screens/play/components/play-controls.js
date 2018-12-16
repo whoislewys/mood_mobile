@@ -6,65 +6,48 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-
-import Images from '@assets/images';
 import ToggleButton from '../../../components/toggle-button';
+import ClapButton from '../../../components/medium-star';
+import Images from '@assets/images';
 
 const styles = StyleSheet.create({
   playControls: {
-    flex: 30,
+    height: 71,
+    width: 311,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 53.16,
   },
   playButton: {
-    width: 75,
-    height: 75,
+    width: 71,
+    height: 71,
+    marginRight: -25.5,
+    marginLeft: -25.5,
   },
-  toggleShuffle: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  toggleRepeat: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  shuffleIcon: {
-    height: 26,
-    width: 26,
+  skipLeftIcon: {
+    height: 35,
+    width: 35,
     resizeMode: 'contain',
-    opacity: 0.8,
+    opacity: 0.6,
   },
-  repeatIcon: {
-    height: 26,
-    width: 26,
+  skipRightIcon: {
+    height: 35,
+    width: 35,
     resizeMode: 'contain',
-    opacity: 0.8,
+    opacity: 0.6,
     transform: [{ rotateY: '180deg' }],
+  },
+  share: {
+    height: 20,
+    width: 20,
+    tintColor: 'white',
+    opacity: 1.0,
+    resizeMode: 'contain',
   },
 });
 
 export default class PlayControls extends Component {
-  render = () => (
-      <View style={styles.playControls}>
-        <View style={styles.toggleShuffle}>
-          <TouchableOpacity onPress={this.props.skipBack}>
-            <Image source={Images.skip1} style={styles.shuffleIcon} />
-          </TouchableOpacity>
-        </View>
-        <View style={{ alignItems: 'center', flex: 2 }}>
-          { this.playButton() }
-        </View>
-        <View style={styles.toggleRepeat}>
-          <TouchableOpacity onPress={this.props.skipForward}>
-            <Image source={Images.skip1} style={styles.repeatIcon} />
-          </TouchableOpacity>
-        </View>
-      </View>
-  )
-
   playButton = () => {
     let ret = (
       <TouchableOpacity onPress={this.props.handlePlayPress}>
@@ -86,4 +69,18 @@ export default class PlayControls extends Component {
 
     return ret;
   }
+
+  render = () => (
+      <View style={styles.playControls}>
+        <ClapButton />
+        <TouchableOpacity onPress={this.props.skipBack}>
+          <Image source={Images.skip} style={styles.skipLeftIcon} />
+        </TouchableOpacity>
+        { this.playButton() }
+        <TouchableOpacity onPress={this.props.skipForward}>
+          <Image source={Images.skip} style={styles.skipRightIcon} />
+        </TouchableOpacity>
+        <ToggleButton iconUnselected={Images.shareOutline} style={styles.share}/>
+      </View>
+  )
 }
