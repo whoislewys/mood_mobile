@@ -10,7 +10,7 @@ import { dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   trackInfoContainer: {
-    flex: 69,
+    flex: 10,
     alignItems: 'center',
   },
   timeBar: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   albumInfo: {
-    marginBottom: 41,
+    marginBottom: 27,
   },
 });
 

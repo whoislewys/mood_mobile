@@ -9,7 +9,6 @@ import {
   StyleSheet,
   Linking,
 } from 'react-native';
-import axios from 'axios';
 import Images from '@assets/images';
 import Mood from './mood';
 import { fonts, colors, dimensions } from '../../../assets/styles';
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    marginTop: 26,
+    marginTop: 38,
   },
   bugsButton: {
     height: 25,
