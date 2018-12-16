@@ -13,9 +13,13 @@ const styles = StyleSheet.create({
     flex: 10,
     alignItems: 'center',
   },
+  albumContainer: {
+    backgroundColor: 'red',
+  },
   timeBar: {
-    width: dimensions.width * 0.63,
+    width: '100%',
     alignSelf: 'stretch',
+    marginTop: '4.6%',
     backgroundColor: 'transparent',
   },
   albumInfo: {
@@ -26,12 +30,16 @@ const styles = StyleSheet.create({
 export default class TrackInfo extends Component {
   render = () => (
       <View style={styles.trackInfoContainer}>
-        <AlbumArt
-          url={this.props.track.artwork}
-          skipForward={this.props.skipForward}
-          skipBack={this.props.skipBack}
-        />
-        <TimeBar setTime={this.props.setTime}/>
+        <View style={styles.albumContainer}>
+          <AlbumArt
+            url={this.props.track.artwork}
+            skipForward={this.props.skipForward}
+            skipBack={this.props.skipBack}
+          />
+        </View>
+        <View style={styles.timeBar}>
+          <TimeBar setTime={this.props.setTime}/>
+        </View>
         <View style={[styles.albumInfo]}>
           <InfoText track={this.props.track} />
         </View>

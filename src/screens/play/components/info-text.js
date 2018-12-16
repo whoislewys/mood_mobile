@@ -8,6 +8,7 @@ import { fonts, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumInfoText: {
+    marginTop: '12.5%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
   },
   albumInfoSubText: {
     color: 'rgba(255, 255, 255, 0.87)',
+    marginTop: '3%',
     fontFamily: fonts.primary,
     fontSize: fonts.body,
     maxWidth: dimensions.width * 0.45,
@@ -50,9 +52,7 @@ export default class InfoText extends Component {
             >
             { track.artist }
           </Text>
-          <Text style={[styles.albumInfoSubText, {
-            marginHorizontal: 2,
-          }]}>
+          <Text style={styles.albumInfoSubText}>
           { track.album ? '-' : '' }
           </Text>
           <Text

@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 53.16,
   },
   playButton: {
     width: 71,
