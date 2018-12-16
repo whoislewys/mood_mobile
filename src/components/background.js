@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     width: dimensions.width,
     height: dimensions.height,
     alignItems: 'center',
-    backgroundColor: 'blue',
   },
   bgImage: {
     flex: 1,

@@ -21,19 +21,19 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginLeft: '5.9%',
     marginRight: '5.9%',
-    backgroundColor: 'red',
   },
   dropdownBar: {
-    height: '10.5%',
+    height: '14.52%',
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'green',
   },
   backButton: {
-    opacity: 0.5,
-    backgroundColor: 'black',
-    marginTop: '10.5%',
     zIndex: 2,
+    marginTop: '22.0%',
+    paddingLeft: '1.8%',
+    resizeMode: 'contain',
+    height: 30,
+    width: 30,
+    opacity: 0.5,
   },
   touchable: {
 
