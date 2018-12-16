@@ -16,17 +16,27 @@ import { fonts, dimensions } from '../../assets/styles';
 import Images from '@assets/images';
 
 const styles = StyleSheet.create({
-  backButton: {
-    opacity: 0.5,
-  },
-  dropdownBar: {
-    flexDirection: 'row',
+  playContainer: {
+    flex: 1,
     alignSelf: 'stretch',
-    marginTop: '10%',
+    marginLeft: '5.9%',
+    marginRight: '5.9%',
     backgroundColor: 'red',
   },
-  touchable: {
+  dropdownBar: {
+    height: '10.5%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'green',
+  },
+  backButton: {
+    opacity: 0.5,
+    backgroundColor: 'black',
+    marginTop: '10.5%',
     zIndex: 2,
+  },
+  touchable: {
+
   },
 });
 
@@ -54,28 +64,30 @@ class PlayScreen extends Component {
           playByDefault={this.props.handlePlayPress}
           parentScreen={this.props.parentScreen}
           />
-          <View style={styles.dropdownBar}>
-            <TouchableOpacity onPress={this.props.moodscreen} style={styles.touchable}>
-              <Image source={Images.arrowDown} style={styles.backButton} />
-            </TouchableOpacity>
+          <View style={styles.playContainer}>
+            <View style={styles.dropdownBar}>
+              <TouchableOpacity onPress={this.props.moodscreen} style={styles.backButton}>
+                <Image source={Images.arrowDown} />
+              </TouchableOpacity>
+            </View>
+            <TrackInfo
+              skipForward={this.props.nextTrack}
+              skipBack={this.props.previousTrack}
+              track={this.props.currentTrack}
+              setTime={this.props.setTime}
+            />
+            <PlayControls
+              shuffled={this.props.shuffled}
+              repeat={this.props.repeat}
+              toggleShuffle={this.props.toggleShuffle}
+              toggleRepeat={this.props.toggleRepeat}
+              skipForward={this.props.nextTrack}
+              skipBack={this.props.previousTrack}
+              playing={this.props.playing}
+              handlePlayPress={this.props.handlePlayPress}
+              loading={this.props.loading}
+            />
           </View>
-          <TrackInfo
-            skipForward={this.props.nextTrack}
-            skipBack={this.props.previousTrack}
-            track={this.props.currentTrack}
-            setTime={this.props.setTime}
-          />
-          <PlayControls
-            shuffled={this.props.shuffled}
-            repeat={this.props.repeat}
-            toggleShuffle={this.props.toggleShuffle}
-            toggleRepeat={this.props.toggleRepeat}
-            skipForward={this.props.nextTrack}
-            skipBack={this.props.previousTrack}
-            playing={this.props.playing}
-            handlePlayPress={this.props.handlePlayPress}
-            loading={this.props.loading}
-          />
         </Background>
       )
       // return a spinner if queue is empty
