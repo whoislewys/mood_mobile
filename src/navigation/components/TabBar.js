@@ -13,20 +13,21 @@ import {
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
+import { dimensions } from '../../assets/styles';
 
-const TAB_BAR_OFFSET = 77;
+const { width, height } = dimensions;
+const TAB_BAR_OFFSET = height * 0.08;
 const SLIDE_DURATION = 100;
-const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: 13.5,
-    paddingRight: 13.5,
     height: TAB_BAR_OFFSET,
     width,
+    paddingLeft: 13.5,
+    paddingRight: 13.5,
     backgroundColor: '#FFFFFF',
     bottom: 0,
     top: 0,
@@ -43,13 +44,13 @@ const styles = StyleSheet.create({
   playPauseButton: {
     height: 33,
     width: 33,
-    marginTop: -8.5,
+    marginTop: '-9%',
     marginLeft: 22,
     marginRight: 22,
   },
   tabBarButton: {
     flex: 1,
-    marginTop: 23,
+    marginTop: '8%',
     height: 55,
   },
   tabBarButtonText: {

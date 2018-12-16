@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
   },
   moodArt: {
     resizeMode: 'contain',
-    width: width * 0.94,
-    height: width * 0.94,
+    width: width * 0.91,
+    height: width * 0.91,
   },
   tile: {
     flex: 1,

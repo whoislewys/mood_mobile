@@ -8,14 +8,16 @@ import { fonts, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumInfoText: {
-    marginTop: '10.8%',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
   },
   albumInfoMain: {
     color: '#FFFFFF',
-    maxWidth: dimensions.width * 0.5,
+    height: 20,
+    paddingBottom: 4,
+    maxWidth: dimensions.width * 0.6,
     fontFamily: fonts.primaryBold,
     fontSize: fonts.subHeader,
   },
@@ -24,7 +26,6 @@ const styles = StyleSheet.create({
   },
   albumInfoSubText: {
     color: 'rgba(255, 255, 255, 0.87)',
-    marginTop: '3.6%',
     fontFamily: fonts.primary,
     fontSize: fonts.body,
     maxWidth: dimensions.width * 0.45,

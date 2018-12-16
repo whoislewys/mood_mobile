@@ -10,20 +10,24 @@ import { dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   trackInfoContainer: {
-    flex: 10,
+    flex: 1,
+    height: '100%',
+    width: '100%',
     alignItems: 'center',
   },
   albumContainer: {
-    backgroundColor: 'red',
+    height: 0.902 * dimensions.width,
+    width: 0.902 * dimensions.width,
+    resizeMode: 'stretch',
   },
   timeBar: {
     width: '100%',
     alignSelf: 'stretch',
-    marginTop: '4.2%',
     backgroundColor: 'transparent',
   },
-  albumInfo: {
-    marginBottom: 27,
+  infoText: {
+    flex: 1,
+    paddingTop: '10%',
   },
 });
 
@@ -40,7 +44,7 @@ export default class TrackInfo extends Component {
         <View style={styles.timeBar}>
           <TimeBar setTime={this.props.setTime}/>
         </View>
-        <View style={[styles.albumInfo]}>
+        <View style={styles.infoText}>
           <InfoText track={this.props.track} />
         </View>
       </View>

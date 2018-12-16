@@ -16,7 +16,7 @@ import { fonts, colors, dimensions } from '../../../assets/styles';
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'column',
-    marginTop: 70,
+    marginTop: dimensions.height * 0.06,
     marginLeft: dimensions.width * 0.077,
     marginRight: dimensions.width * 0.077,
     marginBottom: 41.5,

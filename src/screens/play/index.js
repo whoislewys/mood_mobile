@@ -23,20 +23,26 @@ const styles = StyleSheet.create({
     marginRight: '5.9%',
   },
   dropdownBar: {
-    height: '14.52%',
+    height: '11.52%',
     flexDirection: 'row',
+    alignItems: 'flex-end',
   },
   backButton: {
     zIndex: 2,
-    marginTop: '22.0%',
     paddingLeft: '1.8%',
     resizeMode: 'contain',
     height: 30,
     width: 30,
     opacity: 0.5,
   },
+  trackInfoContainer: {
+    width: '100%',
+    height: '66%',
+    marginTop: '4%',
+    alignItems: 'center',
+  },
   playControlsContainer: {
-    marginBottom: '24.5%',
+    marginTop: '8%',
   },
 });
 
@@ -51,8 +57,8 @@ class PlayScreen extends Component {
     // const { goBack } = this.props.navigation;
 
     return (this.props.queue.length
-      // return playscreen if queue has 1 or more songs
-      // remember adjacent things should be wrapped in upper level view tag
+      // TODO: refactor to get rid of trackInfo
+      // and add each of it's child components separately
       ? (
         <Background
           image={{ uri: this.props.currentTrack.artwork }}
@@ -70,12 +76,14 @@ class PlayScreen extends Component {
                 <Image source={Images.arrowDown} />
               </TouchableOpacity>
             </View>
-            <TrackInfo
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
-              track={this.props.currentTrack}
-              setTime={this.props.setTime}
-            />
+            <View style={styles.trackInfoContainer}>
+              <TrackInfo
+                skipForward={this.props.nextTrack}
+                skipBack={this.props.previousTrack}
+                track={this.props.currentTrack}
+                setTime={this.props.setTime}
+              />
+            </View>
             <View style={styles.playControlsContainer}>
               <PlayControls
                 shuffled={this.props.shuffled}

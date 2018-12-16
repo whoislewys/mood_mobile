@@ -10,6 +10,9 @@ const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   albumContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
     elevation: 4,
     shadowColor: 'black',
     shadowRadius: 4,
@@ -20,8 +23,9 @@ const styles = StyleSheet.create({
     },
   },
   albumArt: {
-    width: width - (0.1 * width),
-    height: width - (0.1 * width),
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
     borderRadius: 4,
   },
 });
