@@ -65,7 +65,12 @@ class MoodScreen extends Component {
   navigateToSettingsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Settings',
-      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar, visible: true },
+      params: {
+        ...params,
+        playscreen: this.navigateToPlayScreenFromPlaybar,
+        moodscreen: this.navigateToMoodScreen,
+        visible: true,
+      },
     });
   };
 

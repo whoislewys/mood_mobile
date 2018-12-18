@@ -135,12 +135,12 @@ class SettingsScreen extends Component {
 
   footerElem = () => (
     <Text style={styles.textRow}>
-      © 2017 Mood Industries LLC, all rights reserved.
+      © 2019 Mood Industries LLC, all rights reserved.
     </Text>
   )
 
   render = () => {
-    const { goBack } = this.props.navigation; // preferred method from react-navigation docs https://reactnavigation.org/docs/en/navigation-prop.html
+    // const { goBack } = this.props.navigation; // preferred method from react-navigation docs https://reactnavigation.org/docs/en/navigation-prop.html
 
     StatusBar.setBarStyle('dark-content', true);
 
@@ -148,7 +148,7 @@ class SettingsScreen extends Component {
       <View style={styles.container}>
         <View style={styles.shadow}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => goBack()} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
+            <TouchableOpacity onPress={this.props.moodscreen} style={{ alignSelf: 'center', width: 25, marginRight: 10 }}>
               <Image source={Images.arrowLeft} style={styles.arrow} />
             </TouchableOpacity>
             <Text style={styles.headerText}>Settings</Text>
