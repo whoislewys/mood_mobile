@@ -139,30 +139,38 @@ class SettingsScreen extends Component {
     super(props);
     this.state = {
       isActive: true,
+      filterExplicit: true,
     };
   }
 
   _keyExtractor = item => item.text;
+
+  onToggle = () => {
+    console.log('toggled!');
+    this.setState(prevState => ({
+      isActive: !prevState.isActive,
+    }));
+  }
 
   onPressLinkButton = (url) => {
     Linking.openURL(url);
   }
 
   renderListItem = elem => (
-    <TouchableOpacity style={styles.button} onPress={() => elem.item.handlePress(elem.item.url)}>
+    <TouchableOpacity activeOpacity={0.6} style={styles.button} onPress={() => elem.item.handlePress(elem.item.url)}>
       <Text style={styles.buttonText}>{elem.item.text}</Text>
       { elem.item.switchExists === true
         ? (
           <View style={styles.switchStyle}>
             <FlipToggle
             value={this.state.isActive}
-            buttonWidth={100}
-            buttonHeight={35}
+            buttonWidth={80}
+            buttonHeight={30}
             buttonRadius={50}
-            buttonOnColor={'rgba(0,0,0,0.8)'}
+            buttonOnColor={'rgba(0,0,0,0.6)'}
             buttonOffColor={'rgba(0,0,0,0.1)'}
-            sliderWidth={32}
-            sliderHeight={32}
+            sliderWidth={26}
+            sliderHeight={26}
             sliderRadius={50}
             sliderOnColor={'white'}
             sliderOffColor={'white'}
@@ -172,7 +180,6 @@ class SettingsScreen extends Component {
             onToggle={newState => this.setState(prevState => ({
               isActive: !prevState.isActive,
             }))}
-            onToggleLongPress={() => console.log('toggle long pressed!')}
             />
           </View>
         )
@@ -220,6 +227,7 @@ class SettingsScreen extends Component {
                 url: 'http://moodindustries.com/privacy.pdf',
                 text: 'Explicit',
                 switchExists: true,
+                handlePress: this.onToggle,
               },
               ]}
               renderItem={this.renderListItem}
