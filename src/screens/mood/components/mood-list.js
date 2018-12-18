@@ -4,7 +4,6 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Switch,
   FlatList,
   StyleSheet,
   Linking,
@@ -15,7 +14,8 @@ import { fonts, colors, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: dimensions.height * 0.06,
     marginLeft: dimensions.width * 0.077,
     marginRight: dimensions.width * 0.077,
@@ -23,29 +23,23 @@ const styles = StyleSheet.create({
     height: 96,
   },
   headerText: {
-    alignSelf: 'flex-start',
     color: colors.header,
     fontFamily: fonts.primary,
     fontSize: fonts.header,
   },
   buttonRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    marginTop: '7%',
+    justifyContent: 'space-between',
+    marginLeft: '33%',
   },
   bugsButton: {
     height: 25,
     width: 25,
   },
-  explicitSwitch: {
-    transform: [{ scaleY: 0.89 }, { scaleX: 1.05 }],
-    marginLeft: dimensions.width * 0.05,
-    marginRight: dimensions.width * 0.05,
-  },
   settingsButton: {
     height: 25,
     width: 25,
+    marginLeft: '10%',
   },
 });
 
@@ -80,13 +74,6 @@ export default class MoodList extends React.Component {
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>
           </TouchableOpacity>
-          <Switch
-          trackColor={'red'}
-          thumbColor={'red'}
-          ios_backgroundColor={'tomato'}
-          style={styles.explicitSwitch}
-          value={true}
-          />
           <TouchableOpacity onPress={this.settings}>
             <Image source={Images.settingsGear} style={styles.settingsButton}/>
           </TouchableOpacity>

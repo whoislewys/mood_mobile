@@ -8,10 +8,12 @@ import {
   Linking,
   Image,
   FlatList,
+  Switch,
 } from 'react-native';
+import FlipToggle from 'react-native-flip-toggle-button';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
-import { dimensions, fonts } from '../../assets/styles';
+import { dimensions, fonts, colors } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,12 +54,10 @@ const styles = StyleSheet.create({
     height: 40,
   },
   section: {
+    flex: 1,
     borderColor: '#bbb',
     // padding: 20,
-    margin: 0,
-    padding: 0,
     flexDirection: 'column',
-    flex: 1,
   },
   headText: {
     fontWeight: '600',
@@ -106,35 +106,83 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    alignItems: 'flex-start',
+    height: 65,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: 'black',
-    padding: 10,
-    fontSize: 20,
-    height: 65,
+    fontSize: fonts.subHeader,
   },
   buttonText: {
     fontWeight: '400',
     fontSize: fonts.subHeader,
     color: '#555',
     fontFamily: fonts.primary,
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 15,
+    marginLeft: '3%',
     textAlign: 'center',
+  },
+  switchStyle: {
+    marginRight: '5%',
+  },
+  copyrightText: {
+    fontSize: fonts.body,
+  },
+  toggleLabel: {
+    fontSize: 15,
+    color: 'white',
   },
 });
 
 class SettingsScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isActive: true,
+    };
+  }
+
   _keyExtractor = item => item.text;
 
-  renderListItem = elem => (<TouchableOpacity style={styles.button} onPress={() => Linking.openURL(elem.item.url)}>
+  onPressLinkButton = (url) => {
+    Linking.openURL(url);
+  }
+
+  renderListItem = elem => (
+    <TouchableOpacity style={styles.button} onPress={() => elem.item.handlePress(elem.item.url)}>
       <Text style={styles.buttonText}>{elem.item.text}</Text>
-    </TouchableOpacity>)
+      { elem.item.switchExists === true
+        ? (
+          <View style={styles.switchStyle}>
+            <FlipToggle
+            value={this.state.isActive}
+            buttonWidth={100}
+            buttonHeight={35}
+            buttonRadius={50}
+            buttonOnColor={'rgba(0,0,0,0.8)'}
+            buttonOffColor={'rgba(0,0,0,0.1)'}
+            sliderWidth={32}
+            sliderHeight={32}
+            sliderRadius={50}
+            sliderOnColor={'white'}
+            sliderOffColor={'white'}
+            onLabel={'😈'}
+            offLabel={'👼'}
+            labelStyle={styles.toggleLabel}
+            onToggle={newState => this.setState(prevState => ({
+              isActive: !prevState.isActive,
+            }))}
+            onToggleLongPress={() => console.log('toggle long pressed!')}
+            />
+          </View>
+        )
+        : <View />
+      }
+    </TouchableOpacity>
+  )
 
   footerElem = () => (
-    <Text style={styles.textRow}>
+    <Text style={[styles.textRow, styles.copyrightText]}>
       © 2019 Mood Industries LLC, all rights reserved.
     </Text>
   )
@@ -161,10 +209,19 @@ class SettingsScreen extends Component {
               data={[{
                 url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
                 text: 'Rate & Review',
+                handlePress: this.onPressLinkButton,
+                switchExists: false,
               }, {
                 url: 'http://moodindustries.com/privacy.pdf',
                 text: 'Terms of Use',
-              }]}
+                handlePress: this.onPressLinkButton,
+                switchExists: false,
+              }, {
+                url: 'http://moodindustries.com/privacy.pdf',
+                text: 'Explicit',
+                switchExists: true,
+              },
+              ]}
               renderItem={this.renderListItem}
               keyExtractor={this._keyExtractor}
               ListFooterComponent={this.footerElem}>
