@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Share,
 } from 'react-native';
 import ToggleButton from '../../../components/toggle-button';
 import ClapButton from '../../../components/medium-star';
@@ -42,7 +43,9 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     tintColor: 'white',
-    opacity: 1.0,
+    opacity: 0.6,
+    alignItems: 'center',
+    justifyContent: 'center',
     resizeMode: 'contain',
   },
 });
@@ -80,7 +83,16 @@ export default class PlayControls extends Component {
         <TouchableOpacity onPress={this.props.skipForward}>
           <Image source={Images.skip} style={styles.skipRightIcon} />
         </TouchableOpacity>
-        <ToggleButton iconUnselected={Images.shareOutline} style={styles.share}/>
+        {/*<ToggleButton iconUnselected={Images.shareOutline} style={styles.share}/>*/}
+        <TouchableOpacity
+        style={styles.share}
+        activeOpacity={0.6}
+        onPress={() => Share.share({
+          message: `Check out this bop on Mood! ${'www.moodindustries.com'}`,
+          url: 'www.moodindustries.com',
+        })}>
+          <Image source={Images.shareOutline}/>
+        </TouchableOpacity>
       </View>
   )
 }

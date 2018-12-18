@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ActivityIndicator,
+  Share,
 } from 'react-native';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
