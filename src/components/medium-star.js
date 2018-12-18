@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
     width: 25,
   },
   shootingStar: {
+    height: 30,
+    width: 30,
+  },
+  shootingStarShadow: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     top: 23,
     width: 30,
     height: 30,
@@ -89,7 +96,9 @@ class ClapBubble extends Component {
     return (
       (this.props.count <= this.props.maxCount) ? (
       <Animated.View style={[clapBubbleStyle, animationStyle]}>
-        <Image source={Images.star} style={styles.shootingStar}/>
+        <View style={styles.shootingStarShadow}>
+          <Image source={Images.star} style={styles.shootingStar}/>
+        </View>
         <Text style={styles.clapText}>{this.props.count}</Text>
       </Animated.View>
       ) : (
