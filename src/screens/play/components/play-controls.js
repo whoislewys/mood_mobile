@@ -51,6 +51,25 @@ const styles = StyleSheet.create({
 });
 
 export default class PlayControls extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shareIcon: Images.shareOutline,
+    };
+  }
+
+  handleShare = () => {
+    this.setState({ shareIcon: Images.share });
+    Share.share({
+      message: `Check out this bop on Mood! ${'www.moodindustries.com'}`,
+      url: 'www.moodindustries.com',
+    }).then((shareResult) => {
+      // shareResult can be dismissedAction() or sharedAction() on ios
+      // shareResult can ONLY be sharedAction() on android
+      this.setState({ shareIcon: Images.shareOutline });
+    });
+  }
+
   playButton = () => {
     let ret = (
       <TouchableOpacity onPress={this.props.handlePlayPress}>
@@ -87,11 +106,8 @@ export default class PlayControls extends Component {
         <TouchableOpacity
         style={styles.share}
         activeOpacity={0.6}
-        onPress={() => Share.share({
-          message: `Check out this bop on Mood! ${'www.moodindustries.com'}`,
-          url: 'www.moodindustries.com',
-        })}>
-          <Image source={Images.shareOutline}/>
+        onPress={this.handleShare}>
+          <Image source={this.state.shareIcon}/>
         </TouchableOpacity>
       </View>
   )
