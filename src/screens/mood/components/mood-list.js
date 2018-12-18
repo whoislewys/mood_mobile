@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    marginTop: 38,
+    marginTop: '7%',
   },
   bugsButton: {
     height: 25,
@@ -96,7 +96,6 @@ export default class MoodList extends React.Component {
 
   // renderItem should be a function that returns a component
   render = () => {
-    console.log(dimensions.width);
     return (
       <FlatList
         data={this.props.moods}

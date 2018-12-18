@@ -32,11 +32,16 @@ const renderMoodLogo = (showLogo) => {
   );
 };
 
-const Header = ({ headerText, showLogo }) => (
+const renderSubText = (subText) => {
+  return (subText ? <Text style={styles.headerSubText}>{subText}</Text>
+    : <View/>);
+};
+
+const Header = ({ showLogo, headerText, subText }) => (
     <View style={styles.headerStyle}>
       {renderMoodLogo(showLogo)}
       <Text style={styles.headerText}>{headerText}</Text>
-      <Text style={styles.headerSubText}>Songs</Text>
+      {renderSubText(subText)}
     </View>
 );
 

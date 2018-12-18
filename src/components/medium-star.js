@@ -8,9 +8,11 @@ import {
   Animated,
 } from 'react-native';
 import Images from '@assets/images';
+import { fonts } from '../assets/styles';
+
 
 function getRndInteger(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const styles = StyleSheet.create({
@@ -21,11 +23,23 @@ const styles = StyleSheet.create({
   },
   clapText: {
     color: 'white',
-    fontSize: 12,
+    fontFamily: fonts.primary,
+    fontSize: fonts.body,
   },
   star: {
     height: 25,
     width: 25,
+  },
+  shootingStar: {
+    top: 23,
+    width: 30,
+    height: 30,
+    elevation: 1,
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      height: 2,
+    },
   },
 });
 
@@ -43,12 +57,12 @@ class ClapBubble extends Component {
   componentDidMount() {
     Animated.parallel([
       Animated.timing(this.state.yPosition, {
-        toValue: -120,
+        toValue: -100,
         duration: 500,
       }),
       Animated.timing(this.state.fadeAnim, {
         toValue: 1,
-        duration: 450,
+        duration: 420,
       }),
       Animated.timing(this.state.xPosition, {
         toValue: getRndInteger(-23, 23),
@@ -64,19 +78,18 @@ class ClapBubble extends Component {
   render = () => {
     let clapBubbleStyle = {
       position: 'absolute',
-      backgroundColor: 'transparent',
       opacity: this.state.fadeAnim,
-      justifyContent: 'center',
-      alignItems: 'center',
     };
     let animationStyle = {
       transform: [{ translateY: this.state.yPosition }, { translateX: this.state.xPosition }],
+      justifyContent: 'center',
+      alignItems: 'center',
     };
 
     return (
       (this.props.count <= this.props.maxCount) ? (
       <Animated.View style={[clapBubbleStyle, animationStyle]}>
-        <Image source={Images.star} style={{ top: 18.7 }}/>
+        <Image source={Images.star} style={styles.shootingStar}/>
         <Text style={styles.clapText}>{this.props.count}</Text>
       </Animated.View>
       ) : (
@@ -119,7 +132,8 @@ export default class ClapButton extends Component {
   }
 
   keepClapping = () => {
-    this.clapTimer = setInterval(() => this.clap(), 150);
+    const clapInterval = 200; // 200 -> 25 stars takes 5 seconds
+    this.clapTimer = setInterval(() => this.clap(), clapInterval); // timer takes ms argument
   }
 
   stopClapping = () => {
@@ -130,7 +144,6 @@ export default class ClapButton extends Component {
 
   renderClaps = () => {
     const maxCount = 25;
-    // TODO: make stars keep shooting up if maxCount is reached.
     return this.state.claps.map(countNum => <ClapBubble
       key={countNum}
       count={countNum}

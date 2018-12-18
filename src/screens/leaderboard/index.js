@@ -38,7 +38,7 @@ class LeaderboardScreen extends Component {
             data={this.props.leaderboardSongs}
             renderItem={this._renderItem}
             keyExtractor={this.keyExtractor}
-            ListHeaderComponent={Header}
+            ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
             >
           </FlatList>
         )

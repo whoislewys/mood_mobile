@@ -13,6 +13,7 @@ import {
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
+import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
 
 const { width, height } = dimensions;
@@ -161,6 +162,9 @@ const TabBar = class TabBar extends Component {
               } else {
                 navigation.navigate(route.routeName);
               }
+            } else if (navRouteName === 'Events') {
+              this.props.loadEvents();
+              navigation.navigate(route.routeName);
             } else {
               navigation.navigate(route.routeName);
             }
@@ -206,6 +210,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadLeaderboardSongs,
+  loadEvents,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabBar);

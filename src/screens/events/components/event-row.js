@@ -25,11 +25,21 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.2,
   },
-  rank: {
-    fontFamily: 'Quicksand',
+  dateContainer: {
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+  },
+  month: {
+    fontFamily: fonts.primary,
+    fontSize: fonts.body,
+    color: colors.body,
+  },
+  day: {
+    fontFamily: fonts.primary,
     width: 66.24,
     textAlign: 'center',
-    fontSize: 34,
+    fontSize: fonts.header,
   },
   albumArt: {
     width: 60,
@@ -37,62 +47,60 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   detailsContainer: {
-    width: 120,
+    width: '70%',
     marginLeft: 11,
     backgroundColor: '#FFFFFF',
     marginTop: -3,
   },
-  songName: {
+  name: {
     fontFamily: fonts.primary,
     fontSize: fonts.subHeader,
-    color: colors.subHeader,
+    color: colors.header,
   },
-  artistName: {
+  location: {
     fontFamily: fonts.primaryLight,
     fontSize: fonts.body,
-    color: colors.body,
-  },
-  starsContainer: {
-    flexDirection: 'row',
-    marginLeft: 25,
-  },
-  starCount: {
-    fontFamily: fonts.primaryLight,
-    fontSize: fonts.subHeader,
     color: colors.subHeader,
-    marginLeft: 6,
   },
 });
 
-const LeaderboardRow = ({ leaderboardSong }) => {
+const EventRow = ({ event }) => {
   const {
-    artist,
-    name,
-    stars,
-    rank,
-    art_url,
-  } = leaderboardSong;
+    summary,
+    month,
+    day,
+    timeAndPlace,
+  } = event;
 
   return (
     <View style={styles.rowBackground}>
-      <Text style={styles.rank}>{rank}</Text>
-      <Image style={styles.albumArt} source={{ uri: art_url }}/>
+      <View style={styles.dateContainer}>
+        <Text style={styles.month}>{month}</Text>
+        <Text style={styles.day}>{day}</Text>
+      </View>
+      {/* <Image style={styles.albumArt} source={{ uri: art_url }}/> */}
       <View style={styles.detailsContainer}>
         <Text
-        style={styles.songName}
+        style={styles.name}
         numberOfLines={1}
         ellipsizeMode="tail"
         >
-          {name}
+          {summary}
         </Text>
-        <Text style={styles.artistName}>{artist}</Text>
+        <Text
+        style={styles.location}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+        >
+          {timeAndPlace}
+        </Text>
       </View>
-      <View style={styles.starsContainer}>
-        <Image source={Images.leaderboardStar}/>
-        <Text style={styles.starCount}>{stars}</Text>
-      </View>
+    {/*   <View style={styles.starsContainer}>
+    //     <Image source={Images.leaderboardStar}/>
+    //     <Text style={styles.starCount}>{stars}</Text>
+    //   </View> */}
     </View>
   );
 };
 
-export default LeaderboardRow;
+export default EventRow;
