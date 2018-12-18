@@ -7,7 +7,6 @@ import {
   StatusBar,
   Linking,
   Image,
-  Dimensions,
   FlatList,
 } from 'react-native';
 import Images from '@assets/images';
@@ -117,9 +116,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: '400',
-    fontSize: 18,
+    fontSize: fonts.subHeader,
     color: '#555',
-    fontFamily: 'Roboto',
+    fontFamily: fonts.primary,
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 15,
