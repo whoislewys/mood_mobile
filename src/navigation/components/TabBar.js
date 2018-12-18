@@ -158,7 +158,7 @@ const TabBar = class TabBar extends Component {
               navigation.navigate(route.routeName);
             } else if (navRouteName === 'Play') {
               if (!this.props.queue.length) {
-                Alert.alert('Pick a song first!');
+                Alert.alert('Let\'s pick a mood first! 🎧');
               } else {
                 navigation.navigate(route.routeName);
               }
