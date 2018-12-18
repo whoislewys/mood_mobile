@@ -68,12 +68,13 @@ const EventRow = ({ event }) => {
   const {
     summary,
     month,
+    borderColor,
     day,
     timeAndPlace,
   } = event;
 
   return (
-    <View style={styles.rowBackground}>
+    <View style={[styles.rowBackground, { borderWidth: 0.5, borderColor }]}>
       <View style={styles.dateContainer}>
         <Text style={styles.month}>{month}</Text>
         <Text style={styles.day}>{day}</Text>

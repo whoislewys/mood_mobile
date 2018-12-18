@@ -1,4 +1,5 @@
 // type variable
+import moment from 'moment';
 import { colors } from '../../assets/styles';
 
 const LOAD_EVENTS = 'events/LOAD';
@@ -80,6 +81,7 @@ export default function events(state = initialState, action = {}) {
 }
 
 export function loadEvents() {
+  const dateTimeStart = moment().toISOString();
   return {
     type: LOAD_EVENTS,
     payload: {
@@ -87,6 +89,9 @@ export function loadEvents() {
         url: `https://www.googleapis.com/calendar/v3/calendars/${EVENT_CAL_ID}/events`,
         params: {
           key: GOOGLE_API_KEY,
+          timeMin: dateTimeStart,
+          singleEvents: 'true',
+          orderBy: 'startTime',
         },
       },
     },
