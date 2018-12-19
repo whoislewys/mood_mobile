@@ -33,24 +33,6 @@ const styles = StyleSheet.create({
     marginRight: 35,
     height: 40,
   },
-  section: {
-    flex: 1,
-    borderColor: '#bbb',
-    // padding: 20,
-    flexDirection: 'column',
-  },
-  headText: {
-    fontWeight: '600',
-    fontSize: 14,
-    color: '#333',
-    fontFamily: fonts.primary,
-    marginBottom: 8,
-  },
-  bodyText: {
-    fontFamily: fonts.primary,
-    fontSize: fonts.subHeader,
-    color: '#555',
-  },
   textRow: {
     fontFamily: fonts.primary,
     fontSize: fonts.subHeader,
@@ -68,6 +50,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 1,
     backgroundColor: '#FFFFFF',
+    shadowOffset: {
+      width: 0,
+      height: 1.2,
+    },
+    shadowRadius: 2,
+    shadowOpacity: 0.2,
   },
   switchStyle: {
     marginRight: '7%',
