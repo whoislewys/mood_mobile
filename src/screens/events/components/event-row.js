@@ -1,12 +1,14 @@
 import React from 'react';
 import {
   View,
+  TouchableOpacity,
   Text,
-  Image,
   StyleSheet,
+  Linking,
 } from 'react-native';
-import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
+
+const CAL_SHARE_LINK = 'https://calendar.google.com/calendar?cid=Z2hkNHYwamZic3I1aGpvZTNpc2ZqdHQ2MnNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -73,10 +75,15 @@ const EventRow = ({ event }) => {
     borderColor,
     day,
     timeAndPlace,
+    id,
   } = event;
 
   return (
-    <View style={[styles.rowBackground, { borderWidth: 0.5, borderColor }]}>
+    <TouchableOpacity
+    activeOpacity={0.5}
+    style={[styles.rowBackground, { borderColor }]}
+    onPress={() => Linking.openURL(CAL_SHARE_LINK)}
+    >
       <View style={styles.dateContainer}>
         <Text style={styles.month}>{month}</Text>
         <Text style={styles.day}>{day}</Text>
@@ -102,7 +109,7 @@ const EventRow = ({ event }) => {
     //     <Image source={Images.leaderboardStar}/>
     //     <Text style={styles.starCount}>{stars}</Text>
     //   </View> */}
-    </View>
+    </TouchableOpacity>
   );
 };
 
