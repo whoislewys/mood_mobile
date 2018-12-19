@@ -5,9 +5,9 @@ import { fonts, colors } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   headerStyle: {
-    marginTop: 41,
+    paddingBottom: '10%',
+    paddingTop: '15%',
     backgroundColor: '#FFFFFF',
-    marginBottom: 10,
   },
   headerText: {
     marginTop: 18,

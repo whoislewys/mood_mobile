@@ -21,13 +21,6 @@ const styles = {
 
 
 class EventsScreen extends Component {
-  componentDidMount = () => {
-    // const { events } = this.props.events;
-    // for (let i = 0; i < events; i++) {
-    //   console.log(events[i]);
-    // }
-  }
-
   keyExtractor = event => event.id;
 
   _renderItem = ({ item }) => <EventRow

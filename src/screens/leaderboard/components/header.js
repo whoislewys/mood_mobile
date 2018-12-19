@@ -5,12 +5,12 @@ import { fonts, colors } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   headerStyle: {
-    marginTop: 41,
+    marginTop: '10%',
+    paddingBottom: '8%',
     backgroundColor: '#FFFFFF',
-    marginBottom: 10,
   },
   headerText: {
-    marginTop: 18,
+    marginTop: '2%',
     fontFamily: fonts.primary,
     fontSize: fonts.header,
     color: colors.header,

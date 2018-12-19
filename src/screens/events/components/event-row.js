@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
     height: 85,
     marginBottom: 15,
     borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: 'white', // !!! borderColor passed as prop later !!!
     elevation: 1,
     backgroundColor: '#FFFFFF',
     shadowOffset: {

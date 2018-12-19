@@ -14,13 +14,14 @@ import { fonts, colors, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   header: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: dimensions.height * 0.06,
+    textAlign: 'center',
+    paddingBottom: '15%',
+    paddingTop: '10%',
     marginLeft: dimensions.width * 0.077,
     marginRight: dimensions.width * 0.077,
-    marginBottom: 41.5,
-    height: 96,
   },
   headerText: {
     color: colors.header,
