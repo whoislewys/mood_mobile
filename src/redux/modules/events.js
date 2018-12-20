@@ -42,7 +42,7 @@ const monthNumToStr = (monthNum) => {
   return { month: '???', evenOrOddMonth: '???' };
 };
 
-function returnEventObj(event) {
+function processEventObj(event) {
   const { month, evenOrOddMonth } = monthNumToStr(event.start.dateTime.split('-')[1]);
   const day = event.start.dateTime.split('-')[2].split('T')[0];
   const militaryHours = event.start.dateTime.split('T')[1].slice(0, 2);
@@ -50,12 +50,14 @@ function returnEventObj(event) {
   const timeStr = getTime(militaryHours, minutes);
   const location = event.location;
   const timeAndPlace = `${timeStr}, ${location}`;
+
   let borderColor;
   if (evenOrOddMonth === 'even') {
     borderColor = colors.orange;
   } else {
     borderColor = colors.pink;
   }
+
   return {
     id: event.id,
     borderColor,
@@ -63,6 +65,7 @@ function returnEventObj(event) {
     month,
     day,
     timeAndPlace,
+    htmlLink: event.htmlLink,
   };
 }
 
@@ -73,7 +76,7 @@ export default function events(state = initialState, action = {}) {
       // return { ...state, events: action.payload.items };
     case LOAD_EVENTS_SUCCESS:
       const rawEvents = action.payload.data.items;
-      const formattedEvents = rawEvents.map(returnEventObj);
+      const formattedEvents = rawEvents.map(processEventObj);
       return { ...state, events: formattedEvents };
     default:
       return { ...state };

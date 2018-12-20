@@ -75,14 +75,14 @@ const EventRow = ({ event }) => {
     borderColor,
     day,
     timeAndPlace,
-    id,
+    htmlLink,
   } = event;
 
   return (
     <TouchableOpacity
     activeOpacity={0.5}
     style={[styles.rowBackground, { borderColor }]}
-    onPress={() => Linking.openURL(CAL_SHARE_LINK)}
+    onPress={() => Linking.openURL(htmlLink)}
     >
       <View style={styles.dateContainer}>
         <Text style={styles.month}>{month}</Text>
