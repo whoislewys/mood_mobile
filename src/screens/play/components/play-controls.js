@@ -11,6 +11,8 @@ import ToggleButton from '../../../components/toggle-button';
 import ClapButton from '../../../components/medium-star';
 import Images from '@assets/images';
 
+const SHARE_URL = 'moodmusic.app.link';
+
 const styles = StyleSheet.create({
   playControls: {
     height: 71,
@@ -61,7 +63,7 @@ export default class PlayControls extends Component {
   handleShare = () => {
     this.setState({ shareIcon: Images.share });
     Share.share({
-      message: `Check out this bop on Mood! ${'www.moodindustries.com'}`,
+      message: `Check out this bop on Mood! ${SHARE_URL}`,
       url: 'www.moodindustries.com',
     }).then((shareResult) => {
       // shareResult can be dismissedAction() or sharedAction() on ios
