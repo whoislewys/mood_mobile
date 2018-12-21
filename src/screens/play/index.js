@@ -73,7 +73,7 @@ class PlayScreen extends Component {
           />
           <View style={styles.playContainer}>
             <View style={styles.dropdownBar}>
-              <TouchableOpacity onPress={this.props.moodscreen} style={styles.backButton}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
                 <Image source={Images.arrowDown} />
               </TouchableOpacity>
             </View>

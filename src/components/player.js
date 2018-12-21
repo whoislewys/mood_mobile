@@ -46,6 +46,14 @@ class Player extends Component {
     }
   }
 
+  handleShare = async (sharedTrack) => {
+    console.log('sharing track!');
+    await TrackPlayer.reset();
+    await TrackPlayer.add(sharedTrack);
+    await TrackPlayer.play();
+    await TrackPlayer.pause();
+  }
+
   stopPlayback = async () => {
     if (!(this.props.track == null || this.props.playbackState === TrackPlayer.STATE_PAUSED)) {
       await TrackPlayer.pause();
@@ -100,6 +108,7 @@ class Player extends Component {
           mood: this.props.selected,
           moodList: this.props.moods,
           handlePlayPress: this.handlePlayPress,
+          handleShare: this.handleShare,
           setTime: TrackPlayer.seekTo,
           toggleShuffle: this.toggleShuffle,
           toggleRepeat: this.toggleRepeat,
