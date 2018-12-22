@@ -9,15 +9,15 @@ import reducer from './modules';
 const URL = 'http://api.moodindustries.com/api/v1/';
 
 const axiosConfig = {
-  interceptors: {
-    request: [
-      ({ getState, dispatch, getSourceAction }, req) => {
-        console.log('Interception!!');
-        console.log(req); // contains information about request object
-        return req;
-      },
-    ],
-  },
+  // interceptors: {
+  //   request: [
+  //     ({ getState, dispatch, getSourceAction }, req) => {
+  //       console.log('Interception!!');
+  //       console.log(req); // contains information about request object
+  //       return req;
+  //     },
+  //   ],
+  // },
 };
 
 // TODO: migrate to bearer token

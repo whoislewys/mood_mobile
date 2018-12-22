@@ -3,33 +3,32 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
-
-const width = Dimensions.get('window').width;
+import { fonts, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumInfoText: {
-    flex: 20,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
   },
   albumInfoMain: {
-    color: 'white',
-    maxWidth: width * 0.5,
-    fontSize: 18,
-    fontFamily: 'Roboto',
-    fontWeight: '400',
+    color: '#FFFFFF',
+    height: 20,
+    paddingBottom: 4,
+    maxWidth: dimensions.width * 0.6,
+    fontFamily: fonts.primaryBold,
+    fontSize: fonts.subHeader,
   },
   albumInfoSubRow: {
     flexDirection: 'row',
   },
   albumInfoSubText: {
-    color: '#ddd',
-    fontSize: 14,
-    fontFamily: 'Roboto',
-    fontWeight: '300',
+    color: 'rgba(255, 255, 255, 0.87)',
+    fontFamily: fonts.primary,
+    fontSize: fonts.body,
+    maxWidth: dimensions.width * 0.45,
   },
 });
 
@@ -48,23 +47,17 @@ export default class InfoText extends Component {
         </Text>
         <View style={styles.albumInfoSubRow}>
           <Text
-            style={[styles.albumInfoSubText, {
-              maxWidth: width * 0.45,
-            }]}
+            style={styles.albumInfoSubText}
             numberOfLines={1}
             ellipsizeMode="tail"
             >
             { track.artist }
           </Text>
-          <Text style={[styles.albumInfoSubText, {
-            marginHorizontal: 2,
-          }]}>
+          <Text style={styles.albumInfoSubText}>
           { track.album ? '-' : '' }
           </Text>
           <Text
-            style={[styles.albumInfoSubText, {
-              maxWidth: width * 0.45,
-            }]}
+            style={styles.albumInfoSubText}
             numberOfLines={1}
             ellipsizeMode="tail"
             >

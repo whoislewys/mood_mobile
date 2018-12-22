@@ -71,7 +71,7 @@ export default class Playbar extends Component {
   }
 
   arrowUp = () => (
-      <Image source={Images.arrowUpWhite} style={styles.arrow}/>
+      <Image source={Images.arrowDown} style={styles.arrow}/>
   );
 
   render = () => (

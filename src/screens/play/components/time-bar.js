@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions,
   Image,
   Text,
 } from 'react-native';
 import moment from 'moment';
 import TrackPlayer from 'react-native-track-player';
-
+import { dimensions, fonts } from '../../../assets/styles';
 import Images from '@assets/images';
 
-const width = Dimensions.get('window').width * 0.8;
+const width = dimensions.width * 0.8;
 
 const styles = StyleSheet.create({
   timeBar: {
@@ -20,23 +19,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 15,
     flexDirection: 'row',
-    position: 'relative',
   },
   tick: {
     position: 'absolute',
   },
   tickContainer: {
     position: 'absolute',
-    top: -9,
+    top: -10,
     width: 40,
     height: 40,
   },
   time: {
-    backgroundColor: 'transparent',
+    fontSize: fonts.body,
+    fontFamily: fonts.primary,
     color: 'white',
-    fontSize: 14,
-    fontFamily: 'Roboto',
-    fontWeight: '400',
+    backgroundColor: 'transparent',
     position: 'absolute',
   },
 });
@@ -101,16 +98,16 @@ export default class TimeBar extends Component {
 
   getTickStyle = () => {
     let style = {
-      width: 9,
-      height: 9,
+      width: 12,
+      height: 12,
       top: 15,
       left: 15,
     };
 
     if (this.state.dragging) {
       style = {
-        width: 17,
-        height: 17,
+        width: 20,
+        height: 20,
         top: 11,
         left: 11,
       };

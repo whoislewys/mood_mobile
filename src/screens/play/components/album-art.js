@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  View,
   Image,
   StyleSheet,
   Dimensions,
@@ -8,11 +9,24 @@ import {
 const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  albumContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    elevation: 4,
+    shadowColor: 'black',
+    shadowRadius: 4,
+    shadowOpacity: 0.16,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+  },
   albumArt: {
-    flex: 75,
-    width: width - (0.1 * width),
-    height: width - (0.1 * width),
-    resizeMode: 'contain',
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
+    borderRadius: 4,
   },
 });
 
@@ -66,12 +80,16 @@ export default class AlbumArt extends Component {
     return { transform };
   }
 
-  render = () => <Image
-      onResponderMove={this.setPosition}
-      onResponderRelease={this.handleRelease}
-      onStartShouldSetResponder={this.onStartShouldSetResponder}
-      onMoveShouldSetResponder={this.onMoveShouldSetResponder}
-      source={{ uri: this.props.url }}
-      style={[styles.albumArt, this.getCardStyle()]}
-    />
+  render = () => (
+    <View style={styles.albumContainer}>
+      <Image
+        onResponderMove={this.setPosition}
+        onResponderRelease={this.handleRelease}
+        onStartShouldSetResponder={this.onStartShouldSetResponder}
+        onMoveShouldSetResponder={this.onMoveShouldSetResponder}
+        source={{ uri: this.props.url }}
+        style={[styles.albumArt, this.getCardStyle()]}
+      />
+    </View>
+  )
 }
