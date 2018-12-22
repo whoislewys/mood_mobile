@@ -5,12 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  Share,
 } from 'react-native';
-import ClapButton from '../../../components/medium-star';
 import Images from '@assets/images';
+import branch, { BranchEvent } from 'react-native-branch';
+import ClapButton from '../../../components/medium-star';
 
-const SHARE_URL = 'moodmusic.app.link';
 
 const styles = StyleSheet.create({
   playControls: {
@@ -59,16 +58,55 @@ export default class PlayControls extends Component {
     };
   }
 
-  handleShare = () => {
+  createBUO = async () => {
+    // first param is $canonical_identifier. allows you to keep track of each link.
+    // It must be a unique ID. branch will dedupe these on the back end!
+    const {
+      album,
+      artist,
+      artwork,
+      id,
+      mood_id,
+      title,
+      url,
+    } = this.props.currentTrack;
+    const branchUniversalObject = await branch.createBranchUniversalObject(
+      id, {
+        locallyIndex: true,
+        // corresponds to $og_title, $og_description, and $og_image_url params respectively
+        // used to display content as a preview card in facebook, twitter, iMessage etc...
+        // structure for track object:
+        title,
+        contentDescription: 'Check out this track on Mood!',
+        contentImageUrl: artwork,
+        contentMetadata: {
+          ratingAverage: 4.2,
+          customMetadata: {
+            album,
+            artist,
+            mood_id: mood_id.toString(),
+            url,
+          },
+        },
+      },
+    );
+    return branchUniversalObject;
+  }
+
+  handleShare = async () => {
     this.setState({ shareIcon: Images.share });
-    Share.share({
-      message: `Check out this bop on Mood! ${SHARE_URL}`,
-      url: 'www.moodindustries.com',
-    }).then((shareResult) => {
-      // shareResult can be dismissedAction() or sharedAction() on ios
-      // shareResult can ONLY be sharedAction() on android
+    const buo = await this.createBUO();
+    // TODO: randomize message body to make sharing a little more novel
+    let shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Mood: ' };
+    const linkProperties = { feature: 'share', channel: 'RNApp' };
+    const controlParams = {
+      $desktop_url: 'http://www.moodindustries.com',
+      $ios_url: 'https://moodmusic.app.link/ZIFgV4QdLS',
+    };
+    const { channel, completed, error } = await buo.showShareSheet(shareOptions, linkProperties, controlParams);
+    if (!error) {
       this.setState({ shareIcon: Images.shareOutline });
-    });
+    }
   }
 
   playButton = () => {
@@ -106,8 +144,8 @@ export default class PlayControls extends Component {
         {/*<ToggleButton iconUnselected={Images.shareOutline} style={styles.share}/>*/}
         <TouchableOpacity
         style={styles.share}
-        activeOpacity={0.6}
-        onPress={this.props.handleShare}>
+        activeOpacity={0.3}
+        onPress={this.handleShare}>
           <Image source={this.state.shareIcon}/>
         </TouchableOpacity>
       </View>

@@ -19,8 +19,7 @@ class SplashScreen extends Component {
 
   openSharedTrack = async (sharedTrack) => {
     const { navigate } = this.props.navigation;
-    // func to load songs for mood into queue: this.props.loadSongsForMoodId(moodObj.id);
-    // func to add track into queue: handleShare(<track object>)
+    // TODO: ensure that a full the queue load before inserting the sharedtrack
     this.props.loadSongsForMoodId(sharedTrack.mood_id);
     await this.props.handleShare(sharedTrack);
     navigate({ routeName: 'Play', params: { visible: false } });
@@ -49,14 +48,16 @@ class SplashScreen extends Component {
       }
 
       // A Branch link was opened.
-      // Route link based on data in params, e.g.
-
       // create track object from shared link's params
-      console.log('params: ', params);
       const id = params.$canonical_identifier;
       const artwork = params.$og_image_url;
       const title = params.$og_title;
-      const { album, artist, mood_id, url } = params;
+      const {
+        album,
+        artist,
+        mood_id,
+        url,
+      } = params;
       const sharedTrack = {
         album,
         artist,
@@ -67,8 +68,6 @@ class SplashScreen extends Component {
         url,
       };
       this.openSharedTrack(sharedTrack);
-      // Now push the view for this URL
-      //this.navigator.navigate({ routeName: 'Settings', params: { title: title, url: url, image: image } });
     });
   }
 
