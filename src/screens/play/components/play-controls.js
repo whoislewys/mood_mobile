@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   Share,
 } from 'react-native';
-import ToggleButton from '../../../components/toggle-button';
 import ClapButton from '../../../components/medium-star';
 import Images from '@assets/images';
 
@@ -108,7 +107,7 @@ export default class PlayControls extends Component {
         <TouchableOpacity
         style={styles.share}
         activeOpacity={0.6}
-        onPress={this.handleShare}>
+        onPress={this.props.handleShare}>
           <Image source={this.state.shareIcon}/>
         </TouchableOpacity>
       </View>

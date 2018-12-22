@@ -3,9 +3,9 @@ import {
   View,
   NetInfo,
   Linking,
-  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
+import branch from 'react-native-branch';
 import { loadMoods } from '../../redux/modules/mood';
 
 class SplashScreen extends Component {
@@ -17,56 +17,59 @@ class SplashScreen extends Component {
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
   }
 
-  handleOpenURL = (event) => {
-    this.navigate(event.url);
-  }
-
-  navigate = async (url) => {
+  openSharedTrack = async (sharedTrack) => {
     const { navigate } = this.props.navigation;
-    const route = url.replace(/.*?:\/\//g, '');
-    const id = route.match(/\/([^\/]+)\/?$/)[1];
-    const urlArray = route.split('/');
-    const routeName = urlArray[0];
-    console.log('url split array: ', urlArray);
-    // ex url: moodmusic://play/mood/id/artist/album/artwork/title/url
-    if (routeName === 'play') {
-      const baggtrack = {
-        album: 'The Holy & The Hostile ',
-        artist: 'Lunchbagg',
-        artwork: 'https://i1.sndcdn.com/artworks-000204149024-2spro2-t500x500.jpg',
-        id: '67',
-        mood_id: 5,
-        title: 'Best Friend (Video in Description)',
-        url: 'https://mood-music-api.herokuapp.com//rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--7f380f375f25d33c28b504a15607408b5d98bb38/song40.mp3',
-      };
-      // func to load songs for mood into queue: this.props.loadSongsForMoodId(moodObj.id);
-      // func to add track into queue: handleShare(<track object>)
-      // structure for track object:
-      // id: t.id.toString(),
-      // url: t.file,
-      // title: t.name,
-      // artist: t.artist
-      // album: t.album_name,
-      // artwork: t.art_url,
-      // mood_id: t.mood_id,
-      this.props.loadSongsForMoodId(parseInt(id, 10));
-      await this.props.handleShare(baggtrack);
-      navigate({ routeName: 'Play', params: { visible: false } });
-    }
+    // func to load songs for mood into queue: this.props.loadSongsForMoodId(moodObj.id);
+    // func to add track into queue: handleShare(<track object>)
+    this.props.loadSongsForMoodId(sharedTrack.mood_id);
+    await this.props.handleShare(sharedTrack);
+    navigate({ routeName: 'Play', params: { visible: false } });
   }
 
   componentDidMount = () => {
-    if (Platform.OS === 'android') {
-      // for android deep linking
-      // immediately navigate to url
-      this.props.loadMoods();
-      Linking.getInitialURL().then((url) => {
-        this.navigate(url);
-      });
-    } else {
-      this.props.loadMoods();
-      Linking.addEventListener('url', this.handleOpenURL);
-    }
+    this.props.loadMoods();
+    branch.subscribe(({ error, params }) => {
+      if (error) {
+        console.error('Error from Branch: ', error);
+        return;
+      }
+
+      // params will never be null if error is null
+
+      if (params['+non_branch_link']) {
+        const nonBranchUrl = params['+non_branch_link'];
+        // Route non-Branch URL if appropriate.
+        return;
+      }
+
+      if (!params['+clicked_branch_link']) {
+        // Indicates initialization success and some other conditions.
+        // No link was opened.
+        return;
+      }
+
+      // A Branch link was opened.
+      // Route link based on data in params, e.g.
+
+      // create track object from shared link's params
+      console.log('params: ', params);
+      const id = params.$canonical_identifier;
+      const artwork = params.$og_image_url;
+      const title = params.$og_title;
+      const { album, artist, mood_id, url } = params;
+      const sharedTrack = {
+        album,
+        artist,
+        artwork,
+        id,
+        mood_id: parseInt(mood_id, 10),
+        title,
+        url,
+      };
+      this.openSharedTrack(sharedTrack);
+      // Now push the view for this URL
+      //this.navigator.navigate({ routeName: 'Settings', params: { title: title, url: url, image: image } });
+    });
   }
 
   componentWillUnmount = () => {

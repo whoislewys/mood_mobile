@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   StatusBar,
   ActivityIndicator,
-  Share,
 } from 'react-native';
+import branch, { BranchEvent } from 'react-native-branch';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
-import { fonts, dimensions } from '../../assets/styles';
+import { dimensions } from '../../assets/styles';
 import Images from '@assets/images';
 
 const styles = StyleSheet.create({
@@ -52,6 +52,52 @@ class PlayScreen extends Component {
   constructor(props) {
     super(props);
     StatusBar.setBarStyle('light-content', true);
+  }
+
+  createBUO = async () => {
+    // first param is $canonical_identifier. It must be a unique ID.
+    // branch will dedupe these on the back end!
+    const { album, artist, artwork, id, mood_id, title, url } = this.props.currentTrack;
+    const branchUniversalObject = await branch.createBranchUniversalObject(
+      id, {
+        locallyIndex: true,
+        // corresponds to $og_title, $og_description, and $og_image_url respectively
+        // used to display content as a preview card in facebook, twitter, iMessage etc...
+        // structure for track object:
+        // id
+        // url
+        // title
+        // artist
+        // album
+        // artwork
+        // mood_id
+        // previous link https://moodmusic.app.link/exyMxP88PS
+        title,
+        contentDescription: 'Check out this track on Mood!',
+        contentImageUrl: artwork,
+        contentMetadata: {
+          ratingAverage: 4.2,
+          customMetadata: {
+            album,
+            artist,
+            mood_id: mood_id.toString(),
+            url,
+          },
+        },
+      },
+    );
+    return branchUniversalObject;
+  }
+
+  handleShare = async () => {
+    const buo = await this.createBUO();
+    let shareOptions = { messageHeader: 'Check this out', messageBody: 'look issa track!' };
+    const linkProperties = { feature: 'share', channel: 'RNApp' };
+    const controlParams = {
+      $desktop_url: 'http://www.moodindustries.com',
+      $ios_url: 'https://moodmusic.app.link/ZIFgV4QdLS',
+    };
+    const { channel, completed, error } = await buo.showShareSheet(shareOptions, linkProperties, controlParams);
   }
 
   render = () => {
@@ -96,6 +142,7 @@ class PlayScreen extends Component {
                 playing={this.props.playing}
                 handlePlayPress={this.props.handlePlayPress}
                 loading={this.props.loading}
+                handleShare={this.handleShare}
               />
             </View>
           </View>
