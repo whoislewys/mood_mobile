@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   },
   clapText: {
     color: 'white',
+    top: -13,
     fontFamily: fonts.primary,
     fontSize: fonts.body,
   },
@@ -35,10 +36,12 @@ const styles = StyleSheet.create({
     width: 30,
   },
   shootingStarShadow: {
+    // TODO: replace this style with a shadowed shooting star
+    // rendering a shadow on a view element is pretty inefficient
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    top: 23,
+    top: 10,
     width: 30,
     height: 30,
     elevation: 1,
