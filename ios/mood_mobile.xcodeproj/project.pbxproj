@@ -89,6 +89,7 @@
 		FB35CCD41EFD419DA1C1B948 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC280FD6F14541FCBC5ABF8D /* libSplashScreen.a */; };
 		FE6C02DF21CC3083008F62A9 /* mood_mobile.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = FE6C02DE21CC25FA008F62A9 /* mood_mobile.entitlements */; };
 		FE78CFB7218F7DE800963022 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78CFB6218F7DE800963022 /* dummy.swift */; };
+		A8410ED63D1446498A8974CA /* add-event-button.png in Resources */ = {isa = PBXBuildFile; fileRef = C1A846AD2BDB45F4BA049FEB /* add-event-button.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -519,6 +520,7 @@
 		FE78CFB5218F7DE800963022 /* mood_mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mood_mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		FE78CFB6218F7DE800963022 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		FEE6322C36D04182A974DCE4 /* background-overlay.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "background-overlay.png"; path = "../src/assets/img/background-overlay.png"; sourceTree = "<group>"; };
+		C1A846AD2BDB45F4BA049FEB /* add-event-button.png */ = {isa = PBXFileReference; name = "add-event-button.png"; path = "../src/assets/img/add-event-button.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -910,6 +912,7 @@
 				6484D3FA3D0440E3A82FB7BC /* do-it.png */,
 				48D8F3EA42224121BC685133 /* explicit-icon.png */,
 				5F632BDAF5F844F8BE6475FC /* view.png */,
+				C1A846AD2BDB45F4BA049FEB /* add-event-button.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1490,6 +1493,7 @@
 				65F5BA2F1F984FCAA2D26754 /* do-it.png in Resources */,
 				DB94CC6C41D9407B95F278B8 /* explicit-icon.png in Resources */,
 				06500EF861904896B908D065 /* view.png in Resources */,
+				A8410ED63D1446498A8974CA /* add-event-button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
