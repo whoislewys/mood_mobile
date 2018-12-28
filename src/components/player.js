@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
-import { loadSongsForMoodId } from '../redux/modules/queue';
+import { loadSongsForMoodId, updateCurrentTrack, updateScore } from '../redux/modules/queue';
 import { setMood } from '../redux/modules/mood';
 
 class Player extends Component {
@@ -63,12 +63,16 @@ class Player extends Component {
   skipToNext = async () => {
     try {
       await TrackPlayer.skipToNext();
+      this.props.updateCurrentTrack();
+      this.props.updateScore(0);
     } catch (_) {}
   }
 
   skipToPrevious = async () => {
     try {
       await TrackPlayer.skipToPrevious();
+      this.props.updateCurrentTrack();
+      this.props.updateScore(0);
     } catch (_) {}
   }
 
@@ -93,13 +97,9 @@ class Player extends Component {
   }
 
   render = () => {
-    let track = this.props.queue.find(e => (e.id === this.props.track));
-    if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
-
     return (
       <Navigator
         screenProps={{
-          currentTrack: track,
           playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
           loadSongsForMoodId: this.loadSongsForMood,
           shuffled: this.state.shuffled,
@@ -112,8 +112,8 @@ class Player extends Component {
           setTime: TrackPlayer.seekTo,
           toggleShuffle: this.toggleShuffle,
           toggleRepeat: this.toggleRepeat,
-          nextTrack: () => TrackPlayer.skipToNext(),
-          previousTrack: () => TrackPlayer.skipToPrevious(),
+          nextTrack: this.skipToNext,
+          previousTrack: this.skipToPrevious,
           stopPlayback: this.stopPlayback,
         }}
       />
@@ -133,6 +133,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadSongsForMoodId,
+  updateCurrentTrack,
+  updateScore,
   setMood,
 };
 
