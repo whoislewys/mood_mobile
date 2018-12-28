@@ -3,7 +3,11 @@ import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
-import { loadSongsForMoodId, updateCurrentTrack, updateScore } from '../redux/modules/queue';
+import {
+  loadSongsForMoodId,
+  updateCurrentTrack,
+  updateScore,
+} from '../redux/modules/queue';
 import { setMood } from '../redux/modules/mood';
 
 class Player extends Component {
@@ -62,6 +66,9 @@ class Player extends Component {
 
   skipToNext = async () => {
     try {
+      if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
+        await TrackPlayer.play();
+      }
       await TrackPlayer.skipToNext();
       this.props.updateCurrentTrack();
       this.props.updateScore(0);
@@ -70,6 +77,9 @@ class Player extends Component {
 
   skipToPrevious = async () => {
     try {
+      if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
+        await TrackPlayer.play();
+      }
       await TrackPlayer.skipToPrevious();
       this.props.updateCurrentTrack();
       this.props.updateScore(0);
@@ -129,6 +139,7 @@ const mapStateToProps = state => ({
   playbackState: state.queue.playback,
   track: state.queue.track,
   queue: state.queue.queue,
+  currentTrack: state.queue.currentTrack,
 });
 
 const mapDispatchToProps = {
