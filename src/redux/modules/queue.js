@@ -10,8 +10,6 @@ const UPDATE_CURRENT_TRACK = 'queue/UPDATE_CURRENT_TRACK';
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
 
-const UPDATE_SCORE = 'UPDATE_SCORE';
-
 const initialState = {
   loading: false,
   currentTrack: {},
@@ -74,8 +72,6 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         track: action.track,
       };
-    case UPDATE_SCORE:
-      return { ...state, currentScore: action.newScore };
     default:
       return state;
   }
@@ -106,14 +102,6 @@ export function playbackTrack(track) {
   return {
     type: PLAYBACK_TRACK,
     track,
-  };
-}
-
-export function updateScore(newScore) {
-  console.log('new score: ', newScore);
-  return {
-    type: UPDATE_SCORE,
-    newScore,
   };
 }
 
