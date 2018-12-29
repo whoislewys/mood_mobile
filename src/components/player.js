@@ -71,8 +71,6 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToNext();
-      this.props.updateCurrentTrack();
-      this.props.updateScore(0);
     } catch (_) {}
   }
 
@@ -82,8 +80,6 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToPrevious();
-      this.props.updateCurrentTrack();
-      this.props.updateScore(0);
     } catch (_) {}
   }
 
@@ -108,6 +104,8 @@ class Player extends Component {
   }
 
   render = () => {
+    this.props.updateCurrentTrack();
+    this.props.updateScore(0);
     return (
       <Navigator
         screenProps={{
