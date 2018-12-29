@@ -51,7 +51,8 @@ class Player extends Component {
   }
 
   handleShare = async (sharedTrack) => {
-    console.log('sharing track!');
+    // plays a shared song
+    this.props.updateScore(0);
     await TrackPlayer.reset();
     await TrackPlayer.add(sharedTrack);
     await TrackPlayer.play();
