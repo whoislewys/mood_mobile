@@ -3,11 +3,8 @@ import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
-import {
-  loadSongsForMoodId,
-  updateCurrentTrack,
-  updateScore,
-} from '../redux/modules/queue';
+import { loadSongsForMoodId, updateCurrentTrack } from '../redux/modules/queue';
+import { updateScore } from '../redux/modules/score';
 import { setMood } from '../redux/modules/mood';
 
 class Player extends Component {
@@ -23,6 +20,7 @@ class Player extends Component {
   }
 
   componentDidMount = () => {
+    // this.props.startScoreTimer();
     TrackPlayer.setupPlayer();
     TrackPlayer.updateOptions({
       stopWithApp: true,

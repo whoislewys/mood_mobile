@@ -9,8 +9,8 @@ import {
   Animated,
 } from 'react-native';
 import Images from '@assets/images';
+import { updateScore } from '../redux/modules/score';
 import { fonts } from '../assets/styles';
-import { updateScore } from '../redux/modules/queue';
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -184,7 +184,7 @@ class ClapButton extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentScore: state.queue.currentScore,
+  currentScore: state.score.currentScore,
 });
 
 const mapDispatchToProps = {
