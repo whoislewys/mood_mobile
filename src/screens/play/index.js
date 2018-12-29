@@ -110,7 +110,6 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
   queue: state.queue.queue,
-  currentTrack: state.queue.currentTrack,
 });
 
 export default connect(mapStateToProps)(PlayScreen);

@@ -9,7 +9,7 @@ import {
   Animated,
 } from 'react-native';
 import Images from '@assets/images';
-import { updateScore } from '../redux/modules/score';
+import { incrementScore, incrementScoreDelta } from '../redux/modules/score';
 import { fonts } from '../assets/styles';
 
 function getRndInteger(min, max) {
@@ -129,11 +129,11 @@ class ClapButton extends Component {
     // start from currentScore + 1 to not show 0 stars
     const { claps, maxCount } = this.state;
     const newScore = this.props.currentScore + 1;
-
     if (newScore <= maxCount) {
       // option 1: push claps for current song to database/ API call HERE
       claps.push(newScore);
-      this.props.updateScore(newScore);
+      this.props.incrementScore();
+      this.props.incrementScoreDelta();
     }
   }
 
@@ -185,10 +185,12 @@ class ClapButton extends Component {
 
 const mapStateToProps = state => ({
   currentScore: state.score.currentScore,
+  scoreDelta: state.score.scoreDelta,
 });
 
 const mapDispatchToProps = {
-  updateScore,
+  incrementScore,
+  incrementScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClapButton);
