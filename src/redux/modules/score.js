@@ -24,10 +24,11 @@ export default function reducer(state = initialState, action = {}) {
     case UPDATE_SCORE_DELTA:
       return { ...state, scoreDelta: state.scoreDelta + 1 };
     case SEND_SCORE:
-      console.log('sending score delta: ', state.scoreDelta);
+      console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
+      // TODO:  ^ replace with POST call to api ^
       return { ...state, scoreDelta: 0 };
     case START_TIMER:
-      const timer = setInterval(() => action.sendScoreDeltaFunc(state.scoreDelta), SEND_SCORE_TIME);
+      const timer = setInterval(() => action.sendScoreDeltaFunc(action.currentTrackId), SEND_SCORE_TIME);
       return { ...state, timer };
     case STOP_TIMER:
       clearInterval(state.timer);
@@ -61,20 +62,22 @@ export function incrementScoreDelta() {
   };
 }
 
-export function sendScoreDelta() {
+export function sendScoreDelta(currentTrackId) {
   // sends change in score (scoreDelta) to api,
   // then resets scoreDelta to 0
   // this should be called (therefore score changes should be pushed) repeatedly
   // by the timer defined above
   return {
     type: SEND_SCORE,
+    currentTrackId,
   };
 }
 
-export function startScoreTimer(sendScoreDeltaFunc) {
+export function startScoreTimer(sendScoreDeltaFunc, currentTrackId) {
   return {
     type: START_TIMER,
     sendScoreDeltaFunc,
+    currentTrackId,
   };
 }
 
