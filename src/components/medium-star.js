@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -9,11 +10,13 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { fonts } from '../assets/styles';
-
+import { updateScore } from '../redux/modules/queue';
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+let COUNT = 1;
 
 const styles = StyleSheet.create({
   clapButton: {
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   shootingStarShadow: {
-    // TODO: replace this style with a shadowed shooting star
+    // TODO: replace this style by using a separate png of a shooting star with baked-in drop shadow
     // rendering a shadow on a view element is pretty inefficient
     alignSelf: 'center',
     justifyContent: 'center',
@@ -44,12 +47,6 @@ const styles = StyleSheet.create({
     top: 10,
     width: 30,
     height: 30,
-    elevation: 1,
-    shadowRadius: 1,
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      height: 2,
-    },
   },
 });
 
@@ -86,11 +83,11 @@ class ClapBubble extends Component {
   }
 
   render = () => {
-    let clapBubbleStyle = {
+    const clapBubbleStyle = {
       position: 'absolute',
       opacity: this.state.fadeAnim,
     };
-    let animationStyle = {
+    const animationStyle = {
       transform: [{ translateY: this.state.yPosition }, { translateX: this.state.xPosition }],
       justifyContent: 'center',
       alignItems: 'center',
@@ -113,34 +110,31 @@ class ClapBubble extends Component {
   }
 }
 
-export default class ClapButton extends Component {
-  constructor() {
-    super();
+class ClapButton extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      count: 1,
       maxCount: 25,
       claps: [],
     };
   }
 
   animationComplete = (countNum) => {
-    let claps = this.state.claps;
+    const claps = this.state.claps;
     claps.splice(claps.indexOf(countNum), 1);
     this.setState({ claps });
   }
 
   clap = () => {
-    let { count, claps, maxCount } = this.state;
-    if (count <= maxCount) {
-      claps.push(count);
-      // push claps for current song to database
-      count++;
-      this.setState({ count });
+    // start from currentScore + 1 to not show 0 stars
+    const { claps, maxCount } = this.state;
+    const newScore = this.props.currentScore + 1;
+
+    if (newScore <= maxCount) {
+      // option 1: push claps for current song to database/ API call HERE
+      claps.push(newScore);
+      this.props.updateScore(newScore);
     }
-    // else {
-    //   claps.push(maxCount);
-    //   this.setState({ maxCount });
-    // }
   }
 
   keepClapping = () => {
@@ -156,18 +150,23 @@ export default class ClapButton extends Component {
 
   renderClaps = () => {
     const maxCount = 25;
-    return this.state.claps.map(countNum => <ClapBubble
-      key={countNum}
-      count={countNum}
-      maxCount={maxCount}
-      animationComplete={this.animationComplete.bind(this)}/>);
+    // render a clap bubble for each clapBubble in the array
+    return this.state.claps.map(countNum => (
+      <ClapBubble
+        key={countNum}
+        count={countNum}
+        maxCount={maxCount}
+        animationComplete={this.animationComplete.bind(this)}
+      />
+    ));
   }
 
   render = () => {
-    let clapIcon = (this.state.count <= 1) ? (
+    let clapIcon = (this.props.currentScore < 1) ? (
       <Image source={Images.starOutline} style={styles.star}/>
     )
       : <Image source={Images.star} style={styles.star}/>;
+
     return (
       <View>
         <TouchableOpacity
@@ -183,3 +182,13 @@ export default class ClapButton extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  currentScore: state.queue.currentScore,
+});
+
+const mapDispatchToProps = {
+  updateScore,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClapButton);

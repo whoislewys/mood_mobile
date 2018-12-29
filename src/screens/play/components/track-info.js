@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
   infoText: {
     flex: 1,
-    paddingTop: '10%',
   },
 });
 
@@ -41,9 +40,7 @@ export default class TrackInfo extends Component {
             skipBack={this.props.skipBack}
           />
         </View>
-        <View style={styles.timeBar}>
-          <TimeBar setTime={this.props.setTime}/>
-        </View>
+        <TimeBar setTime={this.props.setTime}/>
         <View style={styles.infoText}>
           <InfoText track={this.props.track} />
         </View>
