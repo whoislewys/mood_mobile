@@ -29,6 +29,7 @@ const images = {
   doIt: require('./img/do-it.png'),
   view: require('./img/view.png'),
   explicitIcon: require('./img/explicit-icon.png'),
+  addEventButton: require('./img/add-event-button.png'),
 };
 
 export default images;

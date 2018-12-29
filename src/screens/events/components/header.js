@@ -1,13 +1,22 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
 
+const ADD_EVENT_URL = 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1';
+
 const styles = StyleSheet.create({
   headerStyle: {
+    flexDirection: 'row',
     paddingBottom: '10%',
     paddingTop: '15%',
-    backgroundColor: '#FFFFFF',
   },
   headerText: {
     marginTop: 18,
@@ -21,8 +30,14 @@ const styles = StyleSheet.create({
     color: colors.subHeader,
     marginTop: 5,
   },
+  addEventButton: {
+    height: 25,
+    width: 25,
+    resizeMode: 'contain',
+    marginTop: '5%',
+    marginLeft: '53%',
+  },
   moodLogo: {
-    alignSelf: 'center',
   },
 });
 
@@ -41,6 +56,9 @@ const Header = ({ showLogo, headerText, subText }) => (
     <View style={styles.headerStyle}>
       {renderMoodLogo(showLogo)}
       <Text style={styles.headerText}>{headerText}</Text>
+      <TouchableOpacity style={styles.addEventButton} onPress={() => Linking.openURL(ADD_EVENT_URL)}>
+        <Image source={Images.addEventButton}/>
+      </TouchableOpacity>
       {renderSubText(subText)}
     </View>
 );
