@@ -46,16 +46,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 85,
-    marginBottom: 15,
     borderRadius: 10,
     elevation: 1,
     backgroundColor: '#FFFFFF',
-    shadowOffset: {
-      width: 0,
-      height: 1.2,
-    },
-    shadowRadius: 2,
-    shadowOpacity: 0.2,
   },
   switchStyle: {
     marginRight: '7%',
@@ -169,7 +162,7 @@ class SettingsScreen extends Component {
     StatusBar.setBarStyle('dark-content', true);
 
     return (
-      <View>
+      <View style={{flex: 1}}>
         <FlatList
           data={[{
             url: 'http://moodindustries.com/privacy.pdf',
