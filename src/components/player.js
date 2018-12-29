@@ -5,27 +5,20 @@ import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
 import { loadSongsForMoodId } from '../redux/modules/queue';
-import { resetScore, startScoreTimer, stopScoreTimer, sendScoreDelta } from '../redux/modules/score';
+import { resetScore, stopScoreTimer } from '../redux/modules/score';
 
 class Player extends Component {
   constructor(props) {
     super(props);
     this.state = {
       repeat: false,
-      playQueue: [],
       shuffled: false,
     };
 
     StatusBar.setBarStyle('light-content', true);
   }
 
-  sendScoreDeltaFunc = () => {
-    console.log('timer went off!');
-    this.props.sendScoreDelta();
-  }
-
   componentDidMount = () => {
-    this.props.startScoreTimer(this.sendScoreDeltaFunc);
     TrackPlayer.setupPlayer();
     TrackPlayer.updateOptions({
       stopWithApp: true,
@@ -115,7 +108,6 @@ class Player extends Component {
   render = () => {
     let track = this.props.queue.find(e => (e.id === this.props.track));
     if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
-
     return (
       <Navigator
         screenProps={{
@@ -149,16 +141,13 @@ const mapStateToProps = state => ({
   playbackState: state.queue.playback,
   track: state.queue.track,
   queue: state.queue.queue,
-  currentTrack: state.queue.currentTrack,
 });
 
 const mapDispatchToProps = {
   setMood,
   loadSongsForMoodId,
   resetScore,
-  startScoreTimer,
   stopScoreTimer,
-  sendScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

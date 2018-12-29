@@ -14,6 +14,7 @@ import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
+import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
 import Images from '@assets/images';
 
 const styles = StyleSheet.create({
@@ -68,6 +69,9 @@ class PlayScreen extends Component {
           <PlayOnOpen playing={this.props.playing}
           playByDefault={this.props.handlePlayPress}
           parentScreen={this.props.parentScreen}
+          startScoreTimer={this.props.startScoreTimer}
+          currentTrack={this.props.currentTrack}
+          sendScoreDeltaFunc={this.props.sendScoreDelta}
           />
           <View style={styles.playContainer}>
             <View style={styles.dropdownBar}>
@@ -112,4 +116,9 @@ const mapStateToProps = state => ({
   queue: state.queue.queue,
 });
 
-export default connect(mapStateToProps)(PlayScreen);
+const mapDispatchToProps = {
+  startScoreTimer,
+  sendScoreDelta,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);
