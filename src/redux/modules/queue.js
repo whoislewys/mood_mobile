@@ -12,7 +12,6 @@ const PLAYBACK_TRACK = 'playback/TRACK';
 
 const initialState = {
   loading: false,
-  currentTrack: {},
   errors: null,
   queue: [],
   playback: null,
@@ -40,16 +39,10 @@ export default function reducer(state = initialState, action = {}) {
       // load songs for mood, reset global score to 0, and set current track
       let songs = null;
       songs = loadSongData(action.payload.data);
-
-      // Calculate current track
-      let track = songs.find(e => (e.id === state.track));
-      if (track === undefined) track = songs[0]; // This is gross, I promise I'll fix it
-
       return {
         ...state,
         loading: false,
         queue: songs,
-        currentTrack: track,
         currentScore: 0,
       };
     case LOAD_SONGS_FAIL:
@@ -58,10 +51,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
       };
-    case UPDATE_CURRENT_TRACK:
-      let newTrack = state.queue.find(e => (e.id === state.track));
-      if (newTrack === undefined) newTrack = state.queue[0]; // This is gross, I promise I'll fix it
-      return { ...state, currentTrack: newTrack };
     case PLAYBACK_STATE:
       return {
         ...state,
@@ -102,11 +91,5 @@ export function playbackTrack(track) {
   return {
     type: PLAYBACK_TRACK,
     track,
-  };
-}
-
-export function updateCurrentTrack() {
-  return {
-    type: UPDATE_CURRENT_TRACK,
   };
 }
