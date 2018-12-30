@@ -54,7 +54,7 @@ class LeaderboardScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  leaderboardSongs: state.leaderboard.leaderboardSongs, // state/loaderboard.leaderboardSongs get the leaderboardSongs prop off the leaderboardSongs reducer's action
+  leaderboardSongs: state.leaderboard.songs, // state/loaderboard.leaderboardSongs get the leaderboardSongs prop off the leaderboardSongs reducer's action
 });
 
 export default connect(mapStateToProps)(LeaderboardScreen);
