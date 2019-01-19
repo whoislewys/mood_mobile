@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const RESET_SCORE = 'score/RESET_SCORE';
 const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
-const UPDATE_SCORE_DELTA = 'score/UPDATE_SCORE_DELTA';
 const SEND_SCORE = 'score/SEND_SCORE';
 const START_TIMER = 'score/START_TIMER';
 const STOP_TIMER = 'score/STOP_TIMER';
@@ -19,17 +18,33 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case RESET_SCORE:
-      return { ...state, currentScore: 0, scoreDelta: 0 };
+      clearInterval(state.timer);
+      const newTimer = setInterval(
+        () => action.sendScoreDeltaFunc(action.currentTrackId),
+        SEND_SCORE_TIME,
+      );
+
+      return {
+        ...state,
+        currentScore: 0,
+        scoreDelta: 0,
+        timer: newTimer,
+      };
     case INCREMENT_SCORE:
-      return { ...state, currentScore: state.currentScore + 1 };
-    case UPDATE_SCORE_DELTA:
-      return { ...state, scoreDelta: state.scoreDelta + 1 };
+      return { ...state, currentScore: state.currentScore + 1, scoreDelta: state.scoreDelta + 1 };
     case SEND_SCORE:
-      console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
-      // TODO:  ^ replace with POST call to api ^
+      if (state.scoreDelta > 0) {
+        console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
+        axios.post(`http://api.moodindustries.com/api/v1//songs/${action.currentTrackId}/star`, { stars: state.scoreDelta, t: 'EXVbAWTqbGFl7BKuqUQv' });
+      }
+
       return { ...state, scoreDelta: 0 };
     case START_TIMER:
-      const timer = setInterval(() => action.sendScoreDeltaFunc(action.currentTrackId), SEND_SCORE_TIME);
+      const timer = setInterval(
+        () => action.sendScoreDeltaFunc(action.currentTrackId),
+        SEND_SCORE_TIME,
+      );
+
       return { ...state, timer };
     case STOP_TIMER:
       clearInterval(state.timer);
@@ -47,19 +62,13 @@ export function incrementScore() {
   };
 }
 
-export function resetScore() {
+export function resetScore(sendScoreDeltaFunc, currentTrackId) {
   // called for every star press,
   // updates global score variable
   return {
     type: RESET_SCORE,
-  };
-}
-
-export function incrementScoreDelta() {
-  // similar to update score, only this will always update by one in the action
-  // so no argument is needed
-  return {
-    type: UPDATE_SCORE_DELTA,
+    sendScoreDeltaFunc,
+    currentTrackId,
   };
 }
 

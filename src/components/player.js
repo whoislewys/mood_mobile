@@ -5,7 +5,7 @@ import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
 import { loadSongsForMoodId } from '../redux/modules/queue';
-import { resetScore, stopScoreTimer } from '../redux/modules/score';
+import { resetScore, stopScoreTimer, sendScoreDelta } from '../redux/modules/score';
 
 class Player extends Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class Player extends Component {
 
   handleShare = async (sharedTrack) => {
     // plays a shared song
-    this.props.resetScore();
+    this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
     await TrackPlayer.reset();
     await TrackPlayer.add(sharedTrack);
     await TrackPlayer.play();
@@ -71,7 +71,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToNext();
-      this.props.resetScore();
+      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
     } catch (_) {}
   }
 
@@ -81,7 +81,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToPrevious();
-      this.props.resetScore();
+      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
     } catch (_) {}
   }
 
@@ -105,13 +105,18 @@ class Player extends Component {
     this.props.loadSongsForMoodId(id);
   }
 
-  render = () => {
+  getTrack = () => {
     let track = this.props.queue.find(e => (e.id === this.props.track));
     if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
+
+    return track;
+  }
+
+  render = () => {
     return (
       <Navigator
         screenProps={{
-          currentTrack: track,
+          currentTrack: this.getTrack(),
           playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
           loadSongsForMoodId: this.loadSongsForMood,
           shuffled: this.state.shuffled,
@@ -148,6 +153,7 @@ const mapDispatchToProps = {
   loadSongsForMoodId,
   resetScore,
   stopScoreTimer,
+  sendScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
