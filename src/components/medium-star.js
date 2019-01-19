@@ -16,8 +16,6 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-let COUNT = 1;
-
 const styles = StyleSheet.create({
   clapButton: {
     backgroundColor: 'transparent',
@@ -95,16 +93,16 @@ class ClapBubble extends Component {
 
     return (
       (this.props.count <= this.props.maxCount) ? (
-      <Animated.View style={[clapBubbleStyle, animationStyle]}>
-        <View style={styles.shootingStarShadow}>
-          <Image source={Images.star} style={styles.shootingStar}/>
-        </View>
-        <Text style={styles.clapText}>{this.props.count}</Text>
-      </Animated.View>
+        <Animated.View style={[clapBubbleStyle, animationStyle]}>
+          <View style={styles.shootingStarShadow}>
+            <Image source={Images.star} style={styles.shootingStar}/>
+          </View>
+          <Text style={styles.clapText}>{this.props.count}</Text>
+        </Animated.View>
       ) : (
-    <Animated.View style={[clapBubbleStyle, animationStyle]}>
-      <Text style={styles.clapText}>{this.props.maxCount}</Text>
-    </Animated.View>
+        <Animated.View style={[clapBubbleStyle, animationStyle]}>
+          <Text style={styles.clapText}>{this.props.maxCount}</Text>
+        </Animated.View>
       )
     );
   }
@@ -133,7 +131,6 @@ class ClapButton extends Component {
       // option 1: push claps for current song to database/ API call HERE
       claps.push(newScore);
       this.props.incrementScore();
-      this.props.incrementScoreDelta();
     }
   }
 
@@ -162,7 +159,7 @@ class ClapButton extends Component {
   }
 
   render = () => {
-    let clapIcon = (this.props.currentScore < 1) ? (
+    const clapIcon = (this.props.currentScore < 1) ? (
       <Image source={Images.starOutline} style={styles.star}/>
     )
       : <Image source={Images.star} style={styles.star}/>;

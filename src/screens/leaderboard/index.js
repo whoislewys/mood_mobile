@@ -30,10 +30,9 @@ class LeaderboardScreen extends Component {
   >
     </LeaderboardRow>
 
-  getLeaderBoard = () => {
-    return (
-      this.props.leaderboardSongs.length
-        ? (
+  getLeaderBoard = () => (
+    this.props.leaderboardSongs.length
+      ? (
           <FlatList
             data={this.props.leaderboardSongs}
             renderItem={this._renderItem}
@@ -41,10 +40,9 @@ class LeaderboardScreen extends Component {
             ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
             >
           </FlatList>
-        )
-        : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
-    );
-  }
+      )
+      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+  )
 
   render = () => (
     <View style={styles.background}>
