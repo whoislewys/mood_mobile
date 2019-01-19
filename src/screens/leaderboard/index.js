@@ -25,10 +25,12 @@ class LeaderboardScreen extends Component {
   // loadArtists api call, render spinner until artists load
   keyExtractor = song => song.id.toString();
 
-  _renderItem = ({ item }) => <LeaderboardRow
-  leaderboardSong={ item }
-  >
-    </LeaderboardRow>
+  _renderItem = ({ item, index }) => (
+    <LeaderboardRow
+      leaderboardSong={ item }
+      index={index}
+    >
+    </LeaderboardRow>);
 
   getLeaderBoard = () => (
     this.props.leaderboardSongs.length

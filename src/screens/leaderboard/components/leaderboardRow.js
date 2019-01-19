@@ -64,18 +64,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const LeaderboardRow = ({ leaderboardSong }) => {
+const LeaderboardRow = ({ leaderboardSong, index }) => {
   const {
     artist,
     name,
     stars,
-    rank,
     art_url,
   } = leaderboardSong;
 
   return (
     <View style={styles.rowBackground}>
-      <Text style={styles.rank}>{rank}</Text>
+      <Text style={styles.rank}>{index + 1}</Text>
       <Image style={styles.albumArt} source={{ uri: art_url }}/>
       <View style={styles.detailsContainer}>
         <Text

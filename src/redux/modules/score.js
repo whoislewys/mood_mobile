@@ -13,6 +13,7 @@ const initialState = {
   currentScore: 0,
   scoreDelta: 0,
   timer: null,
+  errors: [],
 };
 
 export default function reducer(state = initialState, action = {}) {
