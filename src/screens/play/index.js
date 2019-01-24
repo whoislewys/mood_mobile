@@ -14,6 +14,7 @@ import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
+import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
 import Images from '@assets/images';
 
 const styles = StyleSheet.create({
@@ -55,73 +56,6 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    // option 2: set a timer that triggers api call every so often,
-    // sending currentTrack.score as scoreDelta.
-    // also resets currentTrack.score to 0
-    // (max score would still be 25 as this is held in the star component)
-
-    // option 3: call api with currentTrack.score as scoreDelta when:
-    // * track ends
-    // * user has reached max claps
-    // * app closes
-
-    /*
-
-    problems with option 1 (api call every time a star is given, see queue.js module):
-    uses 25 times more data than other options. but, 25 integer objects still isn't much data
-    space complexity upper bound of 25n. Every additional user can send 25 API calls
-    summary: more intensive
-
-    benefits:
-    no stars lost ever. essentially option 2 with timer set to 0 seconds
-    ***
-
-    problems with option 2:
-    if user stars song in last x seconds, stars will be lost
-    if user stars song then switches song in under x seconds, stars will be lost
-    if user stars song and closes app in under x seconds, stars will be lost
-    summary:
-    large x, more stars will be lost
-    small x, less stars lost, more potential for gaming system (because less of the song has to be listened to)
-
-    benefits:
-    if x is set to under 1 second, api calls would be reduced by half or more,
-    and user's data would be less taxed
-    if x is set to <1 second, gives very little surface area for stars to be lost
-    if x is larger, prevents gaming the system by rapidly skipping back and forth
-    between tracks to inflate ratings
-
-    ***
-
-    problems with option 3:
-    if locking phone counts as closing the app,
-    every time a user locks then unlocks phone while listening to a song,
-    a duplicate score will be sent.
-
-    or if going to multitasking screen counts as closing the app,
-    then user can go to multitasking, click the app, go to multitasking, and repeat
-    to repeatedly send 25 stars.
-    less likely but possible
-    if skipforward or skipbackward send onTrackEnd event, then system is easily gamed.
-    summary: if calling functions when closing app is unreliable, duplicate stars
-    can be sent & abused, artificially inflating ratings
-
-    benefits:
-    no stars lost ever
-
-    ***
-
-    option 4 (2 & 3 hybrid):
-    timer with x = 6 seconds sends ranking. 5 secs is max star time + 1 second makes it so user
-    has to listen to a bit of song before stars are sent. prevents gaming the system
-    also send stars onTrackEnd.
-    if skipforward or skipbackward send onTrackEnd, then this is useless.
-    but also, option 3 would be useless
-
-    */
-
-    // const { goBack } = this.props.navigation;
-
     return (this.props.queue.length
       // TODO: refactor to get rid of trackInfo
       // and add each of it's child components separately
@@ -135,6 +69,9 @@ class PlayScreen extends Component {
           <PlayOnOpen playing={this.props.playing}
           playByDefault={this.props.handlePlayPress}
           parentScreen={this.props.parentScreen}
+          startScoreTimer={this.props.startScoreTimer}
+          currentTrack={this.props.currentTrack}
+          sendScoreDeltaFunc={this.props.sendScoreDelta}
           />
           <View style={styles.playContainer}>
             <View style={styles.dropdownBar}>
@@ -177,8 +114,11 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
   queue: state.queue.queue,
-  currentScore: state.queue.currentScore,
-  currentTrack: state.queue.currentTrack,
 });
 
-export default connect(mapStateToProps)(PlayScreen);
+const mapDispatchToProps = {
+  startScoreTimer,
+  sendScoreDelta,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);

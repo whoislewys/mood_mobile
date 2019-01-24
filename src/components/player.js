@@ -3,19 +3,15 @@ import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
-import {
-  loadSongsForMoodId,
-  updateCurrentTrack,
-  updateScore,
-} from '../redux/modules/queue';
 import { setMood } from '../redux/modules/mood';
+import { loadSongsForMoodId } from '../redux/modules/queue';
+import { resetScore, stopScoreTimer, sendScoreDelta } from '../redux/modules/score';
 
 class Player extends Component {
   constructor(props) {
     super(props);
     this.state = {
       repeat: false,
-      playQueue: [],
       shuffled: false,
     };
 
@@ -35,11 +31,15 @@ class Player extends Component {
     });
   }
 
+  componentWillUnmount = () => {
+    this.props.stopScoreTimer();
+  }
+
   // ///////////////////////////////////////////////////////////
   // State change functions
   handlePlayPress = async () => {
     const { track } = this.props;
-    if (track == null) {
+    if (track === null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(this.props.queue);
       await TrackPlayer.play();
@@ -52,7 +52,7 @@ class Player extends Component {
 
   handleShare = async (sharedTrack) => {
     // plays a shared song
-    this.props.updateScore(0);
+    this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
     await TrackPlayer.reset();
     await TrackPlayer.add(sharedTrack);
     await TrackPlayer.play();
@@ -60,7 +60,7 @@ class Player extends Component {
   }
 
   stopPlayback = async () => {
-    if (!(this.props.track == null || this.props.playbackState === TrackPlayer.STATE_PAUSED)) {
+    if (!(this.props.track === null || this.props.playbackState === TrackPlayer.STATE_PAUSED)) {
       await TrackPlayer.pause();
     }
   }
@@ -71,6 +71,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToNext();
+      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
     } catch (_) {}
   }
 
@@ -80,6 +81,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToPrevious();
+      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
     } catch (_) {}
   }
 
@@ -103,12 +105,18 @@ class Player extends Component {
     this.props.loadSongsForMoodId(id);
   }
 
+  getTrack = () => {
+    let track = this.props.queue.find(e => (e.id === this.props.track));
+    if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
+
+    return track;
+  }
+
   render = () => {
-    this.props.updateCurrentTrack();
-    this.props.updateScore(0);
     return (
       <Navigator
         screenProps={{
+          currentTrack: this.getTrack(),
           playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
           loadSongsForMoodId: this.loadSongsForMood,
           shuffled: this.state.shuffled,
@@ -138,14 +146,14 @@ const mapStateToProps = state => ({
   playbackState: state.queue.playback,
   track: state.queue.track,
   queue: state.queue.queue,
-  currentTrack: state.queue.currentTrack,
 });
 
 const mapDispatchToProps = {
-  loadSongsForMoodId,
-  updateCurrentTrack,
-  updateScore,
   setMood,
+  loadSongsForMoodId,
+  resetScore,
+  stopScoreTimer,
+  sendScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -25,15 +25,16 @@ class LeaderboardScreen extends Component {
   // loadArtists api call, render spinner until artists load
   keyExtractor = song => song.id.toString();
 
-  _renderItem = ({ item }) => <LeaderboardRow
-  leaderboardSong={ item }
-  >
-    </LeaderboardRow>
+  _renderItem = ({ item, index }) => (
+    <LeaderboardRow
+      leaderboardSong={ item }
+      index={index}
+    >
+    </LeaderboardRow>);
 
-  getLeaderBoard = () => {
-    return (
-      this.props.leaderboardSongs.length
-        ? (
+  getLeaderBoard = () => (
+    this.props.leaderboardSongs.length
+      ? (
           <FlatList
             data={this.props.leaderboardSongs}
             renderItem={this._renderItem}
@@ -41,10 +42,9 @@ class LeaderboardScreen extends Component {
             ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
             >
           </FlatList>
-        )
-        : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
-    );
-  }
+      )
+      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+  )
 
   render = () => (
     <View style={styles.background}>
@@ -54,7 +54,7 @@ class LeaderboardScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  leaderboardSongs: state.leaderboard.leaderboardSongs, // state/loaderboard.leaderboardSongs get the leaderboardSongs prop off the leaderboardSongs reducer's action
+  leaderboardSongs: state.leaderboard.songs, // state/loaderboard.leaderboardSongs get the leaderboardSongs prop off the leaderboardSongs reducer's action
 });
 
 export default connect(mapStateToProps)(LeaderboardScreen);

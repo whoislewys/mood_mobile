@@ -7,6 +7,7 @@ import reducer from './modules';
 
 // const TOKEN = 'EXVbAWTqbGFl7BKuqUQv';
 const URL = 'http://api.moodindustries.com/api/v1/';
+// const URL = 'http://api.mood.local:3000/api/v1/';
 
 const axiosConfig = {
   // interceptors: {

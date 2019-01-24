@@ -164,13 +164,13 @@ class SettingsScreen extends Component {
     return (
       <View style={{flex: 1}}>
         <FlatList
-          data={[{
+          data={[ /* {
             url: 'http://moodindustries.com/privacy.pdf',
             settingName: 'Explicit',
             settingInfo: 'Allow playback of explicit music.',
             switchExists: true,
             handlePress: this.onToggle,
-          }, {
+          }, */ {
             url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
             settingName: 'Rate & Review',
             settingInfo: 'Tell us about your experience.',

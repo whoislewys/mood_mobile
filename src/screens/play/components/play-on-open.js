@@ -7,6 +7,7 @@ export default class PlayOnOpen extends Component {
     // Might look smoother if no play button animation would showed
     if (!this.props.playing && this.props.parentScreen !== 'Playbar') {
       this.props.playByDefault();
+      this.props.startScoreTimer(this.props.sendScoreDeltaFunc, this.props.currentTrack.id);
     }
   }
 

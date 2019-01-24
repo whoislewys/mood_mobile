@@ -9,14 +9,12 @@ import {
   Animated,
 } from 'react-native';
 import Images from '@assets/images';
+import { incrementScore, incrementScoreDelta } from '../redux/modules/score';
 import { fonts } from '../assets/styles';
-import { updateScore } from '../redux/modules/queue';
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-let COUNT = 1;
 
 const styles = StyleSheet.create({
   clapButton: {
@@ -95,16 +93,16 @@ class ClapBubble extends Component {
 
     return (
       (this.props.count <= this.props.maxCount) ? (
-      <Animated.View style={[clapBubbleStyle, animationStyle]}>
-        <View style={styles.shootingStarShadow}>
-          <Image source={Images.star} style={styles.shootingStar}/>
-        </View>
-        <Text style={styles.clapText}>{this.props.count}</Text>
-      </Animated.View>
+        <Animated.View style={[clapBubbleStyle, animationStyle]}>
+          <View style={styles.shootingStarShadow}>
+            <Image source={Images.star} style={styles.shootingStar}/>
+          </View>
+          <Text style={styles.clapText}>{this.props.count}</Text>
+        </Animated.View>
       ) : (
-    <Animated.View style={[clapBubbleStyle, animationStyle]}>
-      <Text style={styles.clapText}>{this.props.maxCount}</Text>
-    </Animated.View>
+        <Animated.View style={[clapBubbleStyle, animationStyle]}>
+          <Text style={styles.clapText}>{this.props.maxCount}</Text>
+        </Animated.View>
       )
     );
   }
@@ -129,11 +127,10 @@ class ClapButton extends Component {
     // start from currentScore + 1 to not show 0 stars
     const { claps, maxCount } = this.state;
     const newScore = this.props.currentScore + 1;
-
     if (newScore <= maxCount) {
       // option 1: push claps for current song to database/ API call HERE
       claps.push(newScore);
-      this.props.updateScore(newScore);
+      this.props.incrementScore();
     }
   }
 
@@ -162,7 +159,7 @@ class ClapButton extends Component {
   }
 
   render = () => {
-    let clapIcon = (this.props.currentScore < 1) ? (
+    const clapIcon = (this.props.currentScore < 1) ? (
       <Image source={Images.starOutline} style={styles.star}/>
     )
       : <Image source={Images.star} style={styles.star}/>;
@@ -184,11 +181,13 @@ class ClapButton extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentScore: state.queue.currentScore,
+  currentScore: state.score.currentScore,
+  scoreDelta: state.score.scoreDelta,
 });
 
 const mapDispatchToProps = {
-  updateScore,
+  incrementScore,
+  incrementScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClapButton);

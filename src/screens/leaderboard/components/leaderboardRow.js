@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   rank: {
     fontFamily: 'Quicksand',
-    width: 66.24,
+    width: 56.24,
     textAlign: 'center',
     fontSize: 34,
   },
@@ -64,32 +64,54 @@ const styles = StyleSheet.create({
   },
 });
 
-const LeaderboardRow = ({ leaderboardSong }) => {
+const getStarsString = (stars) => {
+  if (stars >= 1000 && stars < 10000) {
+    // [one thousand, ten thousand)
+    return `${(stars / 1000).toFixed(1)}k`;
+  }
+  if (stars >= 10000 && stars < 1000000) {
+    // [ten thousand, one million)
+    return `${(stars / 1000).toFixed(0)}k`;
+  }
+  if (stars >= 1000000 && stars < 10000000) {
+    // [one million, ten million)
+    return `${(stars / 1000000).toFixed(1)}m`;
+  }
+  if (stars >= 10000000 && stars < 1000000000) {
+    // [ten million, one billion)
+    return `${(stars / 1000000).toFixed(0)}m`;
+  }
+  if (stars >= 1000000000) {
+    // [one billion, inf)
+    return `${(stars / 1000000).toFixed(1)}b`;
+  }
+  return stars.toString();
+};
+
+const LeaderboardRow = ({ leaderboardSong, index }) => {
   const {
     artist,
     name,
     stars,
-    rank,
     art_url,
   } = leaderboardSong;
 
   return (
     <View style={styles.rowBackground}>
-      <Text style={styles.rank}>{rank}</Text>
+      <Text style={styles.rank}>{index + 1}</Text>
       <Image style={styles.albumArt} source={{ uri: art_url }}/>
       <View style={styles.detailsContainer}>
         <Text
         style={styles.songName}
         numberOfLines={1}
-        ellipsizeMode="tail"
-        >
+        ellipsizeMode="tail">
           {name}
         </Text>
         <Text style={styles.artistName}>{artist}</Text>
       </View>
       <View style={styles.starsContainer}>
         <Image source={Images.leaderboardStar}/>
-        <Text style={styles.starCount}>{stars}</Text>
+        <Text style={styles.starCount}>{getStarsString(stars)}</Text>
       </View>
     </View>
   );

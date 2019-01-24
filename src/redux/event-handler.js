@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import { playbackState, playbackTrack } from './modules/queue';
+import { resetScore } from './modules/score';
 
 async function eventHandler(store, data) {
   switch (data.type) {
@@ -17,9 +18,11 @@ async function eventHandler(store, data) {
       break;
     case 'remote-next':
       TrackPlayer.skipToNext();
+      store.dispatch(resetScore()); // reset global score (stars given) to 0
       break;
     case 'remote-previous':
       TrackPlayer.skipToPrevious();
+      store.dispatch(resetScore());
       break;
     case 'remote-seek':
       TrackPlayer.seekTo(data.position);
