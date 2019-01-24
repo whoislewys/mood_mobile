@@ -27,6 +27,8 @@ class SplashScreen extends Component {
 
   componentDidMount = () => {
     this.props.loadMoods();
+    this.setState({ shit: true });
+    /*
     branch.subscribe(({ error, params }) => {
       if (error) {
         console.error('Error from Branch: ', error);
@@ -69,6 +71,7 @@ class SplashScreen extends Component {
       };
       this.openSharedTrack(sharedTrack);
     });
+    */
   }
 
   componentWillUnmount = () => {
@@ -85,7 +88,8 @@ class SplashScreen extends Component {
 
   componentDidUpdate = () => {
     if (this.props.moods.length > 0) {
-      this.navigateToMoodScreen();
+      console.log('moods:', this.props.moods);
+      // this.navigateToMoodScreen();
     }
   }
 
