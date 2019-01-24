@@ -8,7 +8,6 @@ import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.guichaguri.trackplayer.TrackPlayer;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
-import com.futurice.rctaudiotoolkit.AudioPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -33,8 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
             new SplashScreenReactPackage(),
             new TrackPlayer(),
             new VectorIconsPackage(),
-            new ReactNativeRestartPackage(),
-            new AudioPackage()
+            new ReactNativeRestartPackage()
       );
     }
 
