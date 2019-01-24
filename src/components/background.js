@@ -5,19 +5,22 @@ import {
   Image,
 } from 'react-native';
 import Images from '@assets/images';
+import { dimensions } from '../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: dimensions.width,
+    height: dimensions.height,
+    alignItems: 'center',
   },
   bgImage: {
     flex: 1,
     position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    width: dimensions.width,
+    height: dimensions.height,
     resizeMode: 'cover',
+    opacity: 0.5,
   },
 });
 

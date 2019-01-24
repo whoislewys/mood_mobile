@@ -4,61 +4,47 @@ import {
   StyleSheet,
   View,
   Image,
-  Dimensions,
   TouchableOpacity,
   StatusBar,
-  Text,
   ActivityIndicator,
 } from 'react-native';
-import Images from '@assets/images';
+import branch, { BranchEvent } from 'react-native-branch';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+import { dimensions } from '../../assets/styles';
+import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
+import Images from '@assets/images';
 
 const styles = StyleSheet.create({
-  container: {
+  playContainer: {
     flex: 1,
-    marginHorizontal: width * 0.03,
-    marginVertical: height * 0.03,
+    alignSelf: 'stretch',
+    marginLeft: '5.9%',
+    marginRight: '5.9%',
   },
-  menuDropdown: {
-    flex: 8,
+  dropdownBar: {
+    height: '11.52%',
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 0.01 * width,
-    marginRight: 0.02 * width,
-    marginTop: 20,
-  },
-  moodText: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    textAlign: 'center',
-    color: '#ccc',
-
-    paddingTop: 0,
-    marginTop: -4,
-
-    fontSize: 25,
-    fontFamily: 'Roboto',
-    fontWeight: '300',
+    alignItems: 'flex-end',
   },
   backButton: {
-    width: 23,
-    height: 14,
-    position: 'absolute',
-    top: -7,
-    left: 0.02 * width,
-    opacity: 0.5,
-    resizeMode: 'stretch',
-    transform: [{ rotateX: '180deg' }],
-  },
-  touchable: {
     zIndex: 2,
+    paddingLeft: '1.8%',
+    resizeMode: 'contain',
+    height: 30,
+    width: 30,
+    opacity: 0.5,
+  },
+  trackInfoContainer: {
+    width: '100%',
+    height: '66%',
+    marginTop: '4%',
+    alignItems: 'center',
+  },
+  playControlsContainer: {
+    marginTop: '8%',
   },
 });
 
@@ -70,49 +56,51 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    const { goBack } = this.props.navigation;
-
     return (this.props.queue.length
-      // return playscreen if queue has 1 or more songs
+      // TODO: refactor to get rid of trackInfo
+      // and add each of it's child components separately
       ? (
         <Background
           image={{ uri: this.props.currentTrack.artwork }}
-          blur={50}
+          blur={25}
+          height={dimensions.height}
+          bottom={0}
         >
           <PlayOnOpen playing={this.props.playing}
           playByDefault={this.props.handlePlayPress}
           parentScreen={this.props.parentScreen}
+          startScoreTimer={this.props.startScoreTimer}
+          currentTrack={this.props.currentTrack}
+          sendScoreDeltaFunc={this.props.sendScoreDelta}
           />
-          <View style={styles.container}>
-            <View style={styles.menuDropdown}>
-              <TouchableOpacity onPress={() => goBack()} style={styles.touchable}>
-                <Image source={Images.arrowUpWhite} style={styles.backButton} />
+          <View style={styles.playContainer}>
+            <View style={styles.dropdownBar}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
+                <Image source={Images.arrowDown} />
               </TouchableOpacity>
-
-              <Text style={styles.moodText}>
-                { this.props.selected ? this.props.selected.name.toLowerCase() : '' }
-              </Text>
             </View>
-            <TrackInfo
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
-              track={this.props.currentTrack}
-              setTime={this.props.setTime}
-            />
-            <PlayControls
-              shuffled={this.props.shuffled}
-              repeat={this.props.repeat}
-              toggleShuffle={this.props.toggleShuffle}
-              toggleRepeat={this.props.toggleRepeat}
-
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
-
-              playing={this.props.playing}
-              handlePlayPress={this.props.handlePlayPress}
-
-              loading={this.props.loading}
-            />
+            <View style={styles.trackInfoContainer}>
+              <TrackInfo
+                skipForward={this.props.nextTrack}
+                skipBack={this.props.previousTrack}
+                track={this.props.currentTrack}
+                setTime={this.props.setTime}
+              />
+            </View>
+            <View style={styles.playControlsContainer}>
+              <PlayControls
+                shuffled={this.props.shuffled}
+                repeat={this.props.repeat}
+                toggleShuffle={this.props.toggleShuffle}
+                toggleRepeat={this.props.toggleRepeat}
+                skipForward={this.props.nextTrack}
+                skipBack={this.props.previousTrack}
+                playing={this.props.playing}
+                handlePlayPress={this.props.handlePlayPress}
+                loading={this.props.loading}
+                currentTrack={this.props.currentTrack}
+              />
+            </View>
           </View>
         </Background>
       )
@@ -128,4 +116,9 @@ const mapStateToProps = state => ({
   queue: state.queue.queue,
 });
 
-export default connect(mapStateToProps)(PlayScreen);
+const mapDispatchToProps = {
+  startScoreTimer,
+  sendScoreDelta,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);

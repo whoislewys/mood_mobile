@@ -7,17 +7,18 @@ import reducer from './modules';
 
 // const TOKEN = 'EXVbAWTqbGFl7BKuqUQv';
 const URL = 'http://api.moodindustries.com/api/v1/';
+// const URL = 'http://api.mood.local:3000/api/v1/';
 
 const axiosConfig = {
-  interceptors: {
-    request: [
-      ({ getState, dispatch, getSourceAction }, req) => {
-        console.log('Interception!!');
-        console.log(req); // contains information about request object
-        return req;
-      },
-    ],
-  },
+  // interceptors: {
+  //   request: [
+  //     ({ getState, dispatch, getSourceAction }, req) => {
+  //       console.log('Interception!!');
+  //       console.log(req); // contains information about request object
+  //       return req;
+  //     },
+  //   ],
+  // },
 };
 
 // TODO: migrate to bearer token

@@ -32,7 +32,6 @@ export default function reducer(state = initialState, action = {}) {
       let data = action.payload.data;
       data = Object.keys(data).map(key => data[key]);
       preloadImages(data);
-
       return {
         ...state,
         loading: false,

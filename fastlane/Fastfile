@@ -25,7 +25,12 @@ platform :ios do
     ) # more info: https://codesigning.guide
     increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
     gym(scheme: 'mood_mobile', project: './ios/mood_mobile.xcodeproj')
-    # upload_to_testflight
+    upload_to_testflight
+  end
+
+  desc 'increment_build_number'
+  lane :inc_build do
+    increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
   end
 
   desc 'Deploy a new version to the App Store'

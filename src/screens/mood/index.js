@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
 import MoodList from './components/mood-list';
-import Playbar from '../../components/playbar';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,40 +41,45 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   }
 
+  navigateToMoodScreen = (params = {}) => {
+    this.props.navigation.navigate({
+      routeName: 'Mood',
+      params: { ...params, visible: true },
+    });
+  }
+
   navigateToPlayScreenFromMoodScreen = (params = {}) => {
     const currentScreenName = 'MoodScreen';
+    // this.props.navigation.setParams({ visible: false });
     this.props.navigation.navigate({
       routeName: 'Play',
-      params: { ...params, parentScreen: currentScreenName },
-    });
-  };
-
-  navigateToPlayScreenFromPlaybar = (params = {}) => {
-    const currentScreenName = 'Playbar';
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: { ...params, parentScreen: currentScreenName },
+      params: {
+        ...params,
+        parentScreen: currentScreenName,
+        visible: false,
+        moodscreen: this.navigateToMoodScreen,
+      },
     });
   };
 
   navigateToSettingsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Settings',
-      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar },
+      params: {
+        ...params,
+        playscreen: this.navigateToPlayScreenFromPlaybar,
+        moodscreen: this.navigateToMoodScreen,
+        visible: true,
+      },
     });
   };
 
-  getPlaybar = () => (this.props.queue && this.props.queue.queue.length
-    ? (
-        <Playbar
-        track={this.props.currentTrack}
-        playing={this.props.playing}
-        playscreen={this.navigateToPlayScreenFromPlaybar}
-        handlePlayPress={this.props.handlePlayPress}/>
-    )
-    : null
-  )
-
+  navigateToLeaderboardScreen = (params = {}) => {
+    this.props.navigation.navigate({
+      routeName: 'Leaderboard',
+      params: { ...params, playscreen: this.navigateToPlayScreenFromPlaybar, visible: true },
+    });
+  };
 
   getContent = () => {
     if (!this.props.loading) {
@@ -85,7 +89,6 @@ class MoodScreen extends Component {
             setMood={this.props.setMood}
             moods={this.props.moods}
             selected={this.props.mood}
-            track={this.props.currentTrack}
             playing={this.props.playing}
             handlePlayPress={this.props.handlePlayPress}
             settings={this.navigateToSettingsScreen}
@@ -104,15 +107,14 @@ class MoodScreen extends Component {
         <View style={styles.moodList}>
           { this.getContent() }
         </View>
-        { this.getPlaybar() }
       </View>
   )
 }
 
 const mapStateToProps = state => ({
   moods: state.mood.moods,
-  selected: state.mood.selected,
-  queue: state.queue,
+  selected: state.mood.selected, // state.mood.selected gets the selected prop from the state of the mood reducer's action
+  queue: state.queue, // state.queue gets the entire state of the queue reducer's action
 });
 
 const mapDispatchToProps = {

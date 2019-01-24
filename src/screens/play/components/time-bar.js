@@ -8,19 +8,19 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import TrackPlayer from 'react-native-track-player';
-
 import Images from '@assets/images';
 
 const width = Dimensions.get('window').width * 0.8;
 
 const styles = StyleSheet.create({
   timeBar: {
-    flex: 10,
+    height: '10%',
     width,
     marginHorizontal: 10,
     marginTop: 15,
     flexDirection: 'row',
     position: 'relative',
+    backgroundColor: 'transparent',
   },
   tick: {
     position: 'absolute',
@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: 'white',
     fontSize: 14,
-    fontFamily: 'Roboto',
-    fontWeight: '400',
     position: 'absolute',
   },
 });

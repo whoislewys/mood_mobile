@@ -1,82 +1,46 @@
 import React from 'react';
 import {
   View,
-  StyleSheet,
-  FlatList,
-  Dimensions,
   Text,
   Image,
   TouchableOpacity,
+  FlatList,
+  StyleSheet,
   Linking,
 } from 'react-native';
-import axios from 'axios';
 import Images from '@assets/images';
 import Mood from './mood';
-
-const { width } = Dimensions.get('window');
+import { fonts, colors, dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
-    flex: 10,
-    padding: 15,
-    paddingTop: 45,
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 25,
-  },
-  headerContent: {
-    flexDirection: 'row',
-  },
-  headerDivider: {
-    resizeMode: 'contain',
-    width: width * 0.95,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    textAlign: 'center',
+    paddingBottom: '15%',
+    paddingTop: '10%',
+    marginLeft: dimensions.width * 0.077,
+    marginRight: dimensions.width * 0.077,
   },
   headerText: {
-    flex: 1,
-    textAlign: 'left',
-    color: '#666',
-    fontSize: 32,
-    fontWeight: '300',
-    paddingBottom: 0,
-    paddingTop: 10,
-    paddingLeft: 22,
+    color: colors.header,
+    fontFamily: fonts.primary,
+    fontSize: fonts.header,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: '33%',
   },
   bugsButton: {
-    flex: 1,
-    resizeMode: 'contain',
-    position: 'absolute',
-    opacity: 0.35,
-    right: 64,
-    width: 26,
-    height: 44,
-    top: 8,
+    height: 25,
+    width: 25,
   },
   settingsButton: {
-    flex: 1,
-    resizeMode: 'contain',
-    position: 'absolute',
-    right: 22,
-    width: 26,
-    height: 44,
-    top: 8,
-    opacity: 0.4,
-
-  },
-  logo: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: 50,
-    width: 80,
-    marginTop: 10,
-    marginLeft: 20,
+    height: 25,
+    width: 25,
+    marginLeft: '10%',
   },
 });
 
@@ -106,10 +70,8 @@ export default class MoodList extends React.Component {
 
   renderHeader = () => (
       <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <Text style={styles.headerText}>
-            Mood.
-          </Text>
+        <Text style={styles.headerText}>Discover</Text>
+        <View style={styles.buttonRow}>
           <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
             <Image source={Images.bugIcon} style={styles.bugsButton}/>
           </TouchableOpacity>
@@ -121,7 +83,8 @@ export default class MoodList extends React.Component {
   )
 
   // renderItem should be a function that returns a component
-  render = () => (
+  render = () => {
+    return (
       <FlatList
         data={this.props.moods}
         keyExtractor={this.keyExtractor}
@@ -129,5 +92,6 @@ export default class MoodList extends React.Component {
         ListHeaderComponent={this.renderHeader}
         >
       </FlatList>
-  )
+    );
+  }
 }

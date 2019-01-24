@@ -25,6 +25,9 @@
     "spaced-comment" : "warn",
     "prefer-destructuring": "warn",
     "no-empty" : "warn",
-    "prefer-const" : "warn"
+    "prefer-const" : "warn",
+    "max-len" : "warn",
+    "camelcase" : "warn",
+    "no-extra-bind" : "warn"
   }
 }

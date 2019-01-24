@@ -43,8 +43,8 @@ export default function ditherShuffle(arr, field, field2) {
   const sortedArr = [];
   const list = new Map(Object.entries(sort(arr, field)));
 
-  console.log('Begin dithering!');
-  console.log(list);
+  // console.log('Begin dithering!');
+  // console.log(list);
 
   list.forEach((value, key) => {
     let sortedList = value;
@@ -58,7 +58,7 @@ export default function ditherShuffle(arr, field, field2) {
   });
 
   sortedArr.sort((a, b) => (a.i - b.i));
-  console.log(generateVisual(list, sortedArr, len));
+  // console.log(generateVisual(list, sortedArr, len));
 
   return sortedArr;
 }
