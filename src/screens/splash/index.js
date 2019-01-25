@@ -5,7 +5,7 @@ import {
   Linking,
 } from 'react-native';
 import { connect } from 'react-redux';
-import branch from 'react-native-branch';
+// import branch from 'react-native-branch';
 import { loadMoods } from '../../redux/modules/mood';
 
 class SplashScreen extends Component {
@@ -89,7 +89,7 @@ class SplashScreen extends Component {
   componentDidUpdate = () => {
     if (this.props.moods.length > 0) {
       console.log('moods:', this.props.moods);
-      // this.navigateToMoodScreen();
+      this.navigateToMoodScreen();
     }
   }
 
