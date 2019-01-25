@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     textAlign: 'center',
+    justifyContent: 'space-between',
     paddingBottom: '15%',
     paddingTop: '10%',
     marginLeft: dimensions.width * 0.077,
@@ -30,8 +31,10 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
+    alignItems: 'flex-end',
+    width: '25%',
+    backgroundColor: 'red',
     justifyContent: 'space-between',
-    marginLeft: '33%',
   },
   bugsButton: {
     height: 25,
