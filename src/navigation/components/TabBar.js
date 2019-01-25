@@ -5,7 +5,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Dimensions,
   StyleSheet,
   Alert,
   Animated,
