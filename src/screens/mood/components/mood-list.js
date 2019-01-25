@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     width: '25%',
-    backgroundColor: 'red',
     justifyContent: 'space-between',
   },
   bugsButton: {
