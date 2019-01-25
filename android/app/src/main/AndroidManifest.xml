@@ -22,7 +22,7 @@
         </intent-filter>
         <!-- Branch URI Scheme -->
         <intent-filter>
-            <data android:scheme="moodmobile" />
+            <data android:scheme="moodmusic" />
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
