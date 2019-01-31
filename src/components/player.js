@@ -18,25 +18,11 @@ class Player extends Component {
     StatusBar.setBarStyle('light-content', true);
   }
 
-  componentDidMount = () => {
-    TrackPlayer.setupPlayer();
-    TrackPlayer.updateOptions({
-      stopWithApp: true,
-      capabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-      ],
-    });
-  }
-
   componentWillUnmount = () => {
     this.props.stopScoreTimer();
   }
 
-  // ///////////////////////////////////////////////////////////
-  // State change functions
+  // Todo clean up this logic w redux-thunk?
   handlePlayPress = async () => {
     const { track } = this.props;
     if (track === null) {
@@ -52,7 +38,7 @@ class Player extends Component {
 
   handleShare = async (sharedTrack) => {
     // plays a shared song
-    this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
+    this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
     await TrackPlayer.reset();
     await TrackPlayer.add(sharedTrack);
     await TrackPlayer.play();
@@ -71,7 +57,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToNext();
-      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
+      this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
     } catch (_) {}
   }
 
@@ -81,7 +67,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToPrevious();
-      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
+      this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
     } catch (_) {}
   }
 
@@ -92,31 +78,16 @@ class Player extends Component {
   toggleRepeat = () => {
     this.setState({ repeat: !this.state.repeat });
   }
-  // ////////////////////////////////////////////////////////////////////////////
-
-  // Misc. Functions ///////////////////////////////////////////////////////////
-
-  // When I wrote this, only me and God knew the purpose of this function
-  // Now, only God knows
-  mod = (n, m) => ((n % m) + m) % m
 
   loadSongsForMood = (id) => {
     TrackPlayer.reset();
     this.props.loadSongsForMoodId(id);
   }
 
-  getTrack = () => {
-    let track = this.props.queue.find(e => (e.id === this.props.track));
-    if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
-
-    return track;
-  }
-
   render = () => {
     return (
       <Navigator
         screenProps={{
-          currentTrack: this.getTrack(),
           playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
           loadSongsForMoodId: this.loadSongsForMood,
           shuffled: this.state.shuffled,
@@ -145,6 +116,7 @@ const mapStateToProps = state => ({
   errors: state.queue.loading,
   playbackState: state.queue.playback,
   track: state.queue.track,
+  curTrack: state.queue.curTrack,
   queue: state.queue.queue,
 });
 
