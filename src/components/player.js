@@ -22,8 +22,7 @@ class Player extends Component {
     this.props.stopScoreTimer();
   }
 
-  // ///////////////////////////////////////////////////////////
-  // State change functions
+  // Todo clean up this logic w redux-thunk?
   handlePlayPress = async () => {
     const { track } = this.props;
     if (track === null) {
@@ -39,7 +38,7 @@ class Player extends Component {
 
   handleShare = async (sharedTrack) => {
     // plays a shared song
-    this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
+    this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
     await TrackPlayer.reset();
     await TrackPlayer.add(sharedTrack);
     await TrackPlayer.play();
@@ -58,7 +57,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToNext();
-      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
+      this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
     } catch (_) {}
   }
 
@@ -68,7 +67,7 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToPrevious();
-      this.props.resetScore(this.props.sendScoreDelta, this.getTrack().id);
+      this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
     } catch (_) {}
   }
 
@@ -85,18 +84,10 @@ class Player extends Component {
     this.props.loadSongsForMoodId(id);
   }
 
-  getTrack = () => {
-    let track = this.props.queue.find(e => (e.id === this.props.track));
-    if (track === undefined) track = this.props.queue[0]; // This is gross, I promise I'll fix it
-    return track;
-  }
-
   render = () => {
     return (
       <Navigator
         screenProps={{
-          currentTrack: this.getTrack(),
-          // currentTrack: this.props.curTrack, // the curTrack being updated through redux
           playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
           loadSongsForMoodId: this.loadSongsForMood,
           shuffled: this.state.shuffled,

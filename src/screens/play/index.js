@@ -56,8 +56,6 @@ class PlayScreen extends Component {
 
   render = () => {
     if (this.props.queue.length <= 0 || (this.props.curTrack == null)) {
-      console.log('que empty!', this.props.queue);
-      console.log('curTrack: ', this.props.curTrack);
       return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
     }
 
@@ -65,7 +63,7 @@ class PlayScreen extends Component {
       // TODO: refactor to get rid of trackInfo
       // and add each of it's child components separately
       <Background
-        image={{ uri: this.props.currentTrack.artwork }}
+        image={{ uri: this.props.curTrack.artwork }}
         blur={25}
         height={dimensions.height}
         bottom={0}
@@ -74,7 +72,7 @@ class PlayScreen extends Component {
         playByDefault={this.props.handlePlayPress}
         parentScreen={this.props.parentScreen}
         startScoreTimer={this.props.startScoreTimer}
-        currentTrack={this.props.currentTrack}
+        currentTrack={this.props.curTrack}
         sendScoreDeltaFunc={this.props.sendScoreDelta}
         />
         <View style={styles.playContainer}>
@@ -87,7 +85,7 @@ class PlayScreen extends Component {
             <TrackInfo
               skipForward={this.props.nextTrack}
               skipBack={this.props.previousTrack}
-              track={this.props.currentTrack}
+              track={this.props.curTrack}
               setTime={this.props.setTime}
             />
           </View>
@@ -102,7 +100,7 @@ class PlayScreen extends Component {
               playing={this.props.playing}
               handlePlayPress={this.props.handlePlayPress}
               loading={this.props.loading}
-              currentTrack={this.props.currentTrack}
+              currentTrack={this.props.curTrack}
             />
           </View>
         </View>
