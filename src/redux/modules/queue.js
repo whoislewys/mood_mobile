@@ -79,7 +79,7 @@ export default function reducer(state = initialState, action = {}) {
       songs1 = loadSongData(action.payload.data);
       console.log(action);
       console.log('songs1 before unshift: ', songs1);
-      songs1.unshift(SHARETRACK_HACK)
+      songs1.unshift(SHARETRACK_HACK);
       console.log('songs after unshift: ', songs1);
       return {
         ...state,
