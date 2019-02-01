@@ -17,27 +17,11 @@ class SplashScreen extends Component {
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
   }
 
-  openSharedTrack = async (sharedTrack) => {
-    const { navigate } = this.props.navigation;
-    // TODO: ensure that a full the queue load before inserting the sharedtrack
-    this.props.loadSongsForMoodId(sharedTrack.mood_id);
-    await this.props.handleShare(sharedTrack);
-    navigate({ routeName: 'Play', params: { visible: false } });
-  }
-
   componentDidMount = () => {
     this.props.loadMoods();
     branch.subscribe(({ error, params }) => {
       if (error) {
         console.error('Error from Branch: ', error);
-        return;
-      }
-
-      // params will never be null if error is null
-
-      if (params['+non_branch_link']) {
-        const nonBranchUrl = params['+non_branch_link'];
-        // Route non-Branch URL if appropriate.
         return;
       }
 
@@ -49,6 +33,7 @@ class SplashScreen extends Component {
 
       // A Branch link was opened.
       // create track object from shared link's params
+      console.log('branch link opened: ', params);
       const id = params.$canonical_identifier;
       const artwork = params.$og_image_url;
       const title = params.$og_title;
@@ -67,7 +52,11 @@ class SplashScreen extends Component {
         title,
         url,
       };
-      this.openSharedTrack(sharedTrack);
+      console.log('opening shared track: ', sharedTrack);
+      if (!sharedTrack) return;
+      const { navigate } = this.props.navigation;
+      this.props.handleShare(sharedTrack)
+        .then(navigate({ routeName: 'Play', params: { visible: false } }));
     });
   }
 
