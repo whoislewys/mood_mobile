@@ -6,10 +6,16 @@ const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
+const LOAD_SPECIFIC_SONG_QUEUE = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD';
+const LOAD_SPECIFIC_SONG_QUEUE_SUCCESS = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_SUCCESS';
+const LOAD_SPECIFIC_SONG_QUEUE_FAIL = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_FAIL';
+
 const LOAD_SPECIFIC_SONG = 'queue/LOAD_SPECIFIC_SONG';
 
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
+
+let SHARETRACK_HACK = {};
 
 const initialState = {
   loading: false,
@@ -60,6 +66,34 @@ export default function reducer(state = initialState, action = {}) {
       const { specificSong } = action;
       console.log('shared song in reducer: ', specificSong);
       return { ...state, queue: [specificSong], curTrack: [specificSong] };
+
+      // GEN QUEUE WITH SAME MOOD OF SPECIFIC SONG
+    case LOAD_SPECIFIC_SONG_QUEUE:
+      // SET the queue to be the shared track here
+      // push on to the queue on success
+      return { ...state, loading: true, queue: [] };
+    case LOAD_SPECIFIC_SONG_QUEUE_SUCCESS:
+      console.log('shared song in succeess action on reducer: ', SHARETRACK_HACK);
+      // load songs for mood, reset global score to 0, and set current track
+      let songs1 = [SHARETRACK_HACK];
+      songs1 = loadSongData(action.payload.data);
+      console.log(action);
+      console.log('songs1 before unshift: ', songs1);
+      songs1.unshift(SHARETRACK_HACK)
+      console.log('songs after unshift: ', songs1);
+      return {
+        ...state,
+        loading: false,
+        queue: songs1,
+        curTrack: songs1[0],
+        currentScore: 0,
+      };
+    case LOAD_SPECIFIC_SONG_QUEUE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while loading songs.',
+      };
 
     case PLAYBACK_STATE:
       return {
@@ -112,6 +146,22 @@ export function loadSpecificSong(specificSong) {
   return {
     type: LOAD_SPECIFIC_SONG,
     specificSong,
+  };
+}
+
+export function loadSpecificSongQueue(specificSong) {
+  console.log('LOAD SPEC SONG in action creator:', specificSong);
+  SHARETRACK_HACK = specificSong;
+  return {
+    type: LOAD_SPECIFIC_SONG_QUEUE,
+    payload: {
+      request: {
+        url: `/moods/${specificSong.mood_id}/songs`,
+        params: {
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        },
+      },
+    },
   };
 }
 
