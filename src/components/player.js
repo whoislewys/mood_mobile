@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
-import { loadSongsForMoodId } from '../redux/modules/queue';
+import { loadSongsForMoodId, loadSpecificSong } from '../redux/modules/queue';
 import { resetScore, stopScoreTimer, sendScoreDelta } from '../redux/modules/score';
 
 class Player extends Component {
@@ -38,11 +38,12 @@ class Player extends Component {
 
   handleShare = async (sharedTrack) => {
     // plays a shared song
-    this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
+    console.log('shared track: ', sharedTrack);
     await TrackPlayer.reset();
-    await TrackPlayer.add(sharedTrack);
+    this.props.loadSpecificSong(sharedTrack);
+    console.log('queue after loading specific song: ', this.props.queue);
+    await TrackPlayer.add(this.props.queue);
     await TrackPlayer.play();
-    await TrackPlayer.pause();
   }
 
   stopPlayback = async () => {
@@ -123,6 +124,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setMood,
   loadSongsForMoodId,
+  loadSpecificSong,
   resetScore,
   stopScoreTimer,
   sendScoreDelta,

@@ -1,13 +1,12 @@
 // import { Image } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import shuffle from '../util';
-// import * as TrackPlayer from 'eslint';
 
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
-// const UPDATE_CURRENT_TRACK = 'queue/UPDATE_CURRENT_TRACK';
+const LOAD_SPECIFIC_SONG = 'queue/LOAD_SPECIFIC_SONG';
 
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
@@ -35,6 +34,7 @@ export function loadSongData(list) {
 }
 
 export default function reducer(state = initialState, action = {}) {
+  console.log('queue reducer action type: ', action.type);
   switch (action.type) {
     case LOAD_SONGS:
       return { ...state, loading: true, queue: [] };
@@ -55,6 +55,12 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
       };
+
+    case LOAD_SPECIFIC_SONG:
+      const { specificSong } = action;
+      console.log('shared song in reducer: ', specificSong);
+      return { ...state, queue: [specificSong], curTrack: [specificSong] };
+
     case PLAYBACK_STATE:
       return {
         ...state,
@@ -98,6 +104,14 @@ export function playbackTrack(track) {
   return {
     type: PLAYBACK_TRACK,
     track,
+  };
+}
+
+export function loadSpecificSong(specificSong) {
+  console.log('specific song in action creatro:', specificSong);
+  return {
+    type: LOAD_SPECIFIC_SONG,
+    specificSong,
   };
 }
 
