@@ -9,6 +9,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
+import Carousel from 'react-native-snap-carousel';
+import AlbumArtCarouselItem from './components/album-art-carousel-item';
+import AlbumArt from './components/album-art';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
@@ -26,6 +29,11 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginLeft: '5.9%',
     marginRight: '5.9%',
+  },
+  albumContainer: {
+    height: 0.902 * dimensions.width,
+    width: 0.902 * dimensions.width,
+    resizeMode: 'stretch',
   },
   dropdownBar: {
     height: '11.52%',
@@ -64,47 +72,121 @@ class PlayScreen extends Component {
     }
 
     return (
-      // TODO: refactor to get rid of trackInfo
-      // and add each of it's child components separately
+      // TODO: refactor so trackInfo and Playbar are separate components
       <Background
         image={{ uri: this.props.curTrack.artwork }}
         blur={25}
         height={dimensions.height}
         bottom={0}
       >
-        <PlayOnOpen
-          playing={this.props.playing}
-          playByDefault={this.props.handlePlayPress}
-          parentScreen={this.props.parentScreen}
-        />
+        { this.playOnOpen() }
         <View style={styles.playContainer}>
-          <View style={styles.dropdownBar}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
-              <Image source={Images.arrowDown} />
-            </TouchableOpacity>
-          </View>
+          { this.getDropdownBar() }
           <View style={styles.trackInfoContainer}>
-            <TrackInfo
-              skipForward={this.props.skipToNext}
-              skipBack={this.props.skipToPrevious}
-              track={this.props.curTrack}
-              setTime={this.props.setTime}
-            />
+            { /* this.getAlbumArt() */ }
+            { this.getAlbumArtCarousel() }
+            { this.getTrackInfoAndPlaybar() }
           </View>
-          <View style={styles.playControlsContainer}>
-            <PlayControls
-              shuffled={this.props.shuffled}
-              repeat={this.props.repeat}
-              skipForward={this.props.skipToNext}
-              skipBack={this.props.skipToPrevious}
-              playing={this.props.playing}
-              handlePlayPress={this.props.handlePlayPress}
-              loading={this.props.loading}
-              currentTrack={this.props.curTrack}
-            />
-          </View>
+          { this.getPlayControls() }
         </View>
       </Background>
+    );
+  }
+
+  _nextTrack = () => {
+    this.props.nextTrack();
+    this._carouselref.snapToNext();
+  }
+
+  _previousTrack = () => {
+    this.props.previousTrack();
+    this._carouselref.snapToPrev();
+  }
+
+  playOnOpen = () => {
+    return (<PlayOnOpen
+      playing={this.props.playing}
+      playByDefault={this.props.handlePlayPress}
+      parentScreen={this.props.parentScreen}
+      startScoreTimer={this.props.startScoreTimer}
+      currentTrack={this.props.curTrack}
+      sendScoreDeltaFunc={this.props.sendScoreDelta}
+    />);
+  }
+
+  getDropdownBar = () => {
+    return (
+      <View style={styles.dropdownBar}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
+          <Image source={Images.arrowDown} />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  getAlbumArt = () => {
+    return (
+      <View style={styles.albumContainer}>
+        <AlbumArt
+          url={this.props.curTrack.artwork}
+          skipForward={this._nextTrack}
+          skipBack={this._previousTrack}
+        />
+      </View>
+    );
+  }
+
+  _renderCarouselItem = ({ item }) => {
+    return <AlbumArtCarouselItem artwork={item.artwork}/>;
+  }
+
+  _handleCarouselSnap = () => {
+    console.warn('implement da swipe!! :)');
+  }
+
+  getAlbumArtCarousel = () => {
+    // TODO: use the onSnapToItem() callback to move backwards and forwards through tracks
+    // TODO: docs here: https://github.com/archriss/react-native-snap-carousel/blob/master/doc/PROPS_METHODS_AND_GETTERS.md#callbacks
+    return (
+      <Carousel
+        ref={(c) => { this._carouselref = c; }}
+        data={this.props.queue}
+        sliderWidth={dimensions.width}
+        itemWidth={0.75 * dimensions.width}
+        itemHeight={0.95 * dimensions.width}
+        renderItem={this._renderCarouselItem}
+        onSnapToItem={this._handleCarouselSnap}
+      />
+    );
+  }
+
+  getTrackInfoAndPlaybar = () => {
+    return (
+      <TrackInfo
+        skipForward={this._nextTrack}
+        skipBack={this._previousTrack}
+        track={this.props.curTrack}
+        setTime={this.props.setTime}
+      />
+    );
+  }
+
+  getPlayControls = () => {
+    return (
+      <View style={styles.playControlsContainer}>
+        <PlayControls
+          shuffled={this.props.shuffled}
+          repeat={this.props.repeat}
+          toggleShuffle={this.props.toggleShuffle}
+          toggleRepeat={this.props.toggleRepeat}
+          skipForward={this._nextTrack}
+          skipBack={this._previousTrack}
+          playing={this.props.playing}
+          handlePlayPress={this.props.handlePlayPress}
+          loading={this.props.loading}
+          currentTrack={this.props.curTrack}
+        />
+      </View>
     );
   }
 }
@@ -114,6 +196,7 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
+  albumArtList: state.queue.albumArtList,
 });
 
 const mapDispatchToProps = {
