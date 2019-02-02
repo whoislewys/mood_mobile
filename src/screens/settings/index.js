@@ -8,13 +8,12 @@ import {
   Linking,
   Image,
   FlatList,
-  Switch,
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
 import ToggleSwitch from '../../components/toggle-switch';
 import Header from './components/header';
-import { dimensions, fonts, colors } from '../../assets/styles';
+import { fonts, colors } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -90,7 +89,7 @@ class SettingsScreen extends Component {
     super(props);
     this.state = {
       isActive: true,
-      filterExplicit: true,
+      explicit: true,
     };
   }
 
@@ -162,15 +161,15 @@ class SettingsScreen extends Component {
     StatusBar.setBarStyle('dark-content', true);
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <FlatList
-          data={[ /* {
+          data={[{
             url: 'http://moodindustries.com/privacy.pdf',
             settingName: 'Explicit',
             settingInfo: 'Allow playback of explicit music.',
             switchExists: true,
             handlePress: this.onToggle,
-          }, */ {
+          }, {
             url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
             settingName: 'Rate & Review',
             settingInfo: 'Tell us about your experience.',

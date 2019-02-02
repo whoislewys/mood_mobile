@@ -6,6 +6,10 @@ const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
+const LOAD_NON_EXPLICIT_SONGS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD';
+const LOAD_NON_EXPLICIT_SONGS_SUCCESS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_SUCCESS';
+const LOAD_NON_EXPLICIT_SONGS_FAIL = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_FAIL';
+
 const LOAD_SPECIFIC_SONG_QUEUE = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD';
 const LOAD_SPECIFIC_SONG_QUEUE_SUCCESS = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_SUCCESS';
 const LOAD_SPECIFIC_SONG_QUEUE_FAIL = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_FAIL';
@@ -25,6 +29,7 @@ const initialState = {
   track: null,
   curTrack: null,
   currentScore: 0,
+  explicit: true,
 };
 
 export function loadSongData(list) {
@@ -61,6 +66,21 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
       };
+
+    case LOAD_NON_EXPLICIT_SONGS:
+      return { ...state, loading: true, queue: [] };
+    case LOAD_NON_EXPLICIT_SONGS_SUCCESS:
+      let songs0 = null;
+      songs0 = loadSongData(action.payload.data);
+      return {
+        ...state,
+        loading: false,
+        queue: songs0,
+        curTrack: songs0[0],
+        currentScore: 0,
+      };
+    case LOAD_NON_EXPLICIT_SONGS_FAIL:
+      return { ...state, loading: false, error: 'Error while loading songs.' };
 
     case LOAD_SPECIFIC_SONG:
       const { specificSong } = action;
@@ -139,6 +159,12 @@ export function playbackTrack(track) {
     type: PLAYBACK_TRACK,
     track,
   };
+}
+
+export function loadNonExplicitSongs() {
+  // if queue is empty, just set explicit prop on state to `true`
+  // if queue is not empty, set explicit prop on state to `true` and fire loadSongsForMoodId
+  // loadSongsForMoodId will require a small modification for handling explicit state
 }
 
 export function loadSpecificSong(specificSong) {
