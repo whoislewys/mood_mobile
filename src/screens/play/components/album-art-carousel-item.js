@@ -4,12 +4,11 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
+import { dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    alignSelf: 'center',
     elevation: 4,
     shadowColor: 'black',
     shadowRadius: 4,
@@ -20,16 +19,14 @@ const styles = StyleSheet.create({
     },
   },
   albumArt: {
-    resizeMode: 'stretch',
-    width: '100%',
-    height: '100%',
+    height: 0.902 * dimensions.width,
+    width: 0.902 * dimensions.width,
     borderRadius: 4,
   },
 });
 
 export default class AlbumArtCarouselItem extends Component {
   render = () => {
-    console.log('carousel art: ', this.props.artwork);
     return (
       <View style={styles.albumContainer}>
         <Image
