@@ -26,11 +26,6 @@ const styles = StyleSheet.create({
     marginLeft: '5.9%',
     marginRight: '5.9%',
   },
-  albumContainer: {
-    height: 0.902 * dimensions.width,
-    width: 0.902 * dimensions.width,
-    resizeMode: 'stretch',
-  },
   dropdownBar: {
     height: '11.52%',
     flexDirection: 'row',
@@ -46,12 +41,11 @@ const styles = StyleSheet.create({
   },
   trackInfoContainer: {
     width: '100%',
-    height: '66%',
-    marginTop: '4%',
+    height: '55%',
     alignItems: 'center',
   },
   playControlsContainer: {
-    marginTop: '8%',
+    paddingTop: '40%',
   },
 });
 
@@ -60,6 +54,7 @@ class PlayScreen extends Component {
   constructor(props) {
     super(props);
     StatusBar.setBarStyle('light-content', true);
+    this.state = { slideIndex: 0 };
   }
 
   render = () => {
@@ -90,8 +85,9 @@ class PlayScreen extends Component {
   }
 
   _nextTrack = () => {
+    // next track
     this.props.nextTrack();
-    this._carouselref.snapToNext();
+    // this._carouselref.snapToNext();
   }
 
   _previousTrack = () => {
@@ -124,7 +120,7 @@ class PlayScreen extends Component {
     return (
       <View style={styles.albumContainer}>
         <AlbumArt
-          url={this.props.curTrack.artwork}
+          url={art}
           skipForward={this._nextTrack}
           skipBack={this._previousTrack}
         />
@@ -133,25 +129,38 @@ class PlayScreen extends Component {
   }
 
   _renderCarouselItem = ({ item }) => {
-    return <AlbumArtCarouselItem artwork={item.artwork}/>;
+    console.log('carousel art: ', item.artwork);
+    let art = item.artwork !== undefined && item.artwork !== null ? item.artwork : 'https://i1.sndcdn.com/artworks-000232798771-b7p886-t500x500.jpg';
+    console.log('carousel art: ', art);
+    return <AlbumArtCarouselItem artwork={art}/>;
   }
 
-  _handleCarouselSnap = () => {
-    console.warn('implement da swipe!! :)');
+
+
+  _handleCarouselSnap = (slideIndex) => {
+    console.log('this slide index: ', this._carouselref.currentIndex);
+    console.log('slide index: ', slideIndex);
+    if (slideIndex > this._carouselref.currentIndex) {
+      this.props.nextTrack();
+    } else if (slideIndex < this._carouselref.currentIndex) {
+      this.props.previousTrack();
+    }
   }
 
   getAlbumArtCarousel = () => {
     // TODO: use the onSnapToItem() callback to move backwards and forwards through tracks
     // TODO: docs here: https://github.com/archriss/react-native-snap-carousel/blob/master/doc/PROPS_METHODS_AND_GETTERS.md#callbacks
+    this._slideIndex = 0;
     return (
       <Carousel
         ref={(c) => { this._carouselref = c; }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
-        itemWidth={0.75 * dimensions.width}
-        itemHeight={0.95 * dimensions.width}
+        itemWidth={dimensions.width}
         renderItem={this._renderCarouselItem}
-        onSnapToItem={this._handleCarouselSnap}
+        // onSnapToItem={this._handleCarouselSnap}
+        onBeforeSnapToItem={this._handleCarouselSnap}
+        lockScrollWhileSnapping={true}
       />
     );
   }
