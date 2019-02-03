@@ -85,7 +85,8 @@ class PlayScreen extends Component {
   }
 
   _nextTrack = () => {
-    // next track
+    // TODO: implement a snap for when track ends
+    // info on how to do this in github issues on react-native-track-player
     this.props.nextTrack();
     this._carouselref.snapToNext(animated=true, fireCallback=false);
   }
@@ -134,8 +135,6 @@ class PlayScreen extends Component {
     console.log('carousel art: ', art);
     return <AlbumArtCarouselItem artwork={art}/>;
   }
-
-
 
   _handleCarouselSnap = (slideIndex) => {
     console.log('this slide index: ', this._carouselref.currentIndex);
