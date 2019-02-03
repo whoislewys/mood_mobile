@@ -9,7 +9,6 @@ import TimeBar from './time-bar';
 const styles = StyleSheet.create({
   trackInfoContainer: {
     flex: 1,
-    height: '100%',
     width: '100%',
     alignItems: 'center',
   },
@@ -20,6 +19,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     flex: 1,
+    paddingTop: '15%',
   },
 });
 
