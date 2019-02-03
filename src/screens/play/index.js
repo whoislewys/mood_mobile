@@ -87,12 +87,12 @@ class PlayScreen extends Component {
   _nextTrack = () => {
     // next track
     this.props.nextTrack();
-    // this._carouselref.snapToNext();
+    this._carouselref.snapToNext(animated=true, fireCallback=false);
   }
 
   _previousTrack = () => {
     this.props.previousTrack();
-    this._carouselref.snapToPrev();
+    this._carouselref.snapToPrev(animated=true, fireCallback=false);
   }
 
   playOnOpen = () => {
