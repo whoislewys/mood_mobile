@@ -92,12 +92,12 @@ class PlayScreen extends Component {
     // TODO: implement a snap for when track ends
     // info on how to do this in github issues on react-native-track-player
     this.props.nextTrack();
-    this._carouselref.snapToNext(animated=true, fireCallback=false);
+    this._carouselref.snapToNext(animated = true, fireCallback = false);
   }
 
   _previousTrack = () => {
     this.props.previousTrack();
-    this._carouselref.snapToPrev(animated=true, fireCallback=false);
+    this._carouselref.snapToPrev(animated = true, fireCallback = false);
   }
 
   playOnOpen = () => {
@@ -168,35 +168,31 @@ class PlayScreen extends Component {
     );
   }
 
-  getTrackInfoAndPlaybar = () => {
-    return (
+  getTrackInfoAndPlaybar = () => (
       <TrackInfo
         skipForward={this._nextTrack}
         skipBack={this._previousTrack}
         track={this.props.curTrack}
         setTime={this.props.setTime}
       />
-    );
-  }
+  );
 
-  getPlayControls = () => {
-    return (
-      <View style={styles.playControlsContainer}>
-        <PlayControls
-          shuffled={this.props.shuffled}
-          repeat={this.props.repeat}
-          toggleShuffle={this.props.toggleShuffle}
-          toggleRepeat={this.props.toggleRepeat}
-          skipForward={this._nextTrack}
-          skipBack={this._previousTrack}
-          playing={this.props.playing}
-          handlePlayPress={this.props.handlePlayPress}
-          loading={this.props.loading}
-          currentTrack={this.props.curTrack}
-        />
-      </View>
-    );
-  }
+  getPlayControls = () => (
+    <View style={styles.playControlsContainer}>
+      <PlayControls
+        shuffled={this.props.shuffled}
+        repeat={this.props.repeat}
+        toggleShuffle={this.props.toggleShuffle}
+        toggleRepeat={this.props.toggleRepeat}
+        skipForward={this._nextTrack}
+        skipBack={this._previousTrack}
+        playing={this.props.playing}
+        handlePlayPress={this.props.handlePlayPress}
+        loading={this.props.loading}
+        currentTrack={this.props.curTrack}
+      />
+    </View>
+  );
 }
 
 const mapStateToProps = state => ({
