@@ -8,6 +8,7 @@ import Images from '@assets/images';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
+import { loadSpecificSongQueue } from '../../redux/modules/queue';
 
 const styles = {
   background: {
@@ -27,8 +28,9 @@ class LeaderboardScreen extends Component {
 
   _renderItem = ({ item, index }) => (
     <LeaderboardRow
-      leaderboardSong={ item }
+      leaderboardSong={item}
       index={index}
+      loadSpecificSongQueue={this.props.loadSpecificSongQueue}
     >
     </LeaderboardRow>);
 
@@ -54,7 +56,11 @@ class LeaderboardScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  leaderboardSongs: state.leaderboard.songs, // state/loaderboard.leaderboardSongs get the leaderboardSongs prop off the leaderboardSongs reducer's action
+  leaderboardSongs: state.leaderboard.songs,
 });
 
-export default connect(mapStateToProps)(LeaderboardScreen);
+const mapDispatchToProps = {
+  loadSpecificSongQueue,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);

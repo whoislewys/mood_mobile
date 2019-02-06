@@ -73,6 +73,9 @@ export default function reducer(state = initialState, action = {}) {
       // push on to the queue on success
       return { ...state, loading: true, queue: [] };
     case LOAD_SPECIFIC_SONG_QUEUE_SUCCESS:
+      // normally would pass in the specific song to load a queue for as part of the action
+      // but the axios middleware only allows returns a payload on success, all other props are deleted
+      // could try and put the specific song in the load_specific_song_queue case's state and see if it works there
       console.log('shared song in succeess action on reducer: ', SHARETRACK_HACK);
       // load songs for mood, reset global score to 0, and set current track
       let songs1 = [SHARETRACK_HACK];

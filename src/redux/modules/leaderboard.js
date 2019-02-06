@@ -15,6 +15,7 @@ export default function leaderboard(state = initialState, action = {}) {
       return { ...state, loading: true };
     case LOAD_SONGS_SUCCESS:
       const songs = action.payload.data;
+      console.log('leaderboard songs: ', songs);
       return { ...state, loading: false, songs };
     case LOAD_SONGS_FAIL:
       return {
@@ -30,7 +31,7 @@ export default function leaderboard(state = initialState, action = {}) {
 
 export function loadLeaderboardSongs() {
   // TODO @Sam: replace these hardcoded tracks with an api call
-  // const track = {
+  // const track1 = {
   //   id: 69,
   //   file: 'https://production-test-songs.s3.amazonaws.com/songs/files/000/000/078/original/song67.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHMBOKA2QJ7MVUIA%2F20181215%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20181215T025257Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=2009e8c66bdd68a1bffc9c3e576d7c006caf3033738eb65773fd0b9744522eeb',
   //   name: 'Coffee (prod. KRVSH)',

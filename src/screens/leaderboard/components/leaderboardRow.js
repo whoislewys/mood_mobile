@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
@@ -88,16 +89,54 @@ const getStarsString = (stars) => {
   return stars.toString();
 };
 
-const LeaderboardRow = ({ leaderboardSong, index }) => {
+const LeaderboardRow = ({ leaderboardSong, index, navigation, loadSpecificSongQueue }) => {
   const {
     artist,
     name,
     stars,
     art_url,
+    album_name,
+    file,
+    id,
+    mood_id,
   } = leaderboardSong;
 
+  const leaderboardSongObj = {
+    album: album_name,
+    artist,
+    artwork: art_url,
+    id,
+    mood_id,
+    url: file,
+  };
+
+  const navigateToLeaderboardScreen = (params = {}) => {
+    navigation.navigate({
+      routeName: 'Leaderboard',
+      params: { ...params, visible: true },
+    });
+  }
+
+  const _navigateToPlayScreen = () => {
+    navigation.navigate({
+      routeName: 'Play',
+      params: {
+        parentScreen: 'LeaderboardScreen',
+        visible: false,
+        // i think moodscreen prop was meant to be used as a general
+        // 'back' screen for the playscreen to use
+        moodscreen: navigateToLeaderboardScreen,
+      },
+    });
+  }
+
+  const _handlePress = () => {
+    loadSpecificSongQueue(leaderboardSongObj);
+    _navigateToPlayScreen();
+  }
+
   return (
-    <View style={styles.rowBackground}>
+    <TouchableOpacity style={styles.rowBackground} onPress={() => _handlePress()}>
       <Text style={styles.rank}>{index + 1}</Text>
       <Image style={styles.albumArt} source={{ uri: art_url }}/>
       <View style={styles.detailsContainer}>
@@ -113,7 +152,7 @@ const LeaderboardRow = ({ leaderboardSong, index }) => {
         <Image source={Images.leaderboardStar}/>
         <Text style={styles.starCount}>{getStarsString(stars)}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
