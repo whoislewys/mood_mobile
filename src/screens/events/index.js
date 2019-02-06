@@ -23,26 +23,23 @@ const styles = {
 class EventsScreen extends Component {
   keyExtractor = event => event.id;
 
-  _renderItem = ({ item }) => <EventRow
-  event={ item }
-  >
-    </EventRow>
+  _renderItem = ({ item }) => (
+    <EventRow event={ item }> </EventRow>
+  );
 
-  getEvents = () => {
-    return (
-      this.props.events.length
-        ? (
-          <FlatList
-            data={this.props.events}
-            renderItem={this._renderItem}
-            keyExtractor={this.keyExtractor}
-            ListHeaderComponent={Header({ headerText: 'Events', showLogo: false })}
-            >
-          </FlatList>
-        )
-        : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
-    );
-  }
+  getEvents = () => (
+    this.props.events.length
+      ? (
+        <FlatList
+          data={this.props.events}
+          renderItem={this._renderItem}
+          keyExtractor={this.keyExtractor}
+          ListHeaderComponent={Header({ headerText: 'PHX Events', showLogo: false })}
+          >
+        </FlatList>
+      )
+      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+  );
 
   render = () => (
     <View style={styles.background}>
