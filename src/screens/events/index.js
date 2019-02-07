@@ -14,8 +14,8 @@ const styles = {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginLeft: 21,
-    marginRight: 21,
+    marginLeft: 16,
+    marginRight: 16,
   },
 };
 

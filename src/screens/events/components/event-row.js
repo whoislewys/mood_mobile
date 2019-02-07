@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     marginBottom: 15,
+    marginLeft: 5,
+    marginRight: 5,
     borderRadius: 4,
     borderWidth: 1.5,
     borderColor: 'white', // !!! borderColor passed as prop later !!!
