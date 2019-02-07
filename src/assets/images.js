@@ -20,6 +20,7 @@ const images = {
   moodLogo: require('./img/Color-Mood-Logo.png'),
   // Navigation Bar
   discover: require('./img/selected-round-discover.png'),
+  home: require('./img/selected-home-icon.png'),
   player: require('./img/selected-round-media-player.png'),
   navPlayButton: require('./img/round-play_circle_outline-2x.png'),
   navPauseButton: require('./img/round-pause_circle_outline-2x.png'),

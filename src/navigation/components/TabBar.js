@@ -117,7 +117,7 @@ const TabBar = class TabBar extends Component {
 
   renderIcon = ({ tintColor, label }) => {
     if (label === 'Mood') {
-      return <Image source={Images.discover} style={[styles.icon, { tintColor }]} />;
+      return <Image source={Images.home} style={[styles.icon, { tintColor }]} />;
     }
     if (label === 'Play') {
       return <Image source={Images.player} style={[styles.icon, { tintColor }]} />;

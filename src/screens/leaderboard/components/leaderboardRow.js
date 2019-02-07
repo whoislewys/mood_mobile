@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     marginBottom: 15,
+    marginRight: 5,
+    marginLeft: 5,
     borderRadius: 10,
     elevation: 1,
     backgroundColor: '#FFFFFF',
@@ -32,29 +34,30 @@ const styles = StyleSheet.create({
     fontSize: 34,
   },
   albumArt: {
-    width: 60,
-    height: 60,
+    width: 54,
+    height: 54,
     borderRadius: 2,
   },
   detailsContainer: {
     width: 120,
     marginLeft: 11,
     backgroundColor: '#FFFFFF',
-    marginTop: -3,
+    marginTop: 15,
+    alignSelf: 'flex-start',
   },
   songName: {
     fontFamily: fonts.primary,
-    fontSize: fonts.subHeader,
+    fontSize: 15,
     color: colors.subHeader,
   },
   artistName: {
     fontFamily: fonts.primaryLight,
-    fontSize: fonts.body,
+    fontSize: 13,
     color: colors.body,
   },
   starsContainer: {
     flexDirection: 'row',
-    marginLeft: 25,
+    marginLeft: 15,
   },
   starCount: {
     fontFamily: fonts.primaryLight,
@@ -88,6 +91,24 @@ const getStarsString = (stars) => {
   return stars.toString();
 };
 
+// Better number abbreviator
+// function abbreviateNumber(value) {
+//     var newValue = value;
+//     if (value >= 1000) {
+//         var suffixes = ["", "k", "m", "b","t"];
+//         var suffixNum = Math.floor( (""+value).length/3 );
+//         var shortValue = '';
+//         for (var precision = 2; precision >= 1; precision--) {
+//             shortValue = parseFloat( (suffixNum != 0 ? (value / Math.pow(1000,suffixNum) ) : value).toPrecision(precision));
+//             var dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g,'');
+//             if (dotLessShortValue.length <= 2) { break; }
+//         }
+//         if (shortValue % 1 != 0)  shortNum = shortValue.toFixed(1);
+//         newValue = shortValue+suffixes[suffixNum];
+//     }
+//     return newValue;
+// }
+
 const LeaderboardRow = ({ leaderboardSong, index }) => {
   const {
     artist,
@@ -107,7 +128,12 @@ const LeaderboardRow = ({ leaderboardSong, index }) => {
         ellipsizeMode="tail">
           {name}
         </Text>
-        <Text style={styles.artistName}>{artist}</Text>
+        <Text
+        style={styles.artistName}
+        numberOfLines={1}
+        ellipsizeMode="tail">
+            {artist}
+        </Text>
       </View>
       <View style={styles.starsContainer}>
         <Image source={Images.leaderboardStar}/>
