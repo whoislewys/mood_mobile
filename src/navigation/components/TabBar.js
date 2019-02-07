@@ -16,7 +16,7 @@ import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
 
 const { width, height } = dimensions;
-const TAB_BAR_OFFSET = height * 0.08;
+const TAB_BAR_OFFSET = height * 0.085;
 const SLIDE_DURATION = 100;
 
 const styles = StyleSheet.create({
@@ -34,23 +34,23 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     elevation: 1,
-    shadowOpacity: 0.40,
-    shadowRadius: 0.9,
+    shadowOpacity: 0.17,
+    shadowRadius: 1,
     shadowOffset: {
       width: 0,
-      height: -0.3,
+      height: -1,
     },
   },
   playPauseButton: {
     height: 33,
     width: 33,
-    marginTop: '-9%',
+    marginTop: '-2%',
     marginLeft: 22,
     marginRight: 22,
   },
   tabBarButton: {
     flex: 1,
-    marginTop: '8%',
+    marginTop: '9%',
     height: 55,
   },
   tabBarButtonText: {
