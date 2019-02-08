@@ -8,7 +8,7 @@ import Images from '@assets/images';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
-import { loadSpecificSongQueue } from '../../redux/modules/queue';
+import { loadSpecificSongQueue, loadLeaderboardSongQueue } from '../../redux/modules/queue';
 
 const styles = {
   background: {
@@ -26,14 +26,22 @@ class LeaderboardScreen extends Component {
   // loadArtists api call, render spinner until artists load
   keyExtractor = song => song.id.toString();
 
-  _renderItem = ({ item, index }) => (
+  _renderItem = ({ item, index }) => {
+    console.log('leaderboard song for row: ', item);
+    return (
+    // TODO: Replace passing the leaderboardSongs to each leaderboard row with
+    // TODO: passing an onClick handler that will lead songs for the row that is clicked
     <LeaderboardRow
+      navigation={this.props.navigation}
       leaderboardSong={item}
+      leaderboardSongs={this.props.leaderboardSongs}
       index={index}
       loadSpecificSongQueue={this.props.loadSpecificSongQueue}
-      navigation={this.props.navigation}
+      loadLeaderboardSongQueue={this.props.loadLeaderboardSongQueue}
     >
-    </LeaderboardRow>);
+    </LeaderboardRow>
+    );
+  };
 
   getLeaderBoard = () => (
     this.props.leaderboardSongs.length
@@ -64,6 +72,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadSpecificSongQueue,
+  loadLeaderboardSongQueue,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);

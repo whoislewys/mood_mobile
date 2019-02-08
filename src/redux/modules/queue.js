@@ -12,6 +12,9 @@ const LOAD_SPECIFIC_SONG_QUEUE_FAIL = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_FAIL'
 
 const LOAD_SPECIFIC_SONG = 'queue/LOAD_SPECIFIC_SONG';
 
+// const PLAY_LEADERBOARD_SONG_QUEUE = 'queue/PLAY_LEADERBOARD_SONG_QUEUE';
+const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE'
+
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
 
@@ -66,7 +69,6 @@ export default function reducer(state = initialState, action = {}) {
       const { specificSong } = action;
       console.log('shared song in reducer: ', specificSong);
       return { ...state, queue: [specificSong], curTrack: [specificSong] };
-
       // GEN QUEUE WITH SAME MOOD OF SPECIFIC SONG
     case LOAD_SPECIFIC_SONG_QUEUE:
       // SET the queue to be the shared track here
@@ -97,6 +99,21 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
       };
+
+    /*
+    // TODO: make this actually play the songs once we've got thunks
+    case PLAY_LEADERBOARD_SONG_QUEUE:
+      // Only loads the leaderboard queue, the actual skipping
+      // to the selected track and playing happens in the leaderboardRow component
+      const { selectedLeaderboardSong, leaderboardSongs } = action;
+      TrackPlayer.skip(selectedLeaderboardSong.id).then();
+      return { ...state, curTrack: selectedLeaderboardSong, queue: leaderboardSongs };
+    */
+    case LOAD_LEADERBOARD_SONG_QUEUE:
+      // fills queue with leaderboard songs
+      console.log('filling queue with leafboar songs');
+      const { selectedLeaderboardSong, leaderboardSongs } = action;
+      return { ...state, queue: leaderboardSongs, curTrack: selectedLeaderboardSong };
 
     case PLAYBACK_STATE:
       return {
@@ -165,6 +182,24 @@ export function loadSpecificSongQueue(specificSong) {
         },
       },
     },
+  };
+}
+
+/*
+export function playLeaderboardQueueFromSong(selectedLeaderboardSong, leaderboardSongs) {
+  return {
+    type: PLAY_LEADERBOARD_SONG_QUEUE,
+    selectedLeaderboardSong,
+    leaderboardSongs,
+  };
+}
+*/
+
+export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSongs) {
+  return {
+    type: LOAD_LEADERBOARD_SONG_QUEUE,
+    selectedLeaderboardSong,
+    leaderboardSongs,
   };
 }
 

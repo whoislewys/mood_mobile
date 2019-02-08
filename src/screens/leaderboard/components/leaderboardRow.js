@@ -9,6 +9,7 @@ import {
 import * as TrackPlayer from 'react-native-track-player';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
+import shuffle from '../../../redux/util';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -97,28 +98,21 @@ const LeaderboardRow = ({
   leaderboardSong,
   index,
   navigation,
-  loadSpecificSongQueue,
+  // loadSpecificSongQueue,
+  // playLeaderboardQueueFromSong,
+  loadLeaderboardSongQueue,
+  leaderboardSongs,
 }) => {
   const {
+    album,
     artist,
-    name,
-    stars,
-    art_url,
-    album_name,
-    file,
+    artwork,
     id,
     mood_id,
+    title,
+    url,
+    stars,
   } = leaderboardSong;
-
-  const leaderboardSongObj = {
-    album: album_name,
-    artist,
-    artwork: art_url,
-    id: id.toString(),
-    mood_id,
-    title: name,
-    url: file,
-  };
 
   const navigateToLeaderboardScreen = (params = {}) => {
     navigation.navigate({
@@ -140,24 +134,27 @@ const LeaderboardRow = ({
     });
   }
 
-  const _handlePress = () => {
-    // TODO: clean this shit up when we use thunk for trackPlayer contorls
-    TrackPlayer.reset().then(() => {
-      loadSpecificSongQueue(leaderboardSongObj);
-      _navigateToPlayScreen();
-    });
+  const _handlePress = async () => {
+    // TODO: clean this shit up when we use thunk for trackPlayer controls
+    await TrackPlayer.reset();
+    await TrackPlayer.add(leaderboardSongs);
+    await TrackPlayer.skip(leaderboardSong.id);
+    await TrackPlayer.play();
+    // TODO: might have to clean up extra props on the leaderboardSong object
+    loadLeaderboardSongQueue(leaderboardSong, leaderboardSongs);
+    _navigateToPlayScreen();
   }
 
   return (
     <TouchableOpacity style={styles.rowBackground} onPress={() => _handlePress()}>
       <Text style={styles.rank}>{index + 1}</Text>
-      <Image style={styles.albumArt} source={{ uri: art_url }}/>
+      <Image style={styles.albumArt} source={{ uri: artwork }}/>
       <View style={styles.detailsContainer}>
         <Text
         style={styles.songName}
         numberOfLines={1}
         ellipsizeMode="tail">
-          {name}
+          {title}
         </Text>
         <Text
         style={styles.artistName}
