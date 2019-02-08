@@ -17,22 +17,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     marginBottom: 15,
-    borderRadius: 10,
-    borderWidth: 0.5,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 4,
+    borderWidth: 1.5,
     borderColor: 'white', // !!! borderColor passed as prop later !!!
     elevation: 1,
     backgroundColor: '#FFFFFF',
     shadowOffset: {
       width: 0,
-      height: 1.2,
+      height: 2,
     },
-    shadowRadius: 2,
+    shadowRadius: 3,
     shadowOpacity: 0.2,
   },
   dateContainer: {
     width: 60,
     height: 60,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   month: {
     fontFamily: fonts.primary,
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primary,
     width: 66.24,
     textAlign: 'center',
-    fontSize: fonts.header,
+    fontSize: 25,
   },
   albumArt: {
     width: 60,
@@ -80,9 +83,9 @@ const EventRow = ({ event }) => {
 
   return (
     <TouchableOpacity
-    activeOpacity={0.5}
-    style={[styles.rowBackground, { borderColor }]}
-    onPress={() => Linking.openURL(htmlLink)}
+      activeOpacity={0.5}
+      style={[styles.rowBackground, { borderColor }]}
+      onPress={() => Linking.openURL(htmlLink)}
     >
       <View style={styles.dateContainer}>
         <Text style={styles.month}>{month}</Text>

@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     marginBottom: 15,
+    marginRight: 5,
+    marginLeft: 5,
     borderRadius: 10,
     elevation: 1,
     backgroundColor: '#FFFFFF',
@@ -34,29 +36,30 @@ const styles = StyleSheet.create({
     fontSize: 34,
   },
   albumArt: {
-    width: 60,
-    height: 60,
+    width: 54,
+    height: 54,
     borderRadius: 2,
   },
   detailsContainer: {
     width: 120,
     marginLeft: 11,
     backgroundColor: '#FFFFFF',
-    marginTop: -3,
+    marginTop: 15,
+    alignSelf: 'flex-start',
   },
   songName: {
     fontFamily: fonts.primary,
-    fontSize: fonts.subHeader,
+    fontSize: 15,
     color: colors.subHeader,
   },
   artistName: {
     fontFamily: fonts.primaryLight,
-    fontSize: fonts.body,
+    fontSize: 13,
     color: colors.body,
   },
   starsContainer: {
     flexDirection: 'row',
-    marginLeft: 25,
+    marginLeft: 15,
   },
   starCount: {
     fontFamily: fonts.primaryLight,
@@ -151,7 +154,12 @@ const LeaderboardRow = ({ leaderboardSong, index, navigation, loadSpecificSongQu
         ellipsizeMode="tail">
           {name}
         </Text>
-        <Text style={styles.artistName}>{artist}</Text>
+        <Text
+        style={styles.artistName}
+        numberOfLines={1}
+        ellipsizeMode="tail">
+            {artist}
+        </Text>
       </View>
       <View style={styles.starsContainer}>
         <Image source={Images.leaderboardStar}/>

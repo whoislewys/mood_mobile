@@ -43,6 +43,8 @@ class LeaderboardScreen extends Component {
             renderItem={this._renderItem}
             keyExtractor={this.keyExtractor}
             ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
+            ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }}></View>}
+            showsVerticalScrollIndicator={false}
             >
           </FlatList>
       )

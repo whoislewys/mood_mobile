@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     paddingBottom: '8%',
     backgroundColor: '#FFFFFF',
+    marginLeft: 5,
   },
   headerText: {
     marginTop: '2%',
