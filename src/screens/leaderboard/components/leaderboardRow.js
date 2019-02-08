@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -6,9 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import * as TrackPlayer from 'react-native-track-player';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
-import * as TrackPlayer from 'react-native-track-player';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -93,6 +93,88 @@ const getStarsString = (stars) => {
   return stars.toString();
 };
 
+export default class LeaderboardRow extends Component {
+  _navigateToLeaderboardScreen = (params = {}) => {
+    this.props.navigation.navigate({
+      routeName: 'Leaderboard',
+      params: { ...params, visible: true },
+    });
+  }
+
+  _navigateToPlayScreen = () => {
+    this.props.navigation.navigate({
+      routeName: 'Play',
+      params: {
+        parentScreen: 'LeaderboardScreen',
+        visible: false,
+        // i think moodscreen prop was meant to be used as a general
+        // 'back' screen for the playscreen to use
+        moodscreen: this._navigateToLeaderboardScreen,
+      },
+    });
+  }
+
+  _handlePress = (leaderboardSongObj) => {
+    // TODO: clean this shit up when we use thunk for trackPlayer contorls
+    TrackPlayer.reset().then(() => {
+      this.props.loadSpecificSongQueue(leaderboardSongObj);
+      this._navigateToPlayScreen();
+    });
+  }
+
+  render = () => {
+    const { leaderboardSong, index } = this.props;
+
+    const {
+      artist,
+      name,
+      stars,
+      art_url,
+      album_name,
+      file,
+      id,
+      mood_id,
+    } = leaderboardSong;
+
+    const leaderboardSongObj = {
+      // passed into onPress handler
+      album: album_name,
+      artist,
+      artwork: art_url,
+      id: id.toString(),
+      mood_id,
+      title: name,
+      url: file,
+    };
+
+    return (
+      <TouchableOpacity style={styles.rowBackground} onPress={() => this._handlePress(leaderboardSongObj)}>
+        <Text style={styles.rank}>{index + 1}</Text>
+        <Image style={styles.albumArt} source={{ uri: art_url }}/>
+        <View style={styles.detailsContainer}>
+          <Text
+            style={styles.songName}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {name}
+          </Text>
+          <Text
+            style={styles.artistName}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {artist}
+          </Text>
+        </View>
+        <View style={styles.starsContainer}>
+          <Image source={Images.leaderboardStar}/>
+          <Text style={styles.starCount}>{getStarsString(stars)}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
+
+/*
 const LeaderboardRow = ({ leaderboardSong, index, navigation, loadSpecificSongQueue }) => {
   const {
     artist,
@@ -170,3 +252,4 @@ const LeaderboardRow = ({ leaderboardSong, index, navigation, loadSpecificSongQu
 };
 
 export default LeaderboardRow;
+*/
