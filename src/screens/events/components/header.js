@@ -15,7 +15,7 @@ const ADD_EVENT_URL = 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1';
 const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: 'row',
-    paddingBottom: '15%',
+    paddingBottom: '10%',
     paddingTop: '5%',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primary,
     fontSize: fonts.header,
     color: colors.header,
+    marginRight: 20,
   },
   headerSubText: {
     fontFamily: fonts.primary,
