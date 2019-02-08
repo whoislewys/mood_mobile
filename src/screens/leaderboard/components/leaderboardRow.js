@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
+import * as TrackPlayer from 'react-native-track-player';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -105,8 +106,9 @@ const LeaderboardRow = ({ leaderboardSong, index, navigation, loadSpecificSongQu
     album: album_name,
     artist,
     artwork: art_url,
-    id,
+    id: id.toString(),
     mood_id,
+    title: name,
     url: file,
   };
 
@@ -131,8 +133,11 @@ const LeaderboardRow = ({ leaderboardSong, index, navigation, loadSpecificSongQu
   }
 
   const _handlePress = () => {
-    loadSpecificSongQueue(leaderboardSongObj);
-    _navigateToPlayScreen();
+    // TODO: clean this shit up when we use thunk for trackPlayer contorls
+    TrackPlayer.reset().then(() => {
+      loadSpecificSongQueue(leaderboardSongObj);
+      _navigateToPlayScreen();
+    });
   }
 
   return (

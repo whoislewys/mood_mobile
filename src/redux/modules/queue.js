@@ -66,7 +66,6 @@ export default function reducer(state = initialState, action = {}) {
       const { specificSong } = action;
       console.log('shared song in reducer: ', specificSong);
       return { ...state, queue: [specificSong], curTrack: [specificSong] };
-
       // GEN QUEUE WITH SAME MOOD OF SPECIFIC SONG
     case LOAD_SPECIFIC_SONG_QUEUE:
       // SET the queue to be the shared track here

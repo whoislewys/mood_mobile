@@ -31,6 +31,7 @@ class LeaderboardScreen extends Component {
       leaderboardSong={item}
       index={index}
       loadSpecificSongQueue={this.props.loadSpecificSongQueue}
+      navigation={this.props.navigation}
     >
     </LeaderboardRow>);
 
