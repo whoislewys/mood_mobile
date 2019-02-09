@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
@@ -91,42 +92,30 @@ const getStarsString = (stars) => {
   return stars.toString();
 };
 
-// Better number abbreviator
-// function abbreviateNumber(value) {
-//     var newValue = value;
-//     if (value >= 1000) {
-//         var suffixes = ["", "k", "m", "b","t"];
-//         var suffixNum = Math.floor( (""+value).length/3 );
-//         var shortValue = '';
-//         for (var precision = 2; precision >= 1; precision--) {
-//             shortValue = parseFloat( (suffixNum != 0 ? (value / Math.pow(1000,suffixNum) ) : value).toPrecision(precision));
-//             var dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g,'');
-//             if (dotLessShortValue.length <= 2) { break; }
-//         }
-//         if (shortValue % 1 != 0)  shortNum = shortValue.toFixed(1);
-//         newValue = shortValue+suffixes[suffixNum];
-//     }
-//     return newValue;
-// }
-
-const LeaderboardRow = ({ leaderboardSong, index }) => {
+const LeaderboardRow = ({
+  leaderboardSong,
+  index,
+  _handleLeaderboardRowPress,
+}) => {
   const {
     artist,
-    name,
+    artwork,
+    title,
     stars,
-    art_url,
   } = leaderboardSong;
 
   return (
-    <View style={styles.rowBackground}>
+    <TouchableOpacity style={styles.rowBackground} onPress={
+      () => _handleLeaderboardRowPress(leaderboardSong)
+    }>
       <Text style={styles.rank}>{index + 1}</Text>
-      <Image style={styles.albumArt} source={{ uri: art_url }}/>
+      <Image style={styles.albumArt} source={{ uri: artwork }}/>
       <View style={styles.detailsContainer}>
         <Text
         style={styles.songName}
         numberOfLines={1}
         ellipsizeMode="tail">
-          {name}
+          {title}
         </Text>
         <Text
         style={styles.artistName}
@@ -139,7 +128,7 @@ const LeaderboardRow = ({ leaderboardSong, index }) => {
         <Image source={Images.leaderboardStar}/>
         <Text style={styles.starCount}>{getStarsString(stars)}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
