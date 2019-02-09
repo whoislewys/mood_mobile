@@ -12,8 +12,7 @@ const LOAD_SPECIFIC_SONG_QUEUE_FAIL = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_FAIL'
 
 const LOAD_SPECIFIC_SONG = 'queue/LOAD_SPECIFIC_SONG';
 
-// const PLAY_LEADERBOARD_SONG_QUEUE = 'queue/PLAY_LEADERBOARD_SONG_QUEUE';
-const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE'
+const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
 
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
@@ -27,7 +26,6 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
-  currentScore: 0,
 };
 
 export function loadSongData(list) {
@@ -56,7 +54,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs,
         curTrack: songs[0],
-        currentScore: 0,
       };
     case LOAD_SONGS_FAIL:
       return {
@@ -75,9 +72,6 @@ export default function reducer(state = initialState, action = {}) {
       // push on to the queue on success
       return { ...state, loading: true, queue: [] };
     case LOAD_SPECIFIC_SONG_QUEUE_SUCCESS:
-      // normally would pass in the specific song to load a queue for as part of the action
-      // but the axios middleware only allows returns a payload on success, all other props are deleted
-      // could try and put the specific song in the load_specific_song_queue case's state and see if it works there
       console.log('shared song in succeess action on reducer: ', SHARETRACK_HACK);
       // load songs for mood, reset global score to 0, and set current track
       let songs1 = [SHARETRACK_HACK];
@@ -91,7 +85,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs1,
         curTrack: songs1[0],
-        currentScore: 0,
       };
     case LOAD_SPECIFIC_SONG_QUEUE_FAIL:
       return {
@@ -100,20 +93,15 @@ export default function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
       };
 
-    /*
     // TODO: make this actually play the songs once we've got thunks
-    case PLAY_LEADERBOARD_SONG_QUEUE:
-      // Only loads the leaderboard queue, the actual skipping
-      // to the selected track and playing happens in the leaderboardRow component
-      const { selectedLeaderboardSong, leaderboardSongs } = action;
-      TrackPlayer.skip(selectedLeaderboardSong.id).then();
-      return { ...state, curTrack: selectedLeaderboardSong, queue: leaderboardSongs };
-    */
     case LOAD_LEADERBOARD_SONG_QUEUE:
       // fills queue with leaderboard songs
-      console.log('filling queue with leafboar songs');
       const { selectedLeaderboardSong, leaderboardSongs } = action;
-      return { ...state, queue: leaderboardSongs, curTrack: selectedLeaderboardSong };
+      return {
+        ...state,
+        queue: leaderboardSongs,
+        curTrack: selectedLeaderboardSong,
+      };
 
     case PLAYBACK_STATE:
       return {
@@ -184,16 +172,6 @@ export function loadSpecificSongQueue(specificSong) {
     },
   };
 }
-
-/*
-export function playLeaderboardQueueFromSong(selectedLeaderboardSong, leaderboardSongs) {
-  return {
-    type: PLAY_LEADERBOARD_SONG_QUEUE,
-    selectedLeaderboardSong,
-    leaderboardSongs,
-  };
-}
-*/
 
 export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSongs) {
   return {

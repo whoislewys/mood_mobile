@@ -5,10 +5,12 @@ import {
   FlatList,
 } from 'react-native';
 import Images from '@assets/images';
+import * as TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
 import { loadSpecificSongQueue, loadLeaderboardSongQueue } from '../../redux/modules/queue';
+import { resetScore, sendScoreDelta } from '../../redux/modules/score';
 
 const styles = {
   background: {
@@ -21,23 +23,51 @@ const styles = {
 };
 
 class LeaderboardScreen extends Component {
-  // when you press the leaderboard button,
-  // want something to happen similar to when you press moodIcon
-  // loadArtists api call, render spinner until artists load
+  _navigateToLeaderboardScreen = (params = {}) => {
+    this.props.navigation.navigate({
+      routeName: 'Leaderboard',
+      params: { ...params, visible: true },
+    });
+  }
+
+  _navigateToPlayScreen = () => {
+    this.props.navigation.navigate({
+      routeName: 'Play',
+      params: {
+        parentScreen: 'LeaderboardScreen',
+        visible: false,
+        // dont remember why this moodscreen prop even exists
+        moodscreen: this._navigateToLeaderboardScreen,
+      },
+    });
+  }
+
+  _handleLeaderboardRowPress = async (pressedLeaderboardSong) => {
+    // TODO: clean this shit up when we use thunk for trackPlayer controls
+    this.props.resetScore(this.props.sendScoreDelta, this.props.pressedLeaderboardSong);
+    await TrackPlayer.reset();
+    await TrackPlayer.add(this.props.leaderboardSongs);
+    await TrackPlayer.skip(pressedLeaderboardSong.id);
+
+    if (!this.props.queue.length) {
+      await TrackPlayer.play();
+      await TrackPlayer.pause();
+    } else {
+      await TrackPlayer.play();
+    }
+    // TODO: might have to clean up extra props (star prop) on the leaderboardSong object
+    this.props.loadLeaderboardSongQueue(pressedLeaderboardSong, this.props.leaderboardSongs);
+    this._navigateToPlayScreen();
+  }
+
   keyExtractor = song => song.id.toString();
 
   _renderItem = ({ item, index }) => {
-    console.log('leaderboard song for row: ', item);
     return (
-    // TODO: Replace passing the leaderboardSongs to each leaderboard row with
-    // TODO: passing an onClick handler that will lead songs for the row that is clicked
     <LeaderboardRow
-      navigation={this.props.navigation}
       leaderboardSong={item}
-      leaderboardSongs={this.props.leaderboardSongs}
       index={index}
-      loadSpecificSongQueue={this.props.loadSpecificSongQueue}
-      loadLeaderboardSongQueue={this.props.loadLeaderboardSongQueue}
+      _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
     >
     </LeaderboardRow>
     );
@@ -68,11 +98,14 @@ class LeaderboardScreen extends Component {
 
 const mapStateToProps = state => ({
   leaderboardSongs: state.leaderboard.songs,
+  queue: state.queue.queue,
 });
 
 const mapDispatchToProps = {
   loadSpecificSongQueue,
   loadLeaderboardSongQueue,
+  resetScore,
+  sendScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import * as TrackPlayer from 'react-native-track-player';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
-import shuffle from '../../../redux/util';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -97,56 +95,19 @@ const getStarsString = (stars) => {
 const LeaderboardRow = ({
   leaderboardSong,
   index,
-  navigation,
-  // loadSpecificSongQueue,
-  // playLeaderboardQueueFromSong,
-  loadLeaderboardSongQueue,
-  leaderboardSongs,
+  _handleLeaderboardRowPress,
 }) => {
   const {
-    album,
     artist,
     artwork,
-    id,
-    mood_id,
     title,
-    url,
     stars,
   } = leaderboardSong;
 
-  const navigateToLeaderboardScreen = (params = {}) => {
-    navigation.navigate({
-      routeName: 'Leaderboard',
-      params: { ...params, visible: true },
-    });
-  }
-
-  const _navigateToPlayScreen = () => {
-    navigation.navigate({
-      routeName: 'Play',
-      params: {
-        parentScreen: 'LeaderboardScreen',
-        visible: false,
-        // i think moodscreen prop was meant to be used as a general
-        // 'back' screen for the playscreen to use
-        moodscreen: navigateToLeaderboardScreen,
-      },
-    });
-  }
-
-  const _handlePress = async () => {
-    // TODO: clean this shit up when we use thunk for trackPlayer controls
-    await TrackPlayer.reset();
-    await TrackPlayer.add(leaderboardSongs);
-    await TrackPlayer.skip(leaderboardSong.id);
-    await TrackPlayer.play();
-    // TODO: might have to clean up extra props on the leaderboardSong object
-    loadLeaderboardSongQueue(leaderboardSong, leaderboardSongs);
-    _navigateToPlayScreen();
-  }
-
   return (
-    <TouchableOpacity style={styles.rowBackground} onPress={() => _handlePress()}>
+    <TouchableOpacity style={styles.rowBackground} onPress={
+      () => _handleLeaderboardRowPress(leaderboardSong)
+    }>
       <Text style={styles.rank}>{index + 1}</Text>
       <Image style={styles.albumArt} source={{ uri: artwork }}/>
       <View style={styles.detailsContainer}>
