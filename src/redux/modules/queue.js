@@ -16,6 +16,8 @@ const LOAD_SPECIFIC_SONG_QUEUE_FAIL = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_FAIL'
 
 const LOAD_SPECIFIC_SONG = 'queue/LOAD_SPECIFIC_SONG';
 
+const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
+
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
 
@@ -28,7 +30,6 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
-  currentScore: 0,
   explicit: true,
 };
 
@@ -58,7 +59,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs,
         curTrack: songs[0],
-        currentScore: 0,
       };
     case LOAD_SONGS_FAIL:
       return {
@@ -86,7 +86,6 @@ export default function reducer(state = initialState, action = {}) {
       const { specificSong } = action;
       console.log('shared song in reducer: ', specificSong);
       return { ...state, queue: [specificSong], curTrack: [specificSong] };
-
       // GEN QUEUE WITH SAME MOOD OF SPECIFIC SONG
     case LOAD_SPECIFIC_SONG_QUEUE:
       // SET the queue to be the shared track here
@@ -106,13 +105,22 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs1,
         curTrack: songs1[0],
-        currentScore: 0,
       };
     case LOAD_SPECIFIC_SONG_QUEUE_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Error while loading songs.',
+      };
+
+    // TODO: make this actually play the songs once we've got thunks
+    case LOAD_LEADERBOARD_SONG_QUEUE:
+      // fills queue with leaderboard songs
+      const { selectedLeaderboardSong, leaderboardSongs } = action;
+      return {
+        ...state,
+        queue: leaderboardSongs,
+        curTrack: selectedLeaderboardSong,
       };
 
     case PLAYBACK_STATE:
@@ -188,6 +196,14 @@ export function loadSpecificSongQueue(specificSong) {
         },
       },
     },
+  };
+}
+
+export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSongs) {
+  return {
+    type: LOAD_LEADERBOARD_SONG_QUEUE,
+    selectedLeaderboardSong,
+    leaderboardSongs,
   };
 }
 
