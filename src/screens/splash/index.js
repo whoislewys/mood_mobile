@@ -3,6 +3,8 @@ import {
   View,
   NetInfo,
   Linking,
+  Alert,
+  AsyncStorage,
 } from 'react-native';
 import { connect } from 'react-redux';
 import branch from 'react-native-branch';
@@ -17,7 +19,7 @@ class SplashScreen extends Component {
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.props.loadMoods();
     branch.subscribe(({ error, params }) => {
       if (error) {
@@ -58,6 +60,21 @@ class SplashScreen extends Component {
       this.props.handleShare(sharedTrack)
         .then(navigate({ routeName: 'Play', params: { visible: false } }));
     });
+
+    let launches = await this.getLogins();
+    let reviewed = await this.getReviewed();
+
+    try {
+      if (isNaN(launches)) {
+        this.setLogins(1);
+      } else {
+        this.setLogins(launches + 1);
+
+        if ((launches === 3 || (launches - 3) % 6 === 0) && !reviewed) {
+          this.showReviewModal();
+        }
+      }
+    } catch (error) { }
   }
 
   componentWillUnmount = () => {
@@ -76,6 +93,49 @@ class SplashScreen extends Component {
     if (this.props.moods.length > 0) {
       this.navigateToMoodScreen();
     }
+  }
+
+  setLogins = async (logins) => {
+    await AsyncStorage.setItem('logins', logins.toString(10));
+  }
+
+  getLogins = async () => {
+    let logins = await AsyncStorage.getItem('logins');
+    return parseInt(logins, 10);
+  };
+
+  getReviewed = async () => (
+    await AsyncStorage.getItem('reviewed')
+  );
+
+  setReviewed = async (reviewed) => {
+    await AsyncStorage.setItem('reviewed', reviewed);
+  }
+
+  showReviewModal = () => {
+    Alert.alert(
+      'Your opinion matters to us!',
+      'Please take a second to leave a review', // 'Please tap below to give us a review!',
+      [
+        {
+          text: 'No thanks',
+          style: 'default',
+        },
+        {
+          text: 'Review!',
+          onPress: () => {
+            Linking.openURL('https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk');
+            this.setReviewed('true');
+          },
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false },
+    );
+  }
+
+  updateLogins = () => {
+
   }
 
   handleConnectivityChange = (isConnected) => {
