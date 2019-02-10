@@ -10,23 +10,25 @@ const LOAD_NON_EXPLICIT_SONGS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD';
 const LOAD_NON_EXPLICIT_SONGS_SUCCESS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_SUCCESS';
 const LOAD_NON_EXPLICIT_SONGS_FAIL = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_FAIL';
 
-const LOAD_SPECIFIC_SONG_QUEUE = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD';
-const LOAD_SPECIFIC_SONG_QUEUE_SUCCESS = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_SUCCESS';
-const LOAD_SPECIFIC_SONG_QUEUE_FAIL = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_FAIL';
+// const ADD_SHARED_SONG = 'ADD_SHARED_SONG';
 
-const LOAD_SPECIFIC_SONG = 'queue/LOAD_SPECIFIC_SONG';
+const LOAD_SHARED_SONG_QUEUE = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD';
+const LOAD_SHARED_SONG_QUEUE_SUCCESS = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_SUCCESS';
+const LOAD_SHARED_SONG_QUEUE_FAIL = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_FAIL';
 
 const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
 
+const HANDLE_EXPLICIT_TOGGLE = 'queue/HANDLE_EXPLICIT_TOGGLE';
+
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
-
-let SHARETRACK_HACK = {};
 
 const initialState = {
   loading: false,
   errors: null,
   queue: [],
+  // string: used to tell where the current queue came from (e.g. leaderboard, mood tile, etc)
+  queueType: null,
   playback: null,
   track: null,
   curTrack: null,
@@ -35,6 +37,7 @@ const initialState = {
 
 export function loadSongData(list) {
   return shuffle(list.map(t => ({
+    explicit: t.explicit,
     id: t.id.toString(),
     url: t.file,
     title: t.name,
@@ -58,6 +61,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         queue: songs,
+        queueType: 'Mood',
         curTrack: songs[0],
       };
     case LOAD_SONGS_FAIL:
@@ -82,46 +86,55 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_NON_EXPLICIT_SONGS_FAIL:
       return { ...state, loading: false, error: 'Error while loading songs.' };
 
-    case LOAD_SPECIFIC_SONG:
-      const { specificSong } = action;
-      console.log('shared song in reducer: ', specificSong);
-      return { ...state, queue: [specificSong], curTrack: [specificSong] };
-      // GEN QUEUE WITH SAME MOOD OF SPECIFIC SONG
-    case LOAD_SPECIFIC_SONG_QUEUE:
-      // SET the queue to be the shared track here
-      // push on to the queue on success
-      return { ...state, loading: true, queue: [] };
-    case LOAD_SPECIFIC_SONG_QUEUE_SUCCESS:
-      console.log('shared song in succeess action on reducer: ', SHARETRACK_HACK);
-      // load songs for mood, reset global score to 0, and set current track
-      let songs1 = [SHARETRACK_HACK];
-      songs1 = loadSongData(action.payload.data);
-      console.log(action);
-      console.log('songs1 before unshift: ', songs1);
-      songs1.unshift(SHARETRACK_HACK);
-      console.log('songs after unshift: ', songs1);
+    // case ADD_SHARED_SONG:
+    //   this was making a song flash onscreen before the sharedsong was shown & played
+    //   const { sharedTrack } = action;
+    //   console.log('old queue: ', state.queue);
+    //   let newQueue = state.queue(sharedTrack);
+    //   console.log('new queue: ', newQueue);
+    //   console.log('adding shared song', action.sharedTrack);
+    //
+    //   return { ...state, queue: newQueue, curTrack: sharedTrack };
+
+    case LOAD_SHARED_SONG_QUEUE:
+      return {
+        ...state,
+        loading: true,
+        queue: [],
+        sharedTrack: action.specificSong,
+      };
+    case LOAD_SHARED_SONG_QUEUE_SUCCESS:
+      let songs1 = loadSongData(action.payload.data);
+      // add the sharedTrack to front of array
+      songs1.unshift(state.sharedTrack);
       return {
         ...state,
         loading: false,
         queue: songs1,
         curTrack: songs1[0],
       };
-    case LOAD_SPECIFIC_SONG_QUEUE_FAIL:
+    case LOAD_SHARED_SONG_QUEUE_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Error while loading songs.',
       };
 
-    // TODO: make this actually play the songs once we've got thunks
     case LOAD_LEADERBOARD_SONG_QUEUE:
-      // fills queue with leaderboard songs
+      // TODO: make this actually play the songs once we've got thunks
+      // takes in leaderboard songs from leaderboard screen
+      // fills the global queue with those leaderboard songs
       const { selectedLeaderboardSong, leaderboardSongs } = action;
       return {
         ...state,
         queue: leaderboardSongs,
         curTrack: selectedLeaderboardSong,
+        queueType: 'Leaderboard',
       };
+
+    case HANDLE_EXPLICIT_TOGGLE:
+      console.log('new toggle state: ', action.newState);
+      return { ...state };
 
     case PLAYBACK_STATE:
       return {
@@ -141,13 +154,14 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function loadSongsForMoodId(moodId) {
+export function loadSongsForMoodId(moodId, explicit) {
   return {
     type: LOAD_SONGS,
     payload: {
       request: {
         url: `/moods/${moodId}/songs`,
         params: {
+          explicit,
           t: 'EXVbAWTqbGFl7BKuqUQv',
         },
       },
@@ -169,25 +183,21 @@ export function playbackTrack(track) {
   };
 }
 
-export function loadNonExplicitSongs() {
+export function handleExplicitToggle(newState) {
+  return {
+    type: HANDLE_EXPLICIT_TOGGLE,
+    newState,
+  };
   // if queue is empty, just set explicit prop on state to `true`
   // if queue is not empty, set explicit prop on state to `true` and fire loadSongsForMoodId
   // loadSongsForMoodId will require a small modification for handling explicit state
 }
 
-export function loadSpecificSong(specificSong) {
-  console.log('specific song in action creatro:', specificSong);
-  return {
-    type: LOAD_SPECIFIC_SONG,
-    specificSong,
-  };
-}
-
-export function loadSpecificSongQueue(specificSong) {
+export function loadSharedSongQueue(specificSong) {
   console.log('LOAD SPEC SONG in action creator:', specificSong);
-  SHARETRACK_HACK = specificSong;
   return {
-    type: LOAD_SPECIFIC_SONG_QUEUE,
+    type: LOAD_SHARED_SONG_QUEUE,
+    specificSong,
     payload: {
       request: {
         url: `/moods/${specificSong.mood_id}/songs`,
@@ -219,3 +229,10 @@ export function updatePlayback() {
     }
   };
 }
+
+// export function addSharedSongToQueue(sharedTrack) {
+//   return {
+//     type: ADD_SHARED_SONG,
+//     sharedTrack,
+//   };
+// }

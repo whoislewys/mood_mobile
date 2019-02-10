@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import ToggleSwitch from '../../components/toggle-switch';
 import Header from './components/header';
 import { fonts, colors } from '../../assets/styles';
+import { handleExplicitToggle } from '../../redux/modules/queue';
 
 const styles = StyleSheet.create({
   container: {
@@ -93,13 +94,13 @@ class SettingsScreen extends Component {
     };
   }
 
-  _keyExtractor = item => item.text;
+  _keyExtractor = item => item.key;
 
   onToggle = () => {
-    console.log('toggled!');
     this.setState(prevState => ({
       isActive: !prevState.isActive,
     }));
+    this.props.handleExplicitToggle(!this.state.isActive);
   }
 
   onPressLinkButton = (url) => {
@@ -108,6 +109,7 @@ class SettingsScreen extends Component {
 
   renderListItem = elem => (
     <TouchableOpacity
+      key={elem.key}
       activeOpacity={0.6}
       style={styles.button}
       onPress={() => elem.item.handlePress(elem.item.url)} >
@@ -137,13 +139,14 @@ class SettingsScreen extends Component {
             sliderRadius={50}
             sliderOnColor={'white'}
             sliderOffColor={'white'}
-            onToggle={newState => this.setState(prevState => ({
-              isActive: !prevState.isActive,
-            }))}
+            onToggle={this.onToggle}
             />
           </View>
         )
-        : <TouchableOpacity style={styles.buttonImageContainer} onPress={() => elem.item.handlePress(elem.item.url)} >
+        : <TouchableOpacity
+            style={styles.buttonImageContainer}
+            onPress={() => elem.item.handlePress(elem.item.url)}
+          >
             <Image source={elem.item.image} style={styles.buttonImage}/>
         </TouchableOpacity>
       }
@@ -153,7 +156,7 @@ class SettingsScreen extends Component {
   footerElem = () => (
     <Text style={[styles.textRow, styles.copyrightText]}>
       © 2019 Mood Industries LLC, all rights reserved.
-    </Text>
+    </ Text>
   )
 
   render = () => {
@@ -164,12 +167,14 @@ class SettingsScreen extends Component {
       <View style={{ flex: 1 }}>
         <FlatList
           data={[{
+            key: 'privacy',
             url: 'http://moodindustries.com/privacy.pdf',
             settingName: 'Explicit',
             settingInfo: 'Allow playback of explicit music.',
             switchExists: true,
             handlePress: this.onToggle,
           }, {
+            key: 'rate',
             url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
             settingName: 'Rate & Review',
             settingInfo: 'Tell us about your experience.',
@@ -177,6 +182,7 @@ class SettingsScreen extends Component {
             switchExists: false,
             image: Images.doIt,
           }, {
+            key: 'terms',
             url: 'http://moodindustries.com/privacy.pdf',
             settingName: 'Terms of Use',
             settingInfo: 'All the stuff you need to know.',
@@ -196,7 +202,11 @@ class SettingsScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  queue: state.queue,
+  queue: state.queue.queue,
 });
 
-export default connect(mapStateToProps)(SettingsScreen);
+const mapDispatchToProps = {
+  handleExplicitToggle,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
