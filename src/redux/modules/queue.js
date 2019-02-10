@@ -6,11 +6,9 @@ const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
-const LOAD_NON_EXPLICIT_SONGS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD';
-const LOAD_NON_EXPLICIT_SONGS_SUCCESS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_SUCCESS';
-const LOAD_NON_EXPLICIT_SONGS_FAIL = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_FAIL';
-
-// const ADD_SHARED_SONG = 'ADD_SHARED_SONG';
+// const LOAD_NON_EXPLICIT_SONGS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD';
+// const LOAD_NON_EXPLICIT_SONGS_SUCCESS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_SUCCESS';
+// const LOAD_NON_EXPLICIT_SONGS_FAIL = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_FAIL';
 
 const LOAD_SHARED_SONG_QUEUE = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD';
 const LOAD_SHARED_SONG_QUEUE_SUCCESS = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_SUCCESS';
@@ -27,7 +25,7 @@ const initialState = {
   loading: false,
   errors: null,
   queue: [],
-  // string: used to tell where the current queue came from (e.g. leaderboard, mood tile, etc)
+  // (string) used to tell where the current queue came from (e.g. leaderboard, mood tile, etc)
   queueType: null,
   playback: null,
   track: null,
@@ -49,12 +47,15 @@ export function loadSongData(list) {
 }
 
 export default function reducer(state = initialState, action = {}) {
-  console.log('queue reducer action type: ', action.type);
   switch (action.type) {
     case LOAD_SONGS:
-      return { ...state, loading: true, queue: [] };
+      return {
+        ...state,
+        loading: true,
+        queue: [],
+        explicit: action.explicit,
+      };
     case LOAD_SONGS_SUCCESS:
-      // load songs for mood, reset global score to 0, and set current track
       let songs = null;
       songs = loadSongData(action.payload.data);
       return {
@@ -71,30 +72,20 @@ export default function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
       };
 
-    case LOAD_NON_EXPLICIT_SONGS:
-      return { ...state, loading: true, queue: [] };
-    case LOAD_NON_EXPLICIT_SONGS_SUCCESS:
-      let songs0 = null;
-      songs0 = loadSongData(action.payload.data);
-      return {
-        ...state,
-        loading: false,
-        queue: songs0,
-        curTrack: songs0[0],
-        currentScore: 0,
-      };
-    case LOAD_NON_EXPLICIT_SONGS_FAIL:
-      return { ...state, loading: false, error: 'Error while loading songs.' };
-
-    // case ADD_SHARED_SONG:
-    //   this was making a song flash onscreen before the sharedsong was shown & played
-    //   const { sharedTrack } = action;
-    //   console.log('old queue: ', state.queue);
-    //   let newQueue = state.queue(sharedTrack);
-    //   console.log('new queue: ', newQueue);
-    //   console.log('adding shared song', action.sharedTrack);
-    //
-    //   return { ...state, queue: newQueue, curTrack: sharedTrack };
+    // case LOAD_NON_EXPLICIT_SONGS:
+    //   return { ...state, loading: true, queue: [] };
+    // case LOAD_NON_EXPLICIT_SONGS_SUCCESS:
+    //   let songs0 = null;
+    //   songs0 = loadSongData(action.payload.data);
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     queue: songs0,
+    //     curTrack: songs0[0],
+    //     currentScore: 0,
+    //   };
+    // case LOAD_NON_EXPLICIT_SONGS_FAIL:
+    //   return { ...state, loading: false, error: 'Error while loading songs.' };
 
     case LOAD_SHARED_SONG_QUEUE:
       return {
@@ -104,7 +95,7 @@ export default function reducer(state = initialState, action = {}) {
         sharedTrack: action.specificSong,
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
-      let songs1 = loadSongData(action.payload.data);
+      const songs1 = loadSongData(action.payload.data);
       // add the sharedTrack to front of array
       songs1.unshift(state.sharedTrack);
       return {
@@ -133,8 +124,8 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case HANDLE_EXPLICIT_TOGGLE:
-      console.log('new toggle state: ', action.newState);
-      return { ...state };
+      console.log('explicit toggle state: ', action.newState);
+      return { ...state, explicit: action.newState };
 
     case PLAYBACK_STATE:
       return {
@@ -155,6 +146,7 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function loadSongsForMoodId(moodId, explicit) {
+  console.log('explicit songs? ', explicit);
   return {
     type: LOAD_SONGS,
     payload: {
@@ -169,32 +161,7 @@ export function loadSongsForMoodId(moodId, explicit) {
   };
 }
 
-export function playbackState(state) {
-  return {
-    type: PLAYBACK_STATE,
-    state,
-  };
-}
-
-export function playbackTrack(track) {
-  return {
-    type: PLAYBACK_TRACK,
-    track,
-  };
-}
-
-export function handleExplicitToggle(newState) {
-  return {
-    type: HANDLE_EXPLICIT_TOGGLE,
-    newState,
-  };
-  // if queue is empty, just set explicit prop on state to `true`
-  // if queue is not empty, set explicit prop on state to `true` and fire loadSongsForMoodId
-  // loadSongsForMoodId will require a small modification for handling explicit state
-}
-
 export function loadSharedSongQueue(specificSong) {
-  console.log('LOAD SPEC SONG in action creator:', specificSong);
   return {
     type: LOAD_SHARED_SONG_QUEUE,
     specificSong,
@@ -217,6 +184,31 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSon
   };
 }
 
+export function handleExplicitToggle(newState) {
+  return {
+    type: HANDLE_EXPLICIT_TOGGLE,
+    newState,
+  };
+  // if queue is empty, just set explicit prop on state to `true`
+  // if queue is not empty, set explicit prop on state to `true` and fire loadSongsForMoodId
+  // loadSongsForMoodId will require a small modification for handling explicit state
+}
+
+// TrackPlayer action creators
+export function playbackState(state) {
+  return {
+    type: PLAYBACK_STATE,
+    state,
+  };
+}
+
+export function playbackTrack(track) {
+  return {
+    type: PLAYBACK_TRACK,
+    track,
+  };
+}
+
 export function updatePlayback() {
   // should only used when coming back from lock screen
   console.log('calling updateplayback');
@@ -229,10 +221,3 @@ export function updatePlayback() {
     }
   };
 }
-
-// export function addSharedSongToQueue(sharedTrack) {
-//   return {
-//     type: ADD_SHARED_SONG,
-//     sharedTrack,
-//   };
-// }

@@ -78,17 +78,11 @@ class Player extends Component {
     this.setState({ repeat: !this.state.repeat });
   }
 
-  loadSongsForMood = (id) => {
-    TrackPlayer.reset();
-    this.props.loadSongsForMoodId(id);
-  }
-
   render = () => {
     return (
       <Navigator
         screenProps={{
           playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
-          loadSongsForMoodId: this.loadSongsForMood,
           shuffled: this.state.shuffled,
           repeat: this.state.repeat,
           loading: this.props.loading,

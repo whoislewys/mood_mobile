@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
+import { loadSongsForMoodId } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
 
 const styles = StyleSheet.create({
@@ -118,6 +119,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  loadSongsForMoodId,
   setMood,
 };
 
