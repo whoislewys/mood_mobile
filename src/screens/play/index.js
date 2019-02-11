@@ -58,7 +58,7 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    if (this.props.queue.length <= 0 || (this.props.curTrack == null)) {
+    if (!this.props.queue.length || (this.props.curTrack == null)) {
       return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
     }
 
@@ -86,25 +86,30 @@ class PlayScreen extends Component {
 
   _nextTrack = () => {
     // TODO: implement a snap for when track ends
-    // info on how to do this in github issues on react-native-track-player
+    // info on how to do 'ontrackend' stuff in github issues on react-native-track-player
+    // args: snapToNext(animated, fireCallback)
+    this._carouselref.snapToNext(true, false);
     this.props.nextTrack();
-    this._carouselref.snapToNext(animated = true, fireCallback = false);
   }
 
   _previousTrack = () => {
     this.props.previousTrack();
-    this._carouselref.snapToPrev(animated = true, fireCallback = false);
+    // args: snapToNext(animated, fireCallback)
+    this._carouselref.snapToPrev(true, false);
   }
 
   playOnOpen = () => {
-    return (<PlayOnOpen
-      playing={this.props.playing}
-      playByDefault={this.props.handlePlayPress}
-      parentScreen={this.props.parentScreen}
-      startScoreTimer={this.props.startScoreTimer}
-      currentTrack={this.props.curTrack}
-      sendScoreDeltaFunc={this.props.sendScoreDelta}
-    />);
+    // nasty hack to autoplay songs when playscreen first opens
+    // should really refactor this out
+    return (
+      <PlayOnOpen
+        playing={this.props.playing}
+        playByDefault={this.props.handlePlayPress}
+        parentScreen={this.props.parentScreen}
+        startScoreTimer={this.props.startScoreTimer}
+        currentTrack={this.props.curTrack}
+        sendScoreDeltaFunc={this.props.sendScoreDelta}
+      />);
   }
 
   getDropdownBar = () => {
@@ -113,18 +118,6 @@ class PlayScreen extends Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
           <Image source={Images.arrowDown} />
         </TouchableOpacity>
-      </View>
-    );
-  }
-
-  getAlbumArt = () => {
-    return (
-      <View style={styles.albumContainer}>
-        <AlbumArt
-          url={art}
-          skipForward={this._nextTrack}
-          skipBack={this._previousTrack}
-        />
       </View>
     );
   }
