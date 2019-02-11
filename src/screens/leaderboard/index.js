@@ -102,7 +102,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadSpecificSongQueue,
   loadLeaderboardSongQueue,
   resetScore,
   sendScoreDelta,
