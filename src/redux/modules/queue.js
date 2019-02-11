@@ -53,11 +53,15 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: true,
         queue: [],
-        explicit: action.explicit,
       };
     case LOAD_SONGS_SUCCESS:
       let songs = null;
       songs = loadSongData(action.payload.data);
+      console.log('songs b4 filter: ', songs);
+      if (!state.explicit) {
+        songs = songs.filter(track => track.explicit === false);
+      }
+      console.log('songs after filter: ', songs);
       return {
         ...state,
         loading: false,
@@ -102,6 +106,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         queue: songs1,
+        queueType: 'Mood',
         curTrack: songs1[0],
       };
     case LOAD_SHARED_SONG_QUEUE_FAIL:
@@ -124,7 +129,6 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case HANDLE_EXPLICIT_TOGGLE:
-      console.log('explicit toggle state: ', action.newState);
       return { ...state, explicit: action.newState };
 
     case PLAYBACK_STATE:
@@ -145,15 +149,15 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function loadSongsForMoodId(moodId, explicit) {
-  console.log('explicit songs? ', explicit);
+export function loadSongsForMoodId(moodId, explicitBool) {
+  console.log('explicit songs? ', explicitBool);
   return {
     type: LOAD_SONGS,
     payload: {
       request: {
         url: `/moods/${moodId}/songs`,
         params: {
-          explicit,
+          explicit: explicitBool,
           t: 'EXVbAWTqbGFl7BKuqUQv',
         },
       },
