@@ -3,14 +3,13 @@ import {
   View,
   ActivityIndicator,
   FlatList,
-  Alert,
 } from 'react-native';
 import Images from '@assets/images';
 import * as TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
-import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
+import { loadSpecificSongQueue, loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import { resetScore, sendScoreDelta } from '../../redux/modules/score';
 
 const styles = {
@@ -90,19 +89,6 @@ class LeaderboardScreen extends Component {
       : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
   )
 
-  componentDidMount = () => {
-    if (!this.props.explicit && this.props.queueType !== 'Leaderboard') {
-      // if they have explicit songs off, and have a mood queue or no queue at all, show an alert
-      Alert.alert(
-        'Warning',
-        'Explicit songs will not be filtered out of leaderboard',
-        [
-          { text: 'OK', onPress: () => console.log('Ask me later pressed') },
-        ],
-      );
-    }
-  }
-
   render = () => (
     <View style={styles.background}>
       {this.getLeaderBoard()}
@@ -113,8 +99,6 @@ class LeaderboardScreen extends Component {
 const mapStateToProps = state => ({
   leaderboardSongs: state.leaderboard.songs,
   queue: state.queue.queue,
-  queueType: state.queue.queueType,
-  explicit: state.queue.explicit,
 });
 
 const mapDispatchToProps = {
