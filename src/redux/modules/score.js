@@ -84,6 +84,8 @@ export function sendScoreDelta(currentTrackId) {
 }
 
 export function startScoreTimer(sendScoreDeltaFunc, currentTrackId) {
+  // send if i can scoreDeltaFunc arg
+  // use sendScoreDelta from inside this file
   return {
     type: START_TIMER,
     sendScoreDeltaFunc,

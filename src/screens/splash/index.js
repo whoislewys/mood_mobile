@@ -3,6 +3,8 @@ import {
   View,
   NetInfo,
   Linking,
+  Alert,
+  AsyncStorage,
 } from 'react-native';
 import { connect } from 'react-redux';
 import branch from 'react-native-branch';
@@ -17,27 +19,11 @@ class SplashScreen extends Component {
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
   }
 
-  openSharedTrack = async (sharedTrack) => {
-    const { navigate } = this.props.navigation;
-    // TODO: ensure that a full the queue load before inserting the sharedtrack
-    this.props.loadSongsForMoodId(sharedTrack.mood_id);
-    await this.props.handleShare(sharedTrack);
-    navigate({ routeName: 'Play', params: { visible: false } });
-  }
-
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.props.loadMoods();
     branch.subscribe(({ error, params }) => {
       if (error) {
         console.error('Error from Branch: ', error);
-        return;
-      }
-
-      // params will never be null if error is null
-
-      if (params['+non_branch_link']) {
-        const nonBranchUrl = params['+non_branch_link'];
-        // Route non-Branch URL if appropriate.
         return;
       }
 
@@ -49,6 +35,7 @@ class SplashScreen extends Component {
 
       // A Branch link was opened.
       // create track object from shared link's params
+      console.log('branch link opened: ', params);
       const id = params.$canonical_identifier;
       const artwork = params.$og_image_url;
       const title = params.$og_title;
@@ -67,8 +54,27 @@ class SplashScreen extends Component {
         title,
         url,
       };
-      this.openSharedTrack(sharedTrack);
+      console.log('opening shared track: ', sharedTrack);
+      if (!sharedTrack) return;
+      const { navigate } = this.props.navigation;
+      this.props.handleShare(sharedTrack)
+        .then(navigate({ routeName: 'Play', params: { visible: false } }));
     });
+
+    let launches = await this.getLogins();
+    let reviewed = await this.getReviewed();
+
+    try {
+      if (isNaN(launches)) {
+        this.setLogins(1);
+      } else {
+        this.setLogins(launches + 1);
+
+        if ((launches === 3 || (launches - 3) % 6 === 0) && !reviewed) {
+          this.showReviewModal();
+        }
+      }
+    } catch (error) { }
   }
 
   componentWillUnmount = () => {
@@ -87,6 +93,49 @@ class SplashScreen extends Component {
     if (this.props.moods.length > 0) {
       this.navigateToMoodScreen();
     }
+  }
+
+  setLogins = async (logins) => {
+    await AsyncStorage.setItem('logins', logins.toString(10));
+  }
+
+  getLogins = async () => {
+    let logins = await AsyncStorage.getItem('logins');
+    return parseInt(logins, 10);
+  };
+
+  getReviewed = async () => (
+    await AsyncStorage.getItem('reviewed')
+  );
+
+  setReviewed = async (reviewed) => {
+    await AsyncStorage.setItem('reviewed', reviewed);
+  }
+
+  showReviewModal = () => {
+    Alert.alert(
+      'Your opinion matters to us!',
+      'Please take a second to leave a review', // 'Please tap below to give us a review!',
+      [
+        {
+          text: 'No thanks',
+          style: 'default',
+        },
+        {
+          text: 'Review!',
+          onPress: () => {
+            Linking.openURL('https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk');
+            this.setReviewed('true');
+          },
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false },
+    );
+  }
+
+  updateLogins = () => {
+
   }
 
   handleConnectivityChange = (isConnected) => {

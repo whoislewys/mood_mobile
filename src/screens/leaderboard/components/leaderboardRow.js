@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
@@ -15,6 +16,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     marginBottom: 15,
+    marginRight: 5,
+    marginLeft: 5,
     borderRadius: 10,
     elevation: 1,
     backgroundColor: '#FFFFFF',
@@ -32,29 +35,30 @@ const styles = StyleSheet.create({
     fontSize: 34,
   },
   albumArt: {
-    width: 60,
-    height: 60,
+    width: 54,
+    height: 54,
     borderRadius: 2,
   },
   detailsContainer: {
     width: 120,
     marginLeft: 11,
     backgroundColor: '#FFFFFF',
-    marginTop: -3,
+    marginTop: 15,
+    alignSelf: 'flex-start',
   },
   songName: {
     fontFamily: fonts.primary,
-    fontSize: fonts.subHeader,
+    fontSize: 15,
     color: colors.subHeader,
   },
   artistName: {
     fontFamily: fonts.primaryLight,
-    fontSize: fonts.body,
+    fontSize: 13,
     color: colors.body,
   },
   starsContainer: {
     flexDirection: 'row',
-    marginLeft: 25,
+    marginLeft: 15,
   },
   starCount: {
     fontFamily: fonts.primaryLight,
@@ -88,32 +92,43 @@ const getStarsString = (stars) => {
   return stars.toString();
 };
 
-const LeaderboardRow = ({ leaderboardSong, index }) => {
+const LeaderboardRow = ({
+  leaderboardSong,
+  index,
+  _handleLeaderboardRowPress,
+}) => {
   const {
     artist,
-    name,
+    artwork,
+    title,
     stars,
-    art_url,
   } = leaderboardSong;
 
   return (
-    <View style={styles.rowBackground}>
+    <TouchableOpacity style={styles.rowBackground} onPress={
+      () => _handleLeaderboardRowPress(leaderboardSong)
+    }>
       <Text style={styles.rank}>{index + 1}</Text>
-      <Image style={styles.albumArt} source={{ uri: art_url }}/>
+      <Image style={styles.albumArt} source={{ uri: artwork }}/>
       <View style={styles.detailsContainer}>
         <Text
         style={styles.songName}
         numberOfLines={1}
         ellipsizeMode="tail">
-          {name}
+          {title}
         </Text>
-        <Text style={styles.artistName}>{artist}</Text>
+        <Text
+        style={styles.artistName}
+        numberOfLines={1}
+        ellipsizeMode="tail">
+            {artist}
+        </Text>
       </View>
       <View style={styles.starsContainer}>
         <Image source={Images.leaderboardStar}/>
         <Text style={styles.starCount}>{getStarsString(stars)}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

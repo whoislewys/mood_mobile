@@ -97,7 +97,6 @@ class SettingsScreen extends Component {
   _keyExtractor = item => item.text;
 
   onToggle = () => {
-    console.log('toggled!');
     this.setState(prevState => ({
       isActive: !prevState.isActive,
     }));
