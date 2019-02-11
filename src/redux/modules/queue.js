@@ -6,17 +6,11 @@ const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
-// const LOAD_NON_EXPLICIT_SONGS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD';
-// const LOAD_NON_EXPLICIT_SONGS_SUCCESS = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_SUCCESS';
-// const LOAD_NON_EXPLICIT_SONGS_FAIL = 'queue/LOAD_NON_EXPLICIT_SONGS/LOAD_FAIL';
-
 const LOAD_SHARED_SONG_QUEUE = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD';
 const LOAD_SHARED_SONG_QUEUE_SUCCESS = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_SUCCESS';
 const LOAD_SHARED_SONG_QUEUE_FAIL = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_FAIL';
 
 const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
-
-const HANDLE_EXPLICIT_TOGGLE = 'queue/HANDLE_EXPLICIT_TOGGLE';
 
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
@@ -30,7 +24,6 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
-  explicit: true,
 };
 
 export function loadSongData(list) {
@@ -57,11 +50,6 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_SONGS_SUCCESS:
       let songs = null;
       songs = loadSongData(action.payload.data);
-      console.log('songs b4 filter: ', songs);
-      if (!state.explicit) {
-        songs = songs.filter(track => track.explicit === false);
-      }
-      console.log('songs after filter: ', songs);
       return {
         ...state,
         loading: false,
@@ -75,21 +63,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
       };
-
-    // case LOAD_NON_EXPLICIT_SONGS:
-    //   return { ...state, loading: true, queue: [] };
-    // case LOAD_NON_EXPLICIT_SONGS_SUCCESS:
-    //   let songs0 = null;
-    //   songs0 = loadSongData(action.payload.data);
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     queue: songs0,
-    //     curTrack: songs0[0],
-    //     currentScore: 0,
-    //   };
-    // case LOAD_NON_EXPLICIT_SONGS_FAIL:
-    //   return { ...state, loading: false, error: 'Error while loading songs.' };
 
     case LOAD_SHARED_SONG_QUEUE:
       return {
@@ -128,9 +101,6 @@ export default function reducer(state = initialState, action = {}) {
         queueType: 'Leaderboard',
       };
 
-    case HANDLE_EXPLICIT_TOGGLE:
-      return { ...state, explicit: action.newState };
-
     case PLAYBACK_STATE:
       return {
         ...state,
@@ -149,15 +119,13 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function loadSongsForMoodId(moodId, explicitBool) {
-  console.log('explicit songs? ', explicitBool);
+export function loadSongsForMoodId(moodId) {
   return {
     type: LOAD_SONGS,
     payload: {
       request: {
         url: `/moods/${moodId}/songs`,
         params: {
-          explicit: explicitBool,
           t: 'EXVbAWTqbGFl7BKuqUQv',
         },
       },
@@ -186,16 +154,6 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSon
     selectedLeaderboardSong,
     leaderboardSongs,
   };
-}
-
-export function handleExplicitToggle(newState) {
-  return {
-    type: HANDLE_EXPLICIT_TOGGLE,
-    newState,
-  };
-  // if queue is empty, just set explicit prop on state to `true`
-  // if queue is not empty, set explicit prop on state to `true` and fire loadSongsForMoodId
-  // loadSongsForMoodId will require a small modification for handling explicit state
 }
 
 // TrackPlayer action creators

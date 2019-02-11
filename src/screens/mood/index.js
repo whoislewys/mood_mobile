@@ -86,7 +86,6 @@ class MoodScreen extends Component {
       return (
           <MoodList
             loadSongsForMoodId={this.props.loadSongsForMoodId}
-            explicit={this.props.explicit}
             setMood={this.props.setMood}
             moods={this.props.moods}
             selected={this.props.mood}
@@ -115,7 +114,6 @@ class MoodScreen extends Component {
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
-  explicit: state.queue.explicit,
 });
 
 const mapDispatchToProps = {
