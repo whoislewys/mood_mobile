@@ -68,6 +68,7 @@ class PlayScreen extends Component {
         height={dimensions.height}
         bottom={0}
       >
+        {/* PlayOnOpen component is a nasty hack to autoplay songs */}
         <PlayOnOpen playing={this.props.playing}
         playByDefault={this.props.handlePlayPress}
         parentScreen={this.props.parentScreen}
