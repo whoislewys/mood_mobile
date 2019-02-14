@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
+import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import reducer from './modules';
@@ -26,4 +27,8 @@ const client = axios.create({
   responseType: 'json',
 });
 
-export default createStore(reducer, applyMiddleware(axiosMiddleware(client, axiosConfig), logger));
+export default createStore(
+  reducer,
+  applyMiddleware(axiosMiddleware(client, axiosConfig), logger),
+  applyMiddleware(thunk),
+);

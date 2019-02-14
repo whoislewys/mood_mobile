@@ -9,8 +9,8 @@ import * as TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
-import { loadSpecificSongQueue, loadLeaderboardSongQueue } from '../../redux/modules/queue';
-import { resetScore, sendScoreDelta } from '../../redux/modules/score';
+import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
+import { sendScoreDelta } from '../../redux/modules/score';
 
 const styles = {
   background: {
@@ -44,7 +44,7 @@ class LeaderboardScreen extends Component {
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSong) => {
     // TODO: clean this shit up when we use thunk for trackPlayer controls
-    this.props.resetScore(this.props.sendScoreDelta, this.props.pressedLeaderboardSong);
+    // this.props.resetScore(this.props.sendScoreDelta, this.props.pressedLeaderboardSong);
     await TrackPlayer.reset();
     await TrackPlayer.add(this.props.leaderboardSongs);
     await TrackPlayer.skip(pressedLeaderboardSong.id);
@@ -103,7 +103,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadLeaderboardSongQueue,
-  resetScore,
   sendScoreDelta,
 };
 

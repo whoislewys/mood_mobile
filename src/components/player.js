@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
-import { loadSongsForMoodId, loadSpecificSong, loadSpecificSongQueue } from '../redux/modules/queue';
-import { resetScore, stopScoreTimer, sendScoreDelta } from '../redux/modules/score';
+import { loadSongsForMoodId, handlePlayPress } from '../redux/modules/queue';
+import { startScoreTimer, stopScoreTimer, sendScoreDelta } from '../redux/modules/score';
 
 class Player extends Component {
   constructor(props) {
@@ -40,8 +40,7 @@ class Player extends Component {
     // plays a shared song
     console.log('shared track: ', sharedTrack);
     await TrackPlayer.reset();
-    // this.props.loadSpecificSong(sharedTrack);
-    this.props.loadSpecificSongQueue(sharedTrack);
+    this.props.loadSharedSongQueue(sharedTrack);
     console.log('queue after loading specific song: ', this.props.queue);
     await TrackPlayer.add(this.props.queue);
     await TrackPlayer.play();
@@ -59,7 +58,9 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToNext();
-      this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
+
+      // this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
+      this.props.startScoreTimer();
     } catch (_) {}
   }
 
@@ -69,7 +70,8 @@ class Player extends Component {
         await TrackPlayer.play();
       }
       await TrackPlayer.skipToPrevious();
-      this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
+      // this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
+      this.props.startScoreTimer();
     } catch (_) {}
   }
 
@@ -125,11 +127,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setMood,
   loadSongsForMoodId,
-  loadSpecificSong,
-  loadSpecificSongQueue,
-  resetScore,
+  startScoreTimer,
   stopScoreTimer,
   sendScoreDelta,
+  handlePlayPress,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

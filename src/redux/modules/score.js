@@ -17,19 +17,6 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case RESET_SCORE:
-      clearInterval(state.timer);
-      const newTimer = setInterval(
-        () => action.sendScoreDeltaFunc(action.currentTrackId),
-        SEND_SCORE_TIME,
-      );
-
-      return {
-        ...state,
-        currentScore: 0,
-        scoreDelta: 0,
-        timer: newTimer,
-      };
     case INCREMENT_SCORE:
       return { ...state, currentScore: state.currentScore + 1, scoreDelta: state.scoreDelta + 1 };
     case SEND_SCORE:
@@ -40,12 +27,14 @@ export default function reducer(state = initialState, action = {}) {
 
       return { ...state, scoreDelta: 0 };
     case START_TIMER:
-      const timer = setInterval(
-        () => action.sendScoreDeltaFunc(action.currentTrackId),
-        SEND_SCORE_TIME,
-      );
-
-      return { ...state, timer };
+      console.log('new timer for start timer: ', action.newTimer);
+      // return { ...state, timer: action.newTimer };
+      return {
+        ...state,
+        currentScore: 0,
+        scoreDelta: 0,
+        timer: action.newTimer,
+      };
     case STOP_TIMER:
       clearInterval(state.timer);
       return state;
@@ -62,16 +51,6 @@ export function incrementScore() {
   };
 }
 
-export function resetScore(sendScoreDeltaFunc, currentTrackId) {
-  // called for every star press,
-  // updates global score variable
-  return {
-    type: RESET_SCORE,
-    sendScoreDeltaFunc,
-    currentTrackId,
-  };
-}
-
 export function sendScoreDelta(currentTrackId) {
   // sends change in score (scoreDelta) to api,
   // then resets scoreDelta to 0
@@ -83,13 +62,26 @@ export function sendScoreDelta(currentTrackId) {
   };
 }
 
-export function startScoreTimer(sendScoreDeltaFunc, currentTrackId) {
-  // send if i can scoreDeltaFunc arg
-  // use sendScoreDelta from inside this file
-  return {
-    type: START_TIMER,
-    sendScoreDeltaFunc,
-    currentTrackId,
+// old startScoreTimer (build 12)
+// export function startScoreTimer(sendScoreDeltaFunc, currentTrackId) {
+//   // send if i can scoreDeltaFunc arg
+//   // use sendScoreDelta from inside this file
+//   return {
+//     type: START_TIMER,
+//     sendScoreDeltaFunc,
+//     currentTrackId,
+//   };
+// }
+
+export function startScoreTimer() {
+  // startScoreTimer() runs only on first song play
+  return (dispatch, getState) => {
+    clearInterval(getState().score.timer);
+    const newTimer = setInterval(() => dispatch(sendScoreDelta(getState().queue.curTrack.id)), SEND_SCORE_TIME);
+    dispatch({
+      type: START_TIMER,
+      newTimer,
+    });
   };
 }
 

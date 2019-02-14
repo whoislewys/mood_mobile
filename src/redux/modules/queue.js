@@ -37,8 +37,8 @@ export function loadSongData(list) {
 }
 
 export default function reducer(state = initialState, action = {}) {
-  console.log('queue reducer action type: ', action.type);
   switch (action.type) {
+    // loading songs for mood
     case LOAD_SONGS:
       return { ...state, loading: true, queue: [] };
     case LOAD_SONGS_SUCCESS:
@@ -58,6 +58,7 @@ export default function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
       };
 
+    // shared songs
     case LOAD_SHARED_SONG_QUEUE:
       return {
         ...state,
@@ -82,6 +83,7 @@ export default function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
       };
 
+    // leaderboard songs
     // TODO: make this actually play the songs once we've got thunks
     case LOAD_LEADERBOARD_SONG_QUEUE:
       // fills queue with leaderboard songs
@@ -139,6 +141,7 @@ export function playbackTrack(track) {
 }
 
 export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSongs) {
+  // todo Dispatch resetScore() when this gets called
   return {
     type: LOAD_LEADERBOARD_SONG_QUEUE,
     selectedLeaderboardSong,
@@ -146,15 +149,20 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSon
   };
 }
 
-export function updatePlayback() {
-  // should only used when coming back from lock screen
-  console.log('calling updateplayback');
-  return async () => {
-    try {
-      playbackState(await TrackPlayer.getState());
-      playbackTrack(await TrackPlayer.getCurrentTrack());
-    } catch (e) {
-      // player not yet initialized, don't update anything
+// TrackPlayer controls
+export function handlePlayPress() {
+  return async (dispatch, getState) => {
+    console.log('queue in handlePlayPress thunk ', getState().queue.queue);
+    // TO
+    const { track, queue, playback } = getState().queue;
+    if (track === null) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add(queue);
+      await TrackPlayer.play();
+    } else if (playback === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    } else {
+      await TrackPlayer.pause();
     }
   };
 }
