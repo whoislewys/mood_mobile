@@ -1,6 +1,7 @@
 // import { Image } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import shuffle from '../util';
+import { startScoreTimer } from './score';
 
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
@@ -162,6 +163,35 @@ export function handlePlayPress() {
     } else if (playback === TrackPlayer.STATE_PAUSED) {
       await TrackPlayer.play();
     } else {
+      await TrackPlayer.pause();
+    }
+  };
+}
+
+export function skipToNext() {
+  return async (dispatch, getState) => {
+    // TODO
+    if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    }
+    await TrackPlayer.skipToNext();
+    dispatch(startScoreTimer());
+  };
+}
+
+export function skipToPrevious() {
+  return async (dispatch, getState) => {
+    if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    }
+    await TrackPlayer.skipToPrevious();
+    dispatch(startScoreTimer());
+  };
+}
+
+export function stopPlayback() {
+  return async (dispatch, getState) => {
+    if (!(getState().queue.track === null || getState().queue.playbackState === TrackPlayer.STATE_PAUSED)) {
       await TrackPlayer.pause();
     }
   };

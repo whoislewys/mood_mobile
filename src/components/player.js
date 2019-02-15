@@ -4,7 +4,13 @@ import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
-import { loadSongsForMoodId, handlePlayPress } from '../redux/modules/queue';
+import {
+  loadSongsForMoodId,
+  handlePlayPress,
+  skipToNext,
+  skipToPrevious,
+  stopPlayback,
+} from '../redux/modules/queue';
 import { startScoreTimer, stopScoreTimer, sendScoreDelta } from '../redux/modules/score';
 
 class Player extends Component {
@@ -23,18 +29,18 @@ class Player extends Component {
   }
 
   // Todo clean up this logic w redux-thunk?
-  handlePlayPress = async () => {
-    const { track } = this.props;
-    if (track === null) {
-      await TrackPlayer.reset();
-      await TrackPlayer.add(this.props.queue);
-      await TrackPlayer.play();
-    } else if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.pause();
-    }
-  }
+  // handlePlayPress = async () => {
+  //   const { track } = this.props;
+  //   if (track === null) {
+  //     await TrackPlayer.reset();
+  //     await TrackPlayer.add(this.props.queue);
+  //     await TrackPlayer.play();
+  //   } else if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
+  //     await TrackPlayer.play();
+  //   } else {
+  //     await TrackPlayer.pause();
+  //   }
+  // }
 
   handleShare = async (sharedTrack) => {
     // plays a shared song
@@ -44,43 +50,6 @@ class Player extends Component {
     console.log('queue after loading specific song: ', this.props.queue);
     await TrackPlayer.add(this.props.queue);
     await TrackPlayer.play();
-  }
-
-  stopPlayback = async () => {
-    if (!(this.props.track === null || this.props.playbackState === TrackPlayer.STATE_PAUSED)) {
-      await TrackPlayer.pause();
-    }
-  }
-
-  skipToNext = async () => {
-    try {
-      if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
-        await TrackPlayer.play();
-      }
-      await TrackPlayer.skipToNext();
-
-      // this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
-      this.props.startScoreTimer();
-    } catch (_) {}
-  }
-
-  skipToPrevious = async () => {
-    try {
-      if (this.props.playbackState === TrackPlayer.STATE_PAUSED) {
-        await TrackPlayer.play();
-      }
-      await TrackPlayer.skipToPrevious();
-      // this.props.resetScore(this.props.sendScoreDelta, this.props.curTrack.id);
-      this.props.startScoreTimer();
-    } catch (_) {}
-  }
-
-  toggleShuffle = () => {
-    this.setState({ shuffled: !this.state.shuffled });
-  }
-
-  toggleRepeat = () => {
-    this.setState({ repeat: !this.state.repeat });
   }
 
   loadSongsForMood = (id) => {
@@ -99,14 +68,12 @@ class Player extends Component {
           loading: this.props.loading,
           mood: this.props.selected,
           moodList: this.props.moods,
-          handlePlayPress: this.handlePlayPress,
+          handlePlayPress: this.props.handlePlayPress,
+          nextTrack: this.props.skipToNext,
+          previousTrack: this.props.skipToPrevious,
+          stopPlayback: this.props.stopPlayback,
           handleShare: this.handleShare,
           setTime: TrackPlayer.seekTo,
-          toggleShuffle: this.toggleShuffle,
-          toggleRepeat: this.toggleRepeat,
-          nextTrack: this.skipToNext,
-          previousTrack: this.skipToPrevious,
-          stopPlayback: this.stopPlayback,
         }}
       />
     );
@@ -131,6 +98,9 @@ const mapDispatchToProps = {
   stopScoreTimer,
   sendScoreDelta,
   handlePlayPress,
+  skipToNext,
+  skipToPrevious,
+  stopPlayback,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

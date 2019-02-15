@@ -36,8 +36,8 @@ export default function reducer(state = initialState, action = {}) {
         timer: action.newTimer,
       };
     case STOP_TIMER:
-      clearInterval(state.timer);
-      return state;
+      // should only be called on app unmount
+      return { ...state, timer: null };
     default:
       return state;
   }
@@ -62,17 +62,6 @@ export function sendScoreDelta(currentTrackId) {
   };
 }
 
-// old startScoreTimer (build 12)
-// export function startScoreTimer(sendScoreDeltaFunc, currentTrackId) {
-//   // send if i can scoreDeltaFunc arg
-//   // use sendScoreDelta from inside this file
-//   return {
-//     type: START_TIMER,
-//     sendScoreDeltaFunc,
-//     currentTrackId,
-//   };
-// }
-
 export function startScoreTimer() {
   // startScoreTimer() runs only on first song play
   return (dispatch, getState) => {
@@ -86,7 +75,10 @@ export function startScoreTimer() {
 }
 
 export function stopScoreTimer() {
-  return {
-    type: STOP_TIMER,
+  return (dispatch, getState) => {
+    clearInterval(getState().score.timer);
+    dispatch({
+      type: STOP_TIMER,
+    });
   };
 }
