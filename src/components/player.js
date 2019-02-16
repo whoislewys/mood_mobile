@@ -5,8 +5,6 @@ import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
 import {
-  skipToNext,
-  skipToPrevious,
   stopPlayback,
   playSharedSong,
 } from '../redux/modules/queue';
@@ -30,8 +28,6 @@ class Player extends Component {
           loading: this.props.loading,
           mood: this.props.selected,
           moodList: this.props.moods,
-          nextTrack: this.props.skipToNext,
-          previousTrack: this.props.skipToPrevious,
           stopPlayback: this.props.stopPlayback,
           playSharedSong: this.props.playSharedSong,
           setTime: TrackPlayer.seekTo,
@@ -56,8 +52,6 @@ const mapDispatchToProps = {
   setMood,
   playSharedSong,
   stopScoreTimer,
-  skipToNext,
-  skipToPrevious,
   stopPlayback,
 };
 

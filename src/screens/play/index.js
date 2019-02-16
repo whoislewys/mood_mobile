@@ -17,6 +17,8 @@ import { dimensions } from '../../assets/styles';
 import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
 import {
   handlePlayPress,
+  skipToNext,
+  skipToPrevious,
 } from '../../redux/modules/queue';
 
 const styles = StyleSheet.create({
@@ -86,8 +88,8 @@ class PlayScreen extends Component {
           </View>
           <View style={styles.trackInfoContainer}>
             <TrackInfo
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
+              skipForward={this.props.skipToNext}
+              skipBack={this.props.skipToPrevious}
               track={this.props.curTrack}
               setTime={this.props.setTime}
             />
@@ -96,8 +98,8 @@ class PlayScreen extends Component {
             <PlayControls
               shuffled={this.props.shuffled}
               repeat={this.props.repeat}
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
+              skipForward={this.props.skipToNext}
+              skipBack={this.props.skipToPrevious}
               playing={this.props.playing}
               handlePlayPress={this.props.handlePlayPress}
               loading={this.props.loading}
@@ -121,6 +123,8 @@ const mapDispatchToProps = {
   handlePlayPress,
   startScoreTimer,
   sendScoreDelta,
+  skipToNext,
+  skipToPrevious,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);
