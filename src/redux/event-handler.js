@@ -1,28 +1,31 @@
 import { Alert } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
-import { playbackState, playbackTrack } from './modules/queue';
-import { startScoreTimer } from './modules/score';
+import {
+  handlePlayPress,
+  skipToNext,
+  skipToPrevious,
+  playbackTrack,
+  playbackState,
+} from './modules/queue';
 
 async function eventHandler(store, data) {
+  // Forward remote events to the player
   switch (data.type) {
     // Playback updates
-    // Forward remote events to the player
     case 'remote-play':
-      TrackPlayer.play();
+      store.dispatch(handlePlayPress());
       break;
     case 'remote-pause':
-      TrackPlayer.pause();
+      store.dispatch(handlePlayPress());
       break;
     case 'remote-stop':
       TrackPlayer.stop();
       break;
     case 'remote-next':
-      TrackPlayer.skipToNext();
-      store.dispatch(startScoreTimer());
+      store.dispatch(skipToNext());
       break;
     case 'remote-previous':
-      TrackPlayer.skipToPrevious();
-      store.dispatch(startScoreTimer());
+      store.dispatch(skipToPrevious());
       break;
     case 'remote-seek':
       TrackPlayer.seekTo(data.position);

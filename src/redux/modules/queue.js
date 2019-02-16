@@ -116,16 +116,20 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function loadSongsForMoodId(moodId) {
-  return {
-    type: LOAD_SONGS,
-    payload: {
-      request: {
-        url: `/moods/${moodId}/songs`,
-        params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
+  return async (dispatch) => {
+    // todo: see if this reset() is necessary
+    await TrackPlayer.reset();
+    dispatch({
+      type: LOAD_SONGS,
+      payload: {
+        request: {
+          url: `/moods/${moodId}/songs`,
+          params: {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+          },
         },
       },
-    },
+    });
   };
 }
 
@@ -171,8 +175,6 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSon
 // TrackPlayer controls
 export function handlePlayPress() {
   return async (dispatch, getState) => {
-    console.log('queue in handlePlayPress thunk ', getState().queue.queue);
-    // TO
     const { track, queue, playback } = getState().queue;
     if (track === null) {
       await TrackPlayer.reset();
@@ -188,7 +190,6 @@ export function handlePlayPress() {
 
 export function skipToNext() {
   return async (dispatch, getState) => {
-    // TODO
     if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
       await TrackPlayer.play();
     }
@@ -212,5 +213,15 @@ export function stopPlayback() {
     if (!(getState().queue.track === null || getState().queue.playbackState === TrackPlayer.STATE_PAUSED)) {
       await TrackPlayer.pause();
     }
+  };
+}
+
+export function playSharedSong(sharedTrack) {
+  return async (dispatch, getState) => {
+    // plays a shared song
+    await TrackPlayer.reset();
+    dispatch(loadSharedSongQueue(sharedTrack));
+    await TrackPlayer.add(getState().queue.queue);
+    await TrackPlayer.play();
   };
 }

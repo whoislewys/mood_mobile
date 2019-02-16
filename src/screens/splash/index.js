@@ -20,7 +20,7 @@ class SplashScreen extends Component {
   }
 
   componentDidMount = async () => {
-    this.props.loadMoods();
+    this.props.loadMoods()
     branch.subscribe(({ error, params }) => {
       if (error) {
         console.error('Error from Branch: ', error);

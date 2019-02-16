@@ -15,6 +15,9 @@ import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
 import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
+import {
+  handlePlayPress,
+} from '../../redux/modules/queue';
 
 const styles = StyleSheet.create({
   playContainer: {
@@ -115,6 +118,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  handlePlayPress,
   startScoreTimer,
   sendScoreDelta,
 };
