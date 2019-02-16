@@ -23,6 +23,7 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
+  sharedTrack: null,
 };
 
 export function loadSongData(list) {
@@ -65,9 +66,10 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: true,
         queue: [],
-        sharedTrack: action.specificSong,
+        sharedTrack: action.sharedTrack,
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
+      console.log('action.payload.data', action.payload.data);
       const songs1 = loadSongData(action.payload.data);
       // add the sharedTrack to front of array
       songs1.unshift(state.sharedTrack);
@@ -119,6 +121,22 @@ export function loadSongsForMoodId(moodId) {
     payload: {
       request: {
         url: `/moods/${moodId}/songs`,
+        params: {
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        },
+      },
+    },
+  };
+}
+
+export function loadSharedSongQueue(sharedTrack) {
+  console.log('sharedTrack in shares ong qsc: ', sharedTrack);
+  return {
+    type: LOAD_SHARED_SONG_QUEUE,
+    sharedTrack,
+    payload: {
+      request: {
+        url: `/moods/${sharedTrack.mood_id}/songs`,
         params: {
           t: 'EXVbAWTqbGFl7BKuqUQv',
         },

@@ -57,7 +57,7 @@ class SplashScreen extends Component {
       console.log('opening shared track: ', sharedTrack);
       if (!sharedTrack) return;
       const { navigate } = this.props.navigation;
-      this.props.handleShare(sharedTrack)
+      this.props.playSharedSong(sharedTrack)
         .then(navigate({ routeName: 'Play', params: { visible: false } }));
     });
 

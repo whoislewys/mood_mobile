@@ -6,6 +6,7 @@ import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
 import {
   loadSongsForMoodId,
+  loadSharedSongQueue,
   handlePlayPress,
   skipToNext,
   skipToPrevious,
@@ -42,7 +43,7 @@ class Player extends Component {
   //   }
   // }
 
-  handleShare = async (sharedTrack) => {
+  playSharedSong = async (sharedTrack) => {
     // plays a shared song
     console.log('shared track: ', sharedTrack);
     await TrackPlayer.reset();
@@ -72,7 +73,7 @@ class Player extends Component {
           nextTrack: this.props.skipToNext,
           previousTrack: this.props.skipToPrevious,
           stopPlayback: this.props.stopPlayback,
-          handleShare: this.handleShare,
+          playSharedSong: this.playSharedSong,
           setTime: TrackPlayer.seekTo,
         }}
       />
@@ -94,6 +95,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setMood,
   loadSongsForMoodId,
+  loadSharedSongQueue,
   startScoreTimer,
   stopScoreTimer,
   sendScoreDelta,
