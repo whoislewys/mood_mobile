@@ -12,6 +12,7 @@ import {
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
+import { handlePlayPress } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
 
@@ -103,13 +104,13 @@ const TabBar = class TabBar extends Component {
   playButton = () => {
     if (this.props.playbackState === 'playing') {
       return (
-        <TouchableOpacity onPress={this.props.screenProps.handlePlayPress}>
+        <TouchableOpacity onPress={this.props.handlePlayPress}>
           <Image source={Images.navPauseButton} style={styles.playPauseButton} />
         </TouchableOpacity>
       );
     }
     return (
-      <TouchableOpacity onPress={this.props.screenProps.handlePlayPress}>
+      <TouchableOpacity onPress={this.props.handlePlayPress}>
         <Image source={Images.navPlayButton} style={styles.playPauseButton} />
       </TouchableOpacity>
     );
@@ -208,6 +209,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  handlePlayPress,
   loadLeaderboardSongs,
   loadEvents,
 };

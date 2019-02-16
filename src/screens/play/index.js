@@ -14,7 +14,11 @@ import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
-import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
+import {
+  handlePlayPress,
+  skipToNext,
+  skipToPrevious,
+} from '../../redux/modules/queue';
 
 const styles = StyleSheet.create({
   playContainer: {
@@ -55,7 +59,7 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    if (this.props.queue.length <= 0 || (this.props.curTrack == null)) {
+    if (!this.props.queue.length || (this.props.curTrack == null)) {
       return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
     }
 
@@ -68,12 +72,10 @@ class PlayScreen extends Component {
         height={dimensions.height}
         bottom={0}
       >
-        <PlayOnOpen playing={this.props.playing}
-        playByDefault={this.props.handlePlayPress}
-        parentScreen={this.props.parentScreen}
-        startScoreTimer={this.props.startScoreTimer}
-        currentTrack={this.props.curTrack}
-        sendScoreDeltaFunc={this.props.sendScoreDelta}
+        <PlayOnOpen
+          playing={this.props.playing}
+          playByDefault={this.props.handlePlayPress}
+          parentScreen={this.props.parentScreen}
         />
         <View style={styles.playContainer}>
           <View style={styles.dropdownBar}>
@@ -83,8 +85,8 @@ class PlayScreen extends Component {
           </View>
           <View style={styles.trackInfoContainer}>
             <TrackInfo
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
+              skipForward={this.props.skipToNext}
+              skipBack={this.props.skipToPrevious}
               track={this.props.curTrack}
               setTime={this.props.setTime}
             />
@@ -93,10 +95,8 @@ class PlayScreen extends Component {
             <PlayControls
               shuffled={this.props.shuffled}
               repeat={this.props.repeat}
-              toggleShuffle={this.props.toggleShuffle}
-              toggleRepeat={this.props.toggleRepeat}
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
+              skipForward={this.props.skipToNext}
+              skipBack={this.props.skipToPrevious}
               playing={this.props.playing}
               handlePlayPress={this.props.handlePlayPress}
               loading={this.props.loading}
@@ -117,8 +117,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  startScoreTimer,
-  sendScoreDelta,
+  handlePlayPress,
+  skipToNext,
+  skipToPrevious,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);

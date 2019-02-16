@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
+import { loadSongsForMoodId } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
 
 const styles = StyleSheet.create({
@@ -89,7 +90,6 @@ class MoodScreen extends Component {
             moods={this.props.moods}
             selected={this.props.mood}
             playing={this.props.playing}
-            handlePlayPress={this.props.handlePlayPress}
             settings={this.navigateToSettingsScreen}
             playscreen={this.navigateToPlayScreenFromMoodScreen}
           />
@@ -118,6 +118,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setMood,
+  loadSongsForMoodId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodScreen);
