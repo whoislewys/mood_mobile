@@ -4,8 +4,6 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import Images from '@assets/images';
-import * as TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
@@ -43,20 +41,7 @@ class LeaderboardScreen extends Component {
   }
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSong) => {
-    // TODO: clean this shit up when we use thunk for trackPlayer controls
-    // this.props.resetScore(this.props.sendScoreDelta, this.props.pressedLeaderboardSong);
-    await TrackPlayer.reset();
-    await TrackPlayer.add(this.props.leaderboardSongs);
-    await TrackPlayer.skip(pressedLeaderboardSong.id);
-
-    if (!this.props.queue.length) {
-      await TrackPlayer.play();
-      await TrackPlayer.pause();
-    } else {
-      await TrackPlayer.play();
-    }
-    // TODO: might have to clean up extra props (star prop) on the leaderboardSong object
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSong, this.props.leaderboardSongs);
+    this.props.loadLeaderboardSongQueue(pressedLeaderboardSong);
     this._navigateToPlayScreen();
   }
 

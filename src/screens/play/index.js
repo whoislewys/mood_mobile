@@ -14,7 +14,6 @@ import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
-import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
 import {
   handlePlayPress,
   skipToNext,
@@ -60,7 +59,7 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    if (this.props.queue.length <= 0 || (this.props.curTrack == null)) {
+    if (!this.props.queue.length || (this.props.curTrack == null)) {
       return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
     }
 
@@ -73,12 +72,10 @@ class PlayScreen extends Component {
         height={dimensions.height}
         bottom={0}
       >
-        <PlayOnOpen playing={this.props.playing}
-        playByDefault={this.props.handlePlayPress}
-        parentScreen={this.props.parentScreen}
-        startScoreTimer={this.props.startScoreTimer}
-        currentTrack={this.props.curTrack}
-        sendScoreDeltaFunc={this.props.sendScoreDelta}
+        <PlayOnOpen
+          playing={this.props.playing}
+          playByDefault={this.props.handlePlayPress}
+          parentScreen={this.props.parentScreen}
         />
         <View style={styles.playContainer}>
           <View style={styles.dropdownBar}>
@@ -121,8 +118,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   handlePlayPress,
-  startScoreTimer,
-  sendScoreDelta,
   skipToNext,
   skipToPrevious,
 };

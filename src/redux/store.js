@@ -6,7 +6,6 @@ import logger from 'redux-logger';
 
 import reducer from './modules';
 
-// const TOKEN = 'EXVbAWTqbGFl7BKuqUQv';
 const URL = 'http://api.moodindustries.com/api/v1/';
 
 const axiosConfig = {

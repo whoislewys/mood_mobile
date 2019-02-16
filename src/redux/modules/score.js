@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-const RESET_SCORE = 'score/RESET_SCORE';
 const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
 const SEND_SCORE = 'score/SEND_SCORE';
 const START_TIMER = 'score/START_TIMER';
@@ -20,15 +19,12 @@ export default function reducer(state = initialState, action = {}) {
     case INCREMENT_SCORE:
       return { ...state, currentScore: state.currentScore + 1, scoreDelta: state.scoreDelta + 1 };
     case SEND_SCORE:
+      console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
       if (state.scoreDelta > 0) {
-        console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
         axios.post(`http://api.moodindustries.com/api/v1//songs/${action.currentTrackId}/star`, { stars: state.scoreDelta, t: 'EXVbAWTqbGFl7BKuqUQv' });
       }
-
       return { ...state, scoreDelta: 0 };
     case START_TIMER:
-      console.log('new timer for start timer: ', action.newTimer);
-      // return { ...state, timer: action.newTimer };
       return {
         ...state,
         currentScore: 0,
@@ -36,7 +32,6 @@ export default function reducer(state = initialState, action = {}) {
         timer: action.newTimer,
       };
     case STOP_TIMER:
-      // should only be called on app unmount
       return { ...state, timer: null };
     default:
       return state;
@@ -75,6 +70,7 @@ export function startScoreTimer() {
 }
 
 export function stopScoreTimer() {
+  // THIS ACTION SHOULD ONLY BE CALLED WHEN APP UNMOUNTS
   return (dispatch, getState) => {
     clearInterval(getState().score.timer);
     dispatch({

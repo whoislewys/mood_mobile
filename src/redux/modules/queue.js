@@ -1,8 +1,8 @@
-// import { Image } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import shuffle from '../util';
 import { startScoreTimer } from './score';
 
+// Loading songs for a specific mood
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
@@ -40,11 +40,10 @@ export function loadSongData(list) {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    // loading songs for mood
+    // Loading songs for a specific mood
     case LOAD_SONGS:
       return { ...state, loading: true, queue: [] };
     case LOAD_SONGS_SUCCESS:
-      // load songs for mood, reset global score to 0, and set current track
       let songs = null;
       songs = loadSongData(action.payload.data);
       return {
@@ -60,7 +59,16 @@ export default function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
       };
 
-    // shared songs
+    // Loading songs for a leaderboard
+    case LOAD_LEADERBOARD_SONG_QUEUE:
+      const { selectedLeaderboardSong, leaderboardSongs } = action;
+      return {
+        ...state,
+        queue: leaderboardSongs,
+        curTrack: selectedLeaderboardSong,
+      };
+
+    // Loading a shared song, with a queue of the same mood right after
     case LOAD_SHARED_SONG_QUEUE:
       return {
         ...state,
@@ -86,17 +94,7 @@ export default function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
       };
 
-    // leaderboard songs
-    // TODO: make this actually play the songs once we've got thunks
-    case LOAD_LEADERBOARD_SONG_QUEUE:
-      // fills queue with leaderboard songs
-      const { selectedLeaderboardSong, leaderboardSongs } = action;
-      return {
-        ...state,
-        queue: leaderboardSongs,
-        curTrack: selectedLeaderboardSong,
-      };
-
+    // Handles the dispatches from TrackPlayer event handlers
     case PLAYBACK_STATE:
       return {
         ...state,
@@ -110,14 +108,17 @@ export default function reducer(state = initialState, action = {}) {
         track: action.track,
         curTrack: newCurTrack,
       };
+
     default:
       return state;
   }
 }
 
+/* Action Creators */
+
+// Mood action creator
 export function loadSongsForMoodId(moodId) {
   return async (dispatch) => {
-    // todo: see if this reset() is necessary
     await TrackPlayer.reset();
     dispatch({
       type: LOAD_SONGS,
@@ -130,9 +131,33 @@ export function loadSongsForMoodId(moodId) {
         },
       },
     });
+    dispatch(startScoreTimer());
   };
 }
 
+// Leaderboard queue action creators
+export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
+  return async (dispatch, getState) => {
+    const leaderboardSongs = getState().leaderboard.songs;
+    dispatch(startScoreTimer());
+    await TrackPlayer.reset();
+    await TrackPlayer.add(leaderboardSongs);
+    await TrackPlayer.skip(selectedLeaderboardSong.id);
+    if (!getState().queue.queue.length) {
+      await TrackPlayer.play();
+      await TrackPlayer.pause();
+    } else {
+      await TrackPlayer.play();
+    }
+    dispatch({
+      type: LOAD_LEADERBOARD_SONG_QUEUE,
+      selectedLeaderboardSong,
+      leaderboardSongs,
+    });
+  };
+}
+
+// Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {
   console.log('sharedTrack in shares ong qsc: ', sharedTrack);
   return {
@@ -149,26 +174,13 @@ export function loadSharedSongQueue(sharedTrack) {
   };
 }
 
-export function playbackState(state) {
-  return {
-    type: PLAYBACK_STATE,
-    state,
-  };
-}
-
-export function playbackTrack(track) {
-  return {
-    type: PLAYBACK_TRACK,
-    track,
-  };
-}
-
-export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSongs) {
-  // todo Dispatch resetScore() when this gets called
-  return {
-    type: LOAD_LEADERBOARD_SONG_QUEUE,
-    selectedLeaderboardSong,
-    leaderboardSongs,
+export function playSharedSong(sharedTrack) {
+  return async (dispatch, getState) => {
+    await TrackPlayer.reset();
+    dispatch(loadSharedSongQueue(sharedTrack));
+    dispatch(startScoreTimer());
+    await TrackPlayer.add(getState().queue.queue);
+    await TrackPlayer.play();
   };
 }
 
@@ -216,12 +228,17 @@ export function stopPlayback() {
   };
 }
 
-export function playSharedSong(sharedTrack) {
-  return async (dispatch, getState) => {
-    // plays a shared song
-    await TrackPlayer.reset();
-    dispatch(loadSharedSongQueue(sharedTrack));
-    await TrackPlayer.add(getState().queue.queue);
-    await TrackPlayer.play();
+// TrackPlayer event action creators
+export function playbackState(state) {
+  return {
+    type: PLAYBACK_STATE,
+    state,
+  };
+}
+
+export function playbackTrack(track) {
+  return {
+    type: PLAYBACK_TRACK,
+    track,
   };
 }
