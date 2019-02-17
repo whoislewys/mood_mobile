@@ -23,6 +23,7 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
+  curTrackIndex: null,
   sharedTrack: null,
 };
 
@@ -61,11 +62,10 @@ export default function reducer(state = initialState, action = {}) {
 
     // Loading songs for a leaderboard
     case LOAD_LEADERBOARD_SONG_QUEUE:
-      const { selectedLeaderboardSong, leaderboardSongs } = action;
       return {
         ...state,
-        queue: leaderboardSongs,
-        curTrack: selectedLeaderboardSong,
+        queue: action.leaderboardSongs,
+        curTrack: action.selectedLeaderboardSong,
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -101,12 +101,15 @@ export default function reducer(state = initialState, action = {}) {
         playback: action.state,
       };
     case PLAYBACK_TRACK:
-      let newCurTrack = state.queue.find(findTrack => findTrack.id === action.track);
+      console.log(state.queue);
+      const newCurTrackIndex = state.queue.findIndex(findTrack => findTrack.id === action.track);
+      let newCurTrack = state.queue[newCurTrackIndex];
       if (newCurTrack === undefined) newCurTrack = state.queue[0];
       return {
         ...state,
         track: action.track,
         curTrack: newCurTrack,
+        curTrackIndex: newCurTrackIndex,
       };
 
     default:
@@ -139,6 +142,11 @@ export function loadSongsForMoodId(moodId) {
 export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
   return async (dispatch, getState) => {
     const leaderboardSongs = getState().leaderboard.songs;
+    await dispatch({
+      type: LOAD_LEADERBOARD_SONG_QUEUE,
+      selectedLeaderboardSong,
+      leaderboardSongs,
+    });
     dispatch(startScoreTimer());
     await TrackPlayer.reset();
     await TrackPlayer.add(leaderboardSongs);
@@ -149,11 +157,6 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
     } else {
       await TrackPlayer.play();
     }
-    dispatch({
-      type: LOAD_LEADERBOARD_SONG_QUEUE,
-      selectedLeaderboardSong,
-      leaderboardSongs,
-    });
   };
 }
 

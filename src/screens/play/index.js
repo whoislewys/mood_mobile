@@ -60,6 +60,14 @@ class PlayScreen extends Component {
     this.state = { slideIndex: 0 };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.curTrackIndex !== this.props.curTrackIndex) {
+      // because the user is not the one snapping the carousel, set fireCallback to false
+      // so that extra songs are not skipped
+      this._carouselref.snapToItem(this.props.curTrackIndex, true, false);
+    }
+  }
+
   render = () => {
     if (!this.props.queue.length || (this.props.curTrack == null)) {
       return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
@@ -91,8 +99,9 @@ class PlayScreen extends Component {
     // TODO: implement a snap for when track ends
     // info on how to do 'ontrackend' stuff in github issues on react-native-track-player
     // args: snapToNext(animated, fireCallback)
+    // this._carouselref.snapToNext(true, false);
     this._carouselref.snapToNext(true, false);
-    this.props.nextTrack();
+    this.props.skipToNext();
   }
 
   _previousTrack = () => {
@@ -109,9 +118,6 @@ class PlayScreen extends Component {
         playing={this.props.playing}
         playByDefault={this.props.handlePlayPress}
         parentScreen={this.props.parentScreen}
-        startScoreTimer={this.props.startScoreTimer}
-        currentTrack={this.props.curTrack}
-        sendScoreDeltaFunc={this.props.sendScoreDelta}
       />);
   }
 
@@ -126,15 +132,11 @@ class PlayScreen extends Component {
   }
 
   _renderCarouselItem = ({ item }) => {
-    console.log('carousel art: ', item.artwork);
     let art = item.artwork !== undefined && item.artwork !== null ? item.artwork : 'https://i1.sndcdn.com/artworks-000232798771-b7p886-t500x500.jpg';
-    console.log('carousel art: ', art);
     return <AlbumArtCarouselItem artwork={art}/>;
   }
 
   _handleCarouselSnap = (slideIndex) => {
-    console.log('this slide index: ', this._carouselref.currentIndex);
-    console.log('slide index: ', slideIndex);
     if (slideIndex > this._carouselref.currentIndex) {
       this.props.skipToNext();
     } else if (slideIndex < this._carouselref.currentIndex) {
@@ -145,7 +147,6 @@ class PlayScreen extends Component {
   getAlbumArtCarousel = () => {
     // TODO: use the onSnapToItem() callback to move backwards and forwards through tracks
     // TODO: docs here: https://github.com/archriss/react-native-snap-carousel/blob/master/doc/PROPS_METHODS_AND_GETTERS.md#callbacks
-    this._slideIndex = 0;
     return (
       <Carousel
         ref={(c) => { this._carouselref = c; }}
@@ -192,6 +193,7 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
+  curTrackIndex: state.queue.curTrackIndex,
   albumArtList: state.queue.albumArtList,
 });
 
