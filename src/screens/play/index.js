@@ -11,7 +11,6 @@ import {
 import Images from '@assets/images';
 import Carousel from 'react-native-snap-carousel';
 import AlbumArtCarouselItem from './components/album-art-carousel-item';
-import AlbumArt from './components/album-art';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
@@ -97,9 +96,9 @@ class PlayScreen extends Component {
   }
 
   _previousTrack = () => {
-    this.props.previousTrack();
     // args: snapToNext(animated, fireCallback)
     this._carouselref.snapToPrev(true, false);
+    this.props.skipToPrevious();
   }
 
   playOnOpen = () => {
@@ -137,9 +136,9 @@ class PlayScreen extends Component {
     console.log('this slide index: ', this._carouselref.currentIndex);
     console.log('slide index: ', slideIndex);
     if (slideIndex > this._carouselref.currentIndex) {
-      this.props.nextTrack();
+      this.props.skipToNext();
     } else if (slideIndex < this._carouselref.currentIndex) {
-      this.props.previousTrack();
+      this.props.skipToPrevious();
     }
   }
 
