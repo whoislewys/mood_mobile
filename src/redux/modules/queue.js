@@ -141,6 +141,7 @@ export function loadSongsForMoodId(moodId) {
 // Leaderboard queue action creators
 export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
   return async (dispatch, getState) => {
+    await TrackPlayer.reset();
     const leaderboardSongs = getState().leaderboard.songs;
     await dispatch({
       type: LOAD_LEADERBOARD_SONG_QUEUE,
@@ -148,7 +149,6 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
       leaderboardSongs,
     });
     dispatch(startScoreTimer());
-    await TrackPlayer.reset();
     await TrackPlayer.add(leaderboardSongs);
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     if (!getState().queue.queue.length) {
@@ -240,6 +240,7 @@ export function playbackState(state) {
 }
 
 export function playbackTrack(track) {
+  console.log('track in PlaybackTrack: ', track);
   return {
     type: PLAYBACK_TRACK,
     track,
