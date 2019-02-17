@@ -77,12 +77,12 @@ export default class PlayControls extends Component {
         // used to display content as a preview card in facebook, twitter, iMessage etc...
         // structure for track object:
         title,
-        contentDescription: 'Check out this track on Mood!',
+        contentDescription: 'Check out this bop on Mood!',
         contentImageUrl: artwork,
         contentMetadata: {
-          ratingAverage: 4.2,
           customMetadata: {
-            album,
+            // only strings allowed in customMetadata
+            album: album === null ? '' : album,
             artist,
             mood_id: mood_id.toString(),
             url,
@@ -97,7 +97,7 @@ export default class PlayControls extends Component {
     this.setState({ shareIcon: Images.share });
     const buo = await this.createBUO();
     // TODO: randomize message body to make sharing a little more novel
-    let shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Mood: ' };
+    const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
     const linkProperties = { feature: 'share', channel: 'RNApp' };
     const controlParams = {
       $desktop_url: 'http://www.moodindustries.com',
