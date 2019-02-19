@@ -119,74 +119,6 @@ export default function reducer(state = initialState, action = {}) {
 
 /* Action Creators */
 
-// Mood action creator
-export function loadSongsForMoodId(moodId) {
-  return async (dispatch) => {
-    await TrackPlayer.reset();
-    dispatch({
-      type: LOAD_SONGS,
-      payload: {
-        request: {
-          url: `/moods/${moodId}/songs`,
-          params: {
-            t: 'EXVbAWTqbGFl7BKuqUQv',
-          },
-        },
-      },
-    });
-    dispatch(startScoreTimer());
-  };
-}
-
-// Leaderboard queue action creators
-export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
-  return async (dispatch, getState) => {
-    await TrackPlayer.reset();
-    const leaderboardSongs = getState().leaderboard.songs;
-    await dispatch({
-      type: LOAD_LEADERBOARD_SONG_QUEUE,
-      selectedLeaderboardSong,
-      leaderboardSongs,
-    });
-    dispatch(startScoreTimer());
-    await TrackPlayer.add(leaderboardSongs);
-    await TrackPlayer.skip(selectedLeaderboardSong.id);
-    if (!getState().queue.queue.length) {
-      await TrackPlayer.play();
-      await TrackPlayer.pause();
-    } else {
-      await TrackPlayer.play();
-    }
-  };
-}
-
-// Shared song action creators
-export function loadSharedSongQueue(sharedTrack) {
-  console.log('sharedTrack in shares ong qsc: ', sharedTrack);
-  return {
-    type: LOAD_SHARED_SONG_QUEUE,
-    sharedTrack,
-    payload: {
-      request: {
-        url: `/moods/${sharedTrack.mood_id}/songs`,
-        params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        },
-      },
-    },
-  };
-}
-
-export function playSharedSong(sharedTrack) {
-  return async (dispatch, getState) => {
-    await TrackPlayer.reset();
-    dispatch(loadSharedSongQueue(sharedTrack));
-    dispatch(startScoreTimer());
-    await TrackPlayer.add(getState().queue.queue);
-    await TrackPlayer.play();
-  };
-}
-
 // TrackPlayer controls
 export function handlePlayPress() {
   return async (dispatch, getState) => {
@@ -228,6 +160,87 @@ export function stopPlayback() {
     if (!(getState().queue.track === null || getState().queue.playbackState === TrackPlayer.STATE_PAUSED)) {
       await TrackPlayer.pause();
     }
+  };
+}
+
+// Mood action creator
+export function loadSongsForMoodId(moodId) {
+  return async (dispatch, getState) => {
+    await TrackPlayer.reset();
+    await dispatch({
+      type: LOAD_SONGS,
+      payload: {
+        request: {
+          url: `/moods/${moodId}/songs`,
+          params: {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+          },
+        },
+      },
+    });
+    // play songs for moodid
+    // dispatch(handlePlayPress());
+    const { track, queue, playback } = getState().queue;
+    if (track === null) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add(queue);
+      await TrackPlayer.play();
+    } else if (playback === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    } else {
+      await TrackPlayer.pause();
+    }
+
+    dispatch(startScoreTimer());
+  };
+}
+
+// Leaderboard queue action creators
+export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
+  return async (dispatch, getState) => {
+    await TrackPlayer.reset();
+    const leaderboardSongs = getState().leaderboard.songs;
+    await dispatch({
+      type: LOAD_LEADERBOARD_SONG_QUEUE,
+      selectedLeaderboardSong,
+      leaderboardSongs,
+    });
+    // dispatch(startScoreTimer());
+    await TrackPlayer.add(leaderboardSongs);
+    await TrackPlayer.skip(selectedLeaderboardSong.id);
+    if (!getState().queue.queue.length) {
+      await TrackPlayer.play();
+      await TrackPlayer.pause();
+    } else {
+      await TrackPlayer.play();
+    }
+  };
+}
+
+// Shared song action creators
+export function loadSharedSongQueue(sharedTrack) {
+  console.log('sharedTrack in shares ong qsc: ', sharedTrack);
+  return {
+    type: LOAD_SHARED_SONG_QUEUE,
+    sharedTrack,
+    payload: {
+      request: {
+        url: `/moods/${sharedTrack.mood_id}/songs`,
+        params: {
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        },
+      },
+    },
+  };
+}
+
+export function playSharedSong(sharedTrack) {
+  return async (dispatch, getState) => {
+    await TrackPlayer.reset();
+    dispatch(loadSharedSongQueue(sharedTrack));
+    dispatch(startScoreTimer());
+    await TrackPlayer.add(getState().queue.queue);
+    await TrackPlayer.play();
   };
 }
 
