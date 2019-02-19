@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     height: '10%',
     width,
     marginHorizontal: 10,
-    marginTop: '2%',
+    marginTop: 15,
     flexDirection: 'row',
     position: 'relative',
     backgroundColor: 'transparent',
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   tickContainer: {
     position: 'absolute',
-    top: -18.5,
+    top: -9,
     width: 40,
     height: 40,
   },
@@ -170,16 +170,18 @@ export default class TimeBar extends Component {
       <View style={styles.timeBar}>
         <View style={[
           {
-            height: 3,
+            height: 1,
             width: this.state.x,
+            marginTop: 10,
             backgroundColor: '#fff',
           },
         ]}></View>
         { this.getTime() }
         <View style={[
           {
-            height: 3,
+            height: 1,
             width: width - this.state.x,
+            marginTop: 10,
             backgroundColor: '#999',
           },
         ]}></View>

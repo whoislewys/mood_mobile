@@ -9,8 +9,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
-import Carousel from 'react-native-snap-carousel';
-import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
@@ -44,11 +42,12 @@ const styles = StyleSheet.create({
   },
   trackInfoContainer: {
     width: '100%',
-    height: '55%',
+    height: '66%',
+    marginTop: '4%',
     alignItems: 'center',
   },
   playControlsContainer: {
-    paddingTop: '40%',
+    marginTop: '8%',
   },
 });
 
@@ -57,15 +56,6 @@ class PlayScreen extends Component {
   constructor(props) {
     super(props);
     StatusBar.setBarStyle('light-content', true);
-    this.state = { slideIndex: 0 };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.curTrackIndex !== this.props.curTrackIndex) {
-      // because the user is not the one snapping the carousel, set fireCallback to false
-      // so that extra songs are not skipped
-      this._carouselref.snapToItem(this.props.curTrackIndex, true, false);
-    }
   }
 
   render = () => {
@@ -74,118 +64,49 @@ class PlayScreen extends Component {
     }
 
     return (
-      // TODO: refactor so trackInfo and Playbar are separate components
+      // TODO: refactor to get rid of trackInfo
+      // and add each of it's child components separately
       <Background
         image={{ uri: this.props.curTrack.artwork }}
         blur={25}
         height={dimensions.height}
         bottom={0}
       >
-        { this.playOnOpen() }
+        <PlayOnOpen
+          playing={this.props.playing}
+          playByDefault={this.props.handlePlayPress}
+          parentScreen={this.props.parentScreen}
+        />
         <View style={styles.playContainer}>
-          { this.getDropdownBar() }
-          <View style={styles.trackInfoContainer}>
-            { /* this.getAlbumArt() */ }
-            { this.getAlbumArtCarousel() }
-            { this.getTrackInfoAndPlaybar() }
+          <View style={styles.dropdownBar}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
+              <Image source={Images.arrowDown} />
+            </TouchableOpacity>
           </View>
-          { this.getPlayControls() }
+          <View style={styles.trackInfoContainer}>
+            <TrackInfo
+              skipForward={this.props.skipToNext}
+              skipBack={this.props.skipToPrevious}
+              track={this.props.curTrack}
+              setTime={this.props.setTime}
+            />
+          </View>
+          <View style={styles.playControlsContainer}>
+            <PlayControls
+              shuffled={this.props.shuffled}
+              repeat={this.props.repeat}
+              skipForward={this.props.skipToNext}
+              skipBack={this.props.skipToPrevious}
+              playing={this.props.playing}
+              handlePlayPress={this.props.handlePlayPress}
+              loading={this.props.loading}
+              currentTrack={this.props.curTrack}
+            />
+          </View>
         </View>
       </Background>
     );
   }
-
-  _nextTrack = () => {
-    // TODO: implement a snap for when track ends
-    // info on how to do 'ontrackend' stuff in github issues on react-native-track-player
-    // args: snapToNext(animated, fireCallback)
-    // this._carouselref.snapToNext(true, false);
-    this._carouselref.snapToNext(true, false);
-    this.props.skipToNext();
-  }
-
-  _previousTrack = () => {
-    // args: snapToNext(animated, fireCallback)
-    this._carouselref.snapToPrev(true, false);
-    this.props.skipToPrevious();
-  }
-
-  playOnOpen = () => {
-    // nasty hack to autoplay songs when playscreen first opens
-    // should really refactor this out
-    return (
-      <PlayOnOpen
-        playing={this.props.playing}
-        playByDefault={this.props.handlePlayPress}
-        parentScreen={this.props.parentScreen}
-      />);
-  }
-
-  getDropdownBar = () => {
-    return (
-      <View style={styles.dropdownBar}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
-          <Image source={Images.arrowDown} />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  _renderCarouselItem = ({ item }) => {
-    let art = item.artwork !== undefined && item.artwork !== null ? item.artwork : 'https://i1.sndcdn.com/artworks-000232798771-b7p886-t500x500.jpg';
-    return <AlbumArtCarouselItem artwork={art}/>;
-  }
-
-  _handleCarouselSnap = (slideIndex) => {
-    if (slideIndex > this._carouselref.currentIndex) {
-      this.props.skipToNext();
-    } else if (slideIndex < this._carouselref.currentIndex) {
-      this.props.skipToPrevious();
-    }
-  }
-
-  getAlbumArtCarousel = () => {
-    // TODO: use the onSnapToItem() callback to move backwards and forwards through tracks
-    // TODO: docs here: https://github.com/archriss/react-native-snap-carousel/blob/master/doc/PROPS_METHODS_AND_GETTERS.md#callbacks
-    return (
-      <Carousel
-        ref={(c) => { this._carouselref = c; }}
-        data={this.props.queue}
-        sliderWidth={dimensions.width}
-        itemWidth={dimensions.width}
-        renderItem={this._renderCarouselItem}
-        // onSnapToItem={this._handleCarouselSnap}
-        onBeforeSnapToItem={this._handleCarouselSnap}
-        lockScrollWhileSnapping={true}
-      />
-    );
-  }
-
-  getTrackInfoAndPlaybar = () => (
-      <TrackInfo
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
-        track={this.props.curTrack}
-        setTime={this.props.setTime}
-      />
-  );
-
-  getPlayControls = () => (
-    <View style={styles.playControlsContainer}>
-      <PlayControls
-        shuffled={this.props.shuffled}
-        repeat={this.props.repeat}
-        toggleShuffle={this.props.toggleShuffle}
-        toggleRepeat={this.props.toggleRepeat}
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
-        playing={this.props.playing}
-        handlePlayPress={this.props.handlePlayPress}
-        loading={this.props.loading}
-        currentTrack={this.props.curTrack}
-      />
-    </View>
-  );
 }
 
 const mapStateToProps = state => ({
@@ -193,8 +114,6 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
-  curTrackIndex: state.queue.curTrackIndex,
-  albumArtList: state.queue.albumArtList,
 });
 
 const mapDispatchToProps = {
