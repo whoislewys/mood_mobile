@@ -62,6 +62,7 @@ export default function reducer(state = initialState, action = {}) {
 
     // Loading songs for a leaderboard
     case LOAD_LEADERBOARD_SONG_QUEUE:
+      console.log(`leaderboardSongs: ${action.leaderboardSongs}`);
       return {
         ...state,
         queue: action.leaderboardSongs,
@@ -101,7 +102,7 @@ export default function reducer(state = initialState, action = {}) {
         playback: action.state,
       };
     case PLAYBACK_TRACK:
-      console.log(state.queue);
+      console.log('playback track queue: ', state.queue);
       const newCurTrackIndex = state.queue.findIndex(findTrack => findTrack.id === action.track);
       let newCurTrack = state.queue[newCurTrackIndex];
       if (newCurTrack === undefined) newCurTrack = state.queue[0];
@@ -123,6 +124,7 @@ export default function reducer(state = initialState, action = {}) {
 export function handlePlayPress() {
   return async (dispatch, getState) => {
     const { track, queue, playback } = getState().queue;
+    console.log(`queue songs handlePlay: ${queue}`);
     if (track === null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(queue);
@@ -187,21 +189,32 @@ export function loadSongsForMoodId(moodId) {
 // Leaderboard queue action creators
 export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
   return async (dispatch, getState) => {
-    await TrackPlayer.reset();
     const leaderboardSongs = getState().leaderboard.songs;
     await dispatch({
       type: LOAD_LEADERBOARD_SONG_QUEUE,
       selectedLeaderboardSong,
       leaderboardSongs,
     });
-    // dispatch(startScoreTimer());
-    await TrackPlayer.add(leaderboardSongs);
-    await TrackPlayer.skip(selectedLeaderboardSong.id);
-    if (!getState().queue.queue.length) {
+    // queue shuold have songs and a current track right here
+    const {
+      track,
+      queue,
+      playback,
+      curTrack,
+    } = getState().queue;
+
+    console.log(`queue songs leaderboard: ${queue}`);
+    console.log(`queue curTrack: ${curTrack}`);
+    dispatch(startScoreTimer());
+    if (track === null) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add(queue);
+      await TrackPlayer.skip(curTrack.id);
       await TrackPlayer.play();
-      await TrackPlayer.pause();
+    } else if (playback === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
     } else {
-      await TrackPlayer.play();
+      await TrackPlayer.pause();
     }
   };
 }
