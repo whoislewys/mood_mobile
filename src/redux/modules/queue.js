@@ -226,12 +226,10 @@ export function loadSharedSongQueue(sharedTrack) {
 }
 
 export function playSharedSong(sharedTrack) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     await TrackPlayer.reset();
     dispatch(loadSharedSongQueue(sharedTrack));
     dispatch(startScoreTimer());
-    await TrackPlayer.add(getState().queue.queue);
-    await TrackPlayer.play();
   };
 }
 
