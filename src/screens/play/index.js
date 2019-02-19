@@ -59,14 +59,6 @@ class PlayScreen extends Component {
     this.state = { slideIndex: 0 };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.curTrackIndex !== this.props.curTrackIndex) {
-      // because the user is not the one snapping the carousel, set fireCallback to false
-      // so that extra songs are not skipped
-      this._carouselref.snapToItem(this.props.curTrackIndex, true, false);
-    }
-  }
-
   render = () => {
     if (!this.props.queue.length || (this.props.curTrack == null)) {
       return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
@@ -141,8 +133,8 @@ class PlayScreen extends Component {
         sliderWidth={dimensions.width}
         itemWidth={dimensions.width}
         renderItem={this._renderCarouselItem}
-        // onSnapToItem={this._handleCarouselSnap}
         onBeforeSnapToItem={this._handleCarouselSnap}
+        firstItem={this.props.curTrackIndex}
         lockScrollWhileSnapping={true}
       />
     );

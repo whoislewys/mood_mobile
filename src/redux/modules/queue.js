@@ -62,11 +62,11 @@ export default function reducer(state = initialState, action = {}) {
 
     // Loading songs for a leaderboard
     case LOAD_LEADERBOARD_SONG_QUEUE:
-      console.log(`leaderboardSongs: ${action.leaderboardSongs}`);
       return {
         ...state,
         queue: action.leaderboardSongs,
         curTrack: action.selectedLeaderboardSong,
+        curTrackIndex: action.selectedSongIndex,
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -102,15 +102,15 @@ export default function reducer(state = initialState, action = {}) {
         playback: action.state,
       };
     case PLAYBACK_TRACK:
-      console.log('playback track queue: ', state.queue);
+      // console.log('playback track queue: ', state.queue);
       const newCurTrackIndex = state.queue.findIndex(findTrack => findTrack.id === action.track);
       let newCurTrack = state.queue[newCurTrackIndex];
       if (newCurTrack === undefined) newCurTrack = state.queue[0];
       return {
         ...state,
         track: action.track,
-        curTrack: newCurTrack,
-        curTrackIndex: newCurTrackIndex,
+        // curTrack: newCurTrack,
+        // curTrackIndex: newCurTrackIndex,
       };
 
     default:
@@ -124,7 +124,7 @@ export default function reducer(state = initialState, action = {}) {
 export function handlePlayPress() {
   return async (dispatch, getState) => {
     const { track, queue, playback } = getState().queue;
-    console.log(`queue songs handlePlay: ${queue}`);
+    // console.log(`queue songs handlePlay: ${queue}`);
     if (track === null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(queue);
@@ -187,12 +187,19 @@ export function loadSongsForMoodId(moodId) {
 }
 
 // Leaderboard queue action creators
-export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
+export function loadLeaderboardSongQueue(selectedLeaderboardSong, selectedSongIndex) {
   return async (dispatch, getState) => {
+    if (TrackPlayer.getState() !== TrackPlayer.STATE_STOPPED && TrackPlayer.getState() !== TrackPlayer.STATE_NONE) {
+      // TODO: check if this is unnecessary
+      await TrackPlayer.stop();
+      await TrackPlayer.reset();
+    }
+    console.log('trackplayer state on LB click: ', await TrackPlayer.getState());
     const leaderboardSongs = getState().leaderboard.songs;
     await dispatch({
       type: LOAD_LEADERBOARD_SONG_QUEUE,
       selectedLeaderboardSong,
+      selectedSongIndex,
       leaderboardSongs,
     });
     // queue shuold have songs and a current track right here
@@ -203,19 +210,13 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
       curTrack,
     } = getState().queue;
 
-    console.log(`queue songs leaderboard: ${queue}`);
-    console.log(`queue curTrack: ${curTrack}`);
+    // console.log(`queue songs leaderboard: ${queue}`);
+    // console.log(`queue curTrack: ${curTrack}`);
+    await TrackPlayer.reset();
+    await TrackPlayer.add(queue);
+    await TrackPlayer.skip(curTrack.id);
+    await TrackPlayer.play();
     dispatch(startScoreTimer());
-    if (track === null) {
-      await TrackPlayer.reset();
-      await TrackPlayer.add(queue);
-      await TrackPlayer.skip(curTrack.id);
-      await TrackPlayer.play();
-    } else if (playback === TrackPlayer.STATE_PAUSED) {
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.pause();
-    }
   };
 }
 
