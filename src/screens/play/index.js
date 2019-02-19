@@ -11,6 +11,7 @@ import {
 import Images from '@assets/images';
 import Carousel from 'react-native-snap-carousel';
 import AlbumArtCarouselItem from './components/album-art-carousel-item';
+import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
@@ -63,7 +64,7 @@ class PlayScreen extends Component {
     if (prevProps.curTrackIndex !== this.props.curTrackIndex) {
       // because the user is not the one snapping the carousel, set fireCallback to false
       // so that extra songs are not skipped
-      this._carouselref.snapToItem(this.props.curTrackIndex, false, false);
+      this._carouselref.snapToItem(this.props.curTrackIndex, true, false);
     }
   }
 
@@ -80,6 +81,7 @@ class PlayScreen extends Component {
         height={dimensions.height}
         bottom={0}
       >
+        { this.playOnOpen() }
         <View style={styles.playContainer}>
           { this.getDropdownBar() }
           <View style={styles.trackInfoContainer}>
@@ -106,6 +108,17 @@ class PlayScreen extends Component {
     // args: snapToNext(animated, fireCallback)
     this._carouselref.snapToPrev(true, false);
     this.props.skipToPrevious();
+  }
+
+  playOnOpen = () => {
+    // nasty hack to autoplay songs when playscreen first opens
+    // should really refactor this out
+    return (
+      <PlayOnOpen
+        playing={this.props.playing}
+        playByDefault={this.props.handlePlayPress}
+        parentScreen={this.props.parentScreen}
+      />);
   }
 
   getDropdownBar = () => {
