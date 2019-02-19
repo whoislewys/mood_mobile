@@ -165,7 +165,7 @@ export function stopPlayback() {
 
 // Mood action creator
 export function loadSongsForMoodId(moodId) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     await TrackPlayer.reset();
     await dispatch({
       type: LOAD_SONGS,
@@ -179,18 +179,7 @@ export function loadSongsForMoodId(moodId) {
       },
     });
     // play songs for moodid
-    // dispatch(handlePlayPress());
-    const { track, queue, playback } = getState().queue;
-    if (track === null) {
-      await TrackPlayer.reset();
-      await TrackPlayer.add(queue);
-      await TrackPlayer.play();
-    } else if (playback === TrackPlayer.STATE_PAUSED) {
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.pause();
-    }
-
+    dispatch(handlePlayPress());
     dispatch(startScoreTimer());
   };
 }
@@ -219,18 +208,20 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
 
 // Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {
-  console.log('sharedTrack in shares ong qsc: ', sharedTrack);
-  return {
-    type: LOAD_SHARED_SONG_QUEUE,
-    sharedTrack,
-    payload: {
-      request: {
-        url: `/moods/${sharedTrack.mood_id}/songs`,
-        params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
+  return async (dispatch) => {
+    await dispatch({
+      type: LOAD_SHARED_SONG_QUEUE,
+      sharedTrack,
+      payload: {
+        request: {
+          url: `/moods/${sharedTrack.mood_id}/songs`,
+          params: {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+          },
         },
       },
-    },
+    });
+    dispatch(handlePlayPress());
   };
 }
 
