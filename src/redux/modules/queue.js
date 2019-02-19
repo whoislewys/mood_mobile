@@ -25,6 +25,7 @@ const initialState = {
   curTrack: null,
   curTrackIndex: null,
   sharedTrack: null,
+  queueType: '',
 };
 
 export function loadSongData(list) {
@@ -67,6 +68,7 @@ export default function reducer(state = initialState, action = {}) {
         queue: action.leaderboardSongs,
         curTrack: action.selectedLeaderboardSong,
         curTrackIndex: action.selectedSongIndex,
+        queueType: 'Leaderboard',
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -123,12 +125,14 @@ export default function reducer(state = initialState, action = {}) {
 // TrackPlayer controls
 export function handlePlayPress() {
   return async (dispatch, getState) => {
-    const { track, queue, playback } = getState().queue;
-    // console.log(`queue songs handlePlay: ${queue}`);
-    if (track === null) {
+    const { queue, playback } = getState().queue;
+    const currentTrackId = await TrackPlayer.getCurrentTrack();
+    console.log('curtrackid: ', currentTrackId);
+    if (currentTrackId === undefined) {
       await TrackPlayer.reset();
-      await TrackPlayer.add(queue);
       await TrackPlayer.play();
+      await TrackPlayer.add(queue);
+      // in the next react-native-track-player patch,await TrackPlayer.play(); will go here
     } else if (playback === TrackPlayer.STATE_PAUSED) {
       await TrackPlayer.play();
     } else {
@@ -160,7 +164,7 @@ export function skipToPrevious() {
 export function stopPlayback() {
   return async (dispatch, getState) => {
     if (!(getState().queue.track === null || getState().queue.playbackState === TrackPlayer.STATE_PAUSED)) {
-      await TrackPlayer.pause();
+      await TrackPlayer.stop();
     }
   };
 }
@@ -189,13 +193,8 @@ export function loadSongsForMoodId(moodId) {
 // Leaderboard queue action creators
 export function loadLeaderboardSongQueue(selectedLeaderboardSong, selectedSongIndex) {
   return async (dispatch, getState) => {
-    if (TrackPlayer.getState() !== TrackPlayer.STATE_STOPPED && TrackPlayer.getState() !== TrackPlayer.STATE_NONE) {
-      // TODO: check if this is unnecessary
-      await TrackPlayer.stop();
-      await TrackPlayer.reset();
-    }
-    console.log('trackplayer state on LB click: ', await TrackPlayer.getState());
-    const leaderboardSongs = getState().leaderboard.songs;
+    // await TrackPlayer.pause();
+    const leaderboardSongs = await getState().leaderboard.songs;
     await dispatch({
       type: LOAD_LEADERBOARD_SONG_QUEUE,
       selectedLeaderboardSong,
@@ -204,18 +203,30 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong, selectedSongIn
     });
     // queue shuold have songs and a current track right here
     const {
-      track,
       queue,
       playback,
       curTrack,
+      queueType,
     } = getState().queue;
-
-    // console.log(`queue songs leaderboard: ${queue}`);
-    // console.log(`queue curTrack: ${curTrack}`);
-    await TrackPlayer.reset();
-    await TrackPlayer.add(queue);
-    await TrackPlayer.skip(curTrack.id);
-    await TrackPlayer.play();
+    const currentTrackId = await TrackPlayer.getCurrentTrack();
+    // console.log('curtrackid: ', currentTrackId);
+    if (currentTrackId === undefined) {
+      await TrackPlayer.reset();
+      await TrackPlayer.play();
+      await TrackPlayer.add(queue);
+      await TrackPlayer.skip(curTrack.id);
+      // in the next react-native-track-player patch,await TrackPlayer.play(); will go here
+    }
+    else if (queueType === 'Leaderboard') {
+      await TrackPlayer.pause();
+      await TrackPlayer.skip(curTrack.id);
+      await TrackPlayer.play();
+    }
+    else if (playback === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    } else {
+      await TrackPlayer.pause();
+    }
     dispatch(startScoreTimer());
   };
 }
@@ -223,6 +234,7 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong, selectedSongIn
 // Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {
   return async (dispatch) => {
+    await TrackPlayer.reset();
     await dispatch({
       type: LOAD_SHARED_SONG_QUEUE,
       sharedTrack,
