@@ -16,13 +16,16 @@ const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: 'row',
     paddingBottom: '10%',
-    paddingTop: '15%',
+    paddingTop: '5%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   headerText: {
     marginTop: 18,
     fontFamily: fonts.primary,
     fontSize: fonts.header,
     color: colors.header,
+    marginRight: 20,
   },
   headerSubText: {
     fontFamily: fonts.primary,
@@ -31,19 +34,28 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   addEventButton: {
-    resizeMode: 'stretch',
-    marginTop: '5%',
-    marginLeft: '53%',
+    height: 55,
+    width: 55,
+    resizeMode: 'contain',
+    marginLeft: 45,
+    marginTop: '7%',
+    // my version
+    // resizeMode: 'stretch',
+    // marginTop: '5%',
+    // marginLeft: '53%',
+  },
+  addIcon: {
+    height: 55,
+    width: 55,
   },
   moodLogo: {
   },
 });
 
-const renderMoodLogo = (showLogo) => {
-  return (showLogo ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10}/>
+const renderMoodLogo = showLogo => (
+  showLogo ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10}/>
     : <View/>
-  );
-};
+);
 
 const renderSubText = (subText) => {
   return (subText ? <Text style={styles.headerSubText}>{subText}</Text>
@@ -55,7 +67,7 @@ const Header = ({ showLogo, headerText, subText }) => (
       {renderMoodLogo(showLogo)}
       <Text style={styles.headerText}>{headerText}</Text>
       <TouchableOpacity style={styles.addEventButton} onPress={() => Linking.openURL(ADD_EVENT_URL)}>
-        <Image source={Images.addEventButton}/>
+        <Image source={Images.addEventButton} style={styles.addIcon}/>
       </TouchableOpacity>
       {renderSubText(subText)}
     </View>
