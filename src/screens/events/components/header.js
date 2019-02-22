@@ -31,9 +31,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   addEventButton: {
-    height: 25,
-    width: 25,
-    resizeMode: 'contain',
+    resizeMode: 'stretch',
     marginTop: '5%',
     marginLeft: '53%',
   },

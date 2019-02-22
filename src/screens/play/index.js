@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     paddingLeft: '1.8%',
     resizeMode: 'contain',
     height: 30,
-    width: 30,
+    width: 33,
     opacity: 0.5,
   },
   trackInfoContainer: {

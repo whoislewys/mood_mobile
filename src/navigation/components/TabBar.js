@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   playPauseButton: {
     height: 33,
     width: 33,
-    marginTop: '-9%',
+    paddingTop: '-9%',
     marginLeft: 22,
     marginRight: 22,
   },
