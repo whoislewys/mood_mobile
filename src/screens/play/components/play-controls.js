@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   playButton: {
     width: 71,
     height: 71,
-    marginRight: -25.5,
-    marginLeft: -25.5,
+    paddingRight: -25.5,
+    paddingLeft: -25.5,
   },
   skipLeftIcon: {
     height: 35,
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     transform: [{ rotateY: '180deg' }],
   },
   share: {
-    height: 20,
-    width: 20,
+    height: 24,
+    width: 24,
     tintColor: 'white',
     opacity: 0.6,
     alignItems: 'center',
