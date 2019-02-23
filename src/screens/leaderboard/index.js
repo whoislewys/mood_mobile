@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import Images from '@assets/images';
 import * as TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
@@ -14,6 +13,10 @@ import { resetScore, sendScoreDelta } from '../../redux/modules/score';
 
 const styles = {
   background: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  leaderboardContainer: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
@@ -91,7 +94,9 @@ class LeaderboardScreen extends Component {
 
   render = () => (
     <View style={styles.background}>
-      {this.getLeaderBoard()}
+      <View style={styles.leaderboardContainer}>
+        {this.getLeaderBoard()}
+      </View>
     </View>
   )
 }

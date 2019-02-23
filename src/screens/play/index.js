@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   backButton: {
-    zIndex: 2,
+    paddingTop: '1%',
     paddingLeft: '1.8%',
     resizeMode: 'contain',
-    height: 30,
-    width: 33,
+    height: 40,
+    width: 40,
     opacity: 0.5,
   },
   trackInfoContainer: {
