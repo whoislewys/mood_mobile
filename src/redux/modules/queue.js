@@ -23,7 +23,6 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
-  curTrackIndex: null,
   sharedTrack: null,
   queueType: '',
 };
@@ -63,12 +62,11 @@ export default function reducer(state = initialState, action = {}) {
 
     // Loading songs for a leaderboard
     case LOAD_LEADERBOARD_SONG_QUEUE:
+      const { selectedLeaderboardSong, leaderboardSongs } = action;
       return {
         ...state,
-        queue: action.leaderboardSongs,
-        curTrack: action.selectedLeaderboardSong,
-        curTrackIndex: action.selectedSongIndex,
-        queueType: 'Leaderboard',
+        queue: leaderboardSongs,
+        curTrack: selectedLeaderboardSong,
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -104,15 +102,12 @@ export default function reducer(state = initialState, action = {}) {
         playback: action.state,
       };
     case PLAYBACK_TRACK:
-      // console.log('playback track queue: ', state.queue);
-      const newCurTrackIndex = state.queue.findIndex(findTrack => findTrack.id === action.track);
-      let newCurTrack = state.queue[newCurTrackIndex];
+      let newCurTrack = state.queue.find(findTrack => findTrack.id === action.track);
       if (newCurTrack === undefined) newCurTrack = state.queue[0];
       return {
         ...state,
         track: action.track,
-        // curTrack: newCurTrack,
-        // curTrackIndex: newCurTrackIndex,
+        curTrack: newCurTrack,
       };
 
     default:
@@ -191,43 +186,24 @@ export function loadSongsForMoodId(moodId) {
 }
 
 // Leaderboard queue action creators
-export function loadLeaderboardSongQueue(selectedLeaderboardSong, selectedSongIndex) {
+export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
   return async (dispatch, getState) => {
-    // await TrackPlayer.pause();
-    const leaderboardSongs = await getState().leaderboard.songs;
-    await dispatch({
+    const leaderboardSongs = getState().leaderboard.songs;
+    dispatch(startScoreTimer());
+    await TrackPlayer.reset();
+    await TrackPlayer.add(leaderboardSongs);
+    await TrackPlayer.skip(selectedLeaderboardSong.id);
+    if (!getState().queue.queue.length) {
+      await TrackPlayer.play();
+      await TrackPlayer.pause();
+    } else {
+      await TrackPlayer.play();
+    }
+    dispatch({
       type: LOAD_LEADERBOARD_SONG_QUEUE,
       selectedLeaderboardSong,
-      selectedSongIndex,
       leaderboardSongs,
     });
-    // queue shuold have songs and a current track right here
-    const {
-      queue,
-      playback,
-      curTrack,
-      queueType,
-    } = getState().queue;
-    const currentTrackId = await TrackPlayer.getCurrentTrack();
-    // console.log('curtrackid: ', currentTrackId);
-    if (currentTrackId === undefined) {
-      await TrackPlayer.reset();
-      await TrackPlayer.play();
-      await TrackPlayer.add(queue);
-      await TrackPlayer.skip(curTrack.id);
-      // in the next react-native-track-player patch,await TrackPlayer.play(); will go here
-    }
-    else if (queueType === 'Leaderboard') {
-      await TrackPlayer.pause();
-      await TrackPlayer.skip(curTrack.id);
-      await TrackPlayer.play();
-    }
-    else if (playback === TrackPlayer.STATE_PAUSED) {
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.pause();
-    }
-    dispatch(startScoreTimer());
   };
 }
 
@@ -252,12 +228,58 @@ export function loadSharedSongQueue(sharedTrack) {
 }
 
 export function playSharedSong(sharedTrack) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     await TrackPlayer.reset();
     dispatch(loadSharedSongQueue(sharedTrack));
     dispatch(startScoreTimer());
+    await TrackPlayer.add(getState().queue.queue);
+    await TrackPlayer.play();
   };
 }
+
+// // TrackPlayer controls
+// export function handlePlayPress() {
+//   return async (dispatch, getState) => {
+//     const { track, queue, playback } = getState().queue;
+//     if (track === null) {
+//       await TrackPlayer.reset();
+//       await TrackPlayer.add(queue);
+//       await TrackPlayer.play();
+//     } else if (playback === TrackPlayer.STATE_PAUSED) {
+//       await TrackPlayer.play();
+//     } else {
+//       await TrackPlayer.pause();
+//     }
+//   };
+// }
+//
+// export function skipToNext() {
+//   return async (dispatch, getState) => {
+//     if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
+//       await TrackPlayer.play();
+//     }
+//     await TrackPlayer.skipToNext();
+//     dispatch(startScoreTimer());
+//   };
+// }
+//
+// export function skipToPrevious() {
+//   return async (dispatch, getState) => {
+//     if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
+//       await TrackPlayer.play();
+//     }
+//     await TrackPlayer.skipToPrevious();
+//     dispatch(startScoreTimer());
+//   };
+// }
+//
+// export function stopPlayback() {
+//   return async (dispatch, getState) => {
+//     if (!(getState().queue.track === null || getState().queue.playbackState === TrackPlayer.STATE_PAUSED)) {
+//       await TrackPlayer.pause();
+//     }
+//   };
+// }
 
 // TrackPlayer event action creators
 export function playbackState(state) {
@@ -268,7 +290,6 @@ export function playbackState(state) {
 }
 
 export function playbackTrack(track) {
-  console.log('track in PlaybackTrack: ', track);
   return {
     type: PLAYBACK_TRACK,
     track,

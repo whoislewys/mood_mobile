@@ -2,22 +2,22 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions,
   Image,
   Text,
 } from 'react-native';
 import moment from 'moment';
 import TrackPlayer from 'react-native-track-player';
 import Images from '@assets/images';
+import { dimensions } from '../../../assets/styles';
 
-const width = Dimensions.get('window').width * 0.8;
+const width = dimensions.width * 0.8;
 
 const styles = StyleSheet.create({
   timeBar: {
     height: '10%',
     width,
     marginHorizontal: 10,
-    marginTop: '2%',
+    marginTop: 15,
     flexDirection: 'row',
     position: 'relative',
     backgroundColor: 'transparent',
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   tickContainer: {
     position: 'absolute',
-    top: -18.5,
+    top: -9,
     width: 40,
     height: 40,
   },
@@ -170,19 +170,21 @@ export default class TimeBar extends Component {
       <View style={styles.timeBar}>
         <View style={[
           {
-            height: 3,
+            height: 2,
             width: this.state.x,
+            marginTop: 10,
             backgroundColor: '#fff',
           },
-        ]}></View>
+        ]}/>
         { this.getTime() }
         <View style={[
           {
-            height: 3,
+            height: 2,
             width: width - this.state.x,
+            marginTop: 10,
             backgroundColor: '#999',
           },
-        ]}></View>
+        ]}/>
         <View
           style={[styles.tickContainer, this.getTickBoxStyle()]}
           onResponderMove={this.setPosition}

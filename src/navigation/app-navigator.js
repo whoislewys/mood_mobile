@@ -1,6 +1,6 @@
 /* eslint react/display-name: 0, import/no-extraneous-dependencies: 0 */
 
-import React from 'react'
+import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
 import MoodScreen from '../screens/mood';

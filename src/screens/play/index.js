@@ -9,8 +9,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
-import Carousel from 'react-native-snap-carousel';
-import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
@@ -34,20 +32,21 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   backButton: {
-    zIndex: 2,
+    paddingTop: '1%',
     paddingLeft: '1.8%',
     resizeMode: 'contain',
-    height: 30,
-    width: 30,
+    height: 40,
+    width: 40,
     opacity: 0.5,
   },
   trackInfoContainer: {
     width: '100%',
-    height: '55%',
+    height: '66%',
+    marginTop: '4%',
     alignItems: 'center',
   },
   playControlsContainer: {
-    paddingTop: '40%',
+    marginTop: '8%',
   },
 });
 
@@ -56,7 +55,6 @@ class PlayScreen extends Component {
   constructor(props) {
     super(props);
     StatusBar.setBarStyle('light-content', true);
-    this.state = { slideIndex: 0 };
   }
 
   render = () => {
@@ -75,8 +73,7 @@ class PlayScreen extends Component {
         <View style={styles.playContainer}>
           { this.getDropdownBar() }
           <View style={styles.trackInfoContainer}>
-            { /* this.getAlbumArt() */ }
-            { this.getAlbumArtCarousel() }
+            { this.getAlbumArt() }
             { this.getTrackInfoAndPlaybar() }
           </View>
           { this.getPlayControls() }
@@ -85,20 +82,20 @@ class PlayScreen extends Component {
     );
   }
 
-  _nextTrack = () => {
-    // TODO: implement a snap for when track ends
-    // info on how to do 'ontrackend' stuff in github issues on react-native-track-player
-    // args: snapToNext(animated, fireCallback)
-    // this._carouselref.snapToNext(true, false);
-    this._carouselref.snapToNext(true, false);
-    this.props.skipToNext();
-  }
+  // _skipToNext = () => {
+  //   // TODO: implement a snap for when track ends
+  //   // info on how to do 'ontrackend' stuff in github issues on react-native-track-player
+  //   // args: snapToNext(animated, fireCallback)
+  //   // this._carouselref.snapToNext(true, false);
+  //   this._carouselref.snapToNext(true, false);
+  //   this._skipToNext();
+  // }
 
-  _previousTrack = () => {
-    // args: snapToNext(animated, fireCallback)
-    this._carouselref.snapToPrev(true, false);
-    this.props.skipToPrevious();
-  }
+  // _skipToPrevious = () => {
+  //   // args: snapToNext(animated, fireCallback)
+  //   this._carouselref.snapToPrev(true, false);
+  //   this._skipToPrevious();
+  // }
 
   getDropdownBar = () => {
     return (
@@ -110,40 +107,40 @@ class PlayScreen extends Component {
     );
   }
 
-  _renderCarouselItem = ({ item }) => {
-    let art = item.artwork !== undefined && item.artwork !== null ? item.artwork : 'https://i1.sndcdn.com/artworks-000232798771-b7p886-t500x500.jpg';
-    return <AlbumArtCarouselItem artwork={art}/>;
-  }
+  // _renderCarouselItem = ({ item }) => {
+  //   let art = item.artwork !== undefined && item.artwork !== null ? item.artwork : 'https://i1.sndcdn.com/artworks-000232798771-b7p886-t500x500.jpg';
+  //   return <AlbumArtCarouselItem artwork={art}/>;
+  // }
+  //
+  // _handleCarouselSnap = (slideIndex) => {
+  //   if (slideIndex > this._carouselref.currentIndex) {
+  //     this._skipToNext();
+  //   } else if (slideIndex < this._carouselref.currentIndex) {
+  //     this._skipToPrevious();
+  //   }
+  // }
 
-  _handleCarouselSnap = (slideIndex) => {
-    if (slideIndex > this._carouselref.currentIndex) {
-      this.props.skipToNext();
-    } else if (slideIndex < this._carouselref.currentIndex) {
-      this.props.skipToPrevious();
-    }
-  }
-
-  getAlbumArtCarousel = () => {
-    // TODO: use the onSnapToItem() callback to move backwards and forwards through tracks
-    // TODO: docs here: https://github.com/archriss/react-native-snap-carousel/blob/master/doc/PROPS_METHODS_AND_GETTERS.md#callbacks
-    return (
-      <Carousel
-        ref={(c) => { this._carouselref = c; }}
-        data={this.props.queue}
-        sliderWidth={dimensions.width}
-        itemWidth={dimensions.width}
-        renderItem={this._renderCarouselItem}
-        onBeforeSnapToItem={this._handleCarouselSnap}
-        firstItem={this.props.curTrackIndex}
-        lockScrollWhileSnapping={true}
-      />
-    );
-  }
+  // getAlbumArtCarousel = () => {
+  //   // TODO: use the onSnapToItem() callback to move backwards and forwards through tracks
+  //   // TODO: docs here: https://github.com/archriss/react-native-snap-carousel/blob/master/doc/PROPS_METHODS_AND_GETTERS.md#callbacks
+  //   return (
+  //     <Carousel
+  //       ref={(c) => { this._carouselref = c; }}
+  //       data={this.props.queue}
+  //       sliderWidth={dimensions.width}
+  //       itemWidth={dimensions.width}
+  //       renderItem={this._renderCarouselItem}
+  //       onBeforeSnapToItem={this._handleCarouselSnap}
+  //       firstItem={this.props.curTrackIndex}
+  //       lockScrollWhileSnapping={true}
+  //     />
+  //   );
+  // }
 
   getTrackInfoAndPlaybar = () => (
       <TrackInfo
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
+        skipForward={this.props.skipToNext}
+        skipBack={this.props.skipToPrevious}
         track={this.props.curTrack}
         setTime={this.props.setTime}
       />
@@ -156,8 +153,8 @@ class PlayScreen extends Component {
         repeat={this.props.repeat}
         toggleShuffle={this.props.toggleShuffle}
         toggleRepeat={this.props.toggleRepeat}
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
+        skipForward={this.props.skipToNext}
+        skipBack={this.props.skipToPrevious}
         playing={this.props.playing}
         handlePlayPress={this.props.handlePlayPress}
         loading={this.props.loading}
@@ -172,8 +169,6 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
-  curTrackIndex: state.queue.curTrackIndex,
-  albumArtList: state.queue.albumArtList,
 });
 
 const mapDispatchToProps = {

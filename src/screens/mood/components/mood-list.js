@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'space-between',
     paddingBottom: '15%',
-    paddingTop: '10%',
+    paddingTop: '7%',
     marginLeft: dimensions.width * 0.077,
     marginRight: dimensions.width * 0.077,
   },
   headerText: {
-    color: colors.header,
     fontFamily: fonts.primary,
     fontSize: fonts.header,
+    color: colors.header,
   },
   buttonRow: {
     flexDirection: 'row',
