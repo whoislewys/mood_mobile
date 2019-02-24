@@ -237,8 +237,11 @@ export function playbackState(state) {
 }
 
 export function playbackTrack(track) {
-  return {
-    type: PLAYBACK_TRACK,
-    track,
+  return (dispatch) => {
+    dispatch(startScoreTimer());
+    dispatch({
+      type: PLAYBACK_TRACK,
+      track,
+    });
   };
 }
