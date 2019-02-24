@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   detailsContainer: {
     width: 120,
     marginLeft: 11,
-    backgroundColor: '#FFFFFF',
     marginTop: 15,
     alignSelf: 'flex-start',
   },

@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     marginLeft: '7%',
-    backgroundColor: '#FFFFFF',
     marginTop: -3,
   },
 });
@@ -128,9 +127,12 @@ class SettingsScreen extends Component {
             />
           </View>
         )
-        : <TouchableOpacity style={styles.buttonImageContainer} onPress={() => elem.item.handlePress(elem.item.url)} >
+        : <TouchableOpacity
+            style={styles.buttonImageContainer}
+            onPress={() => elem.item.handlePress(elem.item.url)}
+          >
             <Image source={elem.item.image} style={styles.buttonImage}/>
-        </TouchableOpacity>
+          </TouchableOpacity>
       }
     </TouchableOpacity>
   )
@@ -146,7 +148,7 @@ class SettingsScreen extends Component {
     StatusBar.setBarStyle('dark-content', true);
 
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <FlatList
           data={[
             {

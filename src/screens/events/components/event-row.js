@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import { fonts, colors } from '../../../assets/styles';
 
-const CAL_SHARE_LINK = 'https://calendar.google.com/calendar?cid=Z2hkNHYwamZic3I1aGpvZTNpc2ZqdHQ2MnNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ';
-
 const styles = StyleSheet.create({
   rowBackground: {
     flex: 1,
@@ -56,7 +54,6 @@ const styles = StyleSheet.create({
   detailsContainer: {
     width: '70%',
     marginLeft: 11,
-    backgroundColor: '#FFFFFF',
     marginTop: -3,
   },
   name: {
