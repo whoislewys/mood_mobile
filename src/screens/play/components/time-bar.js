@@ -14,7 +14,7 @@ const width = dimensions.width * 0.8;
 
 const styles = StyleSheet.create({
   timeBar: {
-    height: '10%',
+    height: '15%',
     width,
     marginHorizontal: 10,
     marginTop: 15,
