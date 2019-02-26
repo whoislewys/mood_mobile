@@ -20,7 +20,7 @@ class SplashScreen extends Component {
   }
 
   componentDidMount = async () => {
-    this.props.loadMoods();
+    this.props.loadMoods()
     branch.subscribe(({ error, params }) => {
       if (error) {
         console.error('Error from Branch: ', error);
@@ -57,7 +57,7 @@ class SplashScreen extends Component {
       console.log('opening shared track: ', sharedTrack);
       if (!sharedTrack) return;
       const { navigate } = this.props.navigation;
-      this.props.handleShare(sharedTrack)
+      this.props.playSharedSong(sharedTrack)
         .then(navigate({ routeName: 'Play', params: { visible: false } }));
     });
 

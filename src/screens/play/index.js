@@ -9,12 +9,17 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
+import AlbumArt from './components/album-art';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
-import { startScoreTimer, sendScoreDelta } from '../../redux/modules/score';
+import {
+  handlePlayPress,
+  skipToNext,
+  skipToPrevious,
+} from '../../redux/modules/queue';
 
 const styles = StyleSheet.create({
   playContainer: {
@@ -29,11 +34,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   backButton: {
-    zIndex: 2,
+    paddingTop: '1%',
     paddingLeft: '1.8%',
     resizeMode: 'contain',
-    height: 30,
-    width: 30,
+    height: 40,
+    width: 40,
     opacity: 0.5,
   },
   trackInfoContainer: {
@@ -45,6 +50,20 @@ const styles = StyleSheet.create({
   playControlsContainer: {
     marginTop: '8%',
   },
+  trackInfoContainer1: {
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+  },
+  albumContainer: {
+    height: 0.902 * dimensions.width,
+    width: 0.902 * dimensions.width,
+    resizeMode: 'stretch',
+  },
+  infoText: {
+    flex: 1,
+  },
 });
 
 
@@ -55,7 +74,7 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    if (this.props.queue.length <= 0 || (this.props.curTrack == null)) {
+    if (!this.props.queue.length || (this.props.curTrack == null)) {
       return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
     }
 
@@ -68,43 +87,70 @@ class PlayScreen extends Component {
         height={dimensions.height}
         bottom={0}
       >
-        <PlayOnOpen playing={this.props.playing}
-        playByDefault={this.props.handlePlayPress}
-        parentScreen={this.props.parentScreen}
-        startScoreTimer={this.props.startScoreTimer}
-        currentTrack={this.props.curTrack}
-        sendScoreDeltaFunc={this.props.sendScoreDelta}
+        <PlayOnOpen
+          playing={this.props.playing}
+          playByDefault={this.props.handlePlayPress}
+          parentScreen={this.props.parentScreen}
         />
         <View style={styles.playContainer}>
-          <View style={styles.dropdownBar}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
-              <Image source={Images.arrowDown} />
-            </TouchableOpacity>
-          </View>
+          { this.getDropdownBar() }
           <View style={styles.trackInfoContainer}>
-            <TrackInfo
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
-              track={this.props.curTrack}
-              setTime={this.props.setTime}
-            />
+            { this.getAlbumArt() }
+            { this.getTrackInfoAndPlaybar() }
           </View>
           <View style={styles.playControlsContainer}>
-            <PlayControls
-              shuffled={this.props.shuffled}
-              repeat={this.props.repeat}
-              toggleShuffle={this.props.toggleShuffle}
-              toggleRepeat={this.props.toggleRepeat}
-              skipForward={this.props.nextTrack}
-              skipBack={this.props.previousTrack}
-              playing={this.props.playing}
-              handlePlayPress={this.props.handlePlayPress}
-              loading={this.props.loading}
-              currentTrack={this.props.curTrack}
-            />
+            { this.getPlayControls() }
           </View>
         </View>
       </Background>
+    );
+  }
+
+
+  getDropdownBar = () => {
+    return (
+      <View style={styles.dropdownBar}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')}
+                          style={styles.backButton}>
+          <Image source={Images.arrowDown}/>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  getAlbumArt = () => {
+    return (
+      <View style={styles.albumContainer}>
+        <AlbumArt
+          url={this.props.curTrack.artwork}
+          skipForward={this.props.skipToNext}
+          skipBack={this.props.skipToPrevious}
+        />
+      </View>
+    );
+  }
+
+  getTrackInfoAndPlaybar = () => {
+    return (
+      <TrackInfo
+        setTime={this.props.setTime}
+        track={this.props.curTrack}
+      />
+    );
+  }
+
+  getPlayControls = () => {
+    return (
+      <PlayControls
+        shuffled={this.props.shuffled}
+        repeat={this.props.repeat}
+        skipForward={this.props.skipToNext}
+        skipBack={this.props.skipToPrevious}
+        playing={this.props.playing}
+        handlePlayPress={this.props.handlePlayPress}
+        loading={this.props.loading}
+        currentTrack={this.props.curTrack}
+      />
     );
   }
 }
@@ -117,8 +163,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  startScoreTimer,
-  sendScoreDelta,
+  handlePlayPress,
+  skipToNext,
+  skipToPrevious,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);

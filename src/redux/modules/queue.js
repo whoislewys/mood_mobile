@@ -1,23 +1,20 @@
-// import { Image } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import shuffle from '../util';
+import { startScoreTimer } from './score';
 
+// Loading songs for a specific mood
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
-const LOAD_SPECIFIC_SONG_QUEUE = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD';
-const LOAD_SPECIFIC_SONG_QUEUE_SUCCESS = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_SUCCESS';
-const LOAD_SPECIFIC_SONG_QUEUE_FAIL = 'queue/LOAD_SPECIFIC_SONG_QUEUE/LOAD_FAIL';
-
-const LOAD_SPECIFIC_SONG = 'queue/LOAD_SPECIFIC_SONG';
+const LOAD_SHARED_SONG_QUEUE = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD';
+const LOAD_SHARED_SONG_QUEUE_SUCCESS = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_SUCCESS';
+const LOAD_SHARED_SONG_QUEUE_FAIL = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_FAIL';
 
 const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
 
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
-
-let SHARETRACK_HACK = {};
 
 const initialState = {
   loading: false,
@@ -26,6 +23,7 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
+  sharedTrack: null,
 };
 
 export function loadSongData(list) {
@@ -41,12 +39,11 @@ export function loadSongData(list) {
 }
 
 export default function reducer(state = initialState, action = {}) {
-  console.log('queue reducer action type: ', action.type);
   switch (action.type) {
+    // Loading songs for a specific mood
     case LOAD_SONGS:
       return { ...state, loading: true, queue: [] };
     case LOAD_SONGS_SUCCESS:
-      // load songs for mood, reset global score to 0, and set current track
       let songs = null;
       songs = loadSongData(action.payload.data);
       return {
@@ -62,40 +59,8 @@ export default function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
       };
 
-    case LOAD_SPECIFIC_SONG:
-      const { specificSong } = action;
-      console.log('shared song in reducer: ', specificSong);
-      return { ...state, queue: [specificSong], curTrack: [specificSong] };
-      // GEN QUEUE WITH SAME MOOD OF SPECIFIC SONG
-    case LOAD_SPECIFIC_SONG_QUEUE:
-      // SET the queue to be the shared track here
-      // push on to the queue on success
-      return { ...state, loading: true, queue: [] };
-    case LOAD_SPECIFIC_SONG_QUEUE_SUCCESS:
-      console.log('shared song in succeess action on reducer: ', SHARETRACK_HACK);
-      // load songs for mood, reset global score to 0, and set current track
-      let songs1 = [SHARETRACK_HACK];
-      songs1 = loadSongData(action.payload.data);
-      console.log(action);
-      console.log('songs1 before unshift: ', songs1);
-      songs1.unshift(SHARETRACK_HACK);
-      console.log('songs after unshift: ', songs1);
-      return {
-        ...state,
-        loading: false,
-        queue: songs1,
-        curTrack: songs1[0],
-      };
-    case LOAD_SPECIFIC_SONG_QUEUE_FAIL:
-      return {
-        ...state,
-        loading: false,
-        error: 'Error while loading songs.',
-      };
-
-    // TODO: make this actually play the songs once we've got thunks
+    // Loading songs for a leaderboard
     case LOAD_LEADERBOARD_SONG_QUEUE:
-      // fills queue with leaderboard songs
       const { selectedLeaderboardSong, leaderboardSongs } = action;
       return {
         ...state,
@@ -103,6 +68,33 @@ export default function reducer(state = initialState, action = {}) {
         curTrack: selectedLeaderboardSong,
       };
 
+    // Loading a shared song, with a queue of the same mood right after
+    case LOAD_SHARED_SONG_QUEUE:
+      return {
+        ...state,
+        loading: true,
+        queue: [],
+        sharedTrack: action.sharedTrack,
+      };
+    case LOAD_SHARED_SONG_QUEUE_SUCCESS:
+      console.log('action.payload.data', action.payload.data);
+      const songs1 = loadSongData(action.payload.data);
+      // add the sharedTrack to front of array
+      songs1.unshift(state.sharedTrack);
+      return {
+        ...state,
+        loading: false,
+        queue: songs1,
+        curTrack: songs1[0],
+      };
+    case LOAD_SHARED_SONG_QUEUE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while loading songs.',
+      };
+
+    // Handles the dispatches from TrackPlayer event handlers
     case PLAYBACK_STATE:
       return {
         ...state,
@@ -116,17 +108,64 @@ export default function reducer(state = initialState, action = {}) {
         track: action.track,
         curTrack: newCurTrack,
       };
+
     default:
       return state;
   }
 }
 
+/* Action Creators */
+
+// Mood action creator
 export function loadSongsForMoodId(moodId) {
+  return async (dispatch) => {
+    await TrackPlayer.reset();
+    dispatch({
+      type: LOAD_SONGS,
+      payload: {
+        request: {
+          url: `/moods/${moodId}/songs`,
+          params: {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+          },
+        },
+      },
+    });
+    dispatch(startScoreTimer());
+  };
+}
+
+// Leaderboard queue action creators
+export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
+  return async (dispatch, getState) => {
+    const leaderboardSongs = getState().leaderboard.songs;
+    dispatch(startScoreTimer());
+    await TrackPlayer.reset();
+    await TrackPlayer.add(leaderboardSongs);
+    await TrackPlayer.skip(selectedLeaderboardSong.id);
+    if (!getState().queue.queue.length) {
+      await TrackPlayer.play();
+      await TrackPlayer.pause();
+    } else {
+      await TrackPlayer.play();
+    }
+    dispatch({
+      type: LOAD_LEADERBOARD_SONG_QUEUE,
+      selectedLeaderboardSong,
+      leaderboardSongs,
+    });
+  };
+}
+
+// Shared song action creators
+export function loadSharedSongQueue(sharedTrack) {
+  console.log('sharedTrack in shares ong qsc: ', sharedTrack);
   return {
-    type: LOAD_SONGS,
+    type: LOAD_SHARED_SONG_QUEUE,
+    sharedTrack,
     payload: {
       request: {
-        url: `/moods/${moodId}/songs`,
+        url: `/moods/${sharedTrack.mood_id}/songs`,
         params: {
           t: 'EXVbAWTqbGFl7BKuqUQv',
         },
@@ -135,6 +174,61 @@ export function loadSongsForMoodId(moodId) {
   };
 }
 
+export function playSharedSong(sharedTrack) {
+  return async (dispatch, getState) => {
+    await TrackPlayer.reset();
+    dispatch(loadSharedSongQueue(sharedTrack));
+    dispatch(startScoreTimer());
+    await TrackPlayer.add(getState().queue.queue);
+    await TrackPlayer.play();
+  };
+}
+
+// TrackPlayer controls
+export function handlePlayPress() {
+  return async (dispatch, getState) => {
+    const { track, queue, playback } = getState().queue;
+    if (track === null) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add(queue);
+      await TrackPlayer.play();
+    } else if (playback === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    } else {
+      await TrackPlayer.pause();
+    }
+  };
+}
+
+export function skipToNext() {
+  return async (dispatch, getState) => {
+    if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    }
+    await TrackPlayer.skipToNext();
+    dispatch(startScoreTimer());
+  };
+}
+
+export function skipToPrevious() {
+  return async (dispatch, getState) => {
+    if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    }
+    await TrackPlayer.skipToPrevious();
+    dispatch(startScoreTimer());
+  };
+}
+
+export function stopPlayback() {
+  return async (dispatch, getState) => {
+    if (!(getState().queue.track === null || getState().queue.playbackState === TrackPlayer.STATE_PAUSED)) {
+      await TrackPlayer.pause();
+    }
+  };
+}
+
+// TrackPlayer event action creators
 export function playbackState(state) {
   return {
     type: PLAYBACK_STATE,
@@ -143,53 +237,11 @@ export function playbackState(state) {
 }
 
 export function playbackTrack(track) {
-  return {
-    type: PLAYBACK_TRACK,
-    track,
-  };
-}
-
-export function loadSpecificSong(specificSong) {
-  console.log('specific song in action creatro:', specificSong);
-  return {
-    type: LOAD_SPECIFIC_SONG,
-    specificSong,
-  };
-}
-
-export function loadSpecificSongQueue(specificSong) {
-  console.log('LOAD SPEC SONG in action creator:', specificSong);
-  SHARETRACK_HACK = specificSong;
-  return {
-    type: LOAD_SPECIFIC_SONG_QUEUE,
-    payload: {
-      request: {
-        url: `/moods/${specificSong.mood_id}/songs`,
-        params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        },
-      },
-    },
-  };
-}
-
-export function loadLeaderboardSongQueue(selectedLeaderboardSong, leaderboardSongs) {
-  return {
-    type: LOAD_LEADERBOARD_SONG_QUEUE,
-    selectedLeaderboardSong,
-    leaderboardSongs,
-  };
-}
-
-export function updatePlayback() {
-  // should only used when coming back from lock screen
-  console.log('calling updateplayback');
-  return async () => {
-    try {
-      playbackState(await TrackPlayer.getState());
-      playbackTrack(await TrackPlayer.getCurrentTrack());
-    } catch (e) {
-      // player not yet initialized, don't update anything
-    }
+  return (dispatch) => {
+    dispatch(startScoreTimer());
+    dispatch({
+      type: PLAYBACK_TRACK,
+      track,
+    });
   };
 }

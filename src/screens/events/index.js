@@ -12,6 +12,10 @@ import Header from './components/header';
 const styles = {
   background: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  eventsContainer: {
+    flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     marginLeft: 16,
@@ -43,7 +47,9 @@ class EventsScreen extends Component {
 
   render = () => (
     <View style={styles.background}>
-      {this.getEvents()}
+      <View style={styles.eventsContainer}>
+        {this.getEvents()}
+      </View>
     </View>
   )
 }

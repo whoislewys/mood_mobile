@@ -5834,10 +5834,10 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-restart@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.6.tgz#77770d078683947b2c1f2adb876f179269d8443a"
-  integrity sha512-ysKvNOjCeCS8A4ouQkJ8DZRYH4wgPdPEJqqqSGFuNzK4eAi3VPOeneQ3w0HHYeOui5fc6fV9y9ClOB9LcKbKpQ==
+react-native-restart@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.8.tgz#b19e99b6f0cb9820a3a900e57a564c69d2b0b1e2"
+  integrity sha512-rVtjvNZO4QwYHLn1fDzUGNqYFwJufRBkWdSFlxID/QM+2j7siV4rad138I4ejpPdtwdSsQ/EIIdk6VFUQQ9S9g==
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
@@ -5872,10 +5872,10 @@ react-native-tab-view@^1.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-track-player@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-1.0.0.tgz#b5efb39591838f2412b4e8ee967bf64de3184010"
-  integrity sha512-38ueRXIxlbdF2uQ+qoEC91VuWWIvYi8WDZqOF3X7eMApK3nFl+a18SRV5d4Rcc66rKGpudL2AJo4dsJPjZu7QQ==
+react-native-track-player@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-1.1.1.tgz#f5d0f680265bcc98ec0b4f656d7ef6f487962d5c"
+  integrity sha512-NR2rGmXZfArYTQD3/gCGvZc3c/u42I1RgSzr+ppQSAZhNscG/6bRu4TCNnE4XTnnbqXq/MjL0uUgJL5TvGFFAg==
 
 react-native-vector-icons@^4.6.0:
   version "4.6.0"
@@ -6127,6 +6127,11 @@ redux-logger@^3.0.6:
   integrity sha1-91VZZvMJjzyIYExEnPC69XeCdL8=
   dependencies:
     deep-diff "^0.3.5"
+
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+  integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
 
 redux@^4.0.0:
   version "4.0.0"

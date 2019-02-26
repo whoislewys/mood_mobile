@@ -8,13 +8,12 @@ import {
   Linking,
   Image,
   FlatList,
-  Switch,
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
 import ToggleSwitch from '../../components/toggle-switch';
 import Header from './components/header';
-import { dimensions, fonts, colors } from '../../assets/styles';
+import { fonts, colors } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -80,31 +79,16 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     marginLeft: '7%',
-    backgroundColor: '#FFFFFF',
     marginTop: -3,
   },
 });
 
 class SettingsScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isActive: true,
-      filterExplicit: true,
-    };
-  }
+  _keyExtractor = item => item.key;
 
-  _keyExtractor = item => item.text;
-
-  onToggle = () => {
-    this.setState(prevState => ({
-      isActive: !prevState.isActive,
-    }));
-  }
-
-  onPressLinkButton = (url) => {
-    Linking.openURL(url);
-  }
+    onPressLinkButton = (url) => {
+      Linking.openURL(url);
+    }
 
   renderListItem = elem => (
     <TouchableOpacity
@@ -143,9 +127,12 @@ class SettingsScreen extends Component {
             />
           </View>
         )
-        : <TouchableOpacity style={styles.buttonImageContainer} onPress={() => elem.item.handlePress(elem.item.url)} >
+        : <TouchableOpacity
+            style={styles.buttonImageContainer}
+            onPress={() => elem.item.handlePress(elem.item.url)}
+          >
             <Image source={elem.item.image} style={styles.buttonImage}/>
-        </TouchableOpacity>
+          </TouchableOpacity>
       }
     </TouchableOpacity>
   )
@@ -161,29 +148,26 @@ class SettingsScreen extends Component {
     StatusBar.setBarStyle('dark-content', true);
 
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <FlatList
-          data={[ /* {
-            url: 'http://moodindustries.com/privacy.pdf',
-            settingName: 'Explicit',
-            settingInfo: 'Allow playback of explicit music.',
-            switchExists: true,
-            handlePress: this.onToggle,
-          }, */ {
-            url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
-            settingName: 'Rate & Review',
-            settingInfo: 'Tell us about your experience.',
-            handlePress: this.onPressLinkButton,
-            switchExists: false,
-            image: Images.doIt,
-          }, {
-            url: 'http://moodindustries.com/privacy.pdf',
-            settingName: 'Terms of Use',
-            settingInfo: 'All the stuff you need to know.',
-            handlePress: this.onPressLinkButton,
-            switchExists: false,
-            image: Images.view,
-          },
+          data={[
+            {
+              key: 'rate',
+              url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
+              settingName: 'Rate & Review',
+              settingInfo: 'Tell us about your experience.',
+              handlePress: this.onPressLinkButton,
+              switchExists: false,
+              image: Images.doIt,
+            }, {
+              key: 'terms',
+              url: 'http://moodindustries.com/privacy.pdf',
+              settingName: 'Terms of Use',
+              settingInfo: 'All the stuff you need to know.',
+              handlePress: this.onPressLinkButton,
+              switchExists: false,
+              image: Images.view,
+            },
           ]}
           renderItem={this.renderListItem}
           keyExtractor={this._keyExtractor}
