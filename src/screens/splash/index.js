@@ -35,7 +35,7 @@ class SplashScreen extends Component {
 
       // A Branch link was opened.
       // create track object from shared link's params
-      console.log('branch link opened: ', params);
+      // console.log('branch link opened: ', params);
       const id = params.$canonical_identifier;
       const artwork = params.$og_image_url;
       const title = params.$og_title;
@@ -54,7 +54,7 @@ class SplashScreen extends Component {
         title,
         url,
       };
-      console.log('opening shared track: ', sharedTrack);
+      // console.log('opening shared track: ', sharedTrack);
       if (!sharedTrack) return;
       const { navigate } = this.props.navigation;
       this.props.playSharedSong(sharedTrack)
