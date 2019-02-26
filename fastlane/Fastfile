@@ -43,5 +43,21 @@ platform :ios do
     gym(scheme: 'mood_mobile', project: './ios/mood_mobile.xcodeproj')
     upload_to_app_store
   end
+end
 
+platform :android do
+  desc 'Build a release APK for beta usage'
+  lane :beta do
+    gradle(
+      project_dir: './android',      
+      task: 'clean assembleRelease')
+  end
+
+  desc 'Build a debug APK'
+  lane :debug do
+    gradle(
+      project_dir: './android/',
+      task: 'clean assembleDebug'
+    )
+  end
 end

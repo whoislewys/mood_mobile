@@ -28,7 +28,6 @@ export default function leaderboard(state = initialState, action = {}) {
       return { ...state, loading: true };
     case LOAD_SONGS_SUCCESS:
       const songs = mapSongsToValidTrackObjects(action.payload.data);
-      console.log('leaderboard songs: ', songs);
       return { ...state, loading: false, songs };
     case LOAD_SONGS_FAIL:
       return {

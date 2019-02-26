@@ -77,7 +77,6 @@ export default function reducer(state = initialState, action = {}) {
         sharedTrack: action.sharedTrack,
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
-      console.log('action.payload.data', action.payload.data);
       const songs1 = loadSongData(action.payload.data);
       // add the sharedTrack to front of array
       songs1.unshift(state.sharedTrack);
@@ -141,7 +140,9 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
     const leaderboardSongs = getState().leaderboard.songs;
     dispatch(startScoreTimer());
     await TrackPlayer.reset();
-    await TrackPlayer.add(leaderboardSongs);
+    try {
+      await TrackPlayer.add(leaderboardSongs);
+    } catch (_) {}
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     if (!getState().queue.queue.length) {
       await TrackPlayer.play();
@@ -159,7 +160,6 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
 
 // Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {
-  console.log('sharedTrack in shares ong qsc: ', sharedTrack);
   return {
     type: LOAD_SHARED_SONG_QUEUE,
     sharedTrack,
@@ -177,9 +177,11 @@ export function loadSharedSongQueue(sharedTrack) {
 export function playSharedSong(sharedTrack) {
   return async (dispatch, getState) => {
     await TrackPlayer.reset();
-    dispatch(loadSharedSongQueue(sharedTrack));
+    await dispatch(loadSharedSongQueue(sharedTrack));
     dispatch(startScoreTimer());
-    await TrackPlayer.add(getState().queue.queue);
+    try {
+      await TrackPlayer.add(getState().queue.queue);
+    } catch (_) {}
     await TrackPlayer.play();
   };
 }
@@ -190,7 +192,9 @@ export function handlePlayPress() {
     const { track, queue, playback } = getState().queue;
     if (track === null) {
       await TrackPlayer.reset();
-      await TrackPlayer.add(queue);
+      try {
+        await TrackPlayer.add(queue);
+      } catch (_) {}
       await TrackPlayer.play();
     } else if (playback === TrackPlayer.STATE_PAUSED) {
       await TrackPlayer.play();
