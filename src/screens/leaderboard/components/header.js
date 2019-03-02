@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
 
@@ -24,11 +29,15 @@ const styles = StyleSheet.create({
   },
   moodLogo: {
     alignSelf: 'center',
+    width: 200,
+    height: 100,
+    resizeMode: 'contain',
   },
 });
 
 const renderMoodLogo = (showLogo) => {
-  return (showLogo ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10}/>
+  return (showLogo
+    ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10}/>
     : <View/>
   );
 };

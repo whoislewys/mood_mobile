@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
   },
   albumInfoMain: {
     color: '#FFFFFF',
-    height: 20,
-    paddingBottom: 4,
+    height: 22,
+    marginBottom: 4,
     maxWidth: dimensions.width * 0.6,
     fontFamily: fonts.primaryBold,
     fontSize: fonts.subHeader,
