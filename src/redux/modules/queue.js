@@ -230,7 +230,7 @@ export function loadSharedSongQueue(sharedTrack) {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
-      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+      dispatch({ type: LOAD_SHARED_SONG_QUEUE_SUCCESS, payload: songs });
       dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
