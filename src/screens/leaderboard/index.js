@@ -37,7 +37,7 @@ class LeaderboardScreen extends Component {
     this.props.navigation.navigate({
       routeName: 'Play',
       params: {
-        parentScreen: 'LeaderboardScreen',
+        parentScreen: 'Leaderboard',
         visible: false,
         // dont remember why this moodscreen prop even exists
         moodscreen: this._navigateToLeaderboardScreen,
