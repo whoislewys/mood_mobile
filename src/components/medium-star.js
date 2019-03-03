@@ -64,14 +64,17 @@ class ClapBubble extends Component {
       Animated.timing(this.state.yPosition, {
         toValue: -100,
         duration: 500,
+        useNativeDriver: true,
       }),
       Animated.timing(this.state.fadeAnim, {
         toValue: 1,
         duration: 420,
+        useNativeDriver: true,
       }),
       Animated.timing(this.state.xPosition, {
         toValue: getRndInteger(-23, 23),
         duration: 500,
+        useNativeDriver: true,
       }),
     ]).start(() => {
       setTimeout(() => {

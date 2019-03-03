@@ -9,10 +9,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
-import AlbumArt from './components/album-art';
+
+import Carousel from 'react-native-snap-carousel';
+import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
-import TrackInfo from './components/track-info';
+import TimeBar from './components/time-bar';
+import InfoText from './components/info-text';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
 import {
@@ -28,41 +31,36 @@ const styles = StyleSheet.create({
     marginLeft: '5.9%',
     marginRight: '5.9%',
   },
-  dropdownBar: {
-    height: '11.52%',
+  dropdownBarContainer: {
+    flex: 9,
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
   backButton: {
-    paddingTop: '1%',
-    paddingLeft: '1.8%',
-    resizeMode: 'contain',
-    height: 40,
+    marginLeft: '1.8%',
+    paddingBottom: '15%',
     width: 40,
+    resizeMode: 'contain',
     opacity: 0.5,
   },
-  trackInfoContainer: {
-    width: '100%',
-    height: '66%',
-    marginTop: '4%',
+  albumArtContainer: {
+    flex: 55,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '2%',
+  },
+  playBarContainer: {
+    flex: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  trackInfoContainer: {
+    flex: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   playControlsContainer: {
-    marginTop: '8%',
-  },
-  trackInfoContainer1: {
-    flex: 1,
-    height: '100%',
-    width: '100%',
-    alignItems: 'center',
-  },
-  albumContainer: {
-    height: 0.902 * dimensions.width,
-    width: 0.902 * dimensions.width,
-    resizeMode: 'stretch',
-  },
-  infoText: {
-    flex: 1,
+    flex: 15,
   },
 });
 
@@ -75,16 +73,20 @@ class PlayScreen extends Component {
 
   render = () => {
     if (!this.props.queue.length || (this.props.curTrack == null)) {
-      return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
+      return (
+        <ActivityIndicator
+          color='black'
+          size='large'
+          animating
+          style={{ flex: 10 }}
+        />
+      );
     }
 
     return (
-      // TODO: refactor to get rid of trackInfo
-      // and add each of it's child components separately
       <Background
         image={{ uri: this.props.curTrack.artwork }}
         blur={25}
-        height={dimensions.height}
         bottom={0}
       >
         <PlayOnOpen
@@ -93,9 +95,16 @@ class PlayScreen extends Component {
           parentScreen={this.props.parentScreen}
         />
         <View style={styles.playContainer}>
-          { this.getDropdownBar() }
+          <View style={styles.dropdownBarContainer}>
+            { this.getDropdownBar() }
+          </View>
+          <View style={styles.albumArtContainer}>
+            { this.getAlbumArtCarousel() }
+          </View>
+          <View style={styles.playBarContainer}>
+            <TimeBar setTime={this.props.setTime} />
+          </View>
           <View style={styles.trackInfoContainer}>
-            { this.getAlbumArt() }
             { this.getTrackInfoAndPlaybar() }
           </View>
           <View style={styles.playControlsContainer}>
@@ -106,33 +115,65 @@ class PlayScreen extends Component {
     );
   }
 
+  _nextTrack = () => {
+    this.props.skipToNext();
+    this._carouselref.snapToItem(this.props.curTrackIndex);
+  }
+
+  _previousTrack = () => {
+    // args: snapToNext(animated, fireCallback)
+    this.props.skipToPrevious();
+    this._carouselref.snapToItem(this.props.curTrackIndex);
+  }
 
   getDropdownBar = () => {
     return (
-      <View style={styles.dropdownBar}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')}
-                          style={styles.backButton}>
-          <Image source={Images.arrowDown}/>
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate('Mood')}
+        activeOpacity={1}
+      >
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Mood')}
+          style={styles.backButton}
+          activeOpacity={1}
+        >
+          <Image source={Images.arrowDown} />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     );
   }
 
-  getAlbumArt = () => {
+  _renderCarouselItem = ({ item }) => {
+    const art = item.artwork;
+    return <AlbumArtCarouselItem artwork={art} />;
+  }
+
+  _handleCarouselSnap = (slideIndex) => {
+    if (slideIndex > this._carouselref.currentIndex) {
+      this.props.skipToNext();
+    } else if (slideIndex < this._carouselref.currentIndex) {
+      this.props.skipToPrevious();
+    }
+  }
+
+  getAlbumArtCarousel = () => {
     return (
-      <View style={styles.albumContainer}>
-        <AlbumArt
-          url={this.props.curTrack.artwork}
-          skipForward={this.props.skipToNext}
-          skipBack={this.props.skipToPrevious}
-        />
-      </View>
+      <Carousel
+        ref={(c) => { this._carouselref = c; }}
+        data={this.props.queue}
+        sliderWidth={dimensions.width}
+        itemWidth={dimensions.width}
+        renderItem={this._renderCarouselItem}
+        onBeforeSnapToItem={this._handleCarouselSnap}
+        firstItem={this.props.curTrackIndex}
+        lockScrollWhileSnapping
+      />
     );
   }
 
   getTrackInfoAndPlaybar = () => {
     return (
-      <TrackInfo
+      <InfoText
         setTime={this.props.setTime}
         track={this.props.curTrack}
       />
@@ -144,8 +185,8 @@ class PlayScreen extends Component {
       <PlayControls
         shuffled={this.props.shuffled}
         repeat={this.props.repeat}
-        skipForward={this.props.skipToNext}
-        skipBack={this.props.skipToPrevious}
+        skipForward={this._nextTrack}
+        skipBack={this._previousTrack}
         playing={this.props.playing}
         handlePlayPress={this.props.handlePlayPress}
         loading={this.props.loading}
@@ -160,6 +201,7 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
+  curTrackIndex: state.queue.curTrackIndex,
 });
 
 const mapDispatchToProps = {

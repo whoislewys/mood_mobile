@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: dimensions.width,
-    height: '125%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
 
 export default class Background extends Component {
   render = () => (
-      <View style={styles.container}>
-        <Image source={this.props.image} style={styles.bgImage} blurRadius={this.props.blur} />
-        { this.getOverlay() }
-      </View>
+    <View style={styles.container}>
+      <Image source={this.props.image} style={styles.bgImage} blurRadius={this.props.blur} />
+      { this.getOverlay() }
+    </View>
   )
 
   getOverlay = () => {
