@@ -25,6 +25,7 @@
     "camelcase" : "warn",
     "no-extra-bind" : "warn",
     "react/destructuring-assignment" : "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "jsx-quotes": "off"
   }
 }

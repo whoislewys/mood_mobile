@@ -9,7 +9,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
-import AlbumArt from './components/album-art';
+// import AlbumArt from './components/album-art';
+import Carousel from 'react-native-snap-carousel';
+import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
@@ -75,7 +77,14 @@ class PlayScreen extends Component {
 
   render = () => {
     if (!this.props.queue.length || (this.props.curTrack == null)) {
-      return <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>;
+      return (
+        <ActivityIndicator
+          color='black'
+          size='large'
+          animating
+          style={{ flex: 10 }}
+        />
+      );
     }
 
     return (
@@ -95,7 +104,8 @@ class PlayScreen extends Component {
         <View style={styles.playContainer}>
           { this.getDropdownBar() }
           <View style={styles.trackInfoContainer}>
-            { this.getAlbumArt() }
+            {/* this.getAlbumArt() */}
+            { this.getAlbumArtCarousel() }
             { this.getTrackInfoAndPlaybar() }
           </View>
           <View style={styles.playControlsContainer}>
@@ -106,27 +116,55 @@ class PlayScreen extends Component {
     );
   }
 
+  _nextTrack = () => {
+    this.props.skipToNext();
+    this._carouselref.snapToItem(this.props.curTrackIndex);
+  }
+
+  _previousTrack = () => {
+    // args: snapToNext(animated, fireCallback)
+    this.props.skipToPrevious();
+    this._carouselref.snapToItem(this.props.curTrackIndex);
+  }
 
   getDropdownBar = () => {
     return (
       <View style={styles.dropdownBar}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')}
-                          style={styles.backButton}>
-          <Image source={Images.arrowDown}/>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Mood')}
+          style={styles.backButton}
+        >
+          <Image source={Images.arrowDown} />
         </TouchableOpacity>
       </View>
     );
   }
 
-  getAlbumArt = () => {
+  _renderCarouselItem = ({ item }) => {
+    const art = item.artwork;
+    return <AlbumArtCarouselItem artwork={art} />;
+  }
+
+  _handleCarouselSnap = (slideIndex) => {
+    if (slideIndex > this._carouselref.currentIndex) {
+      this.props.skipToNext();
+    } else if (slideIndex < this._carouselref.currentIndex) {
+      this.props.skipToPrevious();
+    }
+  }
+
+  getAlbumArtCarousel = () => {
     return (
-      <View style={styles.albumContainer}>
-        <AlbumArt
-          url={this.props.curTrack.artwork}
-          skipForward={this.props.skipToNext}
-          skipBack={this.props.skipToPrevious}
-        />
-      </View>
+      <Carousel
+        ref={(c) => { this._carouselref = c; }}
+        data={this.props.queue}
+        sliderWidth={dimensions.width}
+        itemWidth={dimensions.width}
+        renderItem={this._renderCarouselItem}
+        onBeforeSnapToItem={this._handleCarouselSnap}
+        firstItem={this.props.curTrackIndex}
+        lockScrollWhileSnapping
+      />
     );
   }
 
@@ -144,8 +182,8 @@ class PlayScreen extends Component {
       <PlayControls
         shuffled={this.props.shuffled}
         repeat={this.props.repeat}
-        skipForward={this.props.skipToNext}
-        skipBack={this.props.skipToPrevious}
+        skipForward={this._nextTrack}
+        skipBack={this._previousTrack}
         playing={this.props.playing}
         handlePlayPress={this.props.handlePlayPress}
         loading={this.props.loading}
@@ -160,6 +198,7 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
+  curTrackIndex: state.queue.curTrackIndex,
 });
 
 const mapDispatchToProps = {
