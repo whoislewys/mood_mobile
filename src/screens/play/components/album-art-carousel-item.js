@@ -8,7 +8,7 @@ import { dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumContainer: {
-    backgroundColor: 'red',
+    flex: 1,
     alignSelf: 'center',
     elevation: 10,
     shadowColor: 'black',
@@ -20,8 +20,12 @@ const styles = StyleSheet.create({
     },
   },
   albumArt: {
+    flex: 1,
+    // give this image the same height & width so
+    // borderRadius will be applied
     height: 0.902 * dimensions.width,
     width: 0.902 * dimensions.width,
+    resizeMode: 'contain',
     borderRadius: 4,
   },
 });

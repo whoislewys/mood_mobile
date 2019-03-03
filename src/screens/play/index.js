@@ -9,12 +9,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
-// import AlbumArt from './components/album-art';
+
 import Carousel from 'react-native-snap-carousel';
 import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
-import TrackInfo from './components/track-info';
+import TimeBar from './components/time-bar';
+import InfoText from './components/info-text';
 import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
 import {
@@ -30,24 +31,36 @@ const styles = StyleSheet.create({
     marginLeft: '5.9%',
     marginRight: '5.9%',
   },
-  dropdownBar: {
-    height: '11.52%',
+  dropdownBarContainer: {
+    flex: 9,
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
   backButton: {
-    paddingLeft: '1.8%',
-    resizeMode: 'contain',
-    height: 40,
+    marginLeft: '1.8%',
+    paddingBottom: '15%',
     width: 40,
+    resizeMode: 'contain',
     opacity: 0.5,
   },
-  trackInfoContainer: {
-    paddingTop: '2%',
+  albumArtContainer: {
+    flex: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '2%',
+  },
+  playBarContainer: {
+    flex: 5,
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  trackInfoContainer: {
+    flex: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   playControlsContainer: {
-    paddingTop: '35%',
+    flex: 15,
   },
 });
 
@@ -71,8 +84,6 @@ class PlayScreen extends Component {
     }
 
     return (
-      // TODO: refactor to get rid of trackInfo
-      // and add each of it's child components separately
       <Background
         image={{ uri: this.props.curTrack.artwork }}
         blur={25}
@@ -84,10 +95,16 @@ class PlayScreen extends Component {
           parentScreen={this.props.parentScreen}
         />
         <View style={styles.playContainer}>
-          { this.getDropdownBar() }
-          <View style={styles.trackInfoContainer}>
-            {/* this.getAlbumArt() */}
+          <View style={styles.dropdownBarContainer}>
+            { this.getDropdownBar() }
+          </View>
+          <View style={styles.albumArtContainer}>
             { this.getAlbumArtCarousel() }
+          </View>
+          <View style={styles.playBarContainer}>
+            <TimeBar setTime={this.props.setTime} />
+          </View>
+          <View style={styles.trackInfoContainer}>
             { this.getTrackInfoAndPlaybar() }
           </View>
           <View style={styles.playControlsContainer}>
@@ -111,14 +128,18 @@ class PlayScreen extends Component {
 
   getDropdownBar = () => {
     return (
-      <View style={styles.dropdownBar}>
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate('Mood')}
+        activeOpacity={1}
+      >
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Mood')}
           style={styles.backButton}
+          activeOpacity={1}
         >
           <Image source={Images.arrowDown} />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -152,7 +173,7 @@ class PlayScreen extends Component {
 
   getTrackInfoAndPlaybar = () => {
     return (
-      <TrackInfo
+      <InfoText
         setTime={this.props.setTime}
         track={this.props.curTrack}
       />
