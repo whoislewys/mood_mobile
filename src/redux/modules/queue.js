@@ -98,7 +98,7 @@ export default function reducer(state = initialState, action = {}) {
         track: null,
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
-      const songs1 = loadSongData(action.payload.data);
+      let songs1 = loadSongData(action.payload.data);
       // add the sharedTrack to front of array
       songs1.unshift(state.sharedTrack);
       return {
@@ -221,27 +221,20 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
 
 // Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {
-  return {
-    type: LOAD_SHARED_SONG_QUEUE,
-    sharedTrack,
-    payload: {
-      request: {
-        url: `/moods/${sharedTrack.mood_id}/songs`,
-        params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        },
-      },
-    },
-  };
-}
-
-export function playSharedSong(sharedTrack) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     await TrackPlayer.reset();
-    dispatch(loadSharedSongQueue(sharedTrack));
-    dispatch(startScoreTimer());
-    await TrackPlayer.add(getState().queue.queue);
-    await TrackPlayer.play();
+    dispatch({ type: LOAD_SHARED_SONG_QUEUE, sharedTrack });
+    try {
+      let songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          responseType: 'json',
+        });
+      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+      dispatch(startScoreTimer());
+    } catch (e) {
+      dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
+    }
   };
 }
 

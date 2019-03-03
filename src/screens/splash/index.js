@@ -7,8 +7,9 @@ import {
   AsyncStorage,
 } from 'react-native';
 import { connect } from 'react-redux';
-// import branch from 'react-native-branch';
+import branch from 'react-native-branch';
 import { loadMoods } from '../../redux/modules/mood';
+import { loadSharedSongQueue } from '../../redux/modules/queue';
 
 class SplashScreen extends Component {
   constructor(props) {
@@ -21,60 +22,60 @@ class SplashScreen extends Component {
 
   componentDidMount = async () => {
     this.props.loadMoods();
-    // branch.subscribe(({ error, params }) => {
-    //   if (error) {
-    //     console.error('Error from Branch: ', error);
-    //     return;
-    //   }
-    //
-    //   if (!params['+clicked_branch_link']) {
-    //     // Indicates initialization success and some other conditions.
-    //     // No link was opened.
-    //     return;
-    //   }
-    //
-    //   // A Branch link was opened.
-    //   // create track object from shared link's params
-    //   console.log('branch link opened: ', params);
-    //   const id = params.$canonical_identifier;
-    //   const artwork = params.$og_image_url;
-    //   const title = params.$og_title;
-    //   const {
-    //     album,
-    //     artist,
-    //     mood_id,
-    //     url,
-    //   } = params;
-    //   const sharedTrack = {
-    //     album,
-    //     artist,
-    //     artwork,
-    //     id,
-    //     mood_id: parseInt(mood_id, 10),
-    //     title,
-    //     url,
-    //   };
-    //   console.log('opening shared track: ', sharedTrack);
-    //   if (!sharedTrack) return;
-    //   const { navigate } = this.props.navigation;
-    //   this.props.playSharedSong(sharedTrack)
-    //     .then(navigate({ routeName: 'Play', params: { visible: false } }));
-    // });
-    //
-    // let launches = await this.getLogins();
-    // let reviewed = await this.getReviewed();
-    //
-    // try {
-    //   if (isNaN(launches)) {
-    //     this.setLogins(1);
-    //   } else {
-    //     this.setLogins(launches + 1);
-    //
-    //     if ((launches === 3 || (launches - 3) % 6 === 0) && !reviewed) {
-    //       this.showReviewModal();
-    //     }
-    //   }
-    // } catch (error) { }
+    branch.subscribe(({ error, params }) => {
+      if (error) {
+        console.error('Error from Branch: ', error);
+        return;
+      }
+
+      if (!params['+clicked_branch_link']) {
+        // Indicates initialization success and some other conditions.
+        // No link was opened.
+        return;
+      }
+
+      // A Branch link was opened.
+      // create track object from shared link's params
+      console.log('branch link opened: ', params);
+      const id = params.$canonical_identifier;
+      const artwork = params.$og_image_url;
+      const title = params.$og_title;
+      const {
+        album,
+        artist,
+        mood_id,
+        url,
+      } = params;
+      const sharedTrack = {
+        album,
+        artist,
+        artwork,
+        id,
+        mood_id: parseInt(mood_id, 10),
+        title,
+        url,
+      };
+      console.log('opening shared track: ', sharedTrack);
+      if (!sharedTrack) return;
+      const { navigate } = this.props.navigation;
+      this.props.loadSharedSongQueue(sharedTrack)
+        .then(navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } }));
+    });
+
+    let launches = await this.getLogins();
+    let reviewed = await this.getReviewed();
+
+    try {
+      if (isNaN(launches)) {
+        this.setLogins(1);
+      } else {
+        this.setLogins(launches + 1);
+
+        if ((launches === 3 || (launches - 3) % 6 === 0) && !reviewed) {
+          this.showReviewModal();
+        }
+      }
+    } catch (error) { }
   }
 
   componentWillUnmount = () => {
@@ -175,6 +176,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadMoods,
+  loadSharedSongQueue,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

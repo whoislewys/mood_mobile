@@ -7,9 +7,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
-// import branch, { BranchEvent } from 'react-native-branch';
+import branch, { BranchEvent } from 'react-native-branch';
 import ClapButton from '../../../components/medium-star';
-
 
 const styles = StyleSheet.create({
   playControls: {
@@ -58,59 +57,56 @@ export default class PlayControls extends Component {
     };
   }
 
-  // createBUO = async () => {
-  //   // first param is $canonical_identifier. allows you to keep track of each link.
-  //   // It must be a unique ID. branch will dedupe these on the back end!
-  //   const {
-  //     album,
-  //     artist,
-  //     artwork,
-  //     id,
-  //     mood_id,
-  //     title,
-  //     url,
-  //   } = this.props.currentTrack;
-  //   const branchUniversalObject = await branch.createBranchUniversalObject(
-  //     id, {
-  //       locallyIndex: true,
-  //       // corresponds to $og_title, $og_description, and $og_image_url params respectively
-  //       // used to display content as a preview card in facebook, twitter, iMessage etc...
-  //       // structure for track object:
-  //       title,
-  //       contentDescription: 'Check out this track on Mood!',
-  //       contentImageUrl: artwork,
-  //       contentMetadata: {
-  //         ratingAverage: 4.2,
-  //         customMetadata: {
-  //           album,
-  //           artist,
-  //           mood_id: mood_id.toString(),
-  //           url,
-  //         },
-  //       },
-  //     },
-  //   );
-  //   return branchUniversalObject;
-  // }
+  createBUO = async () => {
+    // first param is $canonical_identifier. allows you to keep track of each link.
+    // It must be a unique ID. branch will dedupe these on the back end!
+    const {
+      album,
+      artist,
+      artwork,
+      id,
+      mood_id,
+      title,
+      url,
+    } = this.props.currentTrack;
+    const branchUniversalObject = await branch.createBranchUniversalObject(
+      id, {
+        locallyIndex: true,
+        // corresponds to $og_title, $og_description, and $og_image_url params respectively
+        // used to display content as a preview card in facebook, twitter, iMessage etc...
+        // structure for track object:
+        title,
+        contentDescription: 'Check out this track on Mood!',
+        contentImageUrl: artwork,
+        contentMetadata: {
+          ratingAverage: 4.2,
+          customMetadata: {
+            // only strings allowed in customMetadata
+            album: album === null ? '' : album,
+            artist,
+            mood_id: mood_id.toString(),
+            url,
+          },
+        },
+      },
+    );
+    return branchUniversalObject;
+  }
 
-  // _handleShare = async () => {
-  //   this.setState({ shareIcon: Images.share });
-  //   const buo = await this.createBUO();
-  //   // TODO: randomize message body to make sharing a little more novel
-  //   let shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Mood: ' };
-  //   const linkProperties = { feature: 'share', channel: 'RNApp' };
-  //   const controlParams = {
-  //     $desktop_url: 'http://www.moodindustries.com',
-  //     $ios_url: 'https://moodmusic.app.link/ZIFgV4QdLS',
-  //   };
-  //   const { channel, completed, error } = await buo.showShareSheet(shareOptions, linkProperties, controlParams);
-  //   if (!error) {
-  //     this.setState({ shareIcon: Images.shareOutline });
-  //   }
-  // }
-
-  handleShare = () => {
-    console.log('booty lol');
+  _handleShare = async () => {
+    this.setState({ shareIcon: Images.share });
+    const buo = await this.createBUO();
+    // TODO: randomize message body to make sharing a little more novel
+    const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
+    const linkProperties = { feature: 'share', channel: 'RNApp' };
+    const controlParams = {
+      $desktop_url: 'http://www.moodindustries.com',
+      $ios_url: 'https://moodmusic.app.link/ZIFgV4QdLS',
+    };
+    const { channel, completed, error } = await buo.showShareSheet(shareOptions, linkProperties, controlParams);
+    if (!error) {
+      this.setState({ shareIcon: Images.shareOutline });
+    }
   }
 
   playButton = () => {
@@ -149,7 +145,7 @@ export default class PlayControls extends Component {
         <TouchableOpacity
         style={styles.share}
         activeOpacity={0.3}
-        onPress={this.handleShare}>
+        onPress={this._handleShare}>
           <Image source={this.state.shareIcon}/>
         </TouchableOpacity>
       </View>
