@@ -37,7 +37,7 @@ class LeaderboardScreen extends Component {
     this.props.navigation.navigate({
       routeName: 'Play',
       params: {
-        parentScreen: 'Leaderboard',
+        parentScreen: 'LeaderboardScreen',
         visible: false,
         // dont remember why this moodscreen prop even exists
         moodscreen: this._navigateToLeaderboardScreen,
@@ -54,27 +54,27 @@ class LeaderboardScreen extends Component {
 
   _renderItem = ({ item, index }) => {
     return (
-    <LeaderboardRow
-      leaderboardSong={item}
-      index={index}
-      _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
-    >
-    </LeaderboardRow>
+      <LeaderboardRow
+        leaderboardSong={item}
+        index={index}
+        _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
+      >
+      </LeaderboardRow>
     );
   };
 
   getLeaderBoard = () => (
     this.props.leaderboardSongs.length
       ? (
-          <FlatList
-            data={this.props.leaderboardSongs}
-            renderItem={this._renderItem}
-            keyExtractor={this.keyExtractor}
-            ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
-            ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }}></View>}
-            showsVerticalScrollIndicator={false}
-            >
-          </FlatList>
+        <FlatList
+          data={this.props.leaderboardSongs}
+          renderItem={this._renderItem}
+          keyExtractor={this.keyExtractor}
+          ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
+          ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }}></View>}
+          showsVerticalScrollIndicator={false}
+        >
+        </FlatList>
       )
       : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
   )
