@@ -8,8 +8,9 @@ import { dimensions } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   albumContainer: {
+    backgroundColor: 'red',
     alignSelf: 'center',
-    elevation: 4,
+    elevation: 10,
     shadowColor: 'black',
     shadowRadius: 4,
     shadowOpacity: 0.16,

@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   backButton: {
-    paddingTop: '1%',
     paddingLeft: '1.8%',
     resizeMode: 'contain',
     height: 40,
@@ -44,27 +43,11 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   trackInfoContainer: {
-    width: '100%',
-    height: '66%',
-    marginTop: '4%',
+    paddingTop: '2%',
     alignItems: 'center',
   },
   playControlsContainer: {
-    marginTop: '8%',
-  },
-  trackInfoContainer1: {
-    flex: 1,
-    height: '100%',
-    width: '100%',
-    alignItems: 'center',
-  },
-  albumContainer: {
-    height: 0.902 * dimensions.width,
-    width: 0.902 * dimensions.width,
-    resizeMode: 'stretch',
-  },
-  infoText: {
-    flex: 1,
+    paddingTop: '35%',
   },
 });
 
@@ -93,7 +76,6 @@ class PlayScreen extends Component {
       <Background
         image={{ uri: this.props.curTrack.artwork }}
         blur={25}
-        height={dimensions.height}
         bottom={0}
       >
         <PlayOnOpen

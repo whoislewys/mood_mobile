@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     flex: 1,
+    paddingTop: '12%',
   },
 });
 
