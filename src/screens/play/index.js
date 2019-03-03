@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
+import AlbumArt from './components/album-art';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TrackInfo from './components/track-info';
@@ -49,6 +50,20 @@ const styles = StyleSheet.create({
   playControlsContainer: {
     marginTop: '8%',
   },
+  trackInfoContainer1: {
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+  },
+  albumContainer: {
+    height: 0.902 * dimensions.width,
+    width: 0.902 * dimensions.width,
+    resizeMode: 'stretch',
+  },
+  infoText: {
+    flex: 1,
+  },
 });
 
 
@@ -78,33 +93,64 @@ class PlayScreen extends Component {
           parentScreen={this.props.parentScreen}
         />
         <View style={styles.playContainer}>
-          <View style={styles.dropdownBar}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')} style={styles.backButton}>
-              <Image source={Images.arrowDown} />
-            </TouchableOpacity>
-          </View>
+          { this.getDropdownBar() }
           <View style={styles.trackInfoContainer}>
-            <TrackInfo
-              skipForward={this.props.skipToNext}
-              skipBack={this.props.skipToPrevious}
-              track={this.props.curTrack}
-              setTime={this.props.setTime}
-            />
+            { this.getAlbumArt() }
+            { this.getTrackInfoAndPlaybar() }
           </View>
           <View style={styles.playControlsContainer}>
-            <PlayControls
-              shuffled={this.props.shuffled}
-              repeat={this.props.repeat}
-              skipForward={this.props.skipToNext}
-              skipBack={this.props.skipToPrevious}
-              playing={this.props.playing}
-              handlePlayPress={this.props.handlePlayPress}
-              loading={this.props.loading}
-              currentTrack={this.props.curTrack}
-            />
+            { this.getPlayControls() }
           </View>
         </View>
       </Background>
+    );
+  }
+
+
+  getDropdownBar = () => {
+    return (
+      <View style={styles.dropdownBar}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')}
+                          style={styles.backButton}>
+          <Image source={Images.arrowDown}/>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  getAlbumArt = () => {
+    return (
+      <View style={styles.albumContainer}>
+        <AlbumArt
+          url={this.props.curTrack.artwork}
+          skipForward={this.props.skipToNext}
+          skipBack={this.props.skipToPrevious}
+        />
+      </View>
+    );
+  }
+
+  getTrackInfoAndPlaybar = () => {
+    return (
+      <TrackInfo
+        setTime={this.props.setTime}
+        track={this.props.curTrack}
+      />
+    );
+  }
+
+  getPlayControls = () => {
+    return (
+      <PlayControls
+        shuffled={this.props.shuffled}
+        repeat={this.props.repeat}
+        skipForward={this.props.skipToNext}
+        skipBack={this.props.skipToPrevious}
+        playing={this.props.playing}
+        handlePlayPress={this.props.handlePlayPress}
+        loading={this.props.loading}
+        currentTrack={this.props.curTrack}
+      />
     );
   }
 }

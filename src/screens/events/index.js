@@ -39,7 +39,7 @@ class EventsScreen extends Component {
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={Header({ headerText: 'PHX Events', showLogo: false })}
-          >
+        >
         </FlatList>
       )
       : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
