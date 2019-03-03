@@ -143,7 +143,7 @@ dependencies {
     implementation project(':react-native-splash-screen')
     implementation project(':react-native-restart')
     implementation project(':react-native-branch')
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "io.branch.sdk.android:library:3.0.4"
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
