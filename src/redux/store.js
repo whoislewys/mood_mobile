@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import axios from 'axios';
-import axiosMiddleware from 'redux-axios-middleware';
+// import axiosMiddleware from 'redux-axios-middleware';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -21,12 +21,12 @@ const axiosConfig = {
 };
 
 // TODO: migrate to bearer token
-const client = axios.create({
-  baseURL: URL,
-  responseType: 'json',
-});
+// const client = axios.create({
+//   baseURL: URL,
+//   responseType: 'json',
+// });
 
 export default createStore(
   reducer,
-  applyMiddleware(axiosMiddleware(client, axiosConfig), thunk, logger),
+  applyMiddleware(thunk, logger),
 );

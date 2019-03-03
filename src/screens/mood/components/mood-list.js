@@ -53,10 +53,6 @@ export default class MoodList extends React.Component {
     this.props.settings();
   }
 
-  playscreen = () => {
-    this.props.playscreen();
-  }
-
   onPressItem = (moodObj) => {
     this.props.loadSongsForMoodId(moodObj.id);
     this.props.playscreen();

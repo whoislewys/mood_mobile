@@ -84,15 +84,16 @@ class MoodScreen extends Component {
   getContent = () => {
     if (!this.props.loading) {
       return (
-          <MoodList
-            loadSongsForMoodId={this.props.loadSongsForMoodId}
-            setMood={this.props.setMood}
-            moods={this.props.moods}
-            selected={this.props.mood}
-            playing={this.props.playing}
-            settings={this.navigateToSettingsScreen}
-            playscreen={this.navigateToPlayScreenFromMoodScreen}
-          />
+        <MoodList
+          queue={this.props.queue}
+          loadSongsForMoodId={this.props.loadSongsForMoodId}
+          setMood={this.props.setMood}
+          moods={this.props.moods}
+          selected={this.props.mood}
+          playing={this.props.playing}
+          settings={this.navigateToSettingsScreen}
+          playscreen={this.navigateToPlayScreenFromMoodScreen}
+        />
       );
     }
 
@@ -113,7 +114,9 @@ class MoodScreen extends Component {
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
-  queue: state.queue,
+  queue: state.queue.queue,
+  curTrack: state.queue.curTrack,
+  track: state.queue.track,
 });
 
 const mapDispatchToProps = {

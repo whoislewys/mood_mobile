@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const LOAD_SONGS = 'leaderboard/LOAD';
 const LOAD_SONGS_SUCCESS = 'leaderboard/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'leaderboard/LOAD_FAIL';
@@ -41,17 +43,29 @@ export default function leaderboard(state = initialState, action = {}) {
   }
 }
 
-
 export function loadLeaderboardSongs() {
-  return {
-    type: LOAD_SONGS,
-    payload: {
-      request: {
-        url: '/stats/leaderboard',
-        params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        },
-      },
-    },
+  // return {
+  //   type: LOAD_SONGS,
+  //   payload: {
+  //     request: {
+  //       url: '/stats/leaderboard',
+  //       params: {
+  //         t: 'EXVbAWTqbGFl7BKuqUQv',
+  //       },
+  //     },
+  //   },
+  // };
+  return async (dispatch) => {
+    dispatch({ type: LOAD_SONGS });
+    try {
+      let songs = await axios.get('http://api.moodindustries.com/api/v1/stats/leaderboard',
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          responseType: 'json',
+        });
+      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+    } catch (e) {
+      dispatch({ type: LOAD_SONGS_FAIL });
+    }
   };
 }

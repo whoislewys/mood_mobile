@@ -5,7 +5,7 @@ export default class PlayOnOpen extends Component {
   componentDidMount = () => {
     // only autoplay when not playing & parent is not playbar
     // Might look smoother if no play button animation would showed
-    if (!this.props.playing && this.props.parentScreen !== 'Playbar') {
+    if (!this.props.playing && this.props.parentScreen !== 'Playbar' && this.props.parentScreen !== 'Leaderboard') {
       this.props.playByDefault();
     }
   }
