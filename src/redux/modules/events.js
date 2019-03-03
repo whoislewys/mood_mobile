@@ -1,9 +1,10 @@
-// type variable
+import axios from 'axios';
 import moment from 'moment';
 import { colors } from '../../assets/styles';
 
 const LOAD_EVENTS = 'events/LOAD';
 const LOAD_EVENTS_SUCCESS = 'events/LOAD_SUCCESS';
+const LOAD_EVENTS_FAILURE = 'events/LOAD_FAILURE';
 const EVENT_CAL_ID = 'ghd4v0jfbsr5hjoe3isfjtt62s@group.calendar.google.com';
 const GOOGLE_API_KEY = 'AIzaSyBBpspRcmIZc9XqVj3Xk6r227t1s02nnuQ';
 // const clientID = '177472004471-tktd6itgn2h4vn2of9gskvl600mcjlko.apps.googleusercontent.com';
@@ -78,6 +79,9 @@ export default function events(state = initialState, action = {}) {
       const rawEvents = action.payload.data.items;
       const formattedEvents = rawEvents.map(processEventObj);
       return { ...state, events: formattedEvents };
+    case LOAD_EVENTS_FAILURE:
+      // TODO: return some kind of no events error
+      return state;
     default:
       return { ...state };
   }
@@ -85,18 +89,21 @@ export default function events(state = initialState, action = {}) {
 
 export function loadEvents() {
   const dateTimeStart = moment().toISOString();
-  return {
-    type: LOAD_EVENTS,
-    payload: {
-      request: {
-        url: `https://www.googleapis.com/calendar/v3/calendars/${EVENT_CAL_ID}/events`,
-        params: {
-          key: GOOGLE_API_KEY,
-          timeMin: dateTimeStart,
-          singleEvents: 'true',
-          orderBy: 'startTime',
-        },
-      },
-    },
+  return async (dispatch) => {
+    dispatch({ type: LOAD_EVENTS });
+    try {
+      const eventsReq = await axios.get(`https://www.googleapis.com/calendar/v3/calendars/${EVENT_CAL_ID}/events`,
+        {
+          params: {
+            key: GOOGLE_API_KEY,
+            timeMin: dateTimeStart,
+            singleEvents: 'true',
+            orderBy: 'startTime',
+          },
+        });
+      dispatch({type: LOAD_EVENTS_SUCCESS, payload: eventsReq});
+    } catch (_) {
+      dispatch({type: LOAD_EVENTS_FAILURE});
+    }
   };
 }
