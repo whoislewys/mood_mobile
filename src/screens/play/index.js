@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     paddingTop: '1%',
     paddingLeft: '1.8%',
     resizeMode: 'contain',
-    height: 40,
-    width: 40,
+    height: 26,
+    width: 26,
   },
   trackInfoContainer: {
     width: '100%',
@@ -113,7 +113,7 @@ class PlayScreen extends Component {
           onPress={() => this.props.navigation.navigate('Mood')}
           style={styles.backButton}
         >
-          <Image source={Images.arrowDown} />
+          <Image source={Images.arrowDown} style={styles.backButton} />
         </TouchableOpacity>
       </View>
     );
