@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    elevation: 1,
+    elevation: 10,
     shadowOpacity: 0.17,
     shadowRadius: 1,
     shadowOffset: {
@@ -101,16 +101,24 @@ const TabBar = class TabBar extends Component {
     }
   }
 
+  _handlePlayPress = () => {
+    if (!this.props.queue.length) {
+      Alert.alert('Let\'s pick a mood first! 🎧');
+      return;
+    }
+    this.props.handlePlayPress();
+  }
+
   playButton = () => {
     if (this.props.playbackState === 'playing') {
       return (
-        <TouchableOpacity onPress={this.props.handlePlayPress}>
+        <TouchableOpacity onPress={this._handlePlayPress}>
           <Image source={Images.navPauseButton} style={styles.playPauseButton} />
         </TouchableOpacity>
       );
     }
     return (
-      <TouchableOpacity onPress={this.props.handlePlayPress}>
+      <TouchableOpacity onPress={this._handlePlayPress}>
         <Image source={Images.navPlayButton} style={styles.playPauseButton} />
       </TouchableOpacity>
     );
