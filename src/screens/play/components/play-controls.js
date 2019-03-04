@@ -138,7 +138,6 @@ export default class PlayControls extends Component {
         <TouchableOpacity onPress={this.props.skipForward}>
           <Image source={Images.skip} style={styles.skipRightIcon} />
         </TouchableOpacity>
-        {/*<ToggleButton iconUnselected={Images.shareOutline} style={styles.share}/>*/}
         <TouchableOpacity
           style={styles.share}
           activeOpacity={0.3}

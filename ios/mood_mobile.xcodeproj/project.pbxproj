@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -24,7 +25,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		14B70DEFEDFE4B3385CF698E /* repeat-unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C9320DEB0720482480FF55B1 /* repeat-unselected.png */; };
 		1A20AC1B575746EDAA6AF1D6 /* selected-round-format-leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 747D2D7159E94E97AB985E51 /* selected-round-format-leaderboard.png */; };
 		1F69556E3C8F43418B2BF302 /* round-pause_circle_outline-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FAEF63498F4980B3C7FD3E /* round-pause_circle_outline-2x.png */; };
 		26EFBA1462AD4D078C89DD6A /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 720FC630E9AD4B189F15B6A5 /* Quicksand-Medium.ttf */; };
@@ -52,7 +52,6 @@
 		5D5A0E78ADAB4C52A961DACD /* round-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DA61579C0DA4DE8A8709EE8 /* round-settings.png */; };
 		5F610A86813345D4A46AA4E6 /* star-rounded.png in Resources */ = {isa = PBXBuildFile; fileRef = 23DA727A2BE74669AC1D12DF /* star-rounded.png */; };
 		632755E07C444CF893904050 /* selected-round-events.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFD48B532414D0EB0A95AB6 /* selected-round-events.png */; };
-		674179D3BC5546708B6955E7 /* shuffle-button-unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C3E4E3E72E3E4B32AE252EB1 /* shuffle-button-unselected.png */; };
 		67E4902F5F014F1AA9A7EA35 /* selected-round-skip_previous.png in Resources */ = {isa = PBXBuildFile; fileRef = A16208D20E8048F386EC8A0B /* selected-round-skip_previous.png */; };
 		6E51FC71F57A49ED8AE40B11 /* round-pause_circle_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = B790C0EA94124FDFB63379F0 /* round-pause_circle_outline.png */; };
 		7F965C06A8944E1FA322DED5 /* selected-down-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B94A45EA4A84DE1A1155EEE /* selected-down-chevron.png */; };
@@ -1335,7 +1334,6 @@
 				3DCAF3697C164F32B0FB7A34 /* do-it.png in Resources */,
 				F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */,
 				E6A6EF5589824621B4D5A84E /* gradient-heading.png in Resources */,
-				14B70DEFEDFE4B3385CF698E /* repeat-unselected.png in Resources */,
 				9B7864C8A63E4FD882C5662B /* round-bug_report.png in Resources */,
 				1F69556E3C8F43418B2BF302 /* round-pause_circle_outline-2x.png in Resources */,
 				6E51FC71F57A49ED8AE40B11 /* round-pause_circle_outline.png in Resources */,
@@ -1356,7 +1354,6 @@
 				C2A166504F3B4A3D90436BF2 /* selected-share-arrow.png in Resources */,
 				28A1BEB36B55474AB8561D83 /* selected-star-rounded.png in Resources */,
 				D300C5AD7F354EA5B5ED6817 /* share-arrow-outline.png in Resources */,
-				674179D3BC5546708B6955E7 /* shuffle-button-unselected.png in Resources */,
 				89C39A868FEE43DCA6C84E9D /* slider-button.png in Resources */,
 				560A2860F6444E619457E1F7 /* star-rounded-outline.png in Resources */,
 				5F610A86813345D4A46AA4E6 /* star-rounded.png in Resources */,

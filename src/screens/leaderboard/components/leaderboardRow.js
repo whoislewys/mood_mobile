@@ -105,10 +105,9 @@ const LeaderboardRow = ({
   } = leaderboardSong;
 
   return (
-    <TouchableOpacity
-      style={styles.rowBackground}
-      onPress={() => _handleLeaderboardRowPress(leaderboardSong)}
-    >
+    <TouchableOpacity style={styles.rowBackground} onPress={
+      () => _handleLeaderboardRowPress(index)
+    }>
       <Text style={styles.rank}>{index + 1}</Text>
       <Image style={styles.albumArt} source={{ uri: artwork }} />
       <View style={styles.detailsContainer}>

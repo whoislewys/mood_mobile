@@ -45,8 +45,8 @@ class LeaderboardScreen extends Component {
     });
   }
 
-  _handleLeaderboardRowPress = async (pressedLeaderboardSong) => {
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSong);
+  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
+    this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this._navigateToPlayScreen();
   }
 

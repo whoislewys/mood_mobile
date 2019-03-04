@@ -9,7 +9,7 @@ import {
   Animated,
 } from 'react-native';
 import Images from '@assets/images';
-import { incrementScore, incrementScoreDelta } from '../redux/modules/score';
+import { incrementScore } from '../redux/modules/score';
 import { fonts } from '../assets/styles';
 
 function getRndInteger(min, max) {
@@ -66,14 +66,17 @@ class ClapBubble extends Component {
       Animated.timing(this.state.yPosition, {
         toValue: -100,
         duration: 500,
+        useNativeDriver: true,
       }),
       Animated.timing(this.state.fadeAnim, {
         toValue: 1,
         duration: 420,
+        useNativeDriver: true,
       }),
       Animated.timing(this.state.xPosition, {
         toValue: getRndInteger(-23, 23),
         duration: 500,
+        useNativeDriver: true,
       }),
     ]).start(() => {
       setTimeout(() => {
@@ -189,7 +192,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   incrementScore,
-  incrementScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClapButton);

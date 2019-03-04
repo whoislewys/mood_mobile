@@ -25,6 +25,7 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
+  curTrackIndex: NaN,
   sharedTrack: null,
 };
 
@@ -49,6 +50,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: true,
         queue: [],
         curTrack: null,
+        curTrackIndex: NaN,
         track: null,
       };
 
@@ -58,6 +60,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: true,
         queue: [],
         curTrack: null,
+        curTrackIndex: NaN,
         track: null,
       };
 
@@ -69,6 +72,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs,
         curTrack: songs[0],
+        curTrackIndex: 0,
       };
     case LOAD_SONGS_FAIL:
       return {
@@ -79,12 +83,13 @@ export default function reducer(state = initialState, action = {}) {
 
     // Loading songs for a leaderboard
     case LOAD_LEADERBOARD_SONG_QUEUE:
-      const { selectedLeaderboardSong, leaderboardSongs } = action;
+      const { selectedLeaderboardSongIndex, leaderboardSongs } = action;
       return {
         ...state,
         loading: false,
         queue: leaderboardSongs,
-        curTrack: selectedLeaderboardSong,
+        curTrack: leaderboardSongs[selectedLeaderboardSongIndex],
+        curTrackIndex: selectedLeaderboardSongIndex,
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -95,6 +100,7 @@ export default function reducer(state = initialState, action = {}) {
         queue: [],
         sharedTrack: action.sharedTrack,
         curTrack: null,
+        curTrackIndex: NaN,
         track: null,
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
@@ -106,6 +112,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs1,
         curTrack: songs1[0],
+        curTrackIndex: 0,
       };
     case LOAD_SHARED_SONG_QUEUE_FAIL:
       return {
@@ -121,12 +128,14 @@ export default function reducer(state = initialState, action = {}) {
         playback: action.state,
       };
     case PLAYBACK_TRACK:
-      let newCurTrack = state.queue.find(findTrack => findTrack.id === action.track);
+      const newCurTrackIndex = state.queue.findIndex(findTrack => findTrack.id === action.track);
+      let newCurTrack = state.queue[newCurTrackIndex];
       if (newCurTrack === undefined) newCurTrack = state.queue[0];
       return {
         ...state,
         track: action.track,
         curTrack: newCurTrack,
+        curTrackIndex: newCurTrackIndex,
       };
 
     default:
@@ -201,7 +210,7 @@ export function loadSongsForMoodId(moodId) {
 }
 
 // Leaderboard queue action creators
-export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
+export function loadLeaderboardSongQueue(selectedLeaderboardSongIndex) {
   return async (dispatch, getState) => {
     await TrackPlayer.reset();
     dispatch({ type: RESET_QUEUE });
@@ -209,9 +218,11 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
     const leaderboardSongs = getState().leaderboard.songs;
     dispatch({
       type: LOAD_LEADERBOARD_SONG_QUEUE,
-      selectedLeaderboardSong,
+      selectedLeaderboardSongIndex,
       leaderboardSongs,
     });
+
+    const selectedLeaderboardSong = leaderboardSongs[selectedLeaderboardSongIndex];
     await TrackPlayer.add(leaderboardSongs);
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     await TrackPlayer.play();
