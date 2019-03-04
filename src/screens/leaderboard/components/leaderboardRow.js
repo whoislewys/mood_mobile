@@ -109,23 +109,25 @@ const LeaderboardRow = ({
       () => _handleLeaderboardRowPress(index)
     }>
       <Text style={styles.rank}>{index + 1}</Text>
-      <Image style={styles.albumArt} source={{ uri: artwork }}/>
+      <Image style={styles.albumArt} source={{ uri: artwork }} />
       <View style={styles.detailsContainer}>
         <Text
-        style={styles.songName}
-        numberOfLines={1}
-        ellipsizeMode="tail">
+          style={styles.songName}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {title}
         </Text>
         <Text
-        style={styles.artistName}
-        numberOfLines={1}
-        ellipsizeMode="tail">
-            {artist}
+          style={styles.artistName}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {artist}
         </Text>
       </View>
       <View style={styles.starsContainer}>
-        <Image source={Images.leaderboardStar}/>
+        <Image source={Images.leaderboardStar} />
         <Text style={styles.starCount}>{getStarsString(stars)}</Text>
       </View>
     </TouchableOpacity>

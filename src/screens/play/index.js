@@ -33,13 +33,19 @@ const styles = StyleSheet.create({
   },
   dropdownBarContainer: {
     flex: 9,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
   },
-  backButton: {
+  dropdownBarTouchable: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  backButtonContainer: {
     marginLeft: '1.8%',
     paddingBottom: '15%',
-    width: 40,
+    justifyContent: 'flex-end',
+  },
+  backButton: {
+    height: 26,
+    width: 26,
     resizeMode: 'contain',
   },
   albumArtContainer: {
@@ -130,13 +136,14 @@ class PlayScreen extends Component {
       <TouchableOpacity
         onPress={() => this.props.navigation.navigate('Mood')}
         activeOpacity={1}
+        style={styles.dropdownBarTouchable}
       >
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Mood')}
-          style={styles.backButton}
+          style={styles.backButtonContainer}
           activeOpacity={1}
         >
-          <Image source={Images.arrowDown} />
+          <Image source={Images.arrowDown} style={styles.backButton} />
         </TouchableOpacity>
       </TouchableOpacity>
     );
