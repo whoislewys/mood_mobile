@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
 import TrackPlayer from 'react-native-track-player';
@@ -141,8 +142,12 @@ export default class TimeBar extends Component {
   onMoveShouldSetResponder = () => true
 
   setPosition = (e) => {
+    console.log('setting position');
+    console.log('pressX: ', e.nativeEvent.pageX);
+    console.log('width: ', width);
+    console.log('this state x: ', this.state.x);
     const dx = this.state.x + (e.nativeEvent.pageX - this.drag.x);
-
+    console.log('dx: ', dx);
     if (dx - 1 > 0 && dx < width) {
       this.setState({
         x: this.state.x + (e.nativeEvent.pageX - this.drag.x),
@@ -158,6 +163,18 @@ export default class TimeBar extends Component {
   }
 
   pxToSeconds = pixels => (pixels / width) * this.state.duration;
+
+  onTimebarPressIn = (e) => {
+    const pressX = e.nativeEvent.pageX;
+    console.log('pressX: ', pressX);
+    console.log('width: ', width);
+    console.log('this state x: ', this.state.x);
+    const dx = this.state
+    console.log('dx: ', dx);
+    const seconds = this.pxToSeconds(width - pressX - this.state.x);
+    console.log('secs: ', seconds);
+    this.props.setTime(seconds);
+  }
 
   render = () => {
     const animationStyle1 = {
@@ -177,7 +194,13 @@ export default class TimeBar extends Component {
     };
 
     return (
-      <View style={styles.timeBar}>
+      // turn this view to a touchable and move the tic to wherever user touched the bar
+      <TouchableOpacity
+        style={styles.timeBar}
+        activeOpacity={0.5}
+        onPressIn={this.onTimebarPressIn}
+        onPressOut={this.onTimebarPressOut}
+      >
         <View style={animationStyle1} />
         { this.getTime() }
         <View style={animationStyle2} />
@@ -193,7 +216,7 @@ export default class TimeBar extends Component {
             style={[styles.tick, this.getTickStyle()]}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
