@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   clapText: {
-    color: 'white',
+    color: 'goldenrod',
     top: -13,
     fontFamily: fonts.primary,
     fontSize: fonts.body,
@@ -31,10 +31,12 @@ const styles = StyleSheet.create({
   star: {
     height: 25,
     width: 25,
+    tintColor: '#fff',
   },
   shootingStar: {
     height: 30,
     width: 30,
+    tintColor: '#fff',
   },
   shootingStarShadow: {
     // TODO: replace this style by using a separate png of a shooting star with baked-in drop shadow
@@ -95,7 +97,7 @@ class ClapBubble extends Component {
       (this.props.count <= this.props.maxCount) ? (
         <Animated.View style={[clapBubbleStyle, animationStyle]}>
           <View style={styles.shootingStarShadow}>
-            <Image source={Images.star} style={styles.shootingStar}/>
+            <Image source={Images.star} style={styles.shootingStar} />
           </View>
           <Text style={styles.clapText}>{this.props.count}</Text>
         </Animated.View>
@@ -160,19 +162,19 @@ class ClapButton extends Component {
 
   render = () => {
     const clapIcon = (this.props.currentScore < 1) ? (
-      <Image source={Images.starOutline} style={styles.star}/>
+      <Image source={Images.starOutline} style={styles.star} />
     )
-      : <Image source={Images.star} style={styles.star}/>;
+      : <Image source={Images.star} style={styles.star} />;
 
     return (
       <View>
         <TouchableOpacity
-        onPress={this.clap.bind(this)}
-        onPressIn={this.keepClapping.bind(this)}
-        onPressOut={this.stopClapping.bind(this)}
-        activeOpacity={0.7}
-        style={styles.clapButton}>
-          {clapIcon}
+          onPress={this.clap.bind(this)}
+          onPressIn={this.keepClapping.bind(this)}
+          onPressOut={this.stopClapping.bind(this)}
+          activeOpacity={0.7}
+          style={styles.clapButton}>
+            {clapIcon}
         </TouchableOpacity>
         {this.renderClaps()}
       </View>

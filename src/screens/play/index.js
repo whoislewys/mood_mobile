@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: 40,
     width: 40,
-    opacity: 0.5,
   },
   trackInfoContainer: {
     width: '100%',
@@ -110,9 +109,11 @@ class PlayScreen extends Component {
   getDropdownBar = () => {
     return (
       <View style={styles.dropdownBar}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Mood')}
-                          style={styles.backButton}>
-          <Image source={Images.arrowDown}/>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Mood')}
+          style={styles.backButton}
+        >
+          <Image source={Images.arrowDown} />
         </TouchableOpacity>
       </View>
     );
