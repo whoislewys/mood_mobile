@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     paddingBottom: '15%',
     width: 40,
     resizeMode: 'contain',
-    opacity: 0.5,
   },
   albumArtContainer: {
     flex: 55,

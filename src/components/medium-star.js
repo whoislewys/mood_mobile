@@ -9,7 +9,7 @@ import {
   Animated,
 } from 'react-native';
 import Images from '@assets/images';
-import { incrementScore, incrementScoreDelta } from '../redux/modules/score';
+import { incrementScore } from '../redux/modules/score';
 import { fonts } from '../assets/styles';
 
 function getRndInteger(min, max) {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   clapText: {
-    color: 'white',
+    color: 'goldenrod',
     top: -13,
     fontFamily: fonts.primary,
     fontSize: fonts.body,
@@ -31,10 +31,12 @@ const styles = StyleSheet.create({
   star: {
     height: 25,
     width: 25,
+    colorTint: '#fff',
   },
   shootingStar: {
     height: 30,
     width: 30,
+    colorTint: '#fff',
   },
   shootingStarShadow: {
     // TODO: replace this style by using a separate png of a shooting star with baked-in drop shadow
@@ -190,7 +192,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   incrementScore,
-  incrementScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClapButton);
