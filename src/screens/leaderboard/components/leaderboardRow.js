@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
@@ -14,13 +15,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     height: 85,
     marginBottom: 15,
     marginRight: 5,
     marginLeft: 5,
     borderRadius: 10,
-    elevation: 1,
-    backgroundColor: '#FFFFFF',
+    elevation: 2,
+    backgroundColor: '#fff',
     shadowOffset: {
       width: 0,
       height: 1.2,
@@ -29,8 +31,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
   },
   rank: {
+    flex: 8,
     fontFamily: 'Quicksand',
-    width: 56.24,
     textAlign: 'center',
     fontSize: 34,
   },
@@ -40,9 +42,8 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   detailsContainer: {
-    width: 120,
+    flex: 20,
     marginLeft: 11,
-    backgroundColor: '#FFFFFF',
     marginTop: 15,
     alignSelf: 'flex-start',
   },
@@ -57,14 +58,24 @@ const styles = StyleSheet.create({
     color: colors.body,
   },
   starsContainer: {
-    flexDirection: 'row',
+    flex: 15,
     marginLeft: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  starIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
   },
   starCount: {
     fontFamily: fonts.primaryLight,
     fontSize: fonts.subHeader,
     color: colors.subHeader,
     marginLeft: 6,
+    // for some reason, textAlignVertical wasn't working on android
+    marginBottom: Platform.OS === 'android' ? '4%' : '0%',
+    textAlignVertical: 'center',
   },
 });
 
@@ -105,9 +116,10 @@ const LeaderboardRow = ({
   } = leaderboardSong;
 
   return (
-    <TouchableOpacity style={styles.rowBackground} onPress={
-      () => _handleLeaderboardRowPress(index)
-    }>
+    <TouchableOpacity
+      style={styles.rowBackground}
+      onPress={() => _handleLeaderboardRowPress(index)}
+    >
       <Text style={styles.rank}>{index + 1}</Text>
       <Image style={styles.albumArt} source={{ uri: artwork }} />
       <View style={styles.detailsContainer}>
@@ -127,7 +139,7 @@ const LeaderboardRow = ({
         </Text>
       </View>
       <View style={styles.starsContainer}>
-        <Image source={Images.leaderboardStar} />
+        <Image source={Images.leaderboardStar} style={styles.starIcon} />
         <Text style={styles.starCount}>{getStarsString(stars)}</Text>
       </View>
     </TouchableOpacity>
