@@ -86,7 +86,7 @@ const TabBar = class TabBar extends Component {
       const isVisible = !newParams || newParams.visible;
 
       if (wasVisible && !isVisible) {
-        // console.log('animating down!');
+        // TODO: add useNativeDriver: true and replace the height animation with a translateY animation
         Animated.parallel([
           Animated.timing(this.state.offset, { toValue: 0, duration: SLIDE_DURATION }),
           Animated.timing(this.state.fadeAnim, { toValue: 0, duration: SLIDE_DURATION * 0.33 }),
