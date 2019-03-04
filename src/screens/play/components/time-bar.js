@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   tickContainer: {
     position: 'absolute',
-    top: -9,
+    top: -10,
     width: 40,
     height: 40,
   },
@@ -91,16 +91,16 @@ export default class TimeBar extends Component {
 
   getTickStyle = () => {
     let style = {
-      width: 9,
-      height: 9,
+      width: 12,
+      height: 12,
       top: 15,
       left: 15,
     };
 
     if (this.state.dragging) {
       style = {
-        width: 17,
-        height: 17,
+        width: 20,
+        height: 20,
         top: 11,
         left: 11,
       };
@@ -161,14 +161,16 @@ export default class TimeBar extends Component {
 
   render = () => {
     const animationStyle1 = {
-      height: 2,
+      height: 3,
+      borderRadius: 10,
       width: this.state.x,
       marginTop: 10,
       backgroundColor: '#fff',
     };
 
     const animationStyle2 = {
-      height: 2,
+      height: 3,
+      borderRadius: 10,
       width: width - this.state.x,
       marginTop: 10,
       backgroundColor: '#999',
