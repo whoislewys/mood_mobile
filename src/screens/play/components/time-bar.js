@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
   tickContainer: {
     position: 'absolute',
     top: -10,
-    width: 40,
-    height: 40,
+    width: 55,
+    height: '110%',
   },
   time: {
     backgroundColor: 'transparent',
