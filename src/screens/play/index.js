@@ -71,6 +71,8 @@ const styles = StyleSheet.create({
 
 
 class PlayScreen extends Component {
+  _carouselref;
+
   constructor(props) {
     super(props);
     StatusBar.setBarStyle('light-content', true);
