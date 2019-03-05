@@ -1,6 +1,4 @@
-/* eslint react/display-name: 0, import/no-extraneous-dependencies: 0 */
-
-import React from 'react'
+import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
 import MoodScreen from '../screens/mood';
@@ -37,9 +35,5 @@ export default createBottomTabNavigator({
     inactiveTintColor: 'rgba(0, 0, 0, 0.21)',
     activeBackgroundColor: 'red',
   },
-  tabBarComponent: props => <TabBarComponent
-  {...props}
-  />,
+  tabBarComponent: props => <TabBarComponent{...props} />,
 });
-
-// supply this with a custom tabbar component https://stackoverflow.com/questions/47533940/can-react-navigation-add-costom-button-on-the-tab-navigator-like-the-pictures
