@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import axios from 'axios';
 import Images from '@assets/images';
 import branch, { BranchEvent } from 'react-native-branch';
 import ClapButton from '../../../components/medium-star';
@@ -93,6 +95,29 @@ export default class PlayControls extends Component {
   _handleShare = async () => {
     this.setState({ shareIcon: Images.share });
     const buo = await this.createBUO();
+
+    const uniqueId = DeviceInfo.getUniqueID();
+    try {
+      const JSON_Object = { device_id: uniqueId, event_type: 'test_share' };
+      let dataParams = '?api_key=c1bb5c361a35b3978494ded3f756fb65';
+      dataParams += `&event=[${encodeURIComponent(JSON.stringify(JSON_Object))}]`;
+      let url = 'https://api.amplitude.com/httpapi';
+      url += dataParams;
+      console.log('url: ', url);
+      await axios.post(url);
+    } catch (e) {
+      console.log(e.response);
+    }
+    //
+    // curl
+    // --data 'api_key=c1bb5c361a35b3978494ded3f756fb65'
+    // --data 'event=[{"user_id":"john_doe@gmail.com", ' +
+    // '"event_type":"watch_tutorial", ' +
+    // '"user_properties":{"Cohort":"Test A"}, ' +
+    // '"country":"United States", "ip":"127.0.0.1", ' +
+    // '"time":1396381378123}]'
+
+
     // TODO: randomize message body to make sharing a little more novel
     const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
     const linkProperties = { feature: 'share', channel: 'RNApp' };
@@ -115,7 +140,7 @@ export default class PlayControls extends Component {
 
     if (this.props.loading) {
       ret = (
-        <ActivityIndicator color={'white'} size={'large'} animating={true} style={styles.playButton}/>
+        <ActivityIndicator color="white" size="large" animating style={styles.playButton} />
       );
     } else if (this.props.playing) {
       ret = (
@@ -129,21 +154,22 @@ export default class PlayControls extends Component {
   }
 
   render = () => (
-      <View style={styles.playControls}>
-        <ClapButton />
-        <TouchableOpacity onPress={this.props.skipBack}>
-          <Image source={Images.skip} style={styles.skipLeftIcon} />
-        </TouchableOpacity>
-        { this.playButton() }
-        <TouchableOpacity onPress={this.props.skipForward}>
-          <Image source={Images.skip} style={styles.skipRightIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.share}
-          activeOpacity={0.3}
-          onPress={this._handleShare}>
-          <Image source={this.state.shareIcon}/>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.playControls}>
+      <ClapButton />
+      <TouchableOpacity onPress={this.props.skipBack}>
+        <Image source={Images.skip} style={styles.skipLeftIcon} />
+      </TouchableOpacity>
+      { this.playButton() }
+      <TouchableOpacity onPress={this.props.skipForward}>
+        <Image source={Images.skip} style={styles.skipRightIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.share}
+        activeOpacity={0.3}
+        onPress={this._handleShare}
+      >
+        <Image source={this.state.shareIcon} />
+      </TouchableOpacity>
+    </View>
   )
 }
