@@ -2,13 +2,14 @@ import axios from 'axios';
 import moment from 'moment';
 
 const LOG_EVENT = 'ANAL/LOG_EVENT';
-const SET_DEVICE_ID = 'ANAL/SET_DEVICE_ID';
+const SET_DEVICE_INFO = 'ANAL/SET_DEVICE_INFO';
 const SET_USER_ID = 'ANAL/SET_USER_ID';
 const API_KEY = 'c1bb5c361a35b3978494ded3f756fb65';
 
 const initialState = {
   userId: '',
   deviceId: '',
+  deviceIsEmulator: true,
   eventsTracked: 0,
 };
 
@@ -17,14 +18,22 @@ export default function reducer(state = initialState, action = {}) {
     case LOG_EVENT:
       // can use eventsTracked to batch send events later if needed
       return { ...state, eventsTracked: state.eventsTracked + 1 };
-    case SET_DEVICE_ID:
-      return { ...state, deviceId: action.deviceId };
+    case SET_DEVICE_INFO:
+      // if not sure whether device is emulator or not, just assume it is
+      const isEmulator = action.isEmulator == null ? true : action.isEmulator;
+      return { ...state, deviceId: action.deviceId, deviceIsEmulator: isEmulator };
     case SET_USER_ID:
       return { ...state, userId: action.userId };
     default:
       return state;
   }
 }
+
+// IF YOU'RE TESTING ON A PHYSICAL DEVICE USE THIS LOGEVENT FUNCTION
+// OR ADD A NEW TEST PROP (e.g. `testSongShare='Test Song Share'`) IN THE CONSTANTS FILE
+// export function logEvent() {
+//   return;
+// }
 
 /**
  * @required:
@@ -38,7 +47,11 @@ export default function reducer(state = initialState, action = {}) {
 export function logEvent(eventName, eventProperties, userProperties) {
   return async (dispatch, getState) => {
     // https://amplitude.zendesk.com/hc/en-us/articles/204771828-HTTP-API
-    const { userId, deviceId } = getState().analytics;
+    const { userId, deviceId, deviceIsEmulator } = getState().analytics;
+
+    // do not allow emulators to send analytics
+    if (deviceIsEmulator) return;
+
     if (!userId.length && !deviceId.length) {
       // one of userId || device_id are REQUIRED
       // if you have neither, gtfo and don't try to log an event
@@ -74,8 +87,8 @@ export function logEvent(eventName, eventProperties, userProperties) {
   };
 }
 
-export function setDeviceId(deviceId) {
-  return { type: SET_DEVICE_ID, deviceId };
+export function setDeviceInfo(deviceId, isEmulator) {
+  return { type: SET_DEVICE_INFO, deviceId, isEmulator };
 }
 
 export function setUserId(userId) {
