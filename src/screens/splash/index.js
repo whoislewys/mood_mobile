@@ -9,8 +9,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import branch from 'react-native-branch';
+import DeviceInfo from 'react-native-device-info';
 import { loadMoods } from '../../redux/modules/mood';
 import { loadSharedSongQueue } from '../../redux/modules/queue';
+import { setDeviceId } from '../../redux/modules/analytics';
 
 class SplashScreen extends Component {
   constructor(props) {
@@ -23,7 +25,11 @@ class SplashScreen extends Component {
 
   componentDidMount = async () => {
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+
+    this.props.setDeviceId(DeviceInfo.getUniqueID());
+
     this.props.loadMoods();
+
     branch.subscribe(({ error, params }) => {
       if (error) {
         // console.error('Error from Branch: ', error);
@@ -176,6 +182,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadMoods,
   loadSharedSongQueue,
+  setDeviceId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

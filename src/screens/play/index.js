@@ -23,6 +23,7 @@ import {
   skipToNext,
   skipToPrevious,
 } from '../../redux/modules/queue';
+import { logEvent } from '../../redux/modules/analytics';
 
 const styles = StyleSheet.create({
   playContainer: {
@@ -191,6 +192,7 @@ class PlayScreen extends Component {
   getPlayControls = () => {
     return (
       <PlayControls
+        logEvent={this.props.logEvent}
         shuffled={this.props.shuffled}
         repeat={this.props.repeat}
         skipForward={this._nextTrack}
@@ -210,9 +212,11 @@ const mapStateToProps = state => ({
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
   curTrackIndex: state.queue.curTrackIndex,
+  deviceId: state.analytics.deviceId,
 });
 
 const mapDispatchToProps = {
+  logEvent,
   handlePlayPress,
   skipToNext,
   skipToPrevious,

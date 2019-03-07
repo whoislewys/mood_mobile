@@ -96,27 +96,7 @@ export default class PlayControls extends Component {
     this.setState({ shareIcon: Images.share });
     const buo = await this.createBUO();
 
-    const uniqueId = DeviceInfo.getUniqueID();
-    try {
-      const JSON_Object = { device_id: uniqueId, event_type: 'test_share' };
-      let dataParams = '?api_key=c1bb5c361a35b3978494ded3f756fb65';
-      dataParams += `&event=[${encodeURIComponent(JSON.stringify(JSON_Object))}]`;
-      let url = 'https://api.amplitude.com/httpapi';
-      url += dataParams;
-      console.log('url: ', url);
-      await axios.post(url);
-    } catch (e) {
-      console.log(e.response);
-    }
-    //
-    // curl
-    // --data 'api_key=c1bb5c361a35b3978494ded3f756fb65'
-    // --data 'event=[{"user_id":"john_doe@gmail.com", ' +
-    // '"event_type":"watch_tutorial", ' +
-    // '"user_properties":{"Cohort":"Test A"}, ' +
-    // '"country":"United States", "ip":"127.0.0.1", ' +
-    // '"time":1396381378123}]'
-
+    this.props.logEvent('Share song', this.props.currentTrack);
 
     // TODO: randomize message body to make sharing a little more novel
     const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
