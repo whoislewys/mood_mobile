@@ -79,7 +79,7 @@ export function logEvent(eventName, eventProperties, userProperties) {
       // DEBUG:
       // console.log('posturl: ', url);
       // console.log('eventObj');
-      await axios.post(url);
+      axios.post(url);
     } catch (e) {
       console.log('error: ', e.response);
     }
