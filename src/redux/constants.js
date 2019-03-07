@@ -6,8 +6,8 @@ export const queueTypes = {
 
 // Analytics
 export const anal = {
-  shareSong: 'Share Song',
-  starSong: 'Star Song',
-  playSong: 'Play Song',
-  openApp: 'Open App',
+  songShare: 'Song Share',
+  songStar: 'Song Star',
+  songPlay: 'Song Play',
+  appOpen: 'App Open',
 };

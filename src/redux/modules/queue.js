@@ -1,6 +1,6 @@
 import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
-import { ditherShuffle as shuffle, playSongAnalyticEventFactory } from '../util';
+import { ditherShuffle as shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
 import { anal, queueTypes } from '../constants';
 import { logEvent } from './analytics';
@@ -266,7 +266,7 @@ export function playbackTrack(track) {
   return (dispatch, getState) => {
     const { queue, queueType } = getState().queue;
 
-    // find new track
+    // find new current track
     const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
     let newCurTrack = queue[newCurTrackIndex];
     if (newCurTrack === undefined) newCurTrack = queue[0];
@@ -277,8 +277,9 @@ export function playbackTrack(track) {
       track,
     });
 
-    // log the track and start a new score timer
-    dispatch(logEvent(anal.playSong, playSongAnalyticEventFactory(anal.playSong, queueType, newCurTrack)));
+    // do not log analytic or start score timer for an empty queue
+    if (!queue.length) return;
+    dispatch(logEvent(anal.songPlay, songPlayAnalyticEventFactory(anal.songPlay, queueType, newCurTrack)));
     dispatch(startScoreTimer());
   };
 }

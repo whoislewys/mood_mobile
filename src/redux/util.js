@@ -14,28 +14,28 @@ const sort = (arr, field) => {
   return newArr;
 };
 
-const find = (arr, elem) => arr.findIndex(x => (x.name === elem.name && x.i === elem.i));
+// const find = (arr, elem) => arr.findIndex(x => (x.name === elem.name && x.i === elem.i));
 
 // Generates a visual of the sort for debugging purposes
-const generateVisual = (list, inOrderList, len) => {
-  let visString = '';
-  const keys = [];
-
-  list.forEach((value, key) => {
-    const arr = Array(len).fill(' O ');
-    keys.map((e) => {
-      arr[e] = ' | ';
-    });
-    value.map((e) => {
-      const index = find(inOrderList, e);
-      arr[index] = ' * ';
-      keys.push(index);
-    });
-    visString += `\n${arr.join('')}\t${key}\n`;
-  });
-
-  return visString;
-};
+// const generateVisual = (list, inOrderList, len) => {
+//   let visString = '';
+//   const keys = [];
+//
+//   list.forEach((value, key) => {
+//     const arr = Array(len).fill(' O ');
+//     keys.map((e) => {
+//       arr[e] = ' | ';
+//     });
+//     value.map((e) => {
+//       const index = find(inOrderList, e);
+//       arr[index] = ' * ';
+//       keys.push(index);
+//     });
+//     visString += `\n${arr.join('')}\t${key}\n`;
+//   });
+//
+//   return visString;
+// };
 
 /**
  * Does a semi-random shuffle with dithering.
@@ -74,14 +74,9 @@ export function ditherShuffle(arr, field, field2) {
  *   e.g. 'mood' or 'leaderboard'
  * @param: {object} song - the track object being played. it should be pulled off the store
 */
-export function playSongAnalyticEventFactory(eventName, songSource, song) {
-  // TODO: how do i tell what song they're playing if they come from the mood screen?
-  // may be just an if statement and return eventproperties with no song prop if they com from there
-  // if you're calling this and you're not building a playsong analytic, gtfo
-  console.log('analytic song: ', song);
-  if (eventName !== anal.playSong) return null;
+export function songPlayAnalyticEventFactory(eventName, songSource, song) {
+  if (eventName !== anal.songPlay) return null;
   const eventProperties = { songSource };
   if (song != null) eventProperties.song = song;
-  console.log('eventprops: ', eventProperties);
   return eventProperties;
 }

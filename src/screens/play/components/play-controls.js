@@ -6,10 +6,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
-import axios from 'axios';
 import Images from '@assets/images';
-import branch, { BranchEvent } from 'react-native-branch';
+import branch from 'react-native-branch';
 import ClapButton from '../../../components/medium-star';
 import { anal } from '../../../redux/constants';
 
@@ -91,13 +89,13 @@ export default class PlayControls extends Component {
       },
     );
     return branchUniversalObject;
-  }
+  };
 
   _handleShare = async () => {
     this.setState({ shareIcon: Images.share });
     const buo = await this.createBUO();
 
-    this.props.logEvent(anal.shareSong, this.props.currentTrack);
+    this.props.logEvent(anal.songShare, this.props.currentTrack);
 
     // TODO: randomize message body to make sharing a little more novel
     const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
@@ -110,7 +108,7 @@ export default class PlayControls extends Component {
     if (!error) {
       this.setState({ shareIcon: Images.shareOutline });
     }
-  }
+  };
 
   playButton = () => {
     let ret = (
@@ -132,7 +130,7 @@ export default class PlayControls extends Component {
     }
 
     return ret;
-  }
+  };
 
   render = () => (
     <View style={styles.playControls}>

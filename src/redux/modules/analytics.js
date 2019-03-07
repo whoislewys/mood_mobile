@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 const LOG_EVENT = 'ANAL/LOG_EVENT';
 const SET_DEVICE_ID = 'ANAL/SET_DEVICE_ID';
@@ -14,6 +15,7 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOG_EVENT:
+      // can use eventsTracked to batch send events later if needed
       return { ...state, eventsTracked: state.eventsTracked + 1 };
     case SET_DEVICE_ID:
       return { ...state, deviceId: action.deviceId };
@@ -34,7 +36,7 @@ export default function reducer(state = initialState, action = {}) {
  *      e.g. {'cohort': 'Instagram Referrals'}
 */
 export function logEvent(eventName, eventProperties, userProperties) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     // https://amplitude.zendesk.com/hc/en-us/articles/204771828-HTTP-API
     const { userId, deviceId } = getState().analytics;
     if (!userId.length && !deviceId.length) {
@@ -50,20 +52,23 @@ export function logEvent(eventName, eventProperties, userProperties) {
     if (userId.length > 0) eventObj.userId = userId;
     if (deviceId.length > 0) eventObj.device_id = deviceId;
 
-    console.log('logged event obj: ', eventObj);
-
     const encodedEventObj = encodeURIComponent(JSON.stringify(eventObj));
 
     // build the query
     let params = `?api_key=${API_KEY}`;
-    params += `&event=[${encodedEventObj}]`;
+    const insertId = eventName + moment().format('hmmss');
+    params += `&insert_id=${encodeURIComponent(insertId)}`; // amplitude uses this param to dedupe events
+    params += `&event=${encodedEventObj}`;
     const url = `https://api.amplitude.com/httpapi${params}`;
 
     // make the request
     try {
-      axios.post(url);
+      // DEBUG:
+      // console.log('posturl: ', url);
+      // console.log('eventObj');
+      await axios.post(url);
     } catch (e) {
-      console.log(e.response);
+      console.log('error: ', e.response);
     }
     dispatch({ type: LOG_EVENT });
   };

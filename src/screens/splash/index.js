@@ -10,9 +10,10 @@ import {
 import { connect } from 'react-redux';
 import branch from 'react-native-branch';
 import DeviceInfo from 'react-native-device-info';
+import { logEvent, setDeviceId } from '../../redux/modules/analytics';
 import { loadMoods } from '../../redux/modules/mood';
 import { loadSharedSongQueue } from '../../redux/modules/queue';
-import { setDeviceId } from '../../redux/modules/analytics';
+import { anal } from '../../redux/constants';
 
 class SplashScreen extends Component {
   constructor(props) {
@@ -24,6 +25,8 @@ class SplashScreen extends Component {
   }
 
   componentDidMount = async () => {
+    this.props.logEvent(anal.appOpen);
+
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
 
     this.props.setDeviceId(DeviceInfo.getUniqueID());
@@ -87,7 +90,7 @@ class SplashScreen extends Component {
   componentWillUnmount = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
-  }
+  };
 
   shouldComponentUpdate = () => {
     let shouldUpdate = true;
@@ -95,13 +98,13 @@ class SplashScreen extends Component {
       shouldUpdate = false;
     }
     return shouldUpdate;
-  }
+  };
 
   componentDidUpdate = () => {
     if (this.props.moods.length > 0) {
       this.navigateToMoodScreen();
     }
-  }
+  };
 
   setLogins = async (logins) => {
     await AsyncStorage.setItem('logins', logins.toString(10));
@@ -183,6 +186,7 @@ const mapDispatchToProps = {
   loadMoods,
   loadSharedSongQueue,
   setDeviceId,
+  logEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

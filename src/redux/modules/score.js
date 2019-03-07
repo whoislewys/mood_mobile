@@ -21,7 +21,8 @@ export default function reducer(state = initialState, action = {}) {
     case INCREMENT_SCORE:
       return { ...state, currentScore: state.currentScore + 1, scoreDelta: state.scoreDelta + 1 };
     case SEND_SCORE:
-      console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
+      // DEBUG:
+      // console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
       if (state.scoreDelta > 0) {
         axios.post(`http://api.moodindustries.com/api/v1//songs/${action.currentTrackId}/star`, { stars: state.scoreDelta, t: 'EXVbAWTqbGFl7BKuqUQv' });
       }
@@ -54,7 +55,7 @@ export function sendScoreDelta(currentTrackId) {
     // don't waste user's data if their score hasn't changed
     if (getState().score.scoreDelta > 0) {
       const eventProperties = { trackId: currentTrackId, starsSent: getState().score.scoreDelta };
-      dispatch(logEvent(anal.starSong, eventProperties));
+      dispatch(logEvent(anal.songStar, eventProperties));
       dispatch({ type: SEND_SCORE, currentTrackId });
     }
   };
