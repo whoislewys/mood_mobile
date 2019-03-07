@@ -193,8 +193,6 @@ class PlayScreen extends Component {
     return (
       <PlayControls
         logEvent={this.props.logEvent}
-        shuffled={this.props.shuffled}
-        repeat={this.props.repeat}
         skipForward={this._nextTrack}
         skipBack={this._previousTrack}
         playing={this.props.playing}

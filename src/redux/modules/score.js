@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { logEvent } from './analytics';
+import { anal } from '../constants';
 
 const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
 const SEND_SCORE = 'score/SEND_SCORE';
@@ -47,13 +49,14 @@ export function incrementScore() {
 }
 
 export function sendScoreDelta(currentTrackId) {
-  // sends change in score (scoreDelta) to api,
-  // then resets scoreDelta to 0
-  // this should be called (therefore score changes should be pushed) repeatedly
-  // by the timer defined above
-  return {
-    type: SEND_SCORE,
-    currentTrackId,
+  // sends change in score (scoreDelta) to api
+  return (dispatch, getState) => {
+    // don't waste user's data if their score hasn't changed
+    if (getState().score.scoreDelta > 0) {
+      const eventProperties = { trackId: currentTrackId, starsSent: getState().score.scoreDelta };
+      dispatch(logEvent(anal.starSong, eventProperties));
+      dispatch({ type: SEND_SCORE, currentTrackId });
+    }
   };
 }
 

@@ -11,6 +11,7 @@ import axios from 'axios';
 import Images from '@assets/images';
 import branch, { BranchEvent } from 'react-native-branch';
 import ClapButton from '../../../components/medium-star';
+import { anal } from '../../../redux/constants';
 
 const styles = StyleSheet.create({
   playControls: {
@@ -96,7 +97,7 @@ export default class PlayControls extends Component {
     this.setState({ shareIcon: Images.share });
     const buo = await this.createBUO();
 
-    this.props.logEvent('Share song', this.props.currentTrack);
+    this.props.logEvent(anal.shareSong, this.props.currentTrack);
 
     // TODO: randomize message body to make sharing a little more novel
     const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
