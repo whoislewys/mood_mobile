@@ -25,10 +25,14 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 /**
-@param: {string} eventName - name of the event you're tracking (e.g. 'Share song')
-@param: {object} eventProperties - additional data you want to track with the event | e.g. {'title': 'Tomboy'}
-@param: {object} userProperties - user data you want to track with the event | e.g. {'cohort': 'Instagram Bio'}
-* */
+ * @required:
+ *    @param: {string} eventName - name of the event you're tracking (e.g. 'Play Song')
+ * @optional:
+ *    @param: {object} eventProperties - additional data you want to track with the event
+ *      e.g. {'songSource': 'Mood', 'song': {'title': 'Only Time', 'artist': 'Enya'}}
+ *    @param: {object} userProperties - user data you want to track with the event
+ *      e.g. {'cohort': 'Instagram Referrals'}
+*/
 export function logEvent(eventName, eventProperties, userProperties) {
   return (dispatch, getState) => {
     // https://amplitude.zendesk.com/hc/en-us/articles/204771828-HTTP-API
@@ -45,6 +49,7 @@ export function logEvent(eventName, eventProperties, userProperties) {
     if (userProperties != null) eventObj.user_properties = userProperties;
     if (userId.length > 0) eventObj.userId = userId;
     if (deviceId.length > 0) eventObj.device_id = deviceId;
+
     console.log('logged event obj: ', eventObj);
 
     const encodedEventObj = encodeURIComponent(JSON.stringify(eventObj));

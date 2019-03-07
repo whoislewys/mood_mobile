@@ -1,8 +1,10 @@
 import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
-import shuffle from '../util';
+import { ditherShuffle as shuffle, playSongAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
-// Loading songs for a specific mood
+import { anal, queueTypes } from '../constants';
+import { logEvent } from './analytics';
+
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
@@ -27,6 +29,7 @@ const initialState = {
   curTrack: null,
   curTrackIndex: NaN,
   sharedTrack: null,
+  queueType: '',
 };
 
 export function loadSongData(list) {
@@ -52,8 +55,8 @@ export default function reducer(state = initialState, action = {}) {
         curTrack: null,
         curTrackIndex: NaN,
         track: null,
+        queueType: '',
       };
-
     case LOAD_SONGS:
       return {
         ...state,
@@ -62,8 +65,8 @@ export default function reducer(state = initialState, action = {}) {
         curTrack: null,
         curTrackIndex: NaN,
         track: null,
+        queueType: '',
       };
-
     case LOAD_SONGS_SUCCESS:
       let songs = null;
       songs = loadSongData(action.payload.data);
@@ -73,12 +76,14 @@ export default function reducer(state = initialState, action = {}) {
         queue: songs,
         curTrack: songs[0],
         curTrackIndex: 0,
+        queueType: queueTypes.mood,
       };
     case LOAD_SONGS_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Error while loading songs.',
+        queueType: '',
       };
 
     // Loading songs for a leaderboard
@@ -90,6 +95,7 @@ export default function reducer(state = initialState, action = {}) {
         queue: leaderboardSongs,
         curTrack: leaderboardSongs[selectedLeaderboardSongIndex],
         curTrackIndex: selectedLeaderboardSongIndex,
+        queueType: queueTypes.leaderboard,
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -102,6 +108,7 @@ export default function reducer(state = initialState, action = {}) {
         curTrack: null,
         curTrackIndex: NaN,
         track: null,
+        queueType: '',
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
       let songs1 = loadSongData(action.payload.data);
@@ -113,12 +120,14 @@ export default function reducer(state = initialState, action = {}) {
         queue: songs1,
         curTrack: songs1[0],
         curTrackIndex: 0,
+        queueType: queueTypes.mood,
       };
     case LOAD_SHARED_SONG_QUEUE_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Error while loading songs.',
+        queueType: '',
       };
 
     // Handles the dispatches from TrackPlayer event handlers
@@ -128,14 +137,11 @@ export default function reducer(state = initialState, action = {}) {
         playback: action.state,
       };
     case PLAYBACK_TRACK:
-      const newCurTrackIndex = state.queue.findIndex(findTrack => findTrack.id === action.track);
-      let newCurTrack = state.queue[newCurTrackIndex];
-      if (newCurTrack === undefined) newCurTrack = state.queue[0];
       return {
         ...state,
         track: action.track,
-        curTrack: newCurTrack,
-        curTrackIndex: newCurTrackIndex,
+        curTrack: action.newCurTrack,
+        curTrackIndex: action.newCurTrackIndex,
       };
 
     default:
@@ -148,7 +154,6 @@ export default function reducer(state = initialState, action = {}) {
 export function handlePlayPress() {
   return async (dispatch, getState) => {
     const { track, queue, playback } = getState().queue;
-    console.log('track on playpress: ', track);
     if (track === null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(queue);
@@ -258,11 +263,22 @@ export function playbackState(state) {
 }
 
 export function playbackTrack(track) {
-  return (dispatch) => {
-    dispatch(startScoreTimer());
+  return (dispatch, getState) => {
+    const { queue, queueType } = getState().queue;
+
+    // find new track
+    const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
+    let newCurTrack = queue[newCurTrackIndex];
+    if (newCurTrack === undefined) newCurTrack = queue[0];
     dispatch({
+      newCurTrack,
+      newCurTrackIndex,
       type: PLAYBACK_TRACK,
       track,
     });
+
+    // log the track and start a new score timer
+    dispatch(logEvent(anal.playSong, playSongAnalyticEventFactory(anal.playSong, queueType, newCurTrack)));
+    dispatch(startScoreTimer());
   };
 }

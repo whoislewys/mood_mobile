@@ -1,3 +1,9 @@
+// Queue Types
+export const queueTypes = {
+  mood: 'mood',
+  leaderboard: 'leaderboard',
+};
+
 // Analytics
 export const anal = {
   shareSong: 'Share Song',

@@ -44,17 +44,6 @@ export default function leaderboard(state = initialState, action = {}) {
 }
 
 export function loadLeaderboardSongs() {
-  // return {
-  //   type: LOAD_SONGS,
-  //   payload: {
-  //     request: {
-  //       url: '/stats/leaderboard',
-  //       params: {
-  //         t: 'EXVbAWTqbGFl7BKuqUQv',
-  //       },
-  //     },
-  //   },
-  // };
   return async (dispatch) => {
     dispatch({ type: LOAD_SONGS });
     try {
