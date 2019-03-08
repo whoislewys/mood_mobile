@@ -1,116 +1,107 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Image,
-  Text,
+  Text, Image,
 } from 'react-native';
-import Images from '@assets/images';
-import { dimensions } from '../assets/styles';
-
-const { width } = dimensions;
+import { colors, fonts } from '../assets/styles';
+import Images from '../assets/images';
+import StarButton from './medium-star';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    flexDirection: 'row',
-    flex: 1,
+    justifyContent: 'space-around',
+    paddingHorizontal: 2,
+    backgroundColor: '#fff',
+    elevation: 1,
+    shadowOpacity: 0.40,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
   },
-  albumArt: {
-    resizeMode: 'cover',
-    flex: 1,
+  starContainer: {
+    flex: 25,
   },
-  arrow: {
-    resizeMode: 'contain',
-    flex: 1,
-    marginLeft: 24,
-    width: 22,
-    height: 11,
-    opacity: 0.8,
+  detailsContainer: {
+    flex: 75,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
-  art: {
-    flex: 20,
-    justifyContent: 'flex-start',
+  songName: {
+    fontFamily: fonts.primary,
+    fontSize: 15,
+    color: colors.header,
   },
-  info: {
-    flex: 88,
+  artistName: {
+    fontFamily: fonts.primary,
+    fontSize: 13,
+    color: colors.subHeader,
   },
-  subInfo: {
-    flexDirection: 'row',
-  },
-  controls: {
-    flex: 20,
-  },
-  albumInfoText: {
-    flexDirection: 'row',
-    paddingLeft: width * 0.02,
-    width: 280,
-    color: '#fff',
-    fontSize: 18,
-    fontFamily: 'Roboto',
-    fontWeight: '300',
-    textAlign: 'center',
-  },
-  albumInfoSubText: {
-    color: '#fff',
-    fontSize: 14,
-    fontFamily: 'Roboto',
-    fontWeight: '300',
+  playButtonContainer: {
+    flex: 25,
+    alignItems: 'center',
   },
   playPauseButton: {
-    width: 30,
-    height: 30,
-    backgroundColor: 'transparent',
+    height: 29,
+    width: 29,
+    resizeMode: 'contain',
   },
 });
 
-export default class PlayBar extends React.Component {
+export default class PlayBar extends Component {
   playButton = () => {
-    if (this.props.playing) {
-      return (
+    return (
+      <View style={styles.playButtonContainer}>
         <TouchableOpacity onPress={this.props.handlePlayPress}>
-          <Image source={Images.pauseButton} style={styles.playPauseButton} />
+          <Image source={Images.navPlayButton} style={styles.playPauseButton} />
         </TouchableOpacity>
-      );
-    }
-    return (
-      <TouchableOpacity onPress={this.props.handlePlayPress}>
-        <Image source={Images.playButton} style={styles.playPauseButton} />
-      </TouchableOpacity>
-    );
-  }
-
-  albumArt = () => (
-    <Image source={Images.arrowDown} style={styles.arrow} />
-  )
-
-  render = () => {
-    const { track } = this.props;
-
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.art} onPress={this.props.go}>
-          {this.albumArt()}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.go} style={styles.info}>
-          <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-            <Text
-              style={[styles.albumInfoText, {
-                maxWidth: width * 0.61,
-                textAlign: 'center',
-              }]}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              { track.name }
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.controls}>
-          {this.playButton()}
-        </View>
       </View>
     );
-  }
+  };
+
+  getDetails = () => {
+    if (this.props.curTrack == null) return <View style={styles.detailsContainer} />;
+    const { title, artist } = this.props.curTrack;
+    return (
+      <View style={styles.detailsContainer}>
+        <Text
+          style={styles.songName}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {title}
+        </Text>
+        <Text
+          style={styles.artistName}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {artist}
+        </Text>
+      </View>
+    );
+  };
+
+  render = () => (
+    <View style={styles.container}>
+      <View style={styles.starContainer}>
+        <StarButton
+          extraStyles={{ tintColor: colors.gray }}
+          textColor={{ color: '#fff' }}
+          shootFrom={{ x: 20, y: 0 }}
+          spray={15}
+        />
+      </View>
+      { this.getDetails() }
+      { this.playButton() }
+    </View>
+  )
 }

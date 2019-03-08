@@ -15,6 +15,9 @@ export const colors = {
   purple: '#5856D6',
   pink: '#FF377E',
   yellow: '#FFCC00',
+  gold: 'goldenrod',
+  // if this is how they spell it in 50 Shades, that's how I'll spell it dammit
+  gray: '#C9C9C9',
   header: 'rgba(0, 0, 0, 0.87)',
   subHeader: 'rgba(0, 0, 0, 0.60)',
   body: 'rgba(0, 0, 0, 0.60)',

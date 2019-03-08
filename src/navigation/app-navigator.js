@@ -35,5 +35,5 @@ export default createBottomTabNavigator({
     inactiveTintColor: 'rgba(0, 0, 0, 0.21)',
     activeBackgroundColor: 'red',
   },
-  tabBarComponent: props => <TabBarComponent{...props} />,
+  tabBarComponent: props => <TabBarComponent {...props} />,
 });

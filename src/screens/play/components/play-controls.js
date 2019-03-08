@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import branch from 'react-native-branch';
-import ClapButton from '../../../components/medium-star';
+import StarButton from '../../../components/medium-star';
 import { anal } from '../../../redux/constants';
+import { colors } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   playControls: {
@@ -134,7 +135,12 @@ export default class PlayControls extends Component {
 
   render = () => (
     <View style={styles.playControls}>
-      <ClapButton />
+      <StarButton
+        extraStyles={{ tintColor: '#fff' }}
+        textColor={{ color: colors.gold }}
+        shootFrom={{ x: 0, y: 0 }}
+        spray={23}
+      />
       <TouchableOpacity onPress={this.props.skipBack}>
         <Image source={Images.skip} style={styles.skipLeftIcon} />
       </TouchableOpacity>

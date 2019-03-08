@@ -1,4 +1,3 @@
-// adapted from: https://medium.com/@sxia/how-to-customize-tab-bar-in-react-navigation-a0dc6d4d7e61
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -11,6 +10,8 @@ import {
 } from 'react-native';
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
+import TrackPlayer from 'react-native-track-player';
+import PlayBar from '../../components/playbar';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { handlePlayPress } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
@@ -21,6 +22,13 @@ const TAB_BAR_OFFSET = height * 0.085;
 const SLIDE_DURATION = 100;
 
 const styles = StyleSheet.create({
+  bottomBarsContainer: {
+    justifyContent: 'flex-end',
+    height: '6.5%',
+  },
+  playbarContainer: {
+    height: '100%',
+  },
   tabBar: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -34,9 +42,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    elevation: 10,
+    elevation: 1,
     shadowOpacity: 0.17,
-    shadowRadius: 1,
+    shadowRadius: 0.2,
     shadowOffset: {
       width: 0,
       height: -1,
@@ -110,7 +118,7 @@ const TabBar = class TabBar extends Component {
   }
 
   playButton = () => {
-    if (this.props.playbackState === 'playing') {
+    if (this.props.playbackState === TrackPlayer.STATE_PLAYING) {
       return (
         <TouchableOpacity onPress={this._handlePlayPress}>
           <Image source={Images.navPauseButton} style={styles.playPauseButton} />
@@ -204,15 +212,27 @@ const TabBar = class TabBar extends Component {
       }
     }
     return (
-      <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset, opacity: this.state.fadeAnim }]}>
-        {tabBarButtons}
-      </Animated.View>
+      <View style={styles.bottomBarsContainer}>
+        <View style={styles.playbarContainer}>
+          <PlayBar
+            playbackState={this.props.playbackState}
+            handlePlayPress={this._handlePlayPress}
+            curTrack={this.props.curTrack}
+            navigateToPlayscreen={() => navigation.navigate('Play')}
+          />
+        </View>
+        {/*<View style={{ width: '100%', backgroundColor: 'red', height: '50%' }} />*/}
+        <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset, opacity: this.state.fadeAnim }]}>
+          {tabBarButtons}
+        </Animated.View>
+      </View>
     );
   }
 };
 
 const mapStateToProps = state => ({
   queue: state.queue.queue,
+  curTrack: state.queue.curTrack,
   playbackState: state.queue.playback,
 });
 
