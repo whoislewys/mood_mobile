@@ -37,13 +37,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     transform: [{ rotateY: '180deg' }],
   },
-  share: {
-    height: 20,
-    width: 20,
-    tintColor: 'white',
+  shareButton: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  shareIcon: {
+    height: 26,
+    width: 26,
     resizeMode: 'contain',
+    tintColor: 'white',
   },
 });
 
@@ -133,22 +135,21 @@ export default class PlayControls extends Component {
   };
 
   render = () => (
-    <View style={styles.playControls}>
-      <ClapButton />
-      <TouchableOpacity onPress={this.props.skipBack}>
-        <Image source={Images.skip} style={styles.skipLeftIcon} />
-      </TouchableOpacity>
-      { this.playButton() }
-      <TouchableOpacity onPress={this.props.skipForward}>
-        <Image source={Images.skip} style={styles.skipRightIcon} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.share}
-        activeOpacity={0.3}
-        onPress={this._handleShare}
-      >
-        <Image source={this.state.shareIcon} />
-      </TouchableOpacity>
-    </View>
+      <View style={styles.playControls}>
+        <ClapButton />
+        <TouchableOpacity onPress={this.props.skipBack}>
+          <Image source={Images.skip} style={styles.skipLeftIcon} />
+        </TouchableOpacity>
+        { this.playButton() }
+        <TouchableOpacity onPress={this.props.skipForward}>
+          <Image source={Images.skip} style={styles.skipRightIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.shareButton}
+          activeOpacity={0.3}
+          onPress={this._handleShare}>
+          <Image source={this.state.shareIcon} style={styles.shareIcon}/>
+        </TouchableOpacity>
+      </View>
   )
 }
