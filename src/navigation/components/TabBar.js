@@ -202,16 +202,13 @@ const TabBar = class TabBar extends Component {
   render = () => {
     const { navigation, style } = this.props;
     const tabBarButtons = [];
-    for (let i = 3; i < navigation.state.routes.length; i++) {
+
+    // add buttons to bottom tab bar
+    for (let i = 4; i < navigation.state.routes.length; i++) {
+      // start at screen 4 | 0: splash, 1: error, 2: settings 3: play
       tabBarButtons.push(this.renderTabBarButton(navigation.state.routes[i], i));
-      if (i === 4) {
-        tabBarButtons.push(
-          <View key='the-play-button'>
-            {this.playButton()}
-          </View>,
-        );
-      }
     }
+
     return (
       <View style={styles.bottomBarsContainer}>
         <View style={styles.playbarContainer}>
@@ -222,7 +219,6 @@ const TabBar = class TabBar extends Component {
             navigateToPlayscreen={() => navigation.navigate('Play')}
           />
         </View>
-        {/*<View style={{ width: '100%', backgroundColor: 'red', height: '50%' }} />*/}
         <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset, opacity: this.state.fadeAnim }]}>
           {tabBarButtons}
         </Animated.View>

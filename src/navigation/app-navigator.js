@@ -24,8 +24,8 @@ export default createBottomTabNavigator({
   Splash: { screen: map(SplashScreen) },
   Error: { screen: map(ErrorScreen) },
   Settings: { screen: map(SettingsScreen) },
-  Mood: { screen: map(MoodScreen) },
   Play: { screen: map(PlayScreen) },
+  Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
 }, {
