@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    elevation: 1,
+    // careful changing elevation, it interacts with playbar closely
+    elevation: 10,
     shadowOpacity: 0.17,
     shadowRadius: 0.2,
     shadowOffset: {

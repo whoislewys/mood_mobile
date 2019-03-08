@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingHorizontal: 2,
     backgroundColor: '#fff',
-    elevation: 1,
+    // careful changing elevation, it interacts with navbar closely
+    elevation: 9,
     shadowOpacity: 0.40,
     shadowRadius: 5,
     shadowOffset: {
