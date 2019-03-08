@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   Animated,
+  Platform,
 } from 'react-native';
 import Images from '@assets/images';
 import { incrementScore } from '../redux/modules/score';
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   },
   countText: {
     color: 'goldenrod',
-    top: -13,
+    top: Platform.OS === 'android' ? -16 : -13,
     fontFamily: fonts.primary,
     fontSize: fonts.body,
   },
@@ -167,7 +168,7 @@ class StarButton extends Component {
         maxCount={maxCount}
         animationComplete={this.animationComplete}
         extraStyles={this.props.extraStyles}
-        { ...extraProps }
+        {...extraProps}
       />
     ));
   };
