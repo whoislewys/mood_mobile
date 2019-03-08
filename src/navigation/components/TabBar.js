@@ -204,7 +204,7 @@ const TabBar = class TabBar extends Component {
     const tabBarButtons = [];
 
     // add buttons to bottom tab bar
-    for (let i = 4; i < navigation.state.routes.length; i++) {
+    for (let i = 3; i < navigation.state.routes.length; i++) {
       // start at screen 4 | 0: splash, 1: error, 2: settings 3: play
       tabBarButtons.push(this.renderTabBarButton(navigation.state.routes[i], i));
     }

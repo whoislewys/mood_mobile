@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
 import MoodScreen from '../screens/mood';
 import PlayScreen from '../screens/play';
@@ -20,16 +20,18 @@ const map = SomeComponent => class SomeClass extends React.Component {
 
 const TabBarComponent = props => <TabBar {...props} />;
 
-export default createBottomTabNavigator({
+// TODO:
+//  figure out swipe from navbar to open playscreen
+const TabNavigator = createBottomTabNavigator({
   Splash: { screen: map(SplashScreen) },
   Error: { screen: map(ErrorScreen) },
   Settings: { screen: map(SettingsScreen) },
-  Play: { screen: map(PlayScreen) },
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
 }, {
-  swipeEnabled: false,
+  swipeEnabled: true,
+  gesturesEnabled: true,
   tabBarOptions: {
     activeTintColor: 'rgba(0, 0, 0, 1)',
     inactiveTintColor: 'rgba(0, 0, 0, 0.21)',
@@ -37,3 +39,10 @@ export default createBottomTabNavigator({
   },
   tabBarComponent: props => <TabBarComponent {...props} />,
 });
+
+const AppNavigator = createStackNavigator({
+  Home: TabNavigator,
+  Play: { screen: map(PlayScreen) },
+});
+
+export default AppNavigator;

@@ -91,8 +91,12 @@ export default class PlayBar extends Component {
     );
   };
 
+  _handlePress = () => {
+    this.props.navigateToPlayscreen();
+  }
+
   render = () => (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={this._handlePress}>
       <View style={styles.starContainer}>
         <StarButton
           extraStyles={{ tintColor: colors.gray }}
@@ -103,6 +107,6 @@ export default class PlayBar extends Component {
       </View>
       { this.getDetails() }
       { this.playButton() }
-    </View>
+    </TouchableOpacity>
   )
 }
