@@ -8,6 +8,7 @@ import {
 import { colors, fonts } from '../assets/styles';
 import Images from '../assets/images';
 import StarButton from './medium-star';
+import TrackPlayer from 'react-native-track-player';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,16 +60,25 @@ const styles = StyleSheet.create({
 
 export default class PlayBar extends Component {
   playButton = () => {
+    if (this.props.playbackState === TrackPlayer.STATE_PLAYING) {
+      return (
+        <View style={styles.playButtonContainer}>
+          <TouchableOpacity onPress={this.props.handlePlayPress} activeOpacity={0.6}>
+            <Image source={Images.navPauseButton} style={styles.playPauseButton} />
+          </TouchableOpacity>
+        </View>
+      );
+    }
     return (
       <View style={styles.playButtonContainer}>
-        <TouchableOpacity onPress={this.props.handlePlayPress}>
+        <TouchableOpacity onPress={this.props.handlePlayPress} activeOpacity={0.6}>
           <Image source={Images.navPlayButton} style={styles.playPauseButton} />
         </TouchableOpacity>
       </View>
     );
-  };
+  }
 
-  getDetails = () => {
+  trackInfo = () => {
     if (this.props.curTrack == null) return <View style={styles.detailsContainer} />;
     const { title, artist } = this.props.curTrack;
     return (
@@ -91,12 +101,20 @@ export default class PlayBar extends Component {
     );
   };
 
-  _handlePress = () => {
-    this.props.navigateToPlayscreen();
-  }
+  navigateToPlayscreenFromPlaybar = () => {
+    this.props.navigation.navigate({
+      routeName: 'Play',
+      params: {
+        parentScreen: 'Playbar',
+        visible: false,
+        // dont remember why this moodscreen prop even exists
+        moodscreen: this._navigateToLeaderboardScreen,
+      },
+    });
+  };
 
   render = () => (
-    <TouchableOpacity style={styles.container} onPress={this._handlePress}>
+    <TouchableOpacity style={styles.container} activeOpacity={0.5} onPress={() => this.navigateToPlayscreenFromPlaybar()}>
       <View style={styles.starContainer}>
         <StarButton
           extraStyles={{ tintColor: colors.gray }}
@@ -105,7 +123,7 @@ export default class PlayBar extends Component {
           spray={15}
         />
       </View>
-      { this.getDetails() }
+      { this.trackInfo() }
       { this.playButton() }
     </TouchableOpacity>
   )

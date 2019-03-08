@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  Animated,
 } from 'react-native';
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
@@ -17,26 +16,26 @@ import { handlePlayPress } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
 
-const { width, height } = dimensions;
-const TAB_BAR_OFFSET = height * 0.085;
-const SLIDE_DURATION = 100;
+const { width } = dimensions;
 
 const styles = StyleSheet.create({
   bottomBarsContainer: {
+    // TODO: flex-end is fucking up the bottom navigators on android
+    //  fix this. start by removing all animated shit since we won't need that anymore with the new stack navigator
     justifyContent: 'flex-end',
-    height: '6.5%',
+    height: '15%',
   },
   playbarContainer: {
-    height: '100%',
+    flex: 45,
   },
   tabBar: {
+    flex: 50,
+    height: '100%',
+    width,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: TAB_BAR_OFFSET,
-    width,
-    paddingLeft: 13.5,
-    paddingRight: 13.5,
+    paddingHorizontal: 13.5,
     backgroundColor: '#FFFFFF',
     bottom: 0,
     top: 0,
@@ -50,13 +49,6 @@ const styles = StyleSheet.create({
       width: 0,
       height: -1,
     },
-  },
-  playPauseButton: {
-    height: 33,
-    width: 33,
-    marginTop: '-2%',
-    marginLeft: 22,
-    marginRight: 22,
   },
   tabBarButton: {
     flex: 1,
@@ -76,61 +68,12 @@ const styles = StyleSheet.create({
 });
 
 const TabBar = class TabBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      offset: new Animated.Value(TAB_BAR_OFFSET),
-      fadeAnim: new Animated.Value(1),
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    const prevRoute = prevProps.navigation.state.routes[prevProps.navigation.state.index];
-    const newRoute = this.props.navigation.state.routes[this.props.navigation.state.index];
-    if (prevRoute !== newRoute) {
-      const prevParams = prevRoute.params;
-      const wasVisible = !prevParams || prevParams.visible;
-
-      const newParams = newRoute.params;
-      const isVisible = !newParams || newParams.visible;
-
-      if (wasVisible && !isVisible) {
-        // TODO: add useNativeDriver: true and replace the height animation with a translateY animation
-        Animated.parallel([
-          Animated.timing(this.state.offset, { toValue: 0, duration: SLIDE_DURATION }),
-          Animated.timing(this.state.fadeAnim, { toValue: 0, duration: SLIDE_DURATION * 0.33 }),
-        ]).start();
-      } else if (isVisible && !wasVisible) {
-        // console.log('animating up!');
-        Animated.parallel([
-          Animated.timing(this.state.offset, { toValue: TAB_BAR_OFFSET, duration: SLIDE_DURATION }),
-          Animated.timing(this.state.fadeAnim, { toValue: 1, duration: SLIDE_DURATION * 0.33 }),
-        ]).start();
-      }
-    }
-  }
-
   _handlePlayPress = () => {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
       return;
     }
     this.props.handlePlayPress();
-  }
-
-  playButton = () => {
-    if (this.props.playbackState === TrackPlayer.STATE_PLAYING) {
-      return (
-        <TouchableOpacity onPress={this._handlePlayPress}>
-          <Image source={Images.navPauseButton} style={styles.playPauseButton} />
-        </TouchableOpacity>
-      );
-    }
-    return (
-      <TouchableOpacity onPress={this._handlePlayPress}>
-        <Image source={Images.navPlayButton} style={styles.playPauseButton} />
-      </TouchableOpacity>
-    );
   }
 
   renderIcon = ({ tintColor, label }) => {
@@ -200,7 +143,7 @@ const TabBar = class TabBar extends Component {
   }
 
   render = () => {
-    const { navigation, style } = this.props;
+    const { navigation } = this.props;
     const tabBarButtons = [];
 
     // add buttons to bottom tab bar
@@ -216,12 +159,12 @@ const TabBar = class TabBar extends Component {
             playbackState={this.props.playbackState}
             handlePlayPress={this._handlePlayPress}
             curTrack={this.props.curTrack}
-            navigateToPlayscreen={() => navigation.navigate('Play')}
+            navigation={navigation}
           />
         </View>
-        <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset, opacity: this.state.fadeAnim }]}>
+        <View {...this.props} style={styles.tabBar}>
           {tabBarButtons}
-        </Animated.View>
+        </View>
       </View>
     );
   }

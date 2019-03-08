@@ -1,4 +1,5 @@
 import React from 'react';
+import { Easing, Animated } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
 import MoodScreen from '../screens/mood';
@@ -40,9 +41,45 @@ const TabNavigator = createBottomTabNavigator({
   tabBarComponent: props => <TabBarComponent {...props} />,
 });
 
-const AppNavigator = createStackNavigator({
+export default createStackNavigator({
   Home: TabNavigator,
   Play: { screen: map(PlayScreen) },
-});
+}, {
+  headerMode: 'none',
+  navigationOptions: {
+    // TODO: figure out how to get gestures to work
+    gesturesEnabled: true,
+  },
+  transitionConfig: () => ({
+    transitionSpec: {
+      duration: 300,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+    },
+    screenInterpolator: (sceneProps) => {
+      const { layout, position, scene } = sceneProps;
+      const { index, route } = scene;
+      const last = index - 1;
+      const height = layout.initHeight;
+      const width = layout.initWidth;
 
-export default AppNavigator;
+      const opacity = position.interpolate({
+        inputRange: [index - 1, index - 0.99, index],
+        outputRange: [0, 1, 1],
+      });
+
+      const translateY = position.interpolate({
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [width, 0, 0],
+      });
+
+      const translateX = position.interpolate({
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [width, 0, 0],
+      });
+
+      if (route.routeName === 'Settings') return { opacity, transform: [{ translateX }] };
+      return { opacity, transform: [{ translateY }] };
+    },
+  }),
+});
