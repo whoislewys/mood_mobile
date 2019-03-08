@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import * as TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
@@ -58,8 +57,7 @@ class LeaderboardScreen extends Component {
         leaderboardSong={item}
         index={index}
         _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
-      >
-      </LeaderboardRow>
+      />
     );
   };
 
@@ -71,12 +69,11 @@ class LeaderboardScreen extends Component {
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
-          ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }}></View>}
+          ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
-        >
-        </FlatList>
+        />
       )
-      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
   )
 
   render = () => (

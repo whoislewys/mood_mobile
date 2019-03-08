@@ -85,12 +85,10 @@ class MoodScreen extends Component {
     if (!this.props.loading) {
       return (
         <MoodList
-          queue={this.props.queue}
           loadSongsForMoodId={this.props.loadSongsForMoodId}
           setMood={this.props.setMood}
           moods={this.props.moods}
           selected={this.props.mood}
-          playing={this.props.playing}
           settings={this.navigateToSettingsScreen}
           playscreen={this.navigateToPlayScreenFromMoodScreen}
         />
@@ -98,16 +96,16 @@ class MoodScreen extends Component {
     }
 
     return (
-      <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+      <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }} />
     );
   }
 
   render = () => (
-      <View style={styles.container}>
-        <View style={styles.moodList}>
-          { this.getContent() }
-        </View>
+    <View style={styles.container}>
+      <View style={styles.moodList}>
+        { this.getContent() }
       </View>
+    </View>
   )
 }
 

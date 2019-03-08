@@ -5,11 +5,15 @@ import {
   Linking,
   Alert,
   AsyncStorage,
+  BackHandler,
 } from 'react-native';
 import { connect } from 'react-redux';
 import branch from 'react-native-branch';
+import DeviceInfo from 'react-native-device-info';
+import { logEvent, setDeviceInfo } from '../../redux/modules/analytics';
 import { loadMoods } from '../../redux/modules/mood';
 import { loadSharedSongQueue } from '../../redux/modules/queue';
+import { anal } from '../../redux/constants';
 
 class SplashScreen extends Component {
   constructor(props) {
@@ -21,10 +25,17 @@ class SplashScreen extends Component {
   }
 
   componentDidMount = async () => {
+    this.props.setDeviceInfo(DeviceInfo.getUniqueID(), DeviceInfo.isEmulator());
+
+    this.props.logEvent(anal.appOpen);
+
+    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+
     this.props.loadMoods();
+
     branch.subscribe(({ error, params }) => {
       if (error) {
-        console.error('Error from Branch: ', error);
+        // console.error('Error from Branch: ', error);
         return;
       }
 
@@ -35,8 +46,7 @@ class SplashScreen extends Component {
       }
 
       // A Branch link was opened.
-      // create track object from shared link's params
-      console.log('branch link opened: ', params);
+      // create track object from shared link's params and play it
       const id = params.$canonical_identifier;
       const artwork = params.$og_image_url;
       const title = params.$og_title;
@@ -55,7 +65,6 @@ class SplashScreen extends Component {
         title,
         url,
       };
-      console.log('opening shared track: ', sharedTrack);
       if (!sharedTrack) return;
       const { navigate } = this.props.navigation;
       this.props.loadSharedSongQueue(sharedTrack)
@@ -75,12 +84,13 @@ class SplashScreen extends Component {
           this.showReviewModal();
         }
       }
-    } catch (error) { }
-  }
+    } catch (_) {}
+  };
 
   componentWillUnmount = () => {
-    Linking.removeEventsListener('url', this.handleOpenURL);
-  }
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
+  };
 
   shouldComponentUpdate = () => {
     let shouldUpdate = true;
@@ -88,17 +98,17 @@ class SplashScreen extends Component {
       shouldUpdate = false;
     }
     return shouldUpdate;
-  }
+  };
 
   componentDidUpdate = () => {
     if (this.props.moods.length > 0) {
       this.navigateToMoodScreen();
     }
-  }
+  };
 
   setLogins = async (logins) => {
     await AsyncStorage.setItem('logins', logins.toString(10));
-  }
+  };
 
   getLogins = async () => {
     let logins = await AsyncStorage.getItem('logins');
@@ -111,7 +121,7 @@ class SplashScreen extends Component {
 
   setReviewed = async (reviewed) => {
     await AsyncStorage.setItem('reviewed', reviewed);
-  }
+  };
 
   showReviewModal = () => {
     Alert.alert(
@@ -133,23 +143,21 @@ class SplashScreen extends Component {
       ],
       { cancelable: false },
     );
-  }
-
-  updateLogins = () => {
-
-  }
+  };
 
   handleConnectivityChange = (isConnected) => {
     if (!isConnected) {
-      NetInfo.isConnected.removeEventListener(
-        'connectionChange',
-        this.handleConnectivityChange,
-      );
-
       this.props.stopPlayback();
       this.navigateToErrorScreen();
     }
-  }
+  };
+
+  onBackButtonPressAndroid = () => {
+    // TODO: going forward, might need to move this function
+    //  and related listeners outta here and implement for each screen
+    this.props.navigation.navigate('Mood');
+    return true;
+  };
 
   navigateToMoodScreen = (params) => {
     this.props.navigation.navigate({
@@ -165,7 +173,7 @@ class SplashScreen extends Component {
     });
   };
 
-  render = () => (<View style={{ flex: 1 }}></View>)
+  render = () => (<View style={{ flex: 1 }} />)
 }
 
 const mapStateToProps = state => ({
@@ -177,6 +185,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadMoods,
   loadSharedSongQueue,
+  setDeviceInfo,
+  logEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

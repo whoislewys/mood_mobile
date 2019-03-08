@@ -44,52 +44,58 @@ const styles = StyleSheet.create({
     width: 25,
     marginLeft: '10%',
   },
+  flatListStyle: {
+    flexDirection: 'column',
+  },
 });
 
 export default class MoodList extends React.Component {
-  keyExtractor = mood => mood.name
+  keyExtractor = mood => mood.name;
 
   settings = () => {
     this.props.settings();
-  }
+  };
 
   onPressItem = (moodObj) => {
     this.props.loadSongsForMoodId(moodObj.id);
     this.props.playscreen();
-  }
+  };
 
   // renderItem called when rendering FlatList. returns a Mood component
-  _renderItem = ({ item }) => <Mood
+  _renderItem = ({ item }) => (
+    <Mood
       mood={item}
       playscreen={this.props.playscreen}
       selected={this.props.selected}
       onPressItem={this.onPressItem}
     />
+  );
 
   renderHeader = () => (
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Discover</Text>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
-            <Image source={Images.bugIcon} style={styles.bugsButton}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.settings}>
-            <Image source={Images.settingsGear} style={styles.settingsButton}/>
-          </TouchableOpacity>
-        </View>
+    <View style={styles.header}>
+      <Text style={styles.headerText}>Discover</Text>
+      <View style={styles.buttonRow}>
+        <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
+          <Image source={Images.bugIcon} style={styles.bugsButton} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.settings}>
+          <Image source={Images.settingsGear} style={styles.settingsButton} />
+        </TouchableOpacity>
       </View>
-  )
+    </View>
+  );
 
-  // renderItem should be a function that returns a component
   render = () => {
     return (
       <FlatList
+        style={styles.flatListStyle}
         data={this.props.moods}
         keyExtractor={this.keyExtractor}
         renderItem={this._renderItem}
         ListHeaderComponent={this.renderHeader}
-        >
-      </FlatList>
+        contentContainerStyle={styles.container}
+        numColumns={2}
+      />
     );
   }
 }
