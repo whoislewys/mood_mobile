@@ -12,7 +12,7 @@ import Images from '@assets/images';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
-import { handlePlayPress } from '../../redux/modules/queue';
+import { handlePlayPress, skipToNext, skipToPrevious } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
 
@@ -172,6 +172,8 @@ const TabBar = class TabBar extends Component {
       <GestureRecognizer
         style={styles.bottomBarsContainer}
         onSwipeUp={() => this.navigateToPlayscreenFromPlaybar()}
+        onSwipeRight={() => this.props.skipToPrevious()}
+        onSwipeLeft={() => this.props.skipToNext()}
       >
         <View style={styles.playbarContainer}>
           <PlayBar
@@ -197,6 +199,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   handlePlayPress,
+  skipToNext,
+  skipToPrevious,
   loadLeaderboardSongs,
   loadEvents,
 };
