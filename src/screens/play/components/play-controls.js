@@ -38,13 +38,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     transform: [{ rotateY: '180deg' }],
   },
-  share: {
-    height: 20,
-    width: 20,
-    tintColor: 'white',
+  shareButton: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  shareIcon: {
+    height: 26,
+    width: 26,
     resizeMode: 'contain',
+    tintColor: 'white',
   },
 });
 
@@ -149,11 +151,10 @@ export default class PlayControls extends Component {
         <Image source={Images.skip} style={styles.skipRightIcon} />
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.share}
+        style={styles.shareButton}
         activeOpacity={0.3}
-        onPress={this._handleShare}
-      >
-        <Image source={this.state.shareIcon} />
+        onPress={this._handleShare}>
+        <Image source={this.state.shareIcon} style={styles.shareIcon}/>
       </TouchableOpacity>
     </View>
   )
