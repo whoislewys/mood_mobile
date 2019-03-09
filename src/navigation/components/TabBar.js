@@ -10,6 +10,7 @@ import {
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import TrackPlayer from 'react-native-track-player';
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { handlePlayPress } from '../../redux/modules/queue';
@@ -142,6 +143,28 @@ const TabBar = class TabBar extends Component {
     );
   }
 
+  onSwipe(gestureName, gestureState) {
+    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    this.setState({ gestureName });
+    switch (gestureName) {
+      case SWIPE_UP:
+        console.warn('swiped up!');
+        break;
+      default:
+        break;
+    }
+  }
+
+  onSwipeUp(gestureState) {
+    console.warn('swiped up!');
+    if (!this.props.queue.length) {
+      Alert.alert('Let\'s pick a mood first! 🎧');
+      return;
+    }
+    this.props.navigation.navigate('Play');
+  }
+
+
   render = () => {
     const { navigation } = this.props;
     const tabBarButtons = [];
@@ -153,19 +176,23 @@ const TabBar = class TabBar extends Component {
     }
 
     return (
-      <View style={styles.bottomBarsContainer}>
-        <View style={styles.playbarContainer}>
-          <PlayBar
-            playbackState={this.props.playbackState}
-            handlePlayPress={this._handlePlayPress}
-            curTrack={this.props.curTrack}
-            navigation={navigation}
-          />
-        </View>
-        <View {...this.props} style={styles.tabBar}>
-          {tabBarButtons}
-        </View>
-      </View>
+      <GestureRecognizer
+        style={styles.bottomBarsContainer}
+        onSwipe={(direction, state) => this.onSwipe(direction, state)}
+        onSwipeUp={state => this.onSwipeUp(state)}
+      >
+          <View style={styles.playbarContainer}>
+            <PlayBar
+              playbackState={this.props.playbackState}
+              handlePlayPress={this._handlePlayPress}
+              curTrack={this.props.curTrack}
+              navigation={navigation}
+            />
+          </View>
+          <View {...this.props} style={styles.tabBar}>
+            {tabBarButtons}
+          </View>
+      </GestureRecognizer>
     );
   }
 };
