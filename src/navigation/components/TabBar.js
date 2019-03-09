@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
-import TrackPlayer from 'react-native-track-player';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { handlePlayPress } from '../../redux/modules/queue';
@@ -21,9 +20,8 @@ const { width } = dimensions;
 
 const styles = StyleSheet.create({
   bottomBarsContainer: {
-    // TODO: flex-end is fucking up the bottom navigators on android
-    //  fix this. start by removing all animated shit since we won't need that anymore with the new stack navigator
     justifyContent: 'flex-end',
+    backgroundColor: '#fff',
     height: '15%',
   },
   playbarContainer: {
@@ -75,7 +73,7 @@ const TabBar = class TabBar extends Component {
       return;
     }
     this.props.handlePlayPress();
-  }
+  };
 
   renderIcon = ({ tintColor, label }) => {
     if (label === 'Mood') {
@@ -141,27 +139,22 @@ const TabBar = class TabBar extends Component {
         </Text> */}
       </TouchableOpacity>
     );
-  }
+  };
 
-  onSwipe(gestureName, gestureState) {
-    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
-    this.setState({ gestureName });
-    switch (gestureName) {
-      case SWIPE_UP:
-        console.warn('swiped up!');
-        break;
-      default:
-        break;
-    }
-  }
-
-  onSwipeUp(gestureState) {
-    console.warn('swiped up!');
+  navigateToPlayscreenFromPlaybar() {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
       return;
     }
-    this.props.navigation.navigate('Play');
+    this.props.navigation.navigate({
+      routeName: 'Play',
+      params: {
+        parentScreen: 'Playbar',
+        visible: false,
+        // dont remember why this moodscreen prop even exists
+        moodscreen: this._navigateToLeaderboardScreen,
+      },
+    });
   }
 
 
@@ -171,27 +164,26 @@ const TabBar = class TabBar extends Component {
 
     // add buttons to bottom tab bar
     for (let i = 3; i < navigation.state.routes.length; i++) {
-      // start at screen 4 | 0: splash, 1: error, 2: settings 3: play
+      // start at tabNavigator screen 3 | screens are numbered in app-navigator.js
       tabBarButtons.push(this.renderTabBarButton(navigation.state.routes[i], i));
     }
 
     return (
       <GestureRecognizer
         style={styles.bottomBarsContainer}
-        onSwipe={(direction, state) => this.onSwipe(direction, state)}
-        onSwipeUp={state => this.onSwipeUp(state)}
+        onSwipeUp={() => this.navigateToPlayscreenFromPlaybar()}
       >
-          <View style={styles.playbarContainer}>
-            <PlayBar
-              playbackState={this.props.playbackState}
-              handlePlayPress={this._handlePlayPress}
-              curTrack={this.props.curTrack}
-              navigation={navigation}
-            />
-          </View>
-          <View {...this.props} style={styles.tabBar}>
-            {tabBarButtons}
-          </View>
+        <View style={styles.playbarContainer}>
+          <PlayBar
+            playbackState={this.props.playbackState}
+            handlePlayPress={this._handlePlayPress}
+            curTrack={this.props.curTrack}
+            navigateToPlayscreenFromPlaybar={() => this.navigateToPlayscreenFromPlaybar()}
+          />
+        </View>
+        <View {...this.props} style={styles.tabBar}>
+          {tabBarButtons}
+        </View>
       </GestureRecognizer>
     );
   }
