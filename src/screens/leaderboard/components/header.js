@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
 
 const renderMoodLogo = (showLogo) => {
   return (showLogo
-    ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10}/>
-    : <View/>
+    ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
+    : <View />
   );
 };
 

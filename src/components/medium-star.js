@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   Animated,
+  Platform,
 } from 'react-native';
 import Images from '@assets/images';
 import { incrementScore } from '../redux/modules/score';
@@ -17,14 +18,14 @@ function getRndInteger(min, max) {
 }
 
 const styles = StyleSheet.create({
-  clapButton: {
+  starButton: {
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  clapText: {
+  countText: {
     color: 'goldenrod',
-    top: -13,
+    top: Platform.OS === 'android' ? -16 : -13,
     fontFamily: fonts.primary,
     fontSize: fonts.body,
   },
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   },
   shootingStarShadow: {
     // TODO: replace this style by using a separate png of a shooting star with baked-in drop shadow
-    // rendering a shadow on a view element is pretty inefficient
+    //  rendering a shadow on a view element is pretty inefficient
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -50,32 +51,36 @@ const styles = StyleSheet.create({
   },
 });
 
-class ClapBubble extends Component {
-  constructor() {
-    super();
+class ShootingStar extends Component {
+  constructor(props) {
+    super(props);
+    const { x: initX, y: initY } = this.props.shootFrom;
+
     this.state = {
-      yPosition: new Animated.Value(0),
-      xPosition: new Animated.Value(0),
+      xPosition: new Animated.Value(initX),
+      yPosition: new Animated.Value(initY),
       fadeAnim: new Animated.Value(0),
-      maxCount: 25,
     };
   }
 
   componentDidMount() {
+    const { x: initX, y: initY } = this.props.shootFrom;
+    const { spray } = this.props;
+
     Animated.parallel([
+      Animated.timing(this.state.xPosition, {
+        toValue: initX + getRndInteger(-spray, spray),
+        duration: 500,
+        useNativeDriver: true,
+      }),
       Animated.timing(this.state.yPosition, {
-        toValue: -100,
+        toValue: initY - 100,
         duration: 500,
         useNativeDriver: true,
       }),
       Animated.timing(this.state.fadeAnim, {
         toValue: 1,
         duration: 420,
-        useNativeDriver: true,
-      }),
-      Animated.timing(this.state.xPosition, {
-        toValue: getRndInteger(-23, 23),
-        duration: 500,
         useNativeDriver: true,
       }),
     ]).start(() => {
@@ -86,6 +91,8 @@ class ClapBubble extends Component {
   }
 
   render = () => {
+    const { extraStyles } = this.props;
+
     const clapBubbleStyle = {
       position: 'absolute',
       opacity: this.state.fadeAnim,
@@ -100,20 +107,20 @@ class ClapBubble extends Component {
       (this.props.count <= this.props.maxCount) ? (
         <Animated.View style={[clapBubbleStyle, animationStyle]}>
           <View style={styles.shootingStarShadow}>
-            <Image source={Images.star} style={styles.shootingStar} />
+            <Image source={Images.star} style={[styles.shootingStar, extraStyles]} />
           </View>
-          <Text style={styles.clapText}>{this.props.count}</Text>
+          <Text style={[styles.countText, this.props.textColor]}>{this.props.count}</Text>
         </Animated.View>
       ) : (
         <Animated.View style={[clapBubbleStyle, animationStyle]}>
-          <Text style={styles.clapText}>{this.props.maxCount}</Text>
+          <Text style={styles.countText}>{this.props.maxCount}</Text>
         </Animated.View>
       )
     );
   }
 }
 
-class ClapButton extends Component {
+class StarButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -123,10 +130,10 @@ class ClapButton extends Component {
   }
 
   animationComplete = (countNum) => {
-    const claps = this.state.claps;
+    const { claps } = this.state;
     claps.splice(claps.indexOf(countNum), 1);
     this.setState({ claps });
-  }
+  };
 
   clap = () => {
     // start from currentScore + 1 to not show 0 stars
@@ -137,47 +144,52 @@ class ClapButton extends Component {
       claps.push(newScore);
       this.props.incrementScore();
     }
-  }
+  };
 
   keepClapping = () => {
     const clapInterval = 200; // 200 -> 25 stars takes 5 seconds
     this.clapTimer = setInterval(() => this.clap(), clapInterval); // timer takes ms argument
-  }
+  };
 
   stopClapping = () => {
     if (this.clapTimer) {
       clearInterval(this.clapTimer);
     }
-  }
+  };
 
   renderClaps = () => {
+    const { extraStyles, ...extraProps } = this.props;
     const maxCount = 25;
     // render a clap bubble for each clapBubble in the array
     return this.state.claps.map(countNum => (
-      <ClapBubble
+      <ShootingStar
         key={countNum}
         count={countNum}
         maxCount={maxCount}
-        animationComplete={this.animationComplete.bind(this)}
+        animationComplete={this.animationComplete}
+        extraStyles={this.props.extraStyles}
+        {...extraProps}
       />
     ));
-  }
+  };
 
   render = () => {
-    const clapIcon = (this.props.currentScore < 1) ? (
-      <Image source={Images.starOutline} style={styles.star} />
-    )
-      : <Image source={Images.star} style={styles.star} />;
+    const { extraStyles } = this.props;
+
+    const clapIcon = (this.props.currentScore < 1)
+      ? <Image source={Images.starOutline} style={[styles.star, extraStyles]} />
+      : <Image source={Images.star} style={[styles.star, extraStyles]} />;
 
     return (
       <View>
         <TouchableOpacity
-          onPress={this.clap.bind(this)}
-          onPressIn={this.keepClapping.bind(this)}
-          onPressOut={this.stopClapping.bind(this)}
+          onPress={this.clap}
+          onPressIn={this.keepClapping}
+          onPressOut={this.stopClapping}
           activeOpacity={0.7}
-          style={styles.clapButton}>
-            {clapIcon}
+          style={styles.starButton}
+        >
+          {clapIcon}
         </TouchableOpacity>
         {this.renderClaps()}
       </View>
@@ -194,4 +206,4 @@ const mapDispatchToProps = {
   incrementScore,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClapButton);
+export default connect(mapStateToProps, mapDispatchToProps)(StarButton);

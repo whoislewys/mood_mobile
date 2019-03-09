@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import branch from 'react-native-branch';
-import ClapButton from '../../../components/medium-star';
+import StarButton from '../../../components/medium-star';
 import { anal } from '../../../redux/constants';
+import { colors } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   playControls: {
@@ -135,21 +136,26 @@ export default class PlayControls extends Component {
   };
 
   render = () => (
-      <View style={styles.playControls}>
-        <ClapButton />
-        <TouchableOpacity onPress={this.props.skipBack}>
-          <Image source={Images.skip} style={styles.skipLeftIcon} />
-        </TouchableOpacity>
-        { this.playButton() }
-        <TouchableOpacity onPress={this.props.skipForward}>
-          <Image source={Images.skip} style={styles.skipRightIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.shareButton}
-          activeOpacity={0.3}
-          onPress={this._handleShare}>
-          <Image source={this.state.shareIcon} style={styles.shareIcon}/>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.playControls}>
+      <StarButton
+        extraStyles={{ tintColor: '#fff' }}
+        textColor={{ color: colors.gold }}
+        shootFrom={{ x: 0, y: 0 }}
+        spray={23}
+      />
+      <TouchableOpacity onPress={this.props.skipBack}>
+        <Image source={Images.skip} style={styles.skipLeftIcon} />
+      </TouchableOpacity>
+      { this.playButton() }
+      <TouchableOpacity onPress={this.props.skipForward}>
+        <Image source={Images.skip} style={styles.skipRightIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.shareButton}
+        activeOpacity={0.3}
+        onPress={this._handleShare}>
+        <Image source={this.state.shareIcon} style={styles.shareIcon}/>
+      </TouchableOpacity>
+    </View>
   )
 }
