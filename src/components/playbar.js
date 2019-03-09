@@ -114,7 +114,7 @@ export default class PlayBar extends Component {
   };
 
   render = () => (
-    <TouchableOpacity style={styles.container} activeOpacity={0.5} onPress={() => this.navigateToPlayscreenFromPlaybar()}>
+    <TouchableOpacity style={styles.container} activeOpacity={0.5} onPress={this.props.handlePlayPress}>
       <View style={styles.starContainer}>
         <StarButton
           extraStyles={{ tintColor: colors.gray }}
