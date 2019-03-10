@@ -27,16 +27,13 @@ class SplashScreen extends Component {
   componentDidMount = async () => {
     this.props.setDeviceInfo(DeviceInfo.getUniqueID(), DeviceInfo.isEmulator());
 
-    this.props.logEvent(anal.appOpen);
-
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
 
     this.props.loadMoods();
 
     this.updateNumLaunches();
 
-    let channel = null;
-
+    let referralChannel;
     branch.subscribe(({ error, params }) => {
       if (error) {
         return;
@@ -49,23 +46,11 @@ class SplashScreen extends Component {
       }
 
       // A Branch link was opened.
-      const referralChannel = params['~channel'];
-      console.warn(referralChannel);
-      // console.log(referralChannel);
-      // for (let propertyName in params) {
-      //   // propertyName is what you want
-      //   // you can get the value like this: myObject[propertyName]
-      //   if (propertyName.endsWith('channel')) {
-      //     console.warn(propertyName);
-      //     referralChannel = propertyName;
-      //   }
-      //   console.log(params[referralChannel]);
-      // }
+      referralChannel = params['~channel'];
+      this.props.logEvent(anal.appOpen, { referralChannel });
 
-      // const referralChannel = params.[~channel];
       if (!params.$canonical_identifier) {
         // Indicates user clicked a link without track params attached
-        console.log(params);
         return;
       }
 
@@ -91,9 +76,11 @@ class SplashScreen extends Component {
 
       // Play the shared track
       const { navigate } = this.props.navigation;
-      this.props.loadSharedSongQueue(sharedTrack)
-        .then(navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } }));
+      this.props.loadSharedSongQueue(sharedTrack);
+      navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } });
     });
+    // if you're here, no branch link was opened. continue to mood screen as usual
+    this.navigateToMoodScreen();
   };
 
   componentWillUnmount = () => {
@@ -107,12 +94,6 @@ class SplashScreen extends Component {
       shouldUpdate = false;
     }
     return shouldUpdate;
-  };
-
-  componentDidUpdate = () => {
-    if (this.props.moods.length > 0) {
-      this.navigateToMoodScreen();
-    }
   };
 
   updateNumLaunches = async () => {
@@ -204,7 +185,6 @@ class SplashScreen extends Component {
 
 const mapStateToProps = state => ({
   moods: state.mood.moods,
-  loading: state.mood.loading,
   error: state.mood.error,
 });
 
