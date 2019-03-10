@@ -3,12 +3,13 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Text, Image,
+  Text,
+  Image,
 } from 'react-native';
+import TrackPlayer from 'react-native-track-player';
 import { colors, fonts } from '../assets/styles';
 import Images from '../assets/images';
 import StarButton from './medium-star';
-import TrackPlayer from 'react-native-track-player';
 
 const styles = StyleSheet.create({
   container: {
@@ -76,7 +77,7 @@ export default class PlayBar extends Component {
         </TouchableOpacity>
       </View>
     );
-  }
+  };
 
   trackInfo = () => {
     if (this.props.curTrack == null) return <View style={styles.detailsContainer} />;
@@ -101,20 +102,8 @@ export default class PlayBar extends Component {
     );
   };
 
-  navigateToPlayscreenFromPlaybar = () => {
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: {
-        parentScreen: 'Playbar',
-        visible: false,
-        // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToLeaderboardScreen,
-      },
-    });
-  };
-
   render = () => (
-    <TouchableOpacity style={styles.container} activeOpacity={0.5} onPress={this.props.handlePlayPress}>
+    <TouchableOpacity style={styles.container} activeOpacity={0.7} onPress={this.props.navigateToPlayscreenFromPlaybar}>
       <View style={styles.starContainer}>
         <StarButton
           extraStyles={{ tintColor: colors.gray }}

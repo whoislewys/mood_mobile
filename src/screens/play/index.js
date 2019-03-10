@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   StatusBar,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import Images from '@assets/images';
-
 import Carousel from 'react-native-snap-carousel';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
@@ -35,9 +36,12 @@ const styles = StyleSheet.create({
   dropdownBarContainer: {
     flex: 9,
   },
-  dropdownBarTouchable: {
+  dropdownBarSwipeable: {
     flex: 1,
     flexDirection: 'row',
+  },
+  dropdownBarTouchable: {
+    flex: 1,
   },
   backButtonContainer: {
     marginLeft: '1.8%',
@@ -77,6 +81,14 @@ class PlayScreen extends Component {
   constructor(props) {
     super(props);
     StatusBar.setBarStyle('light-content', true);
+  }
+
+  onSwipeDown() {
+    if (!this.props.queue.length) {
+      Alert.alert('Let\'s pick a mood first! 🎧');
+      return;
+    }
+    this.props.navigation.goBack();
   }
 
   render = () => {
@@ -121,41 +133,46 @@ class PlayScreen extends Component {
         </View>
       </Background>
     );
-  }
+  };
 
   _nextTrack = () => {
     this.props.skipToNext();
     this._carouselref.snapToItem(this.props.curTrackIndex);
-  }
+  };
 
   _previousTrack = () => {
     // args: snapToNext(animated, fireCallback)
     this.props.skipToPrevious();
     this._carouselref.snapToItem(this.props.curTrackIndex);
-  }
+  };
 
   getDropdownBar = () => {
     return (
-      <TouchableOpacity
-        onPress={() => this.props.navigation.navigate('Mood')}
-        activeOpacity={1}
-        style={styles.dropdownBarTouchable}
+      <GestureRecognizer
+        style={styles.dropdownBarSwipeable}
+        onSwipeDown={() => this.onSwipeDown()}
       >
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Mood')}
-          style={styles.backButtonContainer}
           activeOpacity={1}
+          style={styles.dropdownBarTouchable}
         >
-          <Image source={Images.arrowDown} style={styles.backButton} />
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Mood')}
+            style={styles.backButtonContainer}
+            activeOpacity={1}
+          >
+            <Image source={Images.arrowDown} style={styles.backButton} />
+          </TouchableOpacity>
         </TouchableOpacity>
-      </TouchableOpacity>
+      </GestureRecognizer>
     );
-  }
+  };
 
   _renderCarouselItem = ({ item }) => {
     const art = item.artwork;
     return <AlbumArtCarouselItem artwork={art} />;
-  }
+  };
 
   _handleCarouselSnap = (slideIndex) => {
     if (slideIndex > this._carouselref.currentIndex) {
@@ -163,7 +180,7 @@ class PlayScreen extends Component {
     } else if (slideIndex < this._carouselref.currentIndex) {
       this.props.skipToPrevious();
     }
-  }
+  };
 
   getAlbumArtCarousel = () => {
     return (
@@ -178,7 +195,7 @@ class PlayScreen extends Component {
         lockScrollWhileSnapping
       />
     );
-  }
+  };
 
   getTrackInfoAndPlaybar = () => {
     return (
@@ -187,7 +204,7 @@ class PlayScreen extends Component {
         track={this.props.curTrack}
       />
     );
-  }
+  };
 
   getPlayControls = () => {
     return (
