@@ -16,6 +16,8 @@ import { loadSharedSongQueue } from '../../redux/modules/queue';
 import { anal } from '../../redux/constants';
 
 class SplashScreen extends Component {
+  _unsubscribeFromBranch = null;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -33,8 +35,11 @@ class SplashScreen extends Component {
 
     this.updateNumLaunches();
 
-    let referralChannel;
-    branch.subscribe(({ error, params }) => {
+    // Any initial link cached by the native layer will be returned to the callback supplied to branch.subscribe immediately if the JavaScript method is called for the first time after app launch.
+    // In case, app does not need to receive the cached initial app launch link event, call branch.skipCachedEvents()
+    branch.skipCachedEvents();
+
+    this._unsubscribeFromBranch = branch.subscribe(({ error, params }) => {
       if (error) {
         return;
       }
@@ -46,8 +51,10 @@ class SplashScreen extends Component {
       }
 
       // A Branch link was opened.
-      referralChannel = params['~channel'];
-      this.props.logEvent(anal.appOpen, { referralChannel });
+      const referralChannel = params['~channel'];
+      const campaign = params['~campaign'];
+      const isFirstSession = params['+is_first_session'];
+      this.props.logEvent(anal.deepLinkOpen, { referralChannel, campaign, isFirstSession });
 
       if (!params.$canonical_identifier) {
         // Indicates user clicked a link without track params attached
@@ -76,16 +83,21 @@ class SplashScreen extends Component {
 
       // Play the shared track
       const { navigate } = this.props.navigation;
-      this.props.loadSharedSongQueue(sharedTrack);
-      navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } });
+      this.props.loadSharedSongQueue(sharedTrack)
+        .then(navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } }));
     });
     // if you're here, no branch link was opened. continue to mood screen as usual
+    this.props.logEvent(anal.appOpen);
     this.navigateToMoodScreen();
   };
 
   componentWillUnmount = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
     NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
+    if (this._unsubscribeFromBranch) {
+      this._unsubscribeFromBranch();
+      this._unsubscribeFromBranch = null;
+    }
   };
 
   shouldComponentUpdate = () => {

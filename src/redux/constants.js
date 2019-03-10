@@ -10,4 +10,5 @@ export const anal = {
   songStar: 'Song Star',
   songPlay: 'Song Play',
   appOpen: 'App Open',
+  deepLinkOpen: 'Deep Link Open',
 };
