@@ -27,15 +27,18 @@ class SplashScreen extends Component {
   componentDidMount = async () => {
     this.props.setDeviceInfo(DeviceInfo.getUniqueID(), DeviceInfo.isEmulator());
 
+    let channel = null;
+
     this.props.logEvent(anal.appOpen);
 
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
 
     this.props.loadMoods();
 
+    this.updateNumLaunches();
+
     branch.subscribe(({ error, params }) => {
       if (error) {
-        // console.error('Error from Branch: ', error);
         return;
       }
 
@@ -46,7 +49,12 @@ class SplashScreen extends Component {
       }
 
       // A Branch link was opened.
-      // create track object from shared link's params and play it
+      if (!params.$canonical_identifier) {
+        // Indicates user clicked a link without track params attached
+        return;
+      }
+
+      // Create a track object from the shared link's params
       const id = params.$canonical_identifier;
       const artwork = params.$og_image_url;
       const title = params.$og_title;
@@ -65,26 +73,12 @@ class SplashScreen extends Component {
         title,
         url,
       };
-      if (!sharedTrack) return;
+
+      // Play the shared track
       const { navigate } = this.props.navigation;
       this.props.loadSharedSongQueue(sharedTrack)
         .then(navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } }));
     });
-
-    let launches = await this.getLogins();
-    let reviewed = await this.getReviewed();
-
-    try {
-      if (isNaN(launches)) {
-        this.setLogins(1);
-      } else {
-        this.setLogins(launches + 1);
-
-        if ((launches === 3 || (launches - 3) % 6 === 0) && !reviewed) {
-          this.showReviewModal();
-        }
-      }
-    } catch (_) {}
   };
 
   componentWillUnmount = () => {
@@ -104,6 +98,23 @@ class SplashScreen extends Component {
     if (this.props.moods.length > 0) {
       this.navigateToMoodScreen();
     }
+  };
+
+  updateNumLaunches = async () => {
+    let launches = await this.getLogins();
+    let reviewed = await this.getReviewed();
+
+    try {
+      if (isNaN(launches)) {
+        this.setLogins(1);
+      } else {
+        this.setLogins(launches + 1);
+
+        if ((launches === 3 || (launches - 3) % 6 === 0) && !reviewed) {
+          this.showReviewModal();
+        }
+      }
+    } catch (_) {}
   };
 
   setLogins = async (logins) => {
