@@ -15,15 +15,12 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
-### inc_build
+## iOS
+### ios inc_build
 ```
-fastlane inc_build
+fastlane ios inc_build
 ```
 increment_build_number
-
-----
-
-## iOS
 ### ios beta
 ```
 fastlane ios beta
