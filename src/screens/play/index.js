@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   },
   dropdownBarTouchable: {
     flex: 1,
+    justifyContent: 'flex-end',
   },
   backButtonContainer: {
     marginLeft: '1.8%',
