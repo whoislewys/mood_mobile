@@ -27,8 +27,6 @@ class SplashScreen extends Component {
   componentDidMount = async () => {
     this.props.setDeviceInfo(DeviceInfo.getUniqueID(), DeviceInfo.isEmulator());
 
-    let channel = null;
-
     this.props.logEvent(anal.appOpen);
 
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
@@ -36,6 +34,8 @@ class SplashScreen extends Component {
     this.props.loadMoods();
 
     this.updateNumLaunches();
+
+    let channel = null;
 
     branch.subscribe(({ error, params }) => {
       if (error) {
@@ -49,8 +49,23 @@ class SplashScreen extends Component {
       }
 
       // A Branch link was opened.
+      const referralChannel = params['~channel'];
+      console.warn(referralChannel);
+      // console.log(referralChannel);
+      // for (let propertyName in params) {
+      //   // propertyName is what you want
+      //   // you can get the value like this: myObject[propertyName]
+      //   if (propertyName.endsWith('channel')) {
+      //     console.warn(propertyName);
+      //     referralChannel = propertyName;
+      //   }
+      //   console.log(params[referralChannel]);
+      // }
+
+      // const referralChannel = params.[~channel];
       if (!params.$canonical_identifier) {
         // Indicates user clicked a link without track params attached
+        console.log(params);
         return;
       }
 
