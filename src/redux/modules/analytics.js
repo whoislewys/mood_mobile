@@ -31,9 +31,12 @@ export default function reducer(state = initialState, action = {}) {
 
 // IF YOU'RE TESTING ON A PHYSICAL DEVICE USE THIS LOGEVENT FUNCTION
 // OR ADD A NEW TEST PROP (e.g. `testSongShare='Test Song Share'`) IN THE CONSTANTS FILE
-// export function logEvent() {
-//   return;
-// }
+export function logEvent() {
+  console.warn('logged event');
+  return {
+    type: LOG_EVENT,
+  };
+}
 
 /**
  * @required:
@@ -44,48 +47,48 @@ export default function reducer(state = initialState, action = {}) {
  *    @param: {object} userProperties - user data you want to track with the event
  *      e.g. {'cohort': 'Instagram Referrals'}
 */
-export function logEvent(eventName, eventProperties, userProperties) {
-  return async (dispatch, getState) => {
-    // https://amplitude.zendesk.com/hc/en-us/articles/204771828-HTTP-API
-    const { userId, deviceId, deviceIsEmulator } = getState().analytics;
-
-    // do not allow emulators to send analytics
-    if (deviceIsEmulator) return;
-
-    if (!userId.length && !deviceId.length) {
-      // one of userId || device_id are REQUIRED
-      // if you have neither, gtfo and don't try to log an event
-      return;
-    }
-
-    // prepare an event object to be an event parameter
-    const eventObj = { event_type: eventName };
-    if (eventProperties != null) eventObj.event_properties = eventProperties;
-    if (userProperties != null) eventObj.user_properties = userProperties;
-    if (userId.length > 0) eventObj.userId = userId;
-    if (deviceId.length > 0) eventObj.device_id = deviceId;
-
-    const encodedEventObj = encodeURIComponent(JSON.stringify(eventObj));
-
-    // build the query
-    let params = `?api_key=${API_KEY}`;
-    const insertId = eventName + moment().format('hmmss');
-    params += `&insert_id=${encodeURIComponent(insertId)}`; // amplitude uses this param to dedupe events
-    params += `&event=${encodedEventObj}`;
-    const url = `https://api.amplitude.com/httpapi${params}`;
-
-    // make the request
-    try {
-      // DEBUG:
-      // console.log('posturl: ', url);
-      // console.log('eventObj');
-      axios.post(url);
-    } catch (e) {
-      console.log('error: ', e.response);
-    }
-    dispatch({ type: LOG_EVENT });
-  };
-}
+// export function logEvent(eventName, eventProperties, userProperties) {
+//   return async (dispatch, getState) => {
+//     // https://amplitude.zendesk.com/hc/en-us/articles/204771828-HTTP-API
+//     const { userId, deviceId, deviceIsEmulator } = getState().analytics;
+//
+//     // do not allow emulators to send analytics
+//     if (deviceIsEmulator) return;
+//
+//     if (!userId.length && !deviceId.length) {
+//       // one of userId || device_id are REQUIRED
+//       // if you have neither, gtfo and don't try to log an event
+//       return;
+//     }
+//
+//     // prepare an event object to be an event parameter
+//     const eventObj = { event_type: eventName };
+//     if (eventProperties != null) eventObj.event_properties = eventProperties;
+//     if (userProperties != null) eventObj.user_properties = userProperties;
+//     if (userId.length > 0) eventObj.userId = userId;
+//     if (deviceId.length > 0) eventObj.device_id = deviceId;
+//
+//     const encodedEventObj = encodeURIComponent(JSON.stringify(eventObj));
+//
+//     // build the query
+//     let params = `?api_key=${API_KEY}`;
+//     const insertId = eventName + moment().format('hmmss');
+//     params += `&insert_id=${encodeURIComponent(insertId)}`; // amplitude uses this param to dedupe events
+//     params += `&event=${encodedEventObj}`;
+//     const url = `https://api.amplitude.com/httpapi${params}`;
+//
+//     // make the request
+//     try {
+//       // DEBUG:
+//       // console.log('posturl: ', url);
+//       // console.log('eventObj');
+//       axios.post(url);
+//     } catch (e) {
+//       console.log('error: ', e.response);
+//     }
+//     dispatch({ type: LOG_EVENT });
+//   };
+// }
 
 export function setDeviceInfo(deviceId, isEmulator) {
   return { type: SET_DEVICE_INFO, deviceId, isEmulator };
