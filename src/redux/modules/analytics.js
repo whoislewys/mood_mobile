@@ -31,8 +31,12 @@ export default function reducer(state = initialState, action = {}) {
 
 // IF YOU'RE TESTING ON A PHYSICAL DEVICE USE THIS LOGEVENT FUNCTION
 // OR ADD A NEW TEST PROP (e.g. `testSongShare='Test Song Share'`) IN THE CONSTANTS FILE
-// export function logEvent() {
-//   return;
+// export function logEvent(eventName, eventProperties, userProperties) {
+//   console.warn('logged event');
+//   console.warn('with eventProperties', eventProperties);
+//   return {
+//     type: LOG_EVENT,
+//   };
 // }
 
 /**
