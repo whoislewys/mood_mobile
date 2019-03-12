@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Text,
 } from 'react-native';
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
@@ -79,14 +80,15 @@ const TabBar = class TabBar extends Component {
     if (label === 'Mood') {
       return <Image source={Images.home} style={[styles.icon, { tintColor }]} />;
     }
-    if (label === 'Play') {
-      return <Image source={Images.player} style={[styles.icon, { tintColor }]} />;
-    }
     if (label === 'Leaderboard') {
       return <Image source={Images.leaderboard} style={[styles.icon, { tintColor }]} />;
     }
     if (label === 'Events') {
       return <Image source={Images.events} style={[styles.icon, { tintColor }]} />;
+    }
+    if (label === 'Library') {
+      // TODO: swap out for library icon
+      return <Image source={Images.leaderboard} style={[styles.icon, { tintColor }]} />;
     }
     return <View />;
   };
@@ -115,14 +117,12 @@ const TabBar = class TabBar extends Component {
             if (navRouteName === 'Leaderboard') {
               this.props.loadLeaderboardSongs();
               navigation.navigate(route.routeName);
-            } else if (navRouteName === 'Play') {
-              if (!this.props.queue.length) {
-                Alert.alert('Let\'s pick a mood first! 🎧');
-              } else {
-                navigation.navigate(route.routeName);
-              }
             } else if (navRouteName === 'Events') {
               this.props.loadEvents();
+              navigation.navigate(route.routeName);
+            } else if (navRouteName === 'Library') {
+              // TODO: replace this with a call to getLibrary action creator
+              this.props.loadLeaderboardSongs();
               navigation.navigate(route.routeName);
             } else {
               navigation.navigate(route.routeName);
@@ -134,9 +134,9 @@ const TabBar = class TabBar extends Component {
           tintColor,
           label,
         })}
-        {/* <Text style={[styles.tabBarButtonText, { color }]}>
-          {label}
-        </Text> */}
+        {/*<Text style={[styles.tabBarButtonText]}>*/}
+          {/*{label}*/}
+        {/*</Text>*/}
       </TouchableOpacity>
     );
   };

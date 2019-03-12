@@ -2,12 +2,13 @@ import React from 'react';
 import { Easing, Animated } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
+import ErrorScreen from '../screens/error';
+import SettingsScreen from '../screens/settings';
 import MoodScreen from '../screens/mood';
-import PlayScreen from '../screens/play';
 import LeaderboardScreen from '../screens/leaderboard';
 import EventsScreen from '../screens/events';
-import SettingsScreen from '../screens/settings';
-import ErrorScreen from '../screens/error';
+import LibraryScreen from '../screens/library';
+import PlayScreen from '../screens/play';
 import TabBar from './components/TabBar';
 
 const map = SomeComponent => class SomeClass extends React.Component {
@@ -30,6 +31,7 @@ const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
+  Library: { screen: map(LibraryScreen) },
 }, {
   swipeEnabled: true,
   gesturesEnabled: true,
