@@ -1,9 +1,4 @@
 {
-  "parser": "babel-eslint",
-  "plugins": [
-    "react",
-    "react-native"
-  ],
   "parserOptions": {
     "ecmaFeatures": {
         "jsx": true,
@@ -11,10 +6,10 @@
     }
   },
   "extends" : [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb-base"
+    "plugin:import/warnings",
+    "airbnb"
   ],
+  "parser": "babel-eslint",
   "rules" : {
     "arrow-body-style" : "warn",
     "no-lonely-if": "warn",
@@ -28,6 +23,10 @@
     "prefer-const" : "warn",
     "max-len" : "warn",
     "camelcase" : "warn",
-    "no-extra-bind" : "warn"
+    "no-extra-bind" : "warn",
+    "react/destructuring-assignment" : "off",
+    "react/jsx-filename-extension": "off",
+    "react/sort-comp": ["on", {"order": ["everything-else", "static-methods", "lifecycle", "render"]}],
+    "jsx-quotes": "off"
   }
 }

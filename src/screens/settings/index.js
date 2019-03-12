@@ -86,9 +86,9 @@ const styles = StyleSheet.create({
 class SettingsScreen extends Component {
   _keyExtractor = item => item.key;
 
-    onPressLinkButton = (url) => {
-      Linking.openURL(url);
-    }
+  onPressLinkButton = (url) => {
+    Linking.openURL(url);
+  }
 
   renderListItem = elem => (
     <TouchableOpacity
@@ -97,37 +97,37 @@ class SettingsScreen extends Component {
       onPress={() => elem.item.handlePress(elem.item.url)} >
       <View style={styles.detailsContainer}>
         <Text
-        style={styles.settingName}
-        numberOfLines={1}
-        ellipsizeMode="tail"
+          style={styles.settingName}
+          numberOfLines={1}
+          ellipsizeMode="tail"
         >
           {elem.item.settingName}
         </Text>
         <Text style={styles.settingInfo}>{elem.item.settingInfo}</Text>
       </View>
       {
-      elem.item.switchExists === true
-        ? (
-          <View style={styles.switchStyle}>
-            <ToggleSwitch
-            value={this.state.isActive}
-            buttonWidth={51}
-            buttonHeight={31}
-            buttonRadius={50}
-            buttonOnColor={colors.green}
-            buttonOffColor={'rgba(0,0,0,0.1)'}
-            sliderWidth={27}
-            sliderHeight={27}
-            sliderRadius={50}
-            sliderOnColor={'white'}
-            sliderOffColor={'white'}
-            onToggle={newState => this.setState(prevState => ({
-              isActive: !prevState.isActive,
-            }))}
-            />
-          </View>
-        )
-        : <TouchableOpacity
+        elem.item.switchExists === true
+          ? (
+            <View style={styles.switchStyle}>
+              <ToggleSwitch
+                value={this.state.isActive}
+                buttonWidth={51}
+                buttonHeight={31}
+                buttonRadius={50}
+                buttonOnColor={colors.green}
+                buttonOffColor={'rgba(0,0,0,0.1)'}
+                sliderWidth={27}
+                sliderHeight={27}
+                sliderRadius={50}
+                sliderOnColor={'white'}
+                sliderOffColor={'white'}
+                onToggle={newState => this.setState(prevState => ({
+                  isActive: !prevState.isActive,
+                }))}
+              />
+            </View>
+          )
+          : <TouchableOpacity
             style={styles.buttonImageContainer}
             onPress={() => elem.item.handlePress(elem.item.url)}
           >

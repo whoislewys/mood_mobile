@@ -1,8 +1,10 @@
+import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
-import shuffle from '../util';
+import { ditherShuffle as shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
+import { anal, queueTypes } from '../constants';
+import { logEvent } from './analytics';
 
-// Loading songs for a specific mood
 const LOAD_SONGS = 'queue/LOAD';
 const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
@@ -12,6 +14,8 @@ const LOAD_SHARED_SONG_QUEUE_SUCCESS = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_SUCCES
 const LOAD_SHARED_SONG_QUEUE_FAIL = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_FAIL';
 
 const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
+
+const RESET_QUEUE = 'queue/RESET_QUEUE';
 
 const PLAYBACK_STATE = 'playback/STATE';
 const PLAYBACK_TRACK = 'playback/TRACK';
@@ -23,7 +27,9 @@ const initialState = {
   playback: null,
   track: null,
   curTrack: null,
+  curTrackIndex: NaN,
   sharedTrack: null,
+  queueType: '',
 };
 
 export function loadSongData(list) {
@@ -40,9 +46,27 @@ export function loadSongData(list) {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    // Loading songs for a specific mood
+    case RESET_QUEUE:
+      // used to empty queue before refilling it with songs from somewhere else
+      return {
+        ...state,
+        loading: true,
+        queue: [],
+        curTrack: null,
+        curTrackIndex: NaN,
+        track: null,
+        queueType: '',
+      };
     case LOAD_SONGS:
-      return { ...state, loading: true, queue: [] };
+      return {
+        ...state,
+        loading: true,
+        queue: [],
+        curTrack: null,
+        curTrackIndex: NaN,
+        track: null,
+        queueType: '',
+      };
     case LOAD_SONGS_SUCCESS:
       let songs = null;
       songs = loadSongData(action.payload.data);
@@ -51,21 +75,27 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs,
         curTrack: songs[0],
+        curTrackIndex: 0,
+        queueType: queueTypes.mood,
       };
     case LOAD_SONGS_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Error while loading songs.',
+        queueType: '',
       };
 
     // Loading songs for a leaderboard
     case LOAD_LEADERBOARD_SONG_QUEUE:
-      const { selectedLeaderboardSong, leaderboardSongs } = action;
+      const { selectedLeaderboardSongIndex, leaderboardSongs } = action;
       return {
         ...state,
+        loading: false,
         queue: leaderboardSongs,
-        curTrack: selectedLeaderboardSong,
+        curTrack: leaderboardSongs[selectedLeaderboardSongIndex],
+        curTrackIndex: selectedLeaderboardSongIndex,
+        queueType: queueTypes.leaderboard,
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -75,9 +105,13 @@ export default function reducer(state = initialState, action = {}) {
         loading: true,
         queue: [],
         sharedTrack: action.sharedTrack,
+        curTrack: null,
+        curTrackIndex: NaN,
+        track: null,
+        queueType: '',
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
-      const songs1 = loadSongData(action.payload.data);
+      let songs1 = loadSongData(action.payload.data);
       // add the sharedTrack to front of array
       songs1.unshift(state.sharedTrack);
       return {
@@ -85,12 +119,15 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         queue: songs1,
         curTrack: songs1[0],
+        curTrackIndex: 0,
+        queueType: queueTypes.mood,
       };
     case LOAD_SHARED_SONG_QUEUE_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Error while loading songs.',
+        queueType: '',
       };
 
     // Handles the dispatches from TrackPlayer event handlers
@@ -100,12 +137,11 @@ export default function reducer(state = initialState, action = {}) {
         playback: action.state,
       };
     case PLAYBACK_TRACK:
-      let newCurTrack = state.queue.find(findTrack => findTrack.id === action.track);
-      if (newCurTrack === undefined) newCurTrack = state.queue[0];
       return {
         ...state,
         track: action.track,
-        curTrack: newCurTrack,
+        curTrack: action.newCurTrack,
+        curTrackIndex: action.newCurTrackIndex,
       };
 
     default:
@@ -114,87 +150,13 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 /* Action Creators */
-
-// Mood action creator
-export function loadSongsForMoodId(moodId) {
-  return async (dispatch) => {
-    await TrackPlayer.reset();
-    dispatch({
-      type: LOAD_SONGS,
-      payload: {
-        request: {
-          url: `/moods/${moodId}/songs`,
-          params: {
-            t: 'EXVbAWTqbGFl7BKuqUQv',
-          },
-        },
-      },
-    });
-    dispatch(startScoreTimer());
-  };
-}
-
-// Leaderboard queue action creators
-export function loadLeaderboardSongQueue(selectedLeaderboardSong) {
-  return async (dispatch, getState) => {
-    const leaderboardSongs = getState().leaderboard.songs;
-    dispatch(startScoreTimer());
-    await TrackPlayer.reset();
-    try {
-      await TrackPlayer.add(leaderboardSongs);
-    } catch (_) {}
-    await TrackPlayer.skip(selectedLeaderboardSong.id);
-    if (!getState().queue.queue.length) {
-      await TrackPlayer.play();
-      await TrackPlayer.pause();
-    } else {
-      await TrackPlayer.play();
-    }
-    dispatch({
-      type: LOAD_LEADERBOARD_SONG_QUEUE,
-      selectedLeaderboardSong,
-      leaderboardSongs,
-    });
-  };
-}
-
-// Shared song action creators
-export function loadSharedSongQueue(sharedTrack) {
-  return {
-    type: LOAD_SHARED_SONG_QUEUE,
-    sharedTrack,
-    payload: {
-      request: {
-        url: `/moods/${sharedTrack.mood_id}/songs`,
-        params: {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        },
-      },
-    },
-  };
-}
-
-export function playSharedSong(sharedTrack) {
-  return async (dispatch, getState) => {
-    await TrackPlayer.reset();
-    await dispatch(loadSharedSongQueue(sharedTrack));
-    dispatch(startScoreTimer());
-    try {
-      await TrackPlayer.add(getState().queue.queue);
-    } catch (_) {}
-    await TrackPlayer.play();
-  };
-}
-
 // TrackPlayer controls
 export function handlePlayPress() {
   return async (dispatch, getState) => {
     const { track, queue, playback } = getState().queue;
     if (track === null) {
       await TrackPlayer.reset();
-      try {
-        await TrackPlayer.add(queue);
-      } catch (_) {}
+      await TrackPlayer.add(queue);
       await TrackPlayer.play();
     } else if (playback === TrackPlayer.STATE_PAUSED) {
       await TrackPlayer.play();
@@ -205,21 +167,22 @@ export function handlePlayPress() {
 }
 
 export function skipToNext() {
-  return async (dispatch, getState) => {
-    if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
-      await TrackPlayer.play();
-    }
-    await TrackPlayer.skipToNext();
+  return async (dispatch) => {
+    try {
+      // works, but should be optimized for skipping several tracks back to back
+      // will probably just have to fanagle trackplayer state
+      // maybe make this just increment the index and do a trackPlayer.skip(index)
+      await TrackPlayer.skipToNext();
+    } catch (_) {}
     dispatch(startScoreTimer());
   };
 }
 
 export function skipToPrevious() {
-  return async (dispatch, getState) => {
-    if (getState().queue.playbackState === TrackPlayer.STATE_PAUSED) {
-      await TrackPlayer.play();
-    }
-    await TrackPlayer.skipToPrevious();
+  return async (dispatch) => {
+    try {
+      await TrackPlayer.skipToPrevious();
+    } catch (_) {}
     dispatch(startScoreTimer());
   };
 }
@@ -228,6 +191,65 @@ export function stopPlayback() {
   return async (dispatch, getState) => {
     if (!(getState().queue.track === null || getState().queue.playbackState === TrackPlayer.STATE_PAUSED)) {
       await TrackPlayer.pause();
+    }
+  };
+}
+
+// Mood action creator
+export function loadSongsForMoodId(moodId) {
+  return async (dispatch) => {
+    await TrackPlayer.reset();
+    dispatch({ type: LOAD_SONGS });
+    try {
+      let songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          responseType: 'json',
+        });
+      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+      dispatch(startScoreTimer());
+    } catch (e) {
+      dispatch({ type: LOAD_SONGS_FAIL });
+    }
+  };
+}
+
+// Leaderboard queue action creators
+export function loadLeaderboardSongQueue(selectedLeaderboardSongIndex) {
+  return async (dispatch, getState) => {
+    await TrackPlayer.reset();
+    dispatch({ type: RESET_QUEUE });
+
+    const leaderboardSongs = getState().leaderboard.songs;
+    dispatch({
+      type: LOAD_LEADERBOARD_SONG_QUEUE,
+      selectedLeaderboardSongIndex,
+      leaderboardSongs,
+    });
+
+    const selectedLeaderboardSong = leaderboardSongs[selectedLeaderboardSongIndex];
+    await TrackPlayer.add(leaderboardSongs);
+    await TrackPlayer.skip(selectedLeaderboardSong.id);
+    await TrackPlayer.play();
+    dispatch(startScoreTimer());
+  };
+}
+
+// Shared song action creators
+export function loadSharedSongQueue(sharedTrack) {
+  return async (dispatch) => {
+    await TrackPlayer.reset();
+    dispatch({ type: LOAD_SHARED_SONG_QUEUE, sharedTrack });
+    try {
+      let songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          responseType: 'json',
+        });
+      dispatch({ type: LOAD_SHARED_SONG_QUEUE_SUCCESS, payload: songs });
+      dispatch(startScoreTimer());
+    } catch (e) {
+      dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
     }
   };
 }
@@ -241,11 +263,23 @@ export function playbackState(state) {
 }
 
 export function playbackTrack(track) {
-  return (dispatch) => {
-    dispatch(startScoreTimer());
+  return (dispatch, getState) => {
+    const { queue, queueType } = getState().queue;
+
+    // find new current track
+    const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
+    let newCurTrack = queue[newCurTrackIndex];
+    if (newCurTrack === undefined) newCurTrack = queue[0];
     dispatch({
+      newCurTrack,
+      newCurTrackIndex,
       type: PLAYBACK_TRACK,
       track,
     });
+
+    // do not log analytic or start score timer for an empty queue
+    if (!queue.length) return;
+    dispatch(logEvent(anal.songPlay, songPlayAnalyticEventFactory(anal.songPlay, queueType, newCurTrack)));
+    dispatch(startScoreTimer());
   };
 }

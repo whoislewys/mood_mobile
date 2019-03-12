@@ -3,8 +3,6 @@ const images = {
   arrowDown: require('./img/selected-down-chevron.png'),
   arrowLeft: require('./img/selected-left-chevron.png'),
   bgOverlay: require('./img/background-overlay.png'),
-  repeatButtonUnselected: require('./img/repeat-unselected.png'),
-  shuffleButtonUnselected: require('./img/shuffle-button-unselected.png'),
   playButton: require('./img/round-play-2x.png'),
   pauseButton: require('./img/round-pause-2x.png'),
   skip: require('./img/selected-round-skip_previous.png'),

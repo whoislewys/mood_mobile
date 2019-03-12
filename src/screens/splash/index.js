@@ -5,12 +5,19 @@ import {
   Linking,
   Alert,
   AsyncStorage,
+  BackHandler,
 } from 'react-native';
 import { connect } from 'react-redux';
 import branch from 'react-native-branch';
+import DeviceInfo from 'react-native-device-info';
+import { logEvent, setDeviceInfo } from '../../redux/modules/analytics';
 import { loadMoods } from '../../redux/modules/mood';
+import { loadSharedSongQueue } from '../../redux/modules/queue';
+import { anal } from '../../redux/constants';
 
 class SplashScreen extends Component {
+  _unsubscribeFromBranch = null;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,10 +27,20 @@ class SplashScreen extends Component {
   }
 
   componentDidMount = async () => {
-    this.props.loadMoods()
-    branch.subscribe(({ error, params }) => {
+    this.props.setDeviceInfo(DeviceInfo.getUniqueID(), DeviceInfo.isEmulator());
+
+    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+
+    this.props.loadMoods();
+
+    this.updateNumLaunches();
+
+    // Any initial link cached by the native layer will be returned to the callback supplied to branch.subscribe immediately if the JavaScript method is called for the first time after app launch.
+    // In case, app does not need to receive the cached initial app launch link event, call branch.skipCachedEvents()
+    branch.skipCachedEvents();
+
+    this._unsubscribeFromBranch = branch.subscribe(({ error, params }) => {
       if (error) {
-        console.error('Error from Branch: ', error);
         return;
       }
 
@@ -34,8 +51,17 @@ class SplashScreen extends Component {
       }
 
       // A Branch link was opened.
-      // create track object from shared link's params
-      // console.log('branch link opened: ', params);
+      const referralChannel = params['~channel'];
+      const campaign = params['~campaign'];
+      const isFirstSession = params['+is_first_session'];
+      this.props.logEvent(anal.deepLinkOpen, { referralChannel, campaign, isFirstSession });
+
+      if (!params.$canonical_identifier) {
+        // Indicates user clicked a link without track params attached
+        return;
+      }
+
+      // Create a track object from the shared link's params
       const id = params.$canonical_identifier;
       const artwork = params.$og_image_url;
       const title = params.$og_title;
@@ -54,13 +80,35 @@ class SplashScreen extends Component {
         title,
         url,
       };
-      // console.log('opening shared track: ', sharedTrack);
-      if (!sharedTrack) return;
-      const { navigate } = this.props.navigation;
-      this.props.playSharedSong(sharedTrack)
-        .then(navigate({ routeName: 'Play', params: { visible: false } }));
-    });
 
+      // Play the shared track
+      const { navigate } = this.props.navigation;
+      this.props.loadSharedSongQueue(sharedTrack)
+        .then(navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } }));
+    });
+    // if you're here, no branch link was opened. continue to mood screen as usual
+    this.props.logEvent(anal.appOpen);
+    this.navigateToMoodScreen();
+  };
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
+    if (this._unsubscribeFromBranch) {
+      this._unsubscribeFromBranch();
+      this._unsubscribeFromBranch = null;
+    }
+  };
+
+  shouldComponentUpdate = () => {
+    let shouldUpdate = true;
+    if (this.props.moods != null && this.props.moods.length > 0) {
+      shouldUpdate = false;
+    }
+    return shouldUpdate;
+  };
+
+  updateNumLaunches = async () => {
     let launches = await this.getLogins();
     let reviewed = await this.getReviewed();
 
@@ -74,30 +122,12 @@ class SplashScreen extends Component {
           this.showReviewModal();
         }
       }
-    } catch (error) { }
-  }
-
-  componentWillUnmount = () => {
-    Linking.removeEventsListener('url', this.handleOpenURL);
-  }
-
-  shouldComponentUpdate = () => {
-    let shouldUpdate = true;
-    if (this.props.moods != null && this.props.moods.length > 0) {
-      shouldUpdate = false;
-    }
-    return shouldUpdate;
-  }
-
-  componentDidUpdate = () => {
-    if (this.props.moods.length > 0) {
-      this.navigateToMoodScreen();
-    }
-  }
+    } catch (_) {}
+  };
 
   setLogins = async (logins) => {
     await AsyncStorage.setItem('logins', logins.toString(10));
-  }
+  };
 
   getLogins = async () => {
     let logins = await AsyncStorage.getItem('logins');
@@ -110,7 +140,7 @@ class SplashScreen extends Component {
 
   setReviewed = async (reviewed) => {
     await AsyncStorage.setItem('reviewed', reviewed);
-  }
+  };
 
   showReviewModal = () => {
     Alert.alert(
@@ -132,23 +162,21 @@ class SplashScreen extends Component {
       ],
       { cancelable: false },
     );
-  }
-
-  updateLogins = () => {
-
-  }
+  };
 
   handleConnectivityChange = (isConnected) => {
     if (!isConnected) {
-      NetInfo.isConnected.removeEventListener(
-        'connectionChange',
-        this.handleConnectivityChange,
-      );
-
       this.props.stopPlayback();
       this.navigateToErrorScreen();
     }
-  }
+  };
+
+  onBackButtonPressAndroid = () => {
+    // TODO: going forward, might need to move this function
+    //  and related listeners outta here and implement for each screen
+    this.props.navigation.navigate('Mood');
+    return true;
+  };
 
   navigateToMoodScreen = (params) => {
     this.props.navigation.navigate({
@@ -164,17 +192,19 @@ class SplashScreen extends Component {
     });
   };
 
-  render = () => (<View style={{ flex: 1 }}></View>)
+  render = () => (<View style={{ flex: 1 }} />)
 }
 
 const mapStateToProps = state => ({
   moods: state.mood.moods,
-  loading: state.mood.loading,
   error: state.mood.error,
 });
 
 const mapDispatchToProps = {
   loadMoods,
+  loadSharedSongQueue,
+  setDeviceInfo,
+  logEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

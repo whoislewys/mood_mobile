@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import * as TrackPlayer from 'react-native-track-player';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import Header from './components/header';
@@ -37,7 +36,7 @@ class LeaderboardScreen extends Component {
     this.props.navigation.navigate({
       routeName: 'Play',
       params: {
-        parentScreen: 'LeaderboardScreen',
+        parentScreen: 'Leaderboard',
         visible: false,
         // dont remember why this moodscreen prop even exists
         moodscreen: this._navigateToLeaderboardScreen,
@@ -45,8 +44,8 @@ class LeaderboardScreen extends Component {
     });
   }
 
-  _handleLeaderboardRowPress = async (pressedLeaderboardSong) => {
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSong);
+  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
+    this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this._navigateToPlayScreen();
   }
 
@@ -54,29 +53,27 @@ class LeaderboardScreen extends Component {
 
   _renderItem = ({ item, index }) => {
     return (
-    <LeaderboardRow
-      leaderboardSong={item}
-      index={index}
-      _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
-    >
-    </LeaderboardRow>
+      <LeaderboardRow
+        leaderboardSong={item}
+        index={index}
+        _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
+      />
     );
   };
 
   getLeaderBoard = () => (
     this.props.leaderboardSongs.length
       ? (
-          <FlatList
-            data={this.props.leaderboardSongs}
-            renderItem={this._renderItem}
-            keyExtractor={this.keyExtractor}
-            ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
-            ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }}></View>}
-            showsVerticalScrollIndicator={false}
-            >
-          </FlatList>
+        <FlatList
+          data={this.props.leaderboardSongs}
+          renderItem={this._renderItem}
+          keyExtractor={this.keyExtractor}
+          ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
+          ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
+          showsVerticalScrollIndicator={false}
+        />
       )
-      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
   )
 
   render = () => (

@@ -14,22 +14,21 @@ const width = dimensions.width * 0.8;
 
 const styles = StyleSheet.create({
   timeBar: {
-    height: '15%',
+    height: '100%',
     width,
     marginHorizontal: 10,
     marginTop: 15,
     flexDirection: 'row',
     position: 'relative',
-    backgroundColor: 'transparent',
   },
   tick: {
     position: 'absolute',
   },
   tickContainer: {
     position: 'absolute',
-    top: -9,
-    width: 40,
-    height: 40,
+    top: -10,
+    width: 55,
+    height: '110%',
   },
   time: {
     backgroundColor: 'transparent',
@@ -68,7 +67,6 @@ export default class TimeBar extends Component {
 
       const data = {
         position: await TrackPlayer.getPosition(),
-        bufferedPosition: await TrackPlayer.getBufferedPosition(),
         duration,
       };
 
@@ -81,12 +79,6 @@ export default class TimeBar extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    // console.log(`Prev Position: ${prevState.position}`);
-    // console.log(`Current Position: ${this.state.position}`);
-    // console.log(prevProps);
-    // console.log(prevState);
-    // console.log(test);
-
     if (prevState.position !== this.state.position || prevState.duration !== this.state.duration) {
       const x = (this.state.position / this.state.duration) * width;
       if (!this.state.dragging) this.setState({ x });
@@ -99,16 +91,16 @@ export default class TimeBar extends Component {
 
   getTickStyle = () => {
     let style = {
-      width: 9,
-      height: 9,
+      width: 12,
+      height: 12,
       top: 15,
       left: 15,
     };
 
     if (this.state.dragging) {
       style = {
-        width: 17,
-        height: 17,
+        width: 20,
+        height: 20,
         top: 11,
         left: 11,
       };
@@ -125,7 +117,8 @@ export default class TimeBar extends Component {
         <Text style={[styles.time, {
           top: -20,
           left: this.state.x - 12,
-        }]}>
+        }]}
+        >
           { moment(0).seconds(this.pxToSeconds(this.state.x)).format('m:ss') }
         </Text>
       );
@@ -166,35 +159,41 @@ export default class TimeBar extends Component {
 
   pxToSeconds = pixels => (pixels / width) * this.state.duration;
 
-  render = () => (
+  render = () => {
+    const animationStyle1 = {
+      height: 3,
+      borderRadius: 10,
+      width: this.state.x,
+      marginTop: 10,
+      backgroundColor: '#fff',
+    };
+
+    const animationStyle2 = {
+      height: 3,
+      borderRadius: 10,
+      width: width - this.state.x,
+      marginTop: 10,
+      backgroundColor: '#999',
+    };
+
+    return (
       <View style={styles.timeBar}>
-        <View style={[
-          {
-            height: 2,
-            width: this.state.x,
-            marginTop: 10,
-            backgroundColor: '#fff',
-          },
-        ]}/>
+        <View style={animationStyle1} />
         { this.getTime() }
-        <View style={[
-          {
-            height: 2,
-            width: width - this.state.x,
-            marginTop: 10,
-            backgroundColor: '#999',
-          },
-        ]}/>
+        <View style={animationStyle2} />
         <View
           style={[styles.tickContainer, this.getTickBoxStyle()]}
           onResponderMove={this.setPosition}
           onResponderRelease={this.handleRelease}
           onStartShouldSetResponder={this.onStartShouldSetResponder}
-          onMoveShouldSetResponder={this.onMoveShouldSetResponder}>
-          <Image source={Images.sliderButton}
+          onMoveShouldSetResponder={this.onMoveShouldSetResponder}
+        >
+          <Image
+            source={Images.sliderButton}
             style={[styles.tick, this.getTickStyle()]}
           />
         </View>
       </View>
-  )
+    );
+  }
 }

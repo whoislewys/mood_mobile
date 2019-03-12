@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { logEvent } from './analytics';
+import { anal } from '../constants';
 
 const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
 const SEND_SCORE = 'score/SEND_SCORE';
@@ -19,6 +21,7 @@ export default function reducer(state = initialState, action = {}) {
     case INCREMENT_SCORE:
       return { ...state, currentScore: state.currentScore + 1, scoreDelta: state.scoreDelta + 1 };
     case SEND_SCORE:
+      // DEBUG:
       // console.log(`sending score delta ${state.scoreDelta} to trackId ${action.currentTrackId}`);
       if (state.scoreDelta > 0) {
         axios.post(`http://api.moodindustries.com/api/v1//songs/${action.currentTrackId}/star`, { stars: state.scoreDelta, t: 'EXVbAWTqbGFl7BKuqUQv' });
@@ -47,13 +50,14 @@ export function incrementScore() {
 }
 
 export function sendScoreDelta(currentTrackId) {
-  // sends change in score (scoreDelta) to api,
-  // then resets scoreDelta to 0
-  // this should be called (therefore score changes should be pushed) repeatedly
-  // by the timer defined above
-  return {
-    type: SEND_SCORE,
-    currentTrackId,
+  // sends change in score (scoreDelta) to api
+  return (dispatch, getState) => {
+    // don't waste user's data if their score hasn't changed
+    if (getState().score.scoreDelta > 0) {
+      const eventProperties = { trackId: currentTrackId, starsSent: getState().score.scoreDelta };
+      dispatch(logEvent(anal.songStar, eventProperties));
+      dispatch({ type: SEND_SCORE, currentTrackId });
+    }
   };
 }
 

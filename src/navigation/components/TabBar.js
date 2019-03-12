@@ -1,4 +1,3 @@
-// adapted from: https://medium.com/@sxia/how-to-customize-tab-bar-in-react-navigation-a0dc6d4d7e61
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -7,47 +6,48 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  Animated,
 } from 'react-native';
 import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import PlayBar from '../../components/playbar';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
-import { handlePlayPress } from '../../redux/modules/queue';
+import { handlePlayPress, skipToNext, skipToPrevious } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
 
-const { width, height } = dimensions;
-const TAB_BAR_OFFSET = height * 0.085;
-const SLIDE_DURATION = 100;
+const { width } = dimensions;
 
 const styles = StyleSheet.create({
+  bottomBarsContainer: {
+    justifyContent: 'flex-end',
+    backgroundColor: '#fff',
+    height: '15%',
+  },
+  playbarContainer: {
+    flex: 45,
+  },
   tabBar: {
+    flex: 50,
+    height: '100%',
+    width,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: TAB_BAR_OFFSET,
-    width,
-    paddingLeft: 13.5,
-    paddingRight: 13.5,
+    paddingHorizontal: 13.5,
     backgroundColor: '#FFFFFF',
     bottom: 0,
     top: 0,
     left: 0,
     right: 0,
-    elevation: 1,
+    // careful changing elevation, it interacts with playbar closely
+    elevation: 10,
     shadowOpacity: 0.17,
-    shadowRadius: 1,
+    shadowRadius: 0.2,
     shadowOffset: {
       width: 0,
       height: -1,
     },
-  },
-  playPauseButton: {
-    height: 33,
-    width: 33,
-    paddingTop: '-2%',
-    marginLeft: 22,
-    marginRight: 22,
   },
   tabBarButton: {
     flex: 1,
@@ -67,62 +67,13 @@ const styles = StyleSheet.create({
 });
 
 const TabBar = class TabBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      offset: new Animated.Value(TAB_BAR_OFFSET),
-      fadeAnim: new Animated.Value(1),
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    const prevRoute = prevProps.navigation.state.routes[prevProps.navigation.state.index];
-    const newRoute = this.props.navigation.state.routes[this.props.navigation.state.index];
-    if (prevRoute !== newRoute) {
-      const prevParams = prevRoute.params;
-      const wasVisible = !prevParams || prevParams.visible;
-
-      const newParams = newRoute.params;
-      const isVisible = !newParams || newParams.visible;
-
-      if (wasVisible && !isVisible) {
-        // console.log('animating down!');
-        Animated.parallel([
-          Animated.timing(this.state.offset, { toValue: 0, duration: SLIDE_DURATION }),
-          Animated.timing(this.state.fadeAnim, { toValue: 0, duration: SLIDE_DURATION * 0.33 }),
-        ]).start();
-      } else if (isVisible && !wasVisible) {
-        // console.log('animating up!');
-        Animated.parallel([
-          Animated.timing(this.state.offset, { toValue: TAB_BAR_OFFSET, duration: SLIDE_DURATION }),
-          Animated.timing(this.state.fadeAnim, { toValue: 1, duration: SLIDE_DURATION * 0.33 }),
-        ]).start();
-      }
-    }
-  }
-
-  handlePlayPress = () => {
+  _handlePlayPress = () => {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
       return;
     }
     this.props.handlePlayPress();
-  }
-
-  playButton = () => {
-    if (this.props.playbackState === 'playing') {
-      return (
-        <TouchableOpacity onPress={this.handlePlayPress}>
-          <Image source={Images.navPauseButton} style={styles.playPauseButton} />
-        </TouchableOpacity>
-      );
-    }
-    return (
-      <TouchableOpacity onPress={this.handlePlayPress}>
-        <Image source={Images.navPlayButton} style={styles.playPauseButton} />
-      </TouchableOpacity>
-    );
-  }
+  };
 
   renderIcon = ({ tintColor, label }) => {
     if (label === 'Mood') {
@@ -188,36 +139,68 @@ const TabBar = class TabBar extends Component {
         </Text> */}
       </TouchableOpacity>
     );
+  };
+
+  navigateToPlayscreenFromPlaybar() {
+    if (!this.props.queue.length) {
+      Alert.alert('Let\'s pick a mood first! 🎧');
+      return;
+    }
+    this.props.navigation.navigate({
+      routeName: 'Play',
+      params: {
+        parentScreen: 'Playbar',
+        visible: false,
+        // dont remember why this moodscreen prop even exists
+        moodscreen: this._navigateToLeaderboardScreen,
+      },
+    });
   }
 
+
   render = () => {
-    const { navigation, style } = this.props;
+    const { navigation } = this.props;
     const tabBarButtons = [];
+
+    // add buttons to bottom tab bar
     for (let i = 3; i < navigation.state.routes.length; i++) {
+      // start at tabNavigator screen 3 | screens are numbered in app-navigator.js
       tabBarButtons.push(this.renderTabBarButton(navigation.state.routes[i], i));
-      if (i === 4) {
-        tabBarButtons.push(
-          <View key='the-play-button'>
-            {this.playButton()}
-          </View>,
-        );
-      }
     }
+
     return (
-      <Animated.View {...this.props} style={[styles.tabBar, style, { height: this.state.offset, opacity: this.state.fadeAnim }]}>
-        {tabBarButtons}
-      </Animated.View>
+      <GestureRecognizer
+        style={styles.bottomBarsContainer}
+        onSwipeUp={() => this.navigateToPlayscreenFromPlaybar()}
+        onSwipeRight={() => this.props.skipToPrevious()}
+        onSwipeLeft={() => this.props.skipToNext()}
+      >
+        <View style={styles.playbarContainer}>
+          <PlayBar
+            playbackState={this.props.playbackState}
+            handlePlayPress={this._handlePlayPress}
+            curTrack={this.props.curTrack}
+            navigateToPlayscreenFromPlaybar={() => this.navigateToPlayscreenFromPlaybar()}
+          />
+        </View>
+        <View {...this.props} style={styles.tabBar}>
+          {tabBarButtons}
+        </View>
+      </GestureRecognizer>
     );
   }
 };
 
 const mapStateToProps = state => ({
   queue: state.queue.queue,
+  curTrack: state.queue.curTrack,
   playbackState: state.queue.playback,
 });
 
 const mapDispatchToProps = {
   handlePlayPress,
+  skipToNext,
+  skipToPrevious,
   loadLeaderboardSongs,
   loadEvents,
 };

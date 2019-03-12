@@ -16,16 +16,16 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios beta
-```
-fastlane ios beta
-```
-Push a new beta build to TestFlight
 ### ios inc_build
 ```
 fastlane ios inc_build
 ```
 increment_build_number
+### ios beta
+```
+fastlane ios beta
+```
+Push a new beta build to TestFlight
 ### ios release
 ```
 fastlane ios release
@@ -40,11 +40,6 @@ Deploy a new version to the App Store
 fastlane android beta
 ```
 Build a release APK for beta usage
-### android debug
-```
-fastlane android debug
-```
-Build a debug APK
 
 ----
 

@@ -15,8 +15,12 @@
 
 default_platform(:ios)
 
-
 platform :ios do
+  desc 'increment_build_number'
+  lane :inc_build do
+      increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
+  end
+  
   desc 'Push a new beta build to TestFlight'
   lane :beta do
     match(
@@ -26,11 +30,6 @@ platform :ios do
     increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
     gym(scheme: 'mood_mobile', project: './ios/mood_mobile.xcodeproj')
     upload_to_testflight
-  end
-
-  desc 'increment_build_number'
-  lane :inc_build do
-    increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
   end
 
   desc 'Deploy a new version to the App Store'
@@ -49,15 +48,7 @@ platform :android do
   desc 'Build a release APK for beta usage'
   lane :beta do
     gradle(
-      project_dir: './android',      
+      project_dir: './android',
       task: 'clean assembleRelease')
-  end
-
-  desc 'Build a debug APK'
-  lane :debug do
-    gradle(
-      project_dir: './android/',
-      task: 'clean assembleDebug'
-    )
   end
 end

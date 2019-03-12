@@ -39,10 +39,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginLeft: 45,
     marginTop: '7%',
-    // my version
-    // resizeMode: 'stretch',
-    // marginTop: '5%',
-    // marginLeft: '53%',
   },
   addIcon: {
     height: 55,

@@ -84,36 +84,37 @@ class MoodScreen extends Component {
   getContent = () => {
     if (!this.props.loading) {
       return (
-          <MoodList
-            loadSongsForMoodId={this.props.loadSongsForMoodId}
-            setMood={this.props.setMood}
-            moods={this.props.moods}
-            selected={this.props.mood}
-            playing={this.props.playing}
-            settings={this.navigateToSettingsScreen}
-            playscreen={this.navigateToPlayScreenFromMoodScreen}
-          />
+        <MoodList
+          loadSongsForMoodId={this.props.loadSongsForMoodId}
+          setMood={this.props.setMood}
+          moods={this.props.moods}
+          selected={this.props.mood}
+          settings={this.navigateToSettingsScreen}
+          playscreen={this.navigateToPlayScreenFromMoodScreen}
+        />
       );
     }
 
     return (
-      <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+      <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }} />
     );
   }
 
   render = () => (
-      <View style={styles.container}>
-        <View style={styles.moodList}>
-          { this.getContent() }
-        </View>
+    <View style={styles.container}>
+      <View style={styles.moodList}>
+        { this.getContent() }
       </View>
+    </View>
   )
 }
 
 const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
-  queue: state.queue,
+  queue: state.queue.queue,
+  curTrack: state.queue.curTrack,
+  track: state.queue.track,
 });
 
 const mapDispatchToProps = {

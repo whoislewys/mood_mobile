@@ -6,7 +6,6 @@ import Navigator from '../navigation/app-navigator';
 import { setMood } from '../redux/modules/mood';
 import {
   stopPlayback,
-  playSharedSong,
 } from '../redux/modules/queue';
 import { stopScoreTimer } from '../redux/modules/score';
 
@@ -29,7 +28,6 @@ class Player extends Component {
           mood: this.props.selected,
           moodList: this.props.moods,
           stopPlayback: this.props.stopPlayback,
-          playSharedSong: this.props.playSharedSong,
           setTime: TrackPlayer.seekTo,
         }}
       />
@@ -50,7 +48,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setMood,
-  playSharedSong,
   stopScoreTimer,
   stopPlayback,
 };

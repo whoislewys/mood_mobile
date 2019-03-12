@@ -1,7 +1,6 @@
-/* eslint react/display-name: 0, import/no-extraneous-dependencies: 0 */
-
 import React from 'react';
-import { createBottomTabNavigator } from 'react-navigation';
+import { Easing, Animated } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
 import MoodScreen from '../screens/mood';
 import PlayScreen from '../screens/play';
@@ -22,24 +21,65 @@ const map = SomeComponent => class SomeClass extends React.Component {
 
 const TabBarComponent = props => <TabBar {...props} />;
 
-export default createBottomTabNavigator({
+// TODO:
+//  figure out swipe from navbar to open playscreen
+const TabNavigator = createBottomTabNavigator({
   Splash: { screen: map(SplashScreen) },
   Error: { screen: map(ErrorScreen) },
   Settings: { screen: map(SettingsScreen) },
   Mood: { screen: map(MoodScreen) },
-  Play: { screen: map(PlayScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
 }, {
-  swipeEnabled: false,
+  swipeEnabled: true,
+  gesturesEnabled: true,
   tabBarOptions: {
     activeTintColor: 'rgba(0, 0, 0, 1)',
     inactiveTintColor: 'rgba(0, 0, 0, 0.21)',
     activeBackgroundColor: 'red',
   },
-  tabBarComponent: props => <TabBarComponent
-  {...props}
-  />,
+  tabBarComponent: props => <TabBarComponent {...props} />,
 });
 
-// supply this with a custom tabbar component https://stackoverflow.com/questions/47533940/can-react-navigation-add-costom-button-on-the-tab-navigator-like-the-pictures
+export default createStackNavigator({
+  Home: TabNavigator,
+  Play: { screen: map(PlayScreen) },
+}, {
+  headerMode: 'none',
+  navigationOptions: {
+    // TODO: figure out how to get gestures to work
+    gesturesEnabled: true,
+  },
+  transitionConfig: () => ({
+    transitionSpec: {
+      duration: 300,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+    },
+    screenInterpolator: (sceneProps) => {
+      const { layout, position, scene } = sceneProps;
+      const { index, route } = scene;
+      const last = index - 1;
+      const height = layout.initHeight;
+      const width = layout.initWidth;
+
+      const opacity = position.interpolate({
+        inputRange: [index - 1, index - 0.99, index],
+        outputRange: [0, 1, 1],
+      });
+
+      const translateY = position.interpolate({
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [width, 0, 0],
+      });
+
+      const translateX = position.interpolate({
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [width, 0, 0],
+      });
+
+      if (route.routeName === 'Settings') return { opacity, transform: [{ translateX }] };
+      return { opacity, transform: [{ translateY }] };
+    },
+  }),
+});

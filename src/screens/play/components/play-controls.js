@@ -7,9 +7,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Images from '@assets/images';
-import branch, { BranchEvent } from 'react-native-branch';
-import ClapButton from '../../../components/medium-star';
-
+import branch from 'react-native-branch';
+import StarButton from '../../../components/medium-star';
+import { anal } from '../../../redux/constants';
+import { colors } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   playControls: {
@@ -23,30 +24,29 @@ const styles = StyleSheet.create({
   playButton: {
     width: 71,
     height: 71,
-    paddingRight: -25.5,
-    paddingLeft: -25.5,
+    marginRight: -25.5,
+    marginLeft: -25.5,
   },
   skipLeftIcon: {
     height: 35,
     width: 35,
     resizeMode: 'contain',
-    opacity: 0.6,
   },
   skipRightIcon: {
     height: 35,
     width: 35,
     resizeMode: 'contain',
-    opacity: 0.6,
     transform: [{ rotateY: '180deg' }],
   },
-  share: {
-    height: 24,
-    width: 24,
-    tintColor: 'white',
-    opacity: 0.6,
+  shareButton: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  shareIcon: {
+    height: 26,
+    width: 26,
     resizeMode: 'contain',
+    tintColor: 'white',
   },
 });
 
@@ -77,9 +77,10 @@ export default class PlayControls extends Component {
         // used to display content as a preview card in facebook, twitter, iMessage etc...
         // structure for track object:
         title,
-        contentDescription: 'Check out this bop on Mood!',
+        contentDescription: 'Check out this track on Mood!',
         contentImageUrl: artwork,
         contentMetadata: {
+          ratingAverage: 4.2,
           customMetadata: {
             // only strings allowed in customMetadata
             album: album === null ? '' : album,
@@ -91,11 +92,14 @@ export default class PlayControls extends Component {
       },
     );
     return branchUniversalObject;
-  }
+  };
 
-  handleShare = async () => {
+  _handleShare = async () => {
     this.setState({ shareIcon: Images.share });
     const buo = await this.createBUO();
+
+    this.props.logEvent(anal.songShare, this.props.currentTrack);
+
     // TODO: randomize message body to make sharing a little more novel
     const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
     const linkProperties = { feature: 'share', channel: 'RNApp' };
@@ -107,7 +111,7 @@ export default class PlayControls extends Component {
     if (!error) {
       this.setState({ shareIcon: Images.shareOutline });
     }
-  }
+  };
 
   playButton = () => {
     let ret = (
@@ -118,7 +122,7 @@ export default class PlayControls extends Component {
 
     if (this.props.loading) {
       ret = (
-        <ActivityIndicator color={'white'} size={'large'} animating={true} style={styles.playButton}/>
+        <ActivityIndicator color="white" size="large" animating style={styles.playButton} />
       );
     } else if (this.props.playing) {
       ret = (
@@ -129,25 +133,29 @@ export default class PlayControls extends Component {
     }
 
     return ret;
-  }
+  };
 
   render = () => (
-      <View style={styles.playControls}>
-        <ClapButton />
-        <TouchableOpacity onPress={this.props.skipBack}>
-          <Image source={Images.skip} style={styles.skipLeftIcon} />
-        </TouchableOpacity>
-        { this.playButton() }
-        <TouchableOpacity onPress={this.props.skipForward}>
-          <Image source={Images.skip} style={styles.skipRightIcon} />
-        </TouchableOpacity>
-        {/*<ToggleButton iconUnselected={Images.shareOutline} style={styles.share}/>*/}
-        <TouchableOpacity
-        style={styles.share}
+    <View style={styles.playControls}>
+      <StarButton
+        extraStyles={{ tintColor: '#fff' }}
+        textColor={{ color: colors.gold }}
+        shootFrom={{ x: 0, y: 0 }}
+        spray={23}
+      />
+      <TouchableOpacity onPress={this.props.skipBack}>
+        <Image source={Images.skip} style={styles.skipLeftIcon} />
+      </TouchableOpacity>
+      { this.playButton() }
+      <TouchableOpacity onPress={this.props.skipForward}>
+        <Image source={Images.skip} style={styles.skipRightIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.shareButton}
         activeOpacity={0.3}
-        onPress={this.handleShare}>
-          <Image source={this.state.shareIcon}/>
-        </TouchableOpacity>
-      </View>
+        onPress={this._handleShare}>
+        <Image source={this.state.shareIcon} style={styles.shareIcon}/>
+      </TouchableOpacity>
+    </View>
   )
 }
