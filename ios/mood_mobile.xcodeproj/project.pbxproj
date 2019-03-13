@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -52,6 +53,7 @@
 		5D5A0E78ADAB4C52A961DACD /* round-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DA61579C0DA4DE8A8709EE8 /* round-settings.png */; };
 		5F610A86813345D4A46AA4E6 /* star-rounded.png in Resources */ = {isa = PBXBuildFile; fileRef = 23DA727A2BE74669AC1D12DF /* star-rounded.png */; };
 		632755E07C444CF893904050 /* selected-round-events.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFD48B532414D0EB0A95AB6 /* selected-round-events.png */; };
+		64C1C29C2BAC472DB8BDBC24 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */; };
 		67E4902F5F014F1AA9A7EA35 /* selected-round-skip_previous.png in Resources */ = {isa = PBXBuildFile; fileRef = A16208D20E8048F386EC8A0B /* selected-round-skip_previous.png */; };
 		6E51FC71F57A49ED8AE40B11 /* round-pause_circle_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = B790C0EA94124FDFB63379F0 /* round-pause_circle_outline.png */; };
 		700157424A65468EB1CA7E17 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */; };
@@ -74,6 +76,7 @@
 		CE26A943A86045C2ACD1F743 /* round-play_circle_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = AA44E46245ED4C289D8F6579 /* round-play_circle_outline.png */; };
 		D300C5AD7F354EA5B5ED6817 /* share-arrow-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 062F938DE37546B59C6FF485 /* share-arrow-outline.png */; };
 		E1BE38701F3444148659F46F /* round-play_circle_outline-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 82FCDE05EA5C470889E650EE /* round-play_circle_outline-2x.png */; };
+		E61902BB2239B0CB00D8098F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E61902BA2239B0CB00D8098F /* GoogleService-Info.plist */; };
 		E62731E5222A166F00A13836 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
 		E62731E6222A166F00A13836 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
 		E62731E7222A166F00A13836 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
@@ -84,7 +87,6 @@
 		EE0B9F005D0B4EA18A4CE71E /* selected-round-discover.png in Resources */ = {isa = PBXBuildFile; fileRef = E821143D5EE4479CB619D579 /* selected-round-discover.png */; };
 		F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D94297707149471BBFE9B883 /* explicit-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
-		64C1C29C2BAC472DB8BDBC24 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -333,6 +335,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		E61902B82239B07300D8098F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F67F644D5DD41299F815D18 /* RNGoogleSignin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
+			remoteInfo = RNGoogleSignin;
+		};
 		E627320E222A167300A13836 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -415,6 +424,7 @@
 		00E356EE1AD99517003FC87E /* mood_mobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mood_mobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* mood_mobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mood_mobileTests.m; sourceTree = "<group>"; };
+		011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = "<group>"; };
 		048BF0A3DC2143EBAAB2F353 /* libRCTRestart.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTRestart.a; sourceTree = "<group>"; };
 		04CAE53C92AD41F7BE1EAA0B /* do-it.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "do-it.png"; path = "../src/assets/img/do-it.png"; sourceTree = "<group>"; };
 		062F938DE37546B59C6FF485 /* share-arrow-outline.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "share-arrow-outline.png"; path = "../src/assets/img/share-arrow-outline.png"; sourceTree = "<group>"; };
@@ -440,6 +450,7 @@
 		3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		402D780E1D784CF2A986182A /* libRNTrackPlayer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTrackPlayer.a; sourceTree = "<group>"; };
 		4140742A12E34D66BFE829B4 /* view.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = view.png; path = ../src/assets/img/view.png; sourceTree = "<group>"; };
+		4F67F644D5DD41299F815D18 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		4FFE2E2CAFBA4B3DAE5B4DEF /* RNBranch.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBranch.xcodeproj; path = "../node_modules/react-native-branch/ios/RNBranch.xcodeproj"; sourceTree = "<group>"; };
 		50FAEF63498F4980B3C7FD3E /* round-pause_circle_outline-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-pause_circle_outline-2x.png"; path = "../src/assets/img/round-pause_circle_outline-2x.png"; sourceTree = "<group>"; };
 		5B94A45EA4A84DE1A1155EEE /* selected-down-chevron.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-down-chevron.png"; path = "../src/assets/img/selected-down-chevron.png"; sourceTree = "<group>"; };
@@ -478,14 +489,13 @@
 		D3A4A1EEF7FC4DACA068E7C5 /* round-stars-1.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-stars-1.png"; path = "../src/assets/img/round-stars-1.png"; sourceTree = "<group>"; };
 		D94297707149471BBFE9B883 /* explicit-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "explicit-icon.png"; path = "../src/assets/img/explicit-icon.png"; sourceTree = "<group>"; };
 		DB3E8CAF9E024C3A9A029C92 /* round-pause-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-pause-2x.png"; path = "../src/assets/img/round-pause-2x.png"; sourceTree = "<group>"; };
+		E61902BA2239B0CB00D8098F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E627326D222A178300A13836 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E6D67E89222B74AC0062A8A2 /* mood_mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mood_mobile.entitlements; path = mood_mobile/mood_mobile.entitlements; sourceTree = "<group>"; };
 		E821143D5EE4479CB619D579 /* selected-round-discover.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-round-discover.png"; path = "../src/assets/img/selected-round-discover.png"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
-		4F67F644D5DD41299F815D18 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; name = "RNGoogleSignin.xcodeproj"; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */ = {isa = PBXFileReference; name = "libRNGoogleSignin.a"; path = "libRNGoogleSignin.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -633,6 +643,7 @@
 		13B07FAE1A68108700A75B9A /* mood_mobile */ = {
 			isa = PBXGroup;
 			children = (
+				E61902BA2239B0CB00D8098F /* GoogleService-Info.plist */,
 				E6D67E89222B74AC0062A8A2 /* mood_mobile.entitlements */,
 				E627326D222A178300A13836 /* LaunchScreen.storyboard */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -810,6 +821,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E61902B52239B07300D8098F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E61902B92239B07300D8098F /* libRNGoogleSignin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E62731E8222A166F00A13836 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -820,6 +839,7 @@
 				402D780E1D784CF2A986182A /* libRNTrackPlayer.a */,
 				676E2E65EED34F26B26B46ED /* libRNDeviceInfo.a */,
 				3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */,
+				011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1044,6 +1064,10 @@
 				{
 					ProductGroup = E6796AA22233428E00534F18 /* Products */;
 					ProjectRef = A14D9C2F56964C42B2D95EAF /* RNDeviceInfo.xcodeproj */;
+				},
+				{
+					ProductGroup = E61902B52239B07300D8098F /* Products */;
+					ProjectRef = 4F67F644D5DD41299F815D18 /* RNGoogleSignin.xcodeproj */;
 				},
 				{
 					ProductGroup = E627321C222A167300A13836 /* Products */;
@@ -1296,6 +1320,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E61902B92239B07300D8098F /* libRNGoogleSignin.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGoogleSignin.a;
+			remoteRef = E61902B82239B07300D8098F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E627320F222A167300A13836 /* libjsi.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1391,6 +1422,7 @@
 				E6A6EF5589824621B4D5A84E /* gradient-heading.png in Resources */,
 				9B7864C8A63E4FD882C5662B /* round-bug_report.png in Resources */,
 				1F69556E3C8F43418B2BF302 /* round-pause_circle_outline-2x.png in Resources */,
+				E61902BB2239B0CB00D8098F /* GoogleService-Info.plist in Resources */,
 				6E51FC71F57A49ED8AE40B11 /* round-pause_circle_outline.png in Resources */,
 				51C87831157A4E61AB3DBDF4 /* round-pause-2x.png in Resources */,
 				E1BE38701F3444148659F46F /* round-play_circle_outline-2x.png in Resources */,
