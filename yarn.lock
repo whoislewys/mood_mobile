@@ -5052,6 +5052,11 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-google-signin@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-google-signin/-/react-native-google-signin-1.2.1.tgz#c4d442c24039ba3ef6983aab18cf13991a29a71f"
+  integrity sha512-i19hQF/HYXdDjwFMM4tx3b7IbztHpKqrpDbjyH7jm+d26F2ow/51iUVRFekTIFRkdSHaKjqprtw9HKCntxXetA==
+
 react-native-restart@^0.0.9:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.9.tgz#252611ef4e28a791b02ab4dabd1a7e9ae5fec6b3"
