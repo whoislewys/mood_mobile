@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "979028939811",
+    "firebase_url": "https://mood-mobile.firebaseio.com",
+    "project_id": "mood-mobile",
+    "storage_bucket": "mood-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979028939811:android:09f5a89519085ba7",
+        "android_client_info": {
+          "package_name": "com.mood_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979028939811-05jmsph9ef5f4qdjsnfchroin23pp2gq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mood_mobile",
+            "certificate_hash": "45f8609873260c035882167a8fb14016ebe936c5"
+          }
+        },
+        {
+          "client_id": "979028939811-p2hjngjmqertnkj6vc833vd5jq2j2fdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPXZpF0pZa758KOCM2E07Mg_l2mLSlsL0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979028939811-p2hjngjmqertnkj6vc833vd5jq2j2fdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
