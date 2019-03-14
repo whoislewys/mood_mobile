@@ -10,6 +10,7 @@ import EventsScreen from '../screens/events';
 import LibraryScreen from '../screens/library';
 import PlayScreen from '../screens/play';
 import TabBar from './components/TabBar';
+import LoginScreen from '../screens/login';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     render = () => {
@@ -31,7 +32,7 @@ const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
-  Library: { screen: map(LibraryScreen) },
+  Library: { screen: map(LoginScreen) },
 }, {
   swipeEnabled: true,
   gesturesEnabled: true,
