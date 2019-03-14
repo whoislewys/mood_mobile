@@ -914,7 +914,6 @@
 				98C808EAABA34257A711B9CD /* Pods-mood_mobileTests.debug.xcconfig */,
 				F64C47065E408A84157EFC84 /* Pods-mood_mobileTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

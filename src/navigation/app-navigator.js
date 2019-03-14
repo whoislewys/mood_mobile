@@ -9,6 +9,7 @@ import LeaderboardScreen from '../screens/leaderboard';
 import EventsScreen from '../screens/events';
 import LibraryScreen from '../screens/library';
 import PlayScreen from '../screens/play';
+import LoginScreen from '../screens/login';
 import TabBar from './components/TabBar';
 
 const map = SomeComponent => class SomeClass extends React.Component {
@@ -44,6 +45,7 @@ const TabNavigator = createBottomTabNavigator({
 });
 
 export default createStackNavigator({
+  Login: { screen: map(LoginScreen) },
   Home: TabNavigator,
   Play: { screen: map(PlayScreen) },
 }, {
