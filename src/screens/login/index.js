@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
+import config from './config';
 
 class LoginScreen extends Component {
   // Somewhere in your code
@@ -7,19 +9,56 @@ class LoginScreen extends Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      this.setState({ userInfo });
+      this.setState({ userInfo, error: null });
+      console.log('curuser: ', this.state.userInfo);
+      console.log('err: ', this.state.error);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
+        // sign in was cancelled
+        Alert.alert('cancelled');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (f.e. sign in) is in progress already
+        // operation in progress already
+        Alert.alert('in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
+        Alert.alert('play services not available or outdated');
       } else {
-        // some other error happened
+        Alert.alert('Something went wrong', error.toString());
+        this.setState({
+          error,
+        });
       }
     }
   };
+
+  async _getCurrentUser() {
+    try {
+      const userInfo = await GoogleSignin.signInSilently();
+      this.setState({ userInfo, error: null });
+    } catch (error) {
+      const errorMessage = error.code === statusCodes.SIGN_IN_REQUIRED ? 'Please sign in :)' : error.message;
+      this.setState({
+        error: new Error(errorMessage),
+      });
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: null,
+      error: null,
+    };
+  }
+
+  async componentDidMount() {
+    //todo: get a valid configure
+    GoogleSignin.configure({
+      webClientId: config.webClientId,
+      offlineAccess: false,
+    });
+
+    await this._getCurrentUser();
+  }
 
   render() {
     return (
