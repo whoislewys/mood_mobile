@@ -10,8 +10,8 @@ class LoginScreen extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.setState({ userInfo, error: null });
-      console.log('curuser: ', this.state.userInfo);
-      console.log('err: ', this.state.error);
+      console.warn('curuser: ', this.state.userInfo);
+      console.warn('err: ', this.state.error);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // sign in was cancelled
@@ -63,7 +63,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <GoogleSigninButton
-        style={{ width: 192, height: 48 }}
+        style={{ top: 40, width: 192, height: 48 }}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
         onPress={this._signIn}
