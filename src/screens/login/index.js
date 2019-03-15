@@ -39,11 +39,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     width: '70%',
+    position: 'absolute',
+    marginBottom: '10%',
+    bottom: 0,
   },
   linkText: {
     color: 'blue',
     textDecorationLine: 'underline',
-  }
+  },
 });
 
 class LoginScreen extends Component {
