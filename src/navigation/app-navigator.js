@@ -32,7 +32,7 @@ const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
-  Library: { screen: map(LoginScreen) },
+  Library: { screen: map(LibraryScreen) },
 }, {
   swipeEnabled: true,
   gesturesEnabled: true,
@@ -46,6 +46,7 @@ const TabNavigator = createBottomTabNavigator({
 
 export default createStackNavigator({
   Home: TabNavigator,
+  Login: { screen: map(LoginScreen) },
   Play: { screen: map(PlayScreen) },
 }, {
   headerMode: 'none',

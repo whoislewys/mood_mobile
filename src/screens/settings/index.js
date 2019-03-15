@@ -161,7 +161,7 @@ class SettingsScreen extends Component {
               image: Images.doIt,
             }, {
               key: 'terms',
-              url: 'http://moodindustries.com/privacy.pdf',
+              url: 'http://www.moodindustries.com/privacy.pdf',
               settingName: 'Terms of Use',
               settingInfo: 'All the stuff you need to know.',
               handlePress: this.onPressLinkButton,

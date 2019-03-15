@@ -1,10 +1,100 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import {
+  View,
+  Text,
+  Alert,
+  StyleSheet,
+  Image,
+  Linking,
+} from 'react-native';
+import Images from '@assets/images';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
+import { fonts } from '../../assets/styles';
 import config from './config';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  moodLogo: {
+    alignSelf: 'center',
+    width: 250,
+    height: 200,
+    resizeMode: 'contain',
+  },
+  signInMessage: {
+    fontFamily: fonts.primary,
+    fontSize: fonts.subHeader,
+  },
+  googleIcon: {
+    marginVertical: '10%',
+    width: 60,
+    height: 60,
+  },
+  tos: {
+    fontFamily: fonts.primary,
+    fontSize: fonts.body,
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '70%',
+  },
+  linkText: {
+    color: 'blue',
+    textDecorationLine: 'underline',
+  }
+});
+
 class LoginScreen extends Component {
-  // Somewhere in your code
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: null,
+      error: null,
+    };
+  }
+
+  async componentDidMount() {
+    GoogleSignin.configure({
+      webClientId: config.webClientId,
+      offlineAccess: false,
+    });
+
+    await this._getCurrentUser();
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
+        <Text style={styles.signInMessage}>Sign in with</Text>
+        <GoogleSigninButton
+          style={styles.googleIcon}
+          size={GoogleSigninButton.Size.Icon}
+          color={GoogleSigninButton.Color.Light}
+          onPress={this._signIn}
+        />
+        <View style={styles.tos}>
+          <Text>
+            {'By signing in, you agree to Mood\'s '}
+            <Text onPress={LoginScreen._openTos} style={styles.linkText}>Terms & Conditions</Text>
+            {' and '}
+            <Text onPress={LoginScreen._ppTouch} style={styles.linkText}>Privacy Policy</Text>
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
+  static _openTos() {
+    Linking.openURL('https://www.example.com');
+  }
+
+  static _ppTouch() {
+    Linking.openURL('http://www.moodindustries.com/privacy.pdf');
+  }
+
   _signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -40,35 +130,6 @@ class LoginScreen extends Component {
         error: new Error(errorMessage),
       });
     }
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      userInfo: null,
-      error: null,
-    };
-  }
-
-  async componentDidMount() {
-    //todo: get a valid configure
-    GoogleSignin.configure({
-      webClientId: config.webClientId,
-      offlineAccess: false,
-    });
-
-    await this._getCurrentUser();
-  }
-
-  render() {
-    return (
-      <GoogleSigninButton
-        style={{ top: 40, width: 192, height: 48 }}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={this._signIn}
-      />
-    );
   }
 }
 
