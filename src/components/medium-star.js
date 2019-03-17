@@ -136,18 +136,21 @@ class StarButton extends Component {
   };
 
   clap = () => {
+    if (!this.props.isUserLoggedIn) {
+      this.props.navigation.navigate('Login');
+      return;
+    }
     // start from currentScore + 1 to not show 0 stars
     const { claps, maxCount } = this.state;
     const newScore = this.props.currentScore + 1;
     if (newScore <= maxCount) {
-      // option 1: push claps for current song to database/ API call HERE
       claps.push(newScore);
       this.props.incrementScore();
     }
   };
 
   keepClapping = () => {
-    const clapInterval = 200; // 200 -> 25 stars takes 5 seconds
+    const clapInterval = 200; // 200ms means 25 stars takes 5 seconds
     this.clapTimer = setInterval(() => this.clap(), clapInterval); // timer takes ms argument
   };
 
@@ -200,6 +203,7 @@ class StarButton extends Component {
 const mapStateToProps = state => ({
   currentScore: state.score.currentScore,
   scoreDelta: state.score.scoreDelta,
+  isUserLoggedIn: state.auth.isUserLoggedIn,
 });
 
 const mapDispatchToProps = {

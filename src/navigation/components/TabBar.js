@@ -157,7 +157,6 @@ const TabBar = class TabBar extends Component {
     });
   }
 
-
   render = () => {
     const { navigation } = this.props;
     const tabBarButtons = [];
@@ -181,6 +180,7 @@ const TabBar = class TabBar extends Component {
             handlePlayPress={this._handlePlayPress}
             curTrack={this.props.curTrack}
             navigateToPlayscreenFromPlaybar={() => this.navigateToPlayscreenFromPlaybar()}
+            navigation={this.props.navigation} // add navigation here to push it down the the star component in playbar
           />
         </View>
         <View {...this.props} style={styles.tabBar}>

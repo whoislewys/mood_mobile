@@ -110,6 +110,7 @@ export default class PlayBar extends Component {
           textColor={{ color: '#fff' }}
           shootFrom={{ x: 20, y: 0 }}
           spray={15}
+          navigation={this.props.navigation}
         />
       </View>
       { this.trackInfo() }
