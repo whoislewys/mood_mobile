@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
 });
 
 const Header = ({ headerText, moodscreen }) => (
-    <View style={styles.headerStyle}>
-      <TouchableOpacity onPress={moodscreen}>
-        <Image source={Images.arrowLeft} style={styles.arrow} />
-      </TouchableOpacity>
-      <Text style={styles.headerText}>{headerText}</Text>
-    </View>
+  <View style={styles.headerStyle}>
+    <TouchableOpacity onPress={moodscreen}>
+      <Image source={Images.arrowLeft} style={styles.arrow} />
+    </TouchableOpacity>
+    <Text style={styles.headerText}>{headerText}</Text>
+  </View>
 );
 
 export default Header;

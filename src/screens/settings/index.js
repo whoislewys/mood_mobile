@@ -94,7 +94,8 @@ class SettingsScreen extends Component {
     <TouchableOpacity
       activeOpacity={0.6}
       style={styles.button}
-      onPress={() => elem.item.handlePress(elem.item.url)} >
+      onPress={() => elem.item.handlePress(elem.item.url)}
+    >
       <View style={styles.detailsContainer}>
         <Text
           style={styles.settingName}
@@ -115,24 +116,26 @@ class SettingsScreen extends Component {
                 buttonHeight={31}
                 buttonRadius={50}
                 buttonOnColor={colors.green}
-                buttonOffColor={'rgba(0,0,0,0.1)'}
+                buttonOffColor='rgba(0,0,0,0.1)'
                 sliderWidth={27}
                 sliderHeight={27}
                 sliderRadius={50}
-                sliderOnColor={'white'}
-                sliderOffColor={'white'}
+                sliderOnColor='white'
+                sliderOffColor='white'
                 onToggle={newState => this.setState(prevState => ({
                   isActive: !prevState.isActive,
                 }))}
               />
             </View>
           )
-          : <TouchableOpacity
-            style={styles.buttonImageContainer}
-            onPress={() => elem.item.handlePress(elem.item.url)}
-          >
-            <Image source={elem.item.image} style={styles.buttonImage}/>
-          </TouchableOpacity>
+          : (
+            <TouchableOpacity
+              style={styles.buttonImageContainer}
+              onPress={() => elem.item.handlePress(elem.item.url)}
+            >
+              <Image source={elem.item.image} style={styles.buttonImage} />
+            </TouchableOpacity>
+          )
       }
     </TouchableOpacity>
   )
@@ -144,7 +147,7 @@ class SettingsScreen extends Component {
   )
 
   render = () => {
-    // const { goBack } = this.props.navigation; // preferred method from react-navigation docs https://reactnavigation.org/docs/en/navigation-prop.html
+    // const { goBack } = this.props.navigation;
     StatusBar.setBarStyle('dark-content', true);
 
     return (
@@ -172,8 +175,8 @@ class SettingsScreen extends Component {
           renderItem={this.renderListItem}
           keyExtractor={this._keyExtractor}
           ListHeaderComponent={Header({ headerText: 'Settings', moodscreen: this.props.moodscreen.bind(this) })}
-          ListFooterComponent={this.footerElem}>
-        </FlatList>
+          ListFooterComponent={this.footerElem}
+        />
       </View>
     );
   }
