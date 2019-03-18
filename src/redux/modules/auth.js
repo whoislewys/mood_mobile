@@ -2,6 +2,11 @@ const USER_LOGGED_IN = 'USER_LOGGED_IN';
 
 const initialState = {
   isUserLoggedIn: false,
+  username: '',
+  email: '',
+  id: '',
+  photoUrl: '',
+  name: '',
 };
 
 export default function auth(state = initialState, action = {}) {
@@ -13,9 +18,10 @@ export default function auth(state = initialState, action = {}) {
   }
 }
 
-export function userLoggedIn() {
+export function userLoggedIn(userInfo) {
   return {
     type: USER_LOGGED_IN,
+    userInfo,
   };
 }
 
