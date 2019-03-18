@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import { fonts } from '../../assets/styles';
 import config from './config';
 
@@ -30,8 +31,8 @@ const styles = StyleSheet.create({
   },
   googleIcon: {
     marginVertical: '10%',
-    width: 60,
-    height: 60,
+    width: 46,
+    height: 48,
   },
   tos: {
     fontFamily: fonts.primary,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '70%',
     position: 'absolute',
-    marginBottom: '10%',
+    paddingBottom: '10%',
     bottom: 0,
   },
   linkText: {
@@ -69,7 +70,7 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <GestureRecognizer style={styles.container} onSwipe={() => this.onSwipe()}>
         <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
         <Text style={styles.signInMessage}>Sign in with</Text>
         <GoogleSigninButton
@@ -86,9 +87,13 @@ class LoginScreen extends Component {
             <Text onPress={LoginScreen._ppTouch} style={styles.linkText}>Privacy Policy</Text>
           </Text>
         </View>
-      </View>
+      </GestureRecognizer>
     );
   }
+
+  onSwipe= () => {
+    this.props.navigation.goBack();
+  };
 
   static _openTos() {
     Linking.openURL('https://www.example.com');
