@@ -44,6 +44,7 @@
   },
   "jest": {
     "preset": "react-native",
+    "transformIgnorePatterns": ["node_modules/(?!(jest-)?react-native|react-navigation)"],
     "setupFilesAfterEnv":  ["./jest/setup.js"]
   },
   "rnpm": {

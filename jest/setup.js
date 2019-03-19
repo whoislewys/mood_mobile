@@ -4,6 +4,16 @@
  * and runs before each test
  **/
 
+// // React Native Modules
+// jest.mock('Linking', () => {
+//   return {
+//     addEventListener: jest.fn(),
+//     removeEventListener: jest.fn(),
+//     openURL: jest.fn(),
+//     canOpenURL: jest.fn(),
+//     getInitialURL: jest.fn(),
+//   };
+// });
 
 // TrackPlayer
 jest.mock('react-native-track-player', () => {
