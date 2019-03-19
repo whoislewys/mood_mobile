@@ -5,6 +5,9 @@
         "modules": true
     }
   },
+  "env": {
+    "jest": true
+  },
   "extends" : [
     "plugin:import/warnings",
     "airbnb"
