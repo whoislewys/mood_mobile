@@ -10,8 +10,10 @@ import {
 import Images from '@assets/images';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { connect } from 'react-redux';
 import { fonts } from '../../assets/styles';
 import config from './config';
+import { userLoggedIn } from '../../redux/modules/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -108,6 +110,8 @@ class LoginScreen extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.setState({ userInfo, error: null });
+      this.props.navigation.goBack();
+      this.props.userLoggedIn();
       console.warn('curuser: ', this.state.userInfo);
       console.warn('err: ', this.state.error);
     } catch (error) {
@@ -141,4 +145,8 @@ class LoginScreen extends Component {
   }
 }
 
-export default LoginScreen;
+const mapDispatchToProps = {
+  userLoggedIn,
+};
+
+export default connect(null, mapDispatchToProps)(LoginScreen);

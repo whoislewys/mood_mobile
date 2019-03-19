@@ -136,6 +136,7 @@ class StarButton extends Component {
   };
 
   clap = () => {
+    console.warn('userloggedin?', this.props.isUserLoggedIn);
     if (!this.props.isUserLoggedIn) {
       this.props.navigation.navigate('Login');
       return;
