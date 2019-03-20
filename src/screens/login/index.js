@@ -53,14 +53,6 @@ const styles = StyleSheet.create({
 });
 
 class LoginScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userInfo: null,
-      error: null,
-    };
-  }
-
   async componentDidMount() {
     GoogleSignin.configure({
       webClientId: config.webClientId,
@@ -111,35 +103,32 @@ class LoginScreen extends Component {
       const userInfo = await GoogleSignin.signIn();
       this.props.userLoggedIn(userInfo);
       this.props.navigation.goBack();
-      console.warn('curuser: ', this.state.userInfo);
-      console.warn('err: ', this.state.error);
+      Alert.alert('Logged in!', null);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // sign in was cancelled
-        Alert.alert('cancelled');
+        // they cancelled, all good
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation in progress already
-        Alert.alert('in progress');
+        // `alert` signature: (title, message)
+        Alert.alert('In Progress', null);
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        Alert.alert('play services not available or outdated');
+        Alert.alert('Play Services not Available', null);
       } else {
-        Alert.alert('Something went wrong', error.toString());
-        this.setState({
-          error,
-        });
+        Alert.alert('Something Went Wrong', error.toString());
       }
     }
   };
 
-  async _getCurrentUser() {
+  _getCurrentUser = async () => {
+    // TODO: move this somehwere higher level so user auto auths on app open
     try {
       const userInfo = await GoogleSignin.signInSilently();
-      this.setState({ userInfo, error: null });
+      this.props.userLoggedIn(userInfo);
     } catch (error) {
-      const errorMessage = error.code === statusCodes.SIGN_IN_REQUIRED ? 'Please sign in :)' : error.message;
-      this.setState({
-        error: new Error(errorMessage),
-      });
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        Alert.alert('Please sign in to save songs :)', null);
+      } else {
+        // fail silently, user probably logged out & logged back in very quickly
+      }
     }
   }
 }

@@ -6,14 +6,16 @@ import {
   TouchableOpacity,
   StatusBar,
   Linking,
-  Image,
-  FlatList,
+  ImageBackground,
+  FlatList, Alert,
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
 import ToggleSwitch from '../../components/toggle-switch';
 import Header from './components/header';
 import { fonts, colors } from '../../assets/styles';
+import { userLoggedOut } from '../../redux/modules/auth';
+import { GoogleSignin } from 'react-native-google-signin';
 
 const styles = StyleSheet.create({
   container: {
@@ -58,10 +60,29 @@ const styles = StyleSheet.create({
     width: 71,
     height: 31,
     marginRight: '7%',
+    // TODO use borderradius when wil sends actual button
+    // backgroundColor: 'tomato',
+    // borderRadius: 4,
+    elevation: 4,
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
   },
   buttonImage: {
     width: 71,
     height: 31,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  buttonText: {
+    fontFamily: fonts.primaryBold,
+    fontSize: fonts.body,
+    marginBottom: 1,
+    color: '#fff',
   },
   copyrightText: {
     fontSize: fonts.body,
@@ -84,11 +105,73 @@ const styles = StyleSheet.create({
 });
 
 class SettingsScreen extends Component {
+  render = () => {
+    // const { goBack } = this.props.navigation;
+    StatusBar.setBarStyle('dark-content', true);
+
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={[
+            {
+              key: 'rate',
+              url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
+              settingName: 'Rate & Review',
+              settingInfo: 'Tell us about your experience.',
+              handlePress: this.onPressLinkButton,
+              switchExists: false,
+              image: Images.doIt,
+              buttonText: 'DO IT',
+            }, {
+              key: 'terms',
+              url: 'http://www.moodindustries.com/privacy.pdf',
+              settingName: 'Terms of Use',
+              settingInfo: 'All the stuff you need to know.',
+              handlePress: this.onPressLinkButton,
+              switchExists: false,
+              image: Images.view,
+              buttonText: 'VIEW',
+            }, {
+              key: 'logout',
+              settingName: 'Logout',
+              settingInfo: 'Log out of your Mood account.',
+              handlePress: this.logout,
+              switchExists: false,
+              image: Images.view,
+              buttonText: 'LOGOUT',
+            },
+          ]}
+          renderItem={this.renderListItem}
+          keyExtractor={this._keyExtractor}
+          ListHeaderComponent={Header({ headerText: 'Settings', moodscreen: this.props.moodscreen.bind(this) })}
+          ListFooterComponent={this.footerElem}
+        />
+      </View>
+    );
+  };
+
   _keyExtractor = item => item.key;
+
+  logout = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      this.props.userLoggedOut();
+      Alert.alert('Logout Successful!');
+    } catch (error) {
+      Alert.alert('Already logged out!', null);
+    }
+  };
+
+  footerElem = () => (
+    <Text style={[styles.textRow, styles.copyrightText]}>
+      © 2019 Mood Industries LLC, all rights reserved.
+    </Text>
+  );
 
   onPressLinkButton = (url) => {
     Linking.openURL(url);
-  }
+  };
 
   renderListItem = elem => (
     <TouchableOpacity
@@ -133,57 +216,23 @@ class SettingsScreen extends Component {
               style={styles.buttonImageContainer}
               onPress={() => elem.item.handlePress(elem.item.url)}
             >
-              <Image source={elem.item.image} style={styles.buttonImage} />
+              {/* <Image source={elem.item.image} style={styles.buttonImage} /> */}
+              <ImageBackground source={elem.item.image} style={styles.buttonImage}>
+                <Text style={styles.buttonText}>{elem.item.buttonText}</Text>
+              </ImageBackground>
             </TouchableOpacity>
           )
       }
     </TouchableOpacity>
   )
-
-  footerElem = () => (
-    <Text style={[styles.textRow, styles.copyrightText]}>
-      © 2019 Mood Industries LLC, all rights reserved.
-    </Text>
-  )
-
-  render = () => {
-    // const { goBack } = this.props.navigation;
-    StatusBar.setBarStyle('dark-content', true);
-
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={[
-            {
-              key: 'rate',
-              url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
-              settingName: 'Rate & Review',
-              settingInfo: 'Tell us about your experience.',
-              handlePress: this.onPressLinkButton,
-              switchExists: false,
-              image: Images.doIt,
-            }, {
-              key: 'terms',
-              url: 'http://www.moodindustries.com/privacy.pdf',
-              settingName: 'Terms of Use',
-              settingInfo: 'All the stuff you need to know.',
-              handlePress: this.onPressLinkButton,
-              switchExists: false,
-              image: Images.view,
-            },
-          ]}
-          renderItem={this.renderListItem}
-          keyExtractor={this._keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'Settings', moodscreen: this.props.moodscreen.bind(this) })}
-          ListFooterComponent={this.footerElem}
-        />
-      </View>
-    );
-  }
 }
 
 const mapStateToProps = state => ({
   queue: state.queue,
 });
 
-export default connect(mapStateToProps)(SettingsScreen);
+const mapDispatchToProps = {
+  userLoggedOut,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
