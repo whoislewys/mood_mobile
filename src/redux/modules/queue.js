@@ -1,6 +1,6 @@
 import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
-import { ditherShuffle as shuffle, songPlayAnalyticEventFactory } from '../util';
+import { shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
 import { anal, queueTypes } from '../constants';
 import { logEvent } from './analytics';
