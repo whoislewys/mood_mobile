@@ -109,9 +109,8 @@ class LoginScreen extends Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      this.setState({ userInfo, error: null });
+      this.props.userLoggedIn(userInfo);
       this.props.navigation.goBack();
-      this.props.userLoggedIn();
       console.warn('curuser: ', this.state.userInfo);
       console.warn('err: ', this.state.error);
     } catch (error) {
