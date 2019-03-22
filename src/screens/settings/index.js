@@ -11,11 +11,12 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
+import { GoogleSignin } from 'react-native-google-signin';
 import ToggleSwitch from '../../components/toggle-switch';
 import Header from './components/header';
 import { fonts, colors } from '../../assets/styles';
 import { userLoggedOut } from '../../redux/modules/auth';
-import { GoogleSignin } from 'react-native-google-signin';
+import { handleDataToggle } from '../../redux/modules/settings';
 
 const styles = StyleSheet.create({
   container: {
@@ -115,30 +116,35 @@ class SettingsScreen extends Component {
           data={[
             {
               key: 'rate',
-              url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
-              settingName: 'Rate & Review',
-              settingInfo: 'Tell us about your experience.',
-              handlePress: this.onPressLinkButton,
-              switchExists: false,
-              image: Images.doIt,
               buttonText: 'DO IT',
+              handlePress: this.onPressLinkButton,
+              image: Images.doIt,
+              settingInfo: 'Tell us about your experience.',
+              settingName: 'Rate & Review',
+              url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
             }, {
               key: 'terms',
-              url: 'http://www.moodindustries.com/privacy.pdf',
-              settingName: 'Terms of Use',
-              settingInfo: 'All the stuff you need to know.',
-              handlePress: this.onPressLinkButton,
-              switchExists: false,
-              image: Images.view,
               buttonText: 'VIEW',
+              handlePress: this.onPressLinkButton,
+              image: Images.view,
+              settingInfo: 'All the stuff you need to know.',
+              settingName: 'Terms of Use',
+              url: 'http://www.moodindustries.com/privacy.pdf',
             }, {
               key: 'logout',
-              settingName: 'Logout',
-              settingInfo: 'Log out of your Mood account.',
-              handlePress: this.logout,
-              switchExists: false,
-              image: Images.view,
               buttonText: 'LOGOUT',
+              handlePress: this.logout,
+              image: Images.view,
+              settingInfo: 'Log out of your Mood account.',
+              settingName: 'Logout',
+            }, {
+              key: 'DATA',
+              buttonText: 'DATA',
+              handlePress: this.logout,
+              hasSwitch: true,
+              image: Images.view,
+              settingInfo: 'Stop sending app usage data',
+              settingName: 'Data',
             },
           ]}
           renderItem={this.renderListItem}
@@ -190,11 +196,11 @@ class SettingsScreen extends Component {
         <Text style={styles.settingInfo}>{elem.item.settingInfo}</Text>
       </View>
       {
-        elem.item.switchExists === true
+        elem.item.hasSwitch === true
           ? (
             <View style={styles.switchStyle}>
               <ToggleSwitch
-                value={this.state.isActive}
+                value={this.props.dataShouldBeTracked}
                 buttonWidth={51}
                 buttonHeight={31}
                 buttonRadius={50}
@@ -205,9 +211,8 @@ class SettingsScreen extends Component {
                 sliderRadius={50}
                 sliderOnColor='white'
                 sliderOffColor='white'
-                onToggle={newState => this.setState(prevState => ({
-                  isActive: !prevState.isActive,
-                }))}
+                // onToggle={newState => this.setState(prevState => ({isActive: !prevState.isActive}))}
+                onToggle={newState => this.props.handleDataToggle(newState)}
               />
             </View>
           )
@@ -228,11 +233,12 @@ class SettingsScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  queue: state.queue,
+  dataShouldBeTracked: state.settings.dataShouldBeTracked,
 });
 
 const mapDispatchToProps = {
   userLoggedOut,
+  handleDataToggle,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
