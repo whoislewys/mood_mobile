@@ -73,17 +73,17 @@ const styles = StyleSheet.create({
     },
   },
   buttonImage: {
-    width: 71,
-    height: 31,
+    width: 80,
+    height: 32,
+    resizeMode: 'contain',
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   buttonText: {
     fontFamily: fonts.primaryBold,
     fontSize: fonts.body,
-    marginBottom: 1,
     color: '#fff',
+    marginLeft: 3,
   },
   copyrightText: {
     fontSize: fonts.body,
@@ -118,7 +118,7 @@ class SettingsScreen extends Component {
               key: 'rate',
               buttonText: 'DO IT',
               handlePress: this.onPressLinkButton,
-              image: Images.doIt,
+              image: Images.settingsButton,
               settingInfo: 'Tell us about your experience.',
               settingName: 'Rate & Review',
               url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
@@ -126,7 +126,7 @@ class SettingsScreen extends Component {
               key: 'terms',
               buttonText: 'VIEW',
               handlePress: this.onPressLinkButton,
-              image: Images.view,
+              image: Images.settingsButton,
               settingInfo: 'All the stuff you need to know.',
               settingName: 'Terms of Use',
               url: 'http://www.moodindustries.com/privacy.pdf',
@@ -134,15 +134,14 @@ class SettingsScreen extends Component {
               key: 'logout',
               buttonText: 'LOGOUT',
               handlePress: this.logout,
-              image: Images.view,
+              image: Images.settingsButton,
               settingInfo: 'Log out of your Mood account.',
               settingName: 'Logout',
             }, {
               key: 'DATA',
               buttonText: 'DATA',
-              handlePress: this.logout,
+              handlePress: this.props.handleDataToggle,
               hasSwitch: true,
-              image: Images.view,
               settingInfo: 'Stop sending app usage data',
               settingName: 'Data',
             },
@@ -211,8 +210,7 @@ class SettingsScreen extends Component {
                 sliderRadius={50}
                 sliderOnColor='white'
                 sliderOffColor='white'
-                // onToggle={newState => this.setState(prevState => ({isActive: !prevState.isActive}))}
-                onToggle={newState => this.props.handleDataToggle(newState)}
+                onToggle={newState => elem.item.handlePress(newState)}
               />
             </View>
           )

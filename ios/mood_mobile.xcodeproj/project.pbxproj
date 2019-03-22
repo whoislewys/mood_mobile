@@ -43,7 +43,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* mood_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mood_mobileTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		36B4959611D040BA98687CCB /* selected-home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF11813B38634D3680D67B0A /* selected-home-icon.png */; };
-		3DCAF3697C164F32B0FB7A34 /* do-it.png in Resources */ = {isa = PBXBuildFile; fileRef = 04CAE53C92AD41F7BE1EAA0B /* do-it.png */; };
 		4345345FB37E4943A84E3DEA /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 676E2E65EED34F26B26B46ED /* libRNDeviceInfo.a */; };
 		475B0F63D6C14F80B221C825 /* selected-left-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E20E42C4A34BA68D2A3E0A /* selected-left-chevron.png */; };
 		49C04EC9FD334B5194237172 /* round-play-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 075897FF1496410190F1AA69 /* round-play-2x.png */; };
@@ -55,6 +54,7 @@
 		632755E07C444CF893904050 /* selected-round-events.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFD48B532414D0EB0A95AB6 /* selected-round-events.png */; };
 		64C1C29C2BAC472DB8BDBC24 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */; };
 		67E4902F5F014F1AA9A7EA35 /* selected-round-skip_previous.png in Resources */ = {isa = PBXBuildFile; fileRef = A16208D20E8048F386EC8A0B /* selected-round-skip_previous.png */; };
+		689965AD2CC3442AAFF51034 /* settings-button.png in Resources */ = {isa = PBXBuildFile; fileRef = C0CF746755FE41B0922BC480 /* settings-button.png */; };
 		6E51FC71F57A49ED8AE40B11 /* round-pause_circle_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = B790C0EA94124FDFB63379F0 /* round-pause_circle_outline.png */; };
 		700157424A65468EB1CA7E17 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */; };
 		7B98D5B845ADCF140AF966D5 /* Pods_mood_mobile_tvOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BDE7870EAD8EA3C7649B459 /* Pods_mood_mobile_tvOSTests.framework */; };
@@ -71,7 +71,6 @@
 		AA751B958F1D4D61B5DF25FA /* Color-Mood-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B6CB029B07B548D1B087DE6A /* Color-Mood-Logo.png */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		AF1EEA2A6F924C978A6C9B8B /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1498BE35C64F8480454C35 /* libSplashScreen.a */; };
-		B57DE14E73A24685A4A4B1CD /* view.png in Resources */ = {isa = PBXBuildFile; fileRef = 4140742A12E34D66BFE829B4 /* view.png */; };
 		BAC10DCF611547D59BE4D744 /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DEA69EC552F43D2B9CD8B9B /* Quicksand-Bold.ttf */; };
 		C2A166504F3B4A3D90436BF2 /* selected-share-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8F5DCEDDC0459B9A3B2401 /* selected-share-arrow.png */; };
 		C3B2A82FDA084D6BBA543775 /* round-stars-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3A4A1EEF7FC4DACA068E7C5 /* round-stars-1.png */; };
@@ -489,6 +488,7 @@
 		BD295E9A5C9F4432AE86F7B6 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Regular.ttf"; path = "../src/assets/fonts/Quicksand/Quicksand-Regular.ttf"; sourceTree = "<group>"; };
 		BF7DB492DFECE92BB2177419 /* Pods-mood_mobile-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobile-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-mood_mobile-tvOSTests/Pods-mood_mobile-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		BFD765C07EED0BC22CEF8AB2 /* Pods-mood_mobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobile-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-mood_mobile-tvOSTests/Pods-mood_mobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C0CF746755FE41B0922BC480 /* settings-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "settings-button.png"; path = "../src/assets/img/settings-button.png"; sourceTree = "<group>"; };
 		C27D1CCE4B374FB5B6084307 /* slider-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "slider-button.png"; path = "../src/assets/img/slider-button.png"; sourceTree = "<group>"; };
 		C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; path = RNPlaceholder.swift; sourceTree = "<group>"; };
 		C3E4E3E72E3E4B32AE252EB1 /* shuffle-button-unselected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "shuffle-button-unselected.png"; path = "../src/assets/img/shuffle-button-unselected.png"; sourceTree = "<group>"; };
@@ -827,6 +827,7 @@
 				62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */,
 				720FC630E9AD4B189F15B6A5 /* Quicksand-Medium.ttf */,
 				BD295E9A5C9F4432AE86F7B6 /* Quicksand-Regular.ttf */,
+				C0CF746755FE41B0922BC480 /* settings-button.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1454,7 +1455,6 @@
 				8927775A9BEA490289E44C71 /* add-event-button.png in Resources */,
 				4DC44D9DB1CD4BD9982341D7 /* background-overlay.png in Resources */,
 				AA751B958F1D4D61B5DF25FA /* Color-Mood-Logo.png in Resources */,
-				3DCAF3697C164F32B0FB7A34 /* do-it.png in Resources */,
 				F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */,
 				E6A6EF5589824621B4D5A84E /* gradient-heading.png in Resources */,
 				9B7864C8A63E4FD882C5662B /* round-bug_report.png in Resources */,
@@ -1481,11 +1481,11 @@
 				89C39A868FEE43DCA6C84E9D /* slider-button.png in Resources */,
 				560A2860F6444E619457E1F7 /* star-rounded-outline.png in Resources */,
 				5F610A86813345D4A46AA4E6 /* star-rounded.png in Resources */,
-				B57DE14E73A24685A4A4B1CD /* view.png in Resources */,
 				BAC10DCF611547D59BE4D744 /* Quicksand-Bold.ttf in Resources */,
 				F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */,
 				26EFBA1462AD4D078C89DD6A /* Quicksand-Medium.ttf in Resources */,
 				9AB0BF98383D4563BBCD75DE /* Quicksand-Regular.ttf in Resources */,
+				689965AD2CC3442AAFF51034 /* settings-button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
