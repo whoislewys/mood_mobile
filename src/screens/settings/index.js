@@ -158,7 +158,7 @@ class SettingsScreen extends Component {
   _keyExtractor = item => item.key;
 
   logout = async () => {
-    if (this.props.userIsLoggedIn) {
+    if (!this.props.userIsLoggedIn) {
       Alert.alert('Already logged out!', null);
       return;
     }
@@ -236,7 +236,7 @@ class SettingsScreen extends Component {
 
 const mapStateToProps = state => ({
   dataShouldBeTracked: state.settings.dataShouldBeTracked,
-  userIsLoggedIn: state.settings.userIsLoggedIn,
+  userIsLoggedIn: state.auth.userIsLoggedIn,
 });
 
 const mapDispatchToProps = {
