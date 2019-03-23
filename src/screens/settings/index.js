@@ -214,7 +214,7 @@ class SettingsScreen extends Component {
                 sliderRadius={50}
                 sliderOnColor='white'
                 sliderOffColor='white'
-                onToggle={newState => elem.item.handlePress(newState)}
+                onToggle={() => elem.item.handlePress()}
               />
             </View>
           )

@@ -7,7 +7,7 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case DATA_TRACK_TOGGLE:
-      return { ...state, dataShouldBeTracked: action.dataShouldBeTracked };
+      return { ...state, dataShouldBeTracked: !state.dataShouldBeTracked };
     default:
       return state;
   }
