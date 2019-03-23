@@ -58,8 +58,6 @@ class LoginScreen extends Component {
       webClientId: config.webClientId,
       offlineAccess: false,
     });
-
-    await this._getCurrentUser();
   }
 
   render() {
@@ -117,20 +115,6 @@ class LoginScreen extends Component {
       }
     }
   };
-
-  _getCurrentUser = async () => {
-    // TODO: move this somehwere higher level so user auto auths on app open
-    try {
-      const userInfo = await GoogleSignin.signInSilently();
-      this.props.userLoggedIn(userInfo);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        Alert.alert('Please sign in to save songs :)', null);
-      } else {
-        // fail silently, user probably logged out & logged back in very quickly
-      }
-    }
-  }
 }
 
 const mapDispatchToProps = {

@@ -136,7 +136,7 @@ class StarButton extends Component {
   };
 
   clap = () => {
-    if (!this.props.isUserLoggedIn) {
+    if (!this.props.userIsLoggedIn) {
       this.props.navigation.navigate('Login');
       return;
     }
@@ -203,7 +203,7 @@ class StarButton extends Component {
 const mapStateToProps = state => ({
   currentScore: state.score.currentScore,
   scoreDelta: state.score.scoreDelta,
-  isUserLoggedIn: state.auth.isUserLoggedIn,
+  userIsLoggedIn: state.auth.userIsLoggedIn,
 });
 
 const mapDispatchToProps = {

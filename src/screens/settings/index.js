@@ -158,11 +158,15 @@ class SettingsScreen extends Component {
   _keyExtractor = item => item.key;
 
   logout = async () => {
+    if (this.props.userIsLoggedIn) {
+      Alert.alert('Already logged out!', null);
+      return;
+    }
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
       this.props.userLoggedOut();
-      Alert.alert('Logout Successful!');
+      Alert.alert('Logout Successful!', null);
     } catch (error) {
       Alert.alert('Already logged out!', null);
     }
@@ -232,6 +236,7 @@ class SettingsScreen extends Component {
 
 const mapStateToProps = state => ({
   dataShouldBeTracked: state.settings.dataShouldBeTracked,
+  userIsLoggedIn: state.settings.userIsLoggedIn,
 });
 
 const mapDispatchToProps = {
