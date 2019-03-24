@@ -12,11 +12,14 @@
 #import "RNSplashScreen.h"
 #import <react-native-branch/RNBranch.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
+#import <Firebase.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+
   [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES]; // <-- add this
 
   NSURL *jsCodeLocation;

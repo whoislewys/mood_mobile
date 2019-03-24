@@ -13,8 +13,10 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* mood_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mood_mobileTests.m */; };
+		0B6ED1045102D8678AB61B13 /* libPods-mood_mobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1768FC3D79D24FCDDC6990C0 /* libPods-mood_mobile-tvOSTests.a */; };
 		0C045860E4F94C11B2C8C636 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
 		0FCC396D5D1847EBA7BD2F61 /* selected-round-media-player.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BBD54B4D815472887D4E008 /* selected-round-media-player.png */; };
+		10D1A8709FC48F63CD2B450D /* libPods-mood_mobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 652435A09D194A3150D69760 /* libPods-mood_mobile.a */; };
 		11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -57,22 +59,22 @@
 		689965AD2CC3442AAFF51034 /* settings-button.png in Resources */ = {isa = PBXBuildFile; fileRef = C0CF746755FE41B0922BC480 /* settings-button.png */; };
 		6E51FC71F57A49ED8AE40B11 /* round-pause_circle_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = B790C0EA94124FDFB63379F0 /* round-pause_circle_outline.png */; };
 		700157424A65468EB1CA7E17 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */; };
-		7B98D5B845ADCF140AF966D5 /* Pods_mood_mobile_tvOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BDE7870EAD8EA3C7649B459 /* Pods_mood_mobile_tvOSTests.framework */; };
 		7F965C06A8944E1FA322DED5 /* selected-down-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B94A45EA4A84DE1A1155EEE /* selected-down-chevron.png */; };
 		8310FABA8D394BA58E9869DF /* libreact-native-branch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BC89C058C04D8C8C5F5C64 /* libreact-native-branch.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8927775A9BEA490289E44C71 /* add-event-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2678D6EEAE9542B1A38B6F5D /* add-event-button.png */; };
 		89C39A868FEE43DCA6C84E9D /* slider-button.png in Resources */ = {isa = PBXBuildFile; fileRef = C27D1CCE4B374FB5B6084307 /* slider-button.png */; };
 		91F6D91B056E4A608EC109BB /* libRNTrackPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 402D780E1D784CF2A986182A /* libRNTrackPlayer.a */; };
-		9547BD55CBC6CB3D62D171D4 /* Pods_mood_mobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67A3EBA3ACB9E65172E588C6 /* Pods_mood_mobileTests.framework */; };
 		9AB0BF98383D4563BBCD75DE /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD295E9A5C9F4432AE86F7B6 /* Quicksand-Regular.ttf */; };
 		9B7864C8A63E4FD882C5662B /* round-bug_report.png in Resources */ = {isa = PBXBuildFile; fileRef = D28E03B4940A47BD846AEEA5 /* round-bug_report.png */; };
 		A10FE8B4703A452F96927F86 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 048BF0A3DC2143EBAAB2F353 /* libRCTRestart.a */; };
 		AA751B958F1D4D61B5DF25FA /* Color-Mood-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B6CB029B07B548D1B087DE6A /* Color-Mood-Logo.png */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		AF1EEA2A6F924C978A6C9B8B /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1498BE35C64F8480454C35 /* libSplashScreen.a */; };
+		B22514A63877D1755460727C /* libPods-mood_mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39D1DE5F9512625FE1EC05EE /* libPods-mood_mobileTests.a */; };
 		BAC10DCF611547D59BE4D744 /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DEA69EC552F43D2B9CD8B9B /* Quicksand-Bold.ttf */; };
 		C2A166504F3B4A3D90436BF2 /* selected-share-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8F5DCEDDC0459B9A3B2401 /* selected-share-arrow.png */; };
+		C35C375D83B34D9499C73F0C /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 062263CA08E94714BA175644 /* libRNFirebase.a */; };
 		C3B2A82FDA084D6BBA543775 /* round-stars-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3A4A1EEF7FC4DACA068E7C5 /* round-stars-1.png */; };
 		CE26A943A86045C2ACD1F743 /* round-play_circle_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = AA44E46245ED4C289D8F6579 /* round-play_circle_outline.png */; };
 		D300C5AD7F354EA5B5ED6817 /* share-arrow-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 062F938DE37546B59C6FF485 /* share-arrow-outline.png */; };
@@ -86,7 +88,6 @@
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		EE0B9F005D0B4EA18A4CE71E /* selected-round-discover.png in Resources */ = {isa = PBXBuildFile; fileRef = E821143D5EE4479CB619D579 /* selected-round-discover.png */; };
-		F52F2708D0BA058A76B20CFD /* Pods_mood_mobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5614FEA0CB9176A8728A1038 /* Pods_mood_mobile.framework */; };
 		F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D94297707149471BBFE9B883 /* explicit-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
 /* End PBXBuildFile section */
@@ -414,6 +415,13 @@
 			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
 			remoteInfo = "RNDeviceInfo-tvOS";
 		};
+		E6BDADB02248271E004DECB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8EB350D4CC6749499737B0BC /* RNFirebase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNFirebase;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -429,6 +437,7 @@
 		011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = "<group>"; };
 		048BF0A3DC2143EBAAB2F353 /* libRCTRestart.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTRestart.a; sourceTree = "<group>"; };
 		04CAE53C92AD41F7BE1EAA0B /* do-it.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "do-it.png"; path = "../src/assets/img/do-it.png"; sourceTree = "<group>"; };
+		062263CA08E94714BA175644 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		062F938DE37546B59C6FF485 /* share-arrow-outline.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "share-arrow-outline.png"; path = "../src/assets/img/share-arrow-outline.png"; sourceTree = "<group>"; };
 		075897FF1496410190F1AA69 /* round-play-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-play-2x.png"; path = "../src/assets/img/round-play-2x.png"; sourceTree = "<group>"; };
 		110656711E8F4CBBB5D72EE6 /* RNTrackPlayer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTrackPlayer.xcodeproj; path = "../node_modules/react-native-track-player/ios/RNTrackPlayer.xcodeproj"; sourceTree = "<group>"; };
@@ -442,7 +451,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = mood_mobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = mood_mobile/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		1BDE7870EAD8EA3C7649B459 /* Pods_mood_mobile_tvOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mood_mobile_tvOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1768FC3D79D24FCDDC6990C0 /* libPods-mood_mobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mood_mobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23DA727A2BE74669AC1D12DF /* star-rounded.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "star-rounded.png"; path = "../src/assets/img/star-rounded.png"; sourceTree = "<group>"; };
 		2678D6EEAE9542B1A38B6F5D /* add-event-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "add-event-button.png"; path = "../src/assets/img/add-event-button.png"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* mood_mobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mood_mobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -450,6 +459,7 @@
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8F5DCEDDC0459B9A3B2401 /* selected-share-arrow.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-share-arrow.png"; path = "../src/assets/img/selected-share-arrow.png"; sourceTree = "<group>"; };
 		2DEA69EC552F43D2B9CD8B9B /* Quicksand-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Bold.ttf"; path = "../src/assets/fonts/Quicksand/Quicksand-Bold.ttf"; sourceTree = "<group>"; };
+		39D1DE5F9512625FE1EC05EE /* libPods-mood_mobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mood_mobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0E9AE80609D5E62E8EA40E /* Pods-mood_mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobile.release.xcconfig"; path = "Target Support Files/Pods-mood_mobile/Pods-mood_mobile.release.xcconfig"; sourceTree = "<group>"; };
 		3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		402D780E1D784CF2A986182A /* libRNTrackPlayer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTrackPlayer.a; sourceTree = "<group>"; };
@@ -457,14 +467,13 @@
 		4F67F644D5DD41299F815D18 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		4FFE2E2CAFBA4B3DAE5B4DEF /* RNBranch.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBranch.xcodeproj; path = "../node_modules/react-native-branch/ios/RNBranch.xcodeproj"; sourceTree = "<group>"; };
 		50FAEF63498F4980B3C7FD3E /* round-pause_circle_outline-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-pause_circle_outline-2x.png"; path = "../src/assets/img/round-pause_circle_outline-2x.png"; sourceTree = "<group>"; };
-		5614FEA0CB9176A8728A1038 /* Pods_mood_mobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mood_mobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B94A45EA4A84DE1A1155EEE /* selected-down-chevron.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-down-chevron.png"; path = "../src/assets/img/selected-down-chevron.png"; sourceTree = "<group>"; };
 		5C9017965E0242C2873A3B4A /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Light.ttf"; path = "../src/assets/fonts/Quicksand/Quicksand-Light.ttf"; sourceTree = "<group>"; };
+		652435A09D194A3150D69760 /* libPods-mood_mobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mood_mobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6748C31959D1AA8AE6CD7D82 /* Pods-mood_mobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobileTests.debug.xcconfig"; path = "Target Support Files/Pods-mood_mobileTests/Pods-mood_mobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		676E2E65EED34F26B26B46ED /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
-		67A3EBA3ACB9E65172E588C6 /* Pods_mood_mobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mood_mobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		683C42FFB40547079C9116A5 /* gradient-heading.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "gradient-heading.png"; path = "../src/assets/img/gradient-heading.png"; sourceTree = "<group>"; };
 		6BEDB5499D5C4185A3F60DBE /* star-rounded-outline.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "star-rounded-outline.png"; path = "../src/assets/img/star-rounded-outline.png"; sourceTree = "<group>"; };
 		6DA61579C0DA4DE8A8709EE8 /* round-settings.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-settings.png"; path = "../src/assets/img/round-settings.png"; sourceTree = "<group>"; };
@@ -474,6 +483,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		82FCDE05EA5C470889E650EE /* round-play_circle_outline-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-play_circle_outline-2x.png"; path = "../src/assets/img/round-play_circle_outline-2x.png"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8EB350D4CC6749499737B0BC /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		95BF9B8D136042F48789EFC0 /* background-overlay.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "background-overlay.png"; path = "../src/assets/img/background-overlay.png"; sourceTree = "<group>"; };
 		9BBD54B4D815472887D4E008 /* selected-round-media-player.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-round-media-player.png"; path = "../src/assets/img/selected-round-media-player.png"; sourceTree = "<group>"; };
 		A14D9C2F56964C42B2D95EAF /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -516,7 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
-				9547BD55CBC6CB3D62D171D4 /* Pods_mood_mobileTests.framework in Frameworks */,
+				B22514A63877D1755460727C /* libPods-mood_mobileTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,7 +553,8 @@
 				91F6D91B056E4A608EC109BB /* libRNTrackPlayer.a in Frameworks */,
 				4345345FB37E4943A84E3DEA /* libRNDeviceInfo.a in Frameworks */,
 				64C1C29C2BAC472DB8BDBC24 /* libRNGoogleSignin.a in Frameworks */,
-				F52F2708D0BA058A76B20CFD /* Pods_mood_mobile.framework in Frameworks */,
+				C35C375D83B34D9499C73F0C /* libRNFirebase.a in Frameworks */,
+				10D1A8709FC48F63CD2B450D /* libPods-mood_mobile.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,7 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
-				7B98D5B845ADCF140AF966D5 /* Pods_mood_mobile_tvOSTests.framework in Frameworks */,
+				0B6ED1045102D8678AB61B13 /* libPods-mood_mobile-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,9 +712,9 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				5614FEA0CB9176A8728A1038 /* Pods_mood_mobile.framework */,
-				1BDE7870EAD8EA3C7649B459 /* Pods_mood_mobile_tvOSTests.framework */,
-				67A3EBA3ACB9E65172E588C6 /* Pods_mood_mobileTests.framework */,
+				652435A09D194A3150D69760 /* libPods-mood_mobile.a */,
+				1768FC3D79D24FCDDC6990C0 /* libPods-mood_mobile-tvOSTests.a */,
+				39D1DE5F9512625FE1EC05EE /* libPods-mood_mobileTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -747,6 +758,7 @@
 				110656711E8F4CBBB5D72EE6 /* RNTrackPlayer.xcodeproj */,
 				A14D9C2F56964C42B2D95EAF /* RNDeviceInfo.xcodeproj */,
 				4F67F644D5DD41299F815D18 /* RNGoogleSignin.xcodeproj */,
+				8EB350D4CC6749499737B0BC /* RNFirebase.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -873,6 +885,7 @@
 				676E2E65EED34F26B26B46ED /* libRNDeviceInfo.a */,
 				3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */,
 				011157DCF8C6493CB7C852DB /* libRNGoogleSignin.a */,
+				062263CA08E94714BA175644 /* libRNFirebase.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -918,6 +931,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E6BDADAD2248271E004DECB3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E6BDADB12248271E004DECB3 /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -949,7 +970,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				B5D6050420544ED5BE90CF22 /* [CP] Embed Pods Frameworks */,
 				425A5F086422A9650F7E59D6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -1102,6 +1122,10 @@
 				{
 					ProductGroup = E6796AA22233428E00534F18 /* Products */;
 					ProjectRef = A14D9C2F56964C42B2D95EAF /* RNDeviceInfo.xcodeproj */;
+				},
+				{
+					ProductGroup = E6BDADAD2248271E004DECB3 /* Products */;
+					ProjectRef = 8EB350D4CC6749499737B0BC /* RNFirebase.xcodeproj */;
 				},
 				{
 					ProductGroup = E6184F58223B866D0020541A /* Products */;
@@ -1435,6 +1459,13 @@
 			remoteRef = E6796AA82233428F00534F18 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E6BDADB12248271E004DECB3 /* libRNFirebase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFirebase.a;
+			remoteRef = E6BDADB02248271E004DECB3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1579,30 +1610,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B5D6050420544ED5BE90CF22 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mood_mobile/Pods-mood_mobile-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mood_mobile/Pods-mood_mobile-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D62D12D61625E8D277BDB008 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1733,18 +1740,13 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = mood_mobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1772,18 +1774,13 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = mood_mobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1815,6 +1812,7 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = mood_mobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1849,6 +1847,7 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = mood_mobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1885,17 +1884,12 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = "mood_mobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1931,17 +1925,12 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = "mood_mobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1977,17 +1966,12 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = "mood_mobile-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -2023,17 +2007,12 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = "mood_mobile-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
