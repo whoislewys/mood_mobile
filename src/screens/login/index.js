@@ -96,28 +96,6 @@ class LoginScreen extends Component {
     Linking.openURL('http://www.moodindustries.com/privacy.pdf');
   }
 
-  // react-native-google-signin
-  // _signIn = async () => {
-  //   try {
-  //     await GoogleSignin.hasPlayServices();
-  //     const userInfo = await GoogleSignin.signIn();
-  //     this.props.userLoggedIn(userInfo);
-  //     this.props.navigation.goBack();
-  //     Alert.alert('Logged in!', null);
-  //   } catch (error) {
-  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-  //       // they cancelled, all good
-  //     } else if (error.code === statusCodes.IN_PROGRESS) {
-  //       // `alert` signature: (title, message)
-  //       Alert.alert('In Progress', null);
-  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-  //       Alert.alert('Play Services not Available', null);
-  //     } else {
-  //       Alert.alert('Something Went Wrong', error.toString());
-  //     }
-  //   }
-  // };
-
   // react-native-firebase
   _signIn = async () => {
     try {
