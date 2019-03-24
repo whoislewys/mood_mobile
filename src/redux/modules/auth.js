@@ -2,20 +2,32 @@ const USER_LOGGED_IN = 'USER_LOGGED_IN';
 const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 
 const initialState = {
-  userIsLoggedIn: false,
-  username: '',
   email: '',
-  id: '',
-  photoUrl: '',
   name: '',
+  photoURL: '',
+  uid: '',
+  userIsLoggedIn: false,
 };
 
 export default function auth(state = initialState, action = {}) {
   switch (action.type) {
     case USER_LOGGED_IN:
-      return { ...state, userIsLoggedIn: true };
+      const {
+        email,
+        uid,
+        providerData: [{ displayName: name, photoURL }],
+      } = action.userInfo;
+      const newState = {
+        ...state,
+        email,
+        name,
+        photoURL,
+        uid,
+        userIsLoggedIn: true,
+      };
+      return newState;
     case USER_LOGGED_OUT:
-      return { ...state, userIsLoggedIn: false };
+      return initialState;
     default:
       return state;
   }

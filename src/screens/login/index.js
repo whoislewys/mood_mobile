@@ -103,7 +103,6 @@ class LoginScreen extends Component {
 
       const credential = firebase.auth.GoogleAuthProvider.credential(userInfo.idToken, userInfo.accessToken);
       const currentUser = await firebase.auth().signInWithCredential(credential);
-      console.warn(currentUser.user);
       this.props.userLoggedIn(currentUser.user);
       Alert.alert('Logged in!', null);
       this.props.navigation.goBack();
