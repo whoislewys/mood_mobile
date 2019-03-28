@@ -105,34 +105,39 @@ class PlayScreen extends Component {
     }
 
     return (
-      <Background
-        image={{ uri: this.props.curTrack.artwork }}
-        blur={25}
-        bottom={0}
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => this.onSwipeDown()}
       >
-        <PlayOnOpen
-          playing={this.props.playing}
-          playByDefault={this.props.handlePlayPress}
-          parentScreen={this.props.parentScreen}
-        />
-        <View style={styles.playContainer}>
-          <View style={styles.dropdownBarContainer}>
-            { this.getDropdownBar() }
+        <Background
+          image={{ uri: this.props.curTrack.artwork }}
+          blur={25}
+          bottom={0}
+        >
+          <PlayOnOpen
+            playing={this.props.playing}
+            playByDefault={this.props.handlePlayPress}
+            parentScreen={this.props.parentScreen}
+          />
+          <View style={styles.playContainer}>
+            <View style={styles.dropdownBarContainer}>
+              { this.getDropdownBar() }
+            </View>
+            <View style={styles.albumArtContainer}>
+              { this.getAlbumArtCarousel() }
+            </View>
+            <View style={styles.playBarContainer}>
+              <TimeBar setTime={this.props.setTime} />
+            </View>
+            <View style={styles.trackInfoContainer}>
+              { this.getTrackInfoAndPlaybar() }
+            </View>
+            <View style={styles.playControlsContainer}>
+              { this.getPlayControls() }
+            </View>
           </View>
-          <View style={styles.albumArtContainer}>
-            { this.getAlbumArtCarousel() }
-          </View>
-          <View style={styles.playBarContainer}>
-            <TimeBar setTime={this.props.setTime} />
-          </View>
-          <View style={styles.trackInfoContainer}>
-            { this.getTrackInfoAndPlaybar() }
-          </View>
-          <View style={styles.playControlsContainer}>
-            { this.getPlayControls() }
-          </View>
-        </View>
-      </Background>
+        </Background>
+      </GestureRecognizer>
     );
   };
 
@@ -149,7 +154,7 @@ class PlayScreen extends Component {
 
   getDropdownBar = () => {
     return (
-      <GestureRecognizer
+      <View
         style={styles.dropdownBarSwipeable}
         onSwipeDown={() => this.onSwipeDown()}
       >
@@ -166,7 +171,7 @@ class PlayScreen extends Component {
             <Image source={Images.arrowDown} style={styles.backButton} />
           </TouchableOpacity>
         </TouchableOpacity>
-      </GestureRecognizer>
+      </View>
     );
   };
 
