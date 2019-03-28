@@ -105,39 +105,34 @@ class PlayScreen extends Component {
     }
 
     return (
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeDown={() => this.onSwipeDown()}
+      <Background
+        image={{ uri: this.props.curTrack.artwork }}
+        blur={25}
+        bottom={0}
       >
-        <Background
-          image={{ uri: this.props.curTrack.artwork }}
-          blur={25}
-          bottom={0}
-        >
-          <PlayOnOpen
-            playing={this.props.playing}
-            playByDefault={this.props.handlePlayPress}
-            parentScreen={this.props.parentScreen}
-          />
-          <View style={styles.playContainer}>
-            <View style={styles.dropdownBarContainer}>
-              { this.getDropdownBar() }
-            </View>
-            <View style={styles.albumArtContainer}>
-              { this.getAlbumArtCarousel() }
-            </View>
-            <View style={styles.playBarContainer}>
-              <TimeBar setTime={this.props.setTime} />
-            </View>
-            <View style={styles.trackInfoContainer}>
-              { this.getTrackInfoAndPlaybar() }
-            </View>
-            <View style={styles.playControlsContainer}>
-              { this.getPlayControls() }
-            </View>
+        <PlayOnOpen
+          playing={this.props.playing}
+          playByDefault={this.props.handlePlayPress}
+          parentScreen={this.props.parentScreen}
+        />
+        <View style={styles.playContainer}>
+          <View style={styles.dropdownBarContainer}>
+            { this.getDropdownBar() }
           </View>
-        </Background>
-      </GestureRecognizer>
+          <View style={styles.albumArtContainer}>
+            { this.getAlbumArtCarousel() }
+          </View>
+          <View style={styles.playBarContainer}>
+            <TimeBar setTime={this.props.setTime} />
+          </View>
+          <View style={styles.trackInfoContainer}>
+            { this.getTrackInfoAndPlaybar() }
+          </View>
+          <View style={styles.playControlsContainer}>
+            { this.getPlayControls() }
+          </View>
+        </View>
+      </Background>
     );
   };
 
@@ -154,7 +149,7 @@ class PlayScreen extends Component {
 
   getDropdownBar = () => {
     return (
-      <View
+      <GestureRecognizer
         style={styles.dropdownBarSwipeable}
         onSwipeDown={() => this.onSwipeDown()}
       >
@@ -171,7 +166,7 @@ class PlayScreen extends Component {
             <Image source={Images.arrowDown} style={styles.backButton} />
           </TouchableOpacity>
         </TouchableOpacity>
-      </View>
+      </GestureRecognizer>
     );
   };
 
@@ -190,39 +185,54 @@ class PlayScreen extends Component {
 
   getAlbumArtCarousel = () => {
     return (
-      <Carousel
-        ref={(c) => { this._carouselref = c; }}
-        data={this.props.queue}
-        sliderWidth={dimensions.width}
-        itemWidth={dimensions.width}
-        renderItem={this._renderCarouselItem}
-        onBeforeSnapToItem={this._handleCarouselSnap}
-        firstItem={this.props.curTrackIndex}
-        lockScrollWhileSnapping
-      />
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => this.onSwipeDown()}
+      >
+        <Carousel
+          ref={(c) => { this._carouselref = c; }}
+          data={this.props.queue}
+          sliderWidth={dimensions.width}
+          itemWidth={dimensions.width}
+          renderItem={this._renderCarouselItem}
+          onBeforeSnapToItem={this._handleCarouselSnap}
+          firstItem={this.props.curTrackIndex}
+          lockScrollWhileSnapping
+        />
+      </GestureRecognizer>
     );
   };
 
   getTrackInfoAndPlaybar = () => {
     return (
-      <InfoText
-        setTime={this.props.setTime}
-        track={this.props.curTrack}
-      />
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => this.onSwipeDown()}
+      >
+        <InfoText
+          setTime={this.props.setTime}
+          track={this.props.curTrack}
+        />
+      </GestureRecognizer>
     );
   };
 
   getPlayControls = () => {
     return (
-      <PlayControls
-        logEvent={this.props.logEvent}
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
-        playing={this.props.playing}
-        handlePlayPress={this.props.handlePlayPress}
-        loading={this.props.loading}
-        currentTrack={this.props.curTrack}
-      />
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => this.onSwipeDown()}
+      >
+        <PlayControls
+          logEvent={this.props.logEvent}
+          skipForward={this._nextTrack}
+          skipBack={this._previousTrack}
+          playing={this.props.playing}
+          handlePlayPress={this.props.handlePlayPress}
+          loading={this.props.loading}
+          currentTrack={this.props.curTrack}
+        />
+      </GestureRecognizer>
     );
   }
 }
