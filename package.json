@@ -29,6 +29,8 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "24.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
     "eslint": "^5.15.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -40,12 +42,17 @@
     "metro-react-native-babel-preset": "0.53.0",
     "object.assign": "^4.1.0",
     "object.entries": "^1.1.0",
-    "react-test-renderer": "16.6.3"
+    "react-test-renderer": "16.6.3",
+    "redux-mock-store": "^1.5.3"
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": ["node_modules/(?!(jest-)?react-native|react-navigation)"],
-    "setupFilesAfterEnv":  ["./jest/setup.js"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation)"
+    ],
+    "setupFilesAfterEnv": [
+      "./jest/setup.js"
+    ]
   },
   "rnpm": {
     "assets": [

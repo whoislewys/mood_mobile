@@ -2,25 +2,25 @@ import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
 import { ditherShuffle as shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
-import { anal, queueTypes } from '../constants';
 import { logEvent } from './analytics';
+import {
+  anal,
+  LOAD_SONGS,
+  LOAD_SONGS_SUCCESS,
+  LOAD_SONGS_FAIL,
+  LOAD_SHARED_SONG_QUEUE,
+  LOAD_SHARED_SONG_QUEUE_SUCCESS,
+  LOAD_SHARED_SONG_QUEUE_FAIL,
+  LOAD_LEADERBOARD_SONG_QUEUE,
+  RESET_QUEUE,
+  PLAYBACK_STATE,
+  PLAYBACK_TRACK,
+  MOOD_TYPE,
+  LEADERBOARD_TYPE,
+} from '../constants';
 
-const LOAD_SONGS = 'queue/LOAD';
-const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
-const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';
 
-const LOAD_SHARED_SONG_QUEUE = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD';
-const LOAD_SHARED_SONG_QUEUE_SUCCESS = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_SUCCESS';
-const LOAD_SHARED_SONG_QUEUE_FAIL = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_FAIL';
-
-const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
-
-const RESET_QUEUE = 'queue/RESET_QUEUE';
-
-const PLAYBACK_STATE = 'playback/STATE';
-const PLAYBACK_TRACK = 'playback/TRACK';
-
-const initialState = {
+export const initialState = {
   loading: false,
   errors: null,
   queue: [],
@@ -76,7 +76,7 @@ export default function reducer(state = initialState, action = {}) {
         queue: songs,
         curTrack: songs[0],
         curTrackIndex: 0,
-        queueType: queueTypes.mood,
+        queueType: MOOD_TYPE,
       };
     case LOAD_SONGS_FAIL:
       return {
@@ -95,7 +95,7 @@ export default function reducer(state = initialState, action = {}) {
         queue: leaderboardSongs,
         curTrack: leaderboardSongs[selectedLeaderboardSongIndex],
         curTrackIndex: selectedLeaderboardSongIndex,
-        queueType: queueTypes.leaderboard,
+        queueType: LEADERBOARD_TYPE,
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -207,7 +207,7 @@ export function loadSongsForMoodId(moodId) {
           responseType: 'json',
         });
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
-      dispatch(startScoreTimer());
+      // dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
     }
