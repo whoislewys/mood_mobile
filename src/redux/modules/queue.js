@@ -36,11 +36,11 @@ export function loadSongData(list) {
   return shuffle(list.map(t => ({
     id: t.id.toString(),
     url: t.file,
-    title: t.name,
-    artist: t.artist,
-    album: t.album_name,
-    artwork: t.art_url,
-    mood_id: t.mood_id,
+    title: t.name ? t.name : '',
+    artist: t.artist ? t.artist : '',
+    album: t.album_name ? t.album_name : '',
+    artwork: t.art_url ? t.art_url : '',
+    mood_id: t.mood_id ? t.mood_id : '',
   })), 'artist');
 }
 
