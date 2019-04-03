@@ -19,7 +19,6 @@ import {
   LEADERBOARD_TYPE,
 } from '../constants';
 
-
 export const initialState = {
   loading: false,
   errors: null,
@@ -228,6 +227,7 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSongIndex) {
     });
 
     const selectedLeaderboardSong = leaderboardSongs[selectedLeaderboardSongIndex];
+    // maybe move this into a helper function
     await TrackPlayer.add(leaderboardSongs);
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     await TrackPlayer.play();
