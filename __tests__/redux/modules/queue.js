@@ -1,7 +1,7 @@
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import {
+import reducer, {
   initialState,
   loadSongsForMoodId,
   loadLeaderboardSongQueue,
@@ -57,9 +57,18 @@ const track2 = {
 describe('Queue module', () => {
   describe('action creator', () => {
     describe('loadSongsForMoodId', () => {
-      it('dispatches LOAD_SONGS_SUCCESS on success', async () => {
-        // mock the stuff you need
-        const store = mockStore(initialState);
+      let store;
+      beforeEach(() => {
+        // only mock what you need in the store
+        store = mockStore(initialState);
+      });
+
+      afterEach(() => {
+        store.clearActions();
+      });
+
+      it('should dispatch LOAD_SONGS_SUCCESS on success', async () => {
+        // mock more stuff you need
         const mockSongs = [track1, track2];
         axios.get.mockResolvedValue(mockSongs);
         // dispatch the action
@@ -71,8 +80,7 @@ describe('Queue module', () => {
         ]);
       });
 
-      it('dispatches LOAD_SONGS_FAIL on fail', async () => {
-        const store = mockStore(initialState);
+      it('should dispatch LOAD_SONGS_FAIL on fail', async () => {
         // mimic a failed api call
         axios.get.mockResolvedValue(Promise.reject(new Error('Some API error')));
         await store.dispatch(loadSongsForMoodId(1));
@@ -85,27 +93,54 @@ describe('Queue module', () => {
 
     describe('loadLeaderboardSongs', () => {
       let mockState;
-      // this is really hard to test because im running into getState() calls pulling state off of different modules
-      // might mean the load leaderboard songs thunk is poorly structured, OR
-      // i just need to mock the whole store at a higher level, and mock more granularly what i need in each test
+      let store;
+
       beforeEach(() => {
-        const mockLeaderboardState = leaderboardInitialState;
-        mockLeaderboardState.songs = [track1, track2];
+        // only mock what you need in the store
+        const toyLeaderboardState = leaderboardInitialState;
+        toyLeaderboardState.songs = [track1, track2];
         mockState = {
           leaderboard: leaderboardInitialState,
           score: scoreInitialState,
         };
+        store = mockStore(mockState);
       });
 
-      it('dispatches LOAD_LEADERBOARD_SONG_QUEUE', async () => {
-        const store = mockStore(mockState);
+      afterEach(() => {
+        store.clearActions();
+      });
+
+      it('should dispatch correct queue actions', async () => {
         const selectedLeaderboardSongIndex = 0;
         await store.dispatch(loadLeaderboardSongQueue(selectedLeaderboardSongIndex));
-        return expect(store.getActions()[1]).toEqual({
-          type: LOAD_LEADERBOARD_SONG_QUEUE,
-          selectedLeaderboardSongIndex,
-          leaderboardSongs: mockState.leaderboard.songs,
-        });
+        return expect(store.getActions().slice(0, 2)).toEqual([
+          { type: RESET_QUEUE },
+          {
+            type: LOAD_LEADERBOARD_SONG_QUEUE,
+            selectedLeaderboardSongIndex,
+            leaderboardSongs: mockState.leaderboard.songs,
+          },
+        ]);
+      });
+    });
+    describe('loadSharedSongQueue', async () => {
+      // TODO:
+    });
+  });
+  describe('reducer', () => {
+    it('should return the initial state', () => {
+      expect(reducer(undefined, undefined)).toEqual(initialState);
+    });
+    it('should handle RESET_QUEUE action', () => {
+      expect(reducer([], { type: RESET_QUEUE })).toEqual({
+        // why tf does this work? shouldnt the spread operator in the reducer return the rest of the state that isnt being modified?
+        // the reducer is only returning what's below...
+        loading: true,
+        queue: [],
+        curTrack: null,
+        curTrackIndex: NaN,
+        track: null,
+        queueType: '',
       });
     });
   });
