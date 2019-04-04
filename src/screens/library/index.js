@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
-import Header from './components/header';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
 

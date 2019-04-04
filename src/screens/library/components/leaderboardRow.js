@@ -19,13 +19,6 @@ const styles = StyleSheet.create({
     height: 85,
     width: '100%',
     marginBottom: 15,
-    backgroundColor: '#fff',
-  },
-  rank: {
-    flex: 8,
-    fontFamily: 'Quicksand',
-    textAlign: 'center',
-    fontSize: 34,
   },
   albumArt: {
     width: 54,
@@ -48,32 +41,22 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.body,
   },
-  starsContainer: {
+  buttonsContainer: {
     flex: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginLeft: 15,
   },
   savedIcon: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
+    marginRight: '10%',
   },
   playlistIcon: {
     width: 24,
     height: 24,
-    marginLeft: '14%',
     resizeMode: 'contain',
-  },
-  starCount: {
-    fontFamily: fonts.primaryLight,
-    fontSize: fonts.subHeader,
-    color: colors.subHeader,
-    marginLeft: 6,
-    // for some reason, textAlignVertical wasn't working on android
-    marginBottom: Platform.OS === 'android' ? '4%' : '0%',
-    textAlignVertical: 'center',
   },
 });
 
@@ -112,7 +95,7 @@ const LeaderboardRow = ({
           {artist}
         </Text>
       </View>
-      <View style={styles.starsContainer}>
+      <View style={styles.buttonsContainer}>
         <TouchableOpacity>
           <Image source={Images.leaderboardStar} style={styles.savedIcon} />
         </TouchableOpacity>
