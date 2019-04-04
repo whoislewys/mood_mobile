@@ -40,27 +40,17 @@ describe('PlayControls Component', () => {
     expect(playControlsInstance).toBeDefined();
   });
 
-  // TODO: this is a bad test. not sure of the best way to do this yet.
-  //   but it DID make me aware that playButton should definitely be it's own component
   it('handles play presses', () => {
     // 1. mock the playpress function
     const mockHandlePlayPress = jest.fn();
     // 2. pass mock fn into the component
     const wrapper = shallow(<PlayControls handlePlayPress={mockHandlePlayPress} />);
-    // 3. manually invoke it
-    const playControlsInstance = wrapper.instance();
-    playControlsInstance.props.handlePlayPress();
-    // 4. assert that it was called
+
+    // 3. reach down and find the playbutton
+    const playButton = wrapper.find({ testId: 'play-button' });
+    playButton.props().onPress();
+
+    // 4. assert the proper function was called
     expect(mockHandlePlayPress).toHaveBeenCalledTimes(1);
-  });
-
-  it('handles play presses2', () => {
-    // 1. mock the playpress function
-    const mockHandlePlayPress = jest.fn();
-    // 2. pass mock fn into the component
-    const wrapper = mount(<PlayControls handlePlayPress={mockHandlePlayPress} />);
-
-    // find the playbutton
-    const playButton = wrapper.find({ testID: 'play-button' });
   });
 });
