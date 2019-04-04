@@ -14,7 +14,7 @@ describe('Star Button', () => {
     expect(starImageProps.source).toBe(Images.starOutline);
   });
   it('renders a filled in image', () => {
-    const wrapper = shallow(<StarButton currentScore={0} />);
+    const wrapper = shallow(<StarButton currentScore={1} />);
     const starImageProps = wrapper.find(Image).props();
     expect(starImageProps.source).toBe(Images.star);
   });
