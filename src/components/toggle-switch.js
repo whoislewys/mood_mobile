@@ -220,8 +220,9 @@ class ToggleSwitch extends React.Component {
               backgroundColor: this.setBackgroundColor('slider'),
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
-            <Image source={Images.explicitIcon} style={styles.explicitIcon}/>
+            }}
+          >
+            {/*<Image source={Images.explicitIcon} style={styles.explicitIcon}/>*/}
           </Animated.View>
         </TouchableOpacity>
       </View>

@@ -142,6 +142,7 @@ export default class PlayControls extends Component {
         textColor={{ color: colors.gold }}
         shootFrom={{ x: 0, y: 0 }}
         spray={23}
+        navigation={this.props.navigation}
       />
       <TouchableOpacity onPress={this.props.skipBack}>
         <Image source={Images.skip} style={styles.skipLeftIcon} />

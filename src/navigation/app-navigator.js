@@ -34,8 +34,6 @@ const TabNavigator = createBottomTabNavigator({
   Events: { screen: map(EventsScreen) },
   Library: { screen: map(LibraryScreen) },
 }, {
-  swipeEnabled: true,
-  gesturesEnabled: true,
   tabBarOptions: {
     activeTintColor: 'rgba(0, 0, 0, 1)',
     inactiveTintColor: 'rgba(0, 0, 0, 0.21)',
@@ -45,14 +43,13 @@ const TabNavigator = createBottomTabNavigator({
 });
 
 export default createStackNavigator({
-  Login: { screen: map(LoginScreen) },
   Home: TabNavigator,
+  Login: { screen: map(LoginScreen) },
   Play: { screen: map(PlayScreen) },
 }, {
   headerMode: 'none',
   navigationOptions: {
-    // TODO: figure out how to get gestures to work
-    gesturesEnabled: true,
+    gesturesEnabled: false,
   },
   transitionConfig: () => ({
     transitionSpec: {

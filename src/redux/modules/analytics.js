@@ -50,7 +50,8 @@ export default function reducer(state = initialState, action = {}) {
 */
 export function logEvent(eventName, eventProperties, userProperties) {
   return async (dispatch, getState) => {
-    // https://amplitude.zendesk.com/hc/en-us/articles/204771828-HTTP-API
+    // if user turned off data tracking, exit this func immediately
+    if (!getState().settings.dataShouldBeTracked) return;
     const { userId, deviceId, deviceIsEmulator } = getState().analytics;
 
     // do not allow emulators to send analytics

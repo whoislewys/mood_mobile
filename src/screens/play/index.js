@@ -217,6 +217,7 @@ class PlayScreen extends Component {
         handlePlayPress={this.props.handlePlayPress}
         loading={this.props.loading}
         currentTrack={this.props.curTrack}
+        navigation={this.props.navigation} // add navigation here to push it down the the star component in playcontrols
       />
     );
   }

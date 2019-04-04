@@ -62,7 +62,6 @@ export function sendScoreDelta(currentTrackId) {
 }
 
 export function startScoreTimer() {
-  // startScoreTimer() runs only on first song play
   return (dispatch, getState) => {
     clearInterval(getState().score.timer);
     const newTimer = setInterval(() => dispatch(sendScoreDelta(getState().queue.curTrack.id)), SEND_SCORE_TIME);

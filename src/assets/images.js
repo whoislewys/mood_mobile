@@ -25,10 +25,9 @@ const images = {
   leaderboard: require('./img/selected-round-format-leaderboard.png'),
   events: require('./img/selected-round-events.png'),
   // SettingsScreen
-  doIt: require('./img/do-it.png'),
-  view: require('./img/view.png'),
   explicitIcon: require('./img/explicit-icon.png'),
   addEventButton: require('./img/add-event-button.png'),
+  settingsButton: require('./img/settings-button.png'),
 };
 
 export default images;

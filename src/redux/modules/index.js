@@ -1,16 +1,20 @@
 import { combineReducers } from 'redux';
-import mood from './mood';
-import queue from './queue';
-import leaderboard from './leaderboard';
-import events from './events';
-import score from './score';
 import analytics from './analytics';
+import auth from './auth';
+import events from './events';
+import leaderboard from './leaderboard';
+import queue from './queue';
+import score from './score';
+import settings from './settings';
+import mood from './mood';
 
 export default combineReducers({
-  mood,
-  queue,
-  leaderboard,
-  events,
-  score,
   analytics,
+  auth,
+  events,
+  leaderboard,
+  queue,
+  score,
+  settings,
+  mood,
 });

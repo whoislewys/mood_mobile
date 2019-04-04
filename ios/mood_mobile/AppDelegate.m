@@ -12,11 +12,14 @@
 #import "RNSplashScreen.h"
 #import <react-native-branch/RNBranch.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
+#import <Firebase.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+
   [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES]; // <-- add this
 
   NSURL *jsCodeLocation;
@@ -42,7 +45,7 @@
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     if (![RNBranch.branch application:app openURL:url options:options]) {
         // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
-        return [RNGoogleSignin application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+        [RNGoogleSignin application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
     }
     return YES;
 }
