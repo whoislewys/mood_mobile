@@ -11,20 +11,14 @@ import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
 
 const styles = {
-  background: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   leaderboardContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    marginLeft: 21,
-    marginRight: 21,
+    backgroundColor: '#fff',
+    paddingLeft: 21,
+    paddingRight: 21,
   },
 };
 
-class LibraryScreen extends Component {
+class SavedSongs extends Component {
   _navigateToLeaderboardScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Leaderboard',
@@ -65,10 +59,11 @@ class LibraryScreen extends Component {
     this.props.leaderboardSongs.length
       ? (
         <FlatList
+          // TODO: figure out the sticky header components
           data={this.props.leaderboardSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'My Music', showLogo: false})}
+          ListHeaderComponent={<View style={{ height: 0, marginTop: 70 }} />}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
@@ -95,4 +90,4 @@ const mapDispatchToProps = {
   sendScoreDelta,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LibraryScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedSongs);
