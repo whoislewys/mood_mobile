@@ -6,7 +6,7 @@ import Player from './src/components/player';
 import store from './src/redux/store';
 import createEventHandler from './src/redux/event-handler';
 
-class App extends Component {
+export default class App extends Component {
     componentDidMount = async () => {
       await TrackPlayer.setupPlayer({
         // Can set maxCacheSize like this:

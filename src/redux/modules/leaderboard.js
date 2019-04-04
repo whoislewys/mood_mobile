@@ -4,7 +4,7 @@ const LOAD_SONGS = 'leaderboard/LOAD';
 const LOAD_SONGS_SUCCESS = 'leaderboard/LOAD_SUCCESS';
 const LOAD_SONGS_FAIL = 'leaderboard/LOAD_FAIL';
 
-const initialState = {
+export const initialState = {
   songs: [],
   loading: false,
   error: null,
