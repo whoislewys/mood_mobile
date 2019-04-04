@@ -120,7 +120,7 @@ class ShootingStar extends Component {
   }
 }
 
-class StarButton extends Component {
+export class StarButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
