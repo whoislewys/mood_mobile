@@ -6,14 +6,7 @@ import PlayControls from '../../../../src/screens/play/components/play-controls'
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('PlayControls Component', () => {
-  it('shallow renders', () => {
-    const wrapper = shallow(<PlayControls />);
-    const playControlsInstance = wrapper.instance();
-    playControlsInstance.constructor();
-    expect(playControlsInstance).toBeDefined();
-  });
-
-  it('handles play presses', () => {
+  it('should handle play presses', () => {
     // NOTE: the playbutton should really be it's own component. right now it's copypasta'd a couple different places
     // but this is an example of how you would exercise onPress functionality somewhere
 

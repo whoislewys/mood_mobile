@@ -123,10 +123,12 @@ describe('Queue module', () => {
         ]);
       });
     });
+
     describe('loadSharedSongQueue', async () => {
-      // TODO:
+      // TODO: this is left as an exercise to the reader
     });
   });
+
   describe('reducer', () => {
     it('should return the initial state', () => {
       expect(reducer(undefined, undefined)).toEqual(initialState);
@@ -143,5 +145,6 @@ describe('Queue module', () => {
         queueType: '',
       });
     });
+    // TODO: test the other actions...
   });
 });
