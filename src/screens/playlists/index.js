@@ -1,19 +1,83 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
+  TextInput,
   ActivityIndicator,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
-import { sendScoreDelta } from '../../redux/modules/score';
+import { openModal, closeModal, updateNewPlaylistName } from '../../redux/modules/playlists';
+import { colors, fonts } from '../../assets/styles';
 
 const styles = {
   leaderboardContainer: {
+    flex: 1,
     backgroundColor: '#fff',
     paddingLeft: 21,
     paddingRight: 21,
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '72.0%',
+    height: '17.24%',
+    backgroundColor: '#fff',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderRadius: 4,
+    elevation: 10,
+    shadowOpacity: 0.65,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+  },
+  modalHeader: {
+    height: '30%',
+    justifyContent: 'flex-end',
+  },
+  modalInput: {
+    borderWidth: 1,
+    borderRadius: 4,
+    width: '85.93%',
+    height: '23.57%',
+    marginVertical: '4%',
+  },
+  modalButtonsRow: {
+    height: '30%',
+    flexDirection: 'row',
+  },
+  modalButtonLeft: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+    borderRightWidth: 0.25,
+    borderTopWidth: 0.5,
+  },
+  modalButtonRight: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+    borderLeftWidth: 0.25,
+    borderTopWidth: 0.5,
+  },
+  modalText: {
+    fontFamily: fonts.primaryBold,
+    fontSize: fonts.subHeader,
+  },
+  modalTextCancel: {
+    fontFamily: fonts.primaryLight,
+    fontSize: fonts.subHeader,
   },
 };
 
@@ -45,7 +109,7 @@ class Playlists extends Component {
   };
 
   _onCreatePlaylist = () => {
-    console.warn('yup');
+    if (!this.props.isCreatePlaylistModalOpen) this.props.openModal();
   };
 
   _renderItem = ({ item, index }) => (
@@ -62,7 +126,6 @@ class Playlists extends Component {
       ...this.props.leaderboardSongs[0],
       id: 'create-playlist',
     };
-    console.warn(firstItem);
     return (
     // TODO: build the object that will represent the playlist here
     // something like
@@ -93,25 +156,53 @@ class Playlists extends Component {
         />
       )
       : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  )
+  );
+
+  getModal = () => (
+    <Modal visible={this.props.isCreatePlaylistModalOpen} style={{ margin: 0 }}>
+      <View style={styles.modalBackground}>
+        <View style={styles.modalContent}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalText}>Create new playlist</Text>
+          </View>
+          <TextInput
+            style={styles.modalInput}
+            onChangeText={text => this.props.updateNewPlaylistName(text)}
+            value={this.props.newPlaylistName}
+            placeholder='Enter playlist title'
+          />
+          <View style={styles.modalButtonsRow}>
+            <TouchableOpacity onPress={() => this.props.closeModal()} style={styles.modalButtonLeft}>
+              <Text style={[styles.modalText, styles.modalTextCancel]}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity /* TODO: call this.props.createPlaylist() when endpoint is ready*/ style={styles.modalButtonRight}>
+              <Text style={styles.modalText}>Create</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
 
   render = () => (
-    <View style={styles.background}>
-      <View style={styles.leaderboardContainer}>
-        {this.getLeaderBoard()}
-      </View>
+    <View style={styles.leaderboardContainer}>
+      {this.getModal()}
+      {this.getLeaderBoard()}
     </View>
   )
 }
 
 const mapStateToProps = state => ({
   leaderboardSongs: state.leaderboard.songs,
-  queue: state.queue.queue,
+  isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
+  updateNewPlaylistName: state.playlists.updateNewPlaylistName,
 });
 
 const mapDispatchToProps = {
   loadLeaderboardSongQueue,
-  sendScoreDelta,
+  openModal,
+  closeModal,
+  updateNewPlaylistName,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlists);

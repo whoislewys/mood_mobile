@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 const LeaderboardRow = ({
   leaderboardSong,
   index,

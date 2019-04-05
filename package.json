@@ -15,6 +15,7 @@
     "react-native-device-info": "^0.26.4",
     "react-native-firebase": "^5.2.3",
     "react-native-google-signin": "^1.2.1",
+    "react-native-modal": "^9.0.0",
     "react-native-restart": "^0.0.9",
     "react-native-snap-carousel": "^3.7.5",
     "react-native-splash-screen": "^3.2.0",
