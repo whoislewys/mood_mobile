@@ -5,7 +5,6 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Platform,
 } from 'react-native';
 import Images from '@assets/images';
 import { fonts, colors } from '../../../assets/styles';
@@ -65,6 +64,7 @@ const LeaderboardRow = ({
   leaderboardSong,
   index,
   _handleLeaderboardRowPress,
+  _onCreatePlaylist,
 }) => {
   const {
     artist,
@@ -72,10 +72,18 @@ const LeaderboardRow = ({
     title,
   } = leaderboardSong;
 
+  let _onPress;
+  if (index === 0) {
+    _onPress = _onCreatePlaylist;
+  } else {
+    _onPress = _handleLeaderboardRowPress;
+  }
+
+
   return (
     <TouchableOpacity
       style={styles.rowBackground}
-      onPress={() => _handleLeaderboardRowPress(index)}
+      onPress={() => _onPress(index - 1)}
     >
       <Image style={styles.albumArt} source={{ uri: artwork }} />
       <View style={styles.detailsContainer}>

@@ -8,6 +8,7 @@ import MoodScreen from '../screens/mood';
 import LeaderboardScreen from '../screens/leaderboard';
 import EventsScreen from '../screens/events';
 import LibraryScreen from '../screens/library';
+import PlaylistsScreen from '../screens/playlists';
 import PlayScreen from '../screens/play';
 import LoginScreen from '../screens/login';
 import TabBar from './components/TabBar';
@@ -32,7 +33,7 @@ const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
-  Library: { screen: map(LibraryScreen) },
+  Library: { screen: map(PlaylistsScreen) },
 }, {
   tabBarOptions: {
     activeTintColor: 'rgba(0, 0, 0, 1)',
