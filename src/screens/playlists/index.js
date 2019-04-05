@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import { openModal, closeModal, updateNewPlaylistName } from '../../redux/modules/playlists';
-import { colors, fonts } from '../../assets/styles';
+import { colors, fonts, dimensions } from '../../assets/styles';
 
 const styles = {
   leaderboardContainer: {
@@ -29,7 +29,7 @@ const styles = {
   },
   modalContent: {
     width: '72.0%',
-    height: '17.24%',
+    height: dimensions.height * 0.2,
     backgroundColor: '#fff',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -55,6 +55,7 @@ const styles = {
     textAlign: 'center',
     fontFamily: fonts.primaryLight,
     fontSize: fonts.body,
+    color: colors.black,
   },
   modalButtonsRow: {
     height: '30%',
@@ -77,6 +78,7 @@ const styles = {
   modalText: {
     fontFamily: fonts.primaryBold,
     fontSize: fonts.subHeader,
+    color: colors.black,
   },
   modalTextCancel: {
     fontFamily: fonts.primaryLight,
@@ -162,7 +164,7 @@ class Playlists extends Component {
   );
 
   getModal = () => (
-    <Modal visible={this.props.isCreatePlaylistModalOpen} style={{ margin: 0 }}>
+    <Modal visible={this.props.isCreatePlaylistModalOpen} style={{ margin: 0 }} avoidKeyboard>
       <View style={styles.modalBackground}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
