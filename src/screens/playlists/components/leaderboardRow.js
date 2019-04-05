@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   detailsContainer: {
-    flex: 30,
+    flex: 20,
     marginLeft: 11,
     marginTop: 15,
     alignSelf: 'flex-start',
@@ -70,7 +70,6 @@ const LeaderboardRow = ({
     artist,
     artwork,
     title,
-    stars,
   } = leaderboardSong;
 
   return (
