@@ -52,6 +52,9 @@ const styles = {
     width: '85.93%',
     height: '23.57%',
     marginVertical: '4%',
+    textAlign: 'center',
+    fontFamily: fonts.primaryLight,
+    fontSize: fonts.body,
   },
   modalButtonsRow: {
     height: '30%',
