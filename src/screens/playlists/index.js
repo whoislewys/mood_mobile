@@ -87,21 +87,21 @@ const styles = {
 };
 
 class Playlists extends Component {
-  _navigateToLeaderboardScreen = (params = {}) => {
+  _navigateToPlaylistsScreen = (params = {}) => {
     this.props.navigation.navigate({
-      routeName: 'Leaderboard',
+      routeName: 'Playlists',
       params: { ...params, visible: true },
     });
   };
 
-  _navigateToPlayScreen = () => {
+  _navigateToPlaylistDetailScreen = () => {
     this.props.navigation.navigate({
-      routeName: 'Play',
+      routeName: 'PlaylistDetail',
       params: {
-        parentScreen: 'Leaderboard',
+        parentScreen: 'Playlists',
         visible: false,
         // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToLeaderboardScreen,
+        moodscreen: this._navigateToPlaylistsScreen,
       },
     });
   };
@@ -109,11 +109,17 @@ class Playlists extends Component {
   keyExtractor = song => song.id.toString();
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
+    // TODO: swap loadLeaderboardSongQueue for loadPlayListSongsForId
     this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
-    this._navigateToPlayScreen();
+    this._navigateToPlaylistDetailScreen();
   };
 
-  _onCreatePlaylist = () => {
+  _onOpenCreatePlaylistModal = () => {
+    if (!this.props.userIsLoggedIn) {
+      // TODO: move this into a util
+      this.props.navigation.navigate('Login');
+      return;
+    }
     if (!this.props.isCreatePlaylistModalOpen) this.props.openModal();
   };
 
@@ -122,7 +128,7 @@ class Playlists extends Component {
       leaderboardSong={item}
       index={index}
       _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
-      _onCreatePlaylist={this._onCreatePlaylist}
+      _onCreatePlaylist={this._onOpenCreatePlaylistModal}
     />
   );
 
@@ -163,6 +169,10 @@ class Playlists extends Component {
       : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
   );
 
+  _onCreatePlaylist = () => {
+    this.props.navigation.navigate('PlaylistDetail');
+  }
+
   getModal = () => (
     <Modal visible={this.props.isCreatePlaylistModalOpen} style={{ margin: 0 }} avoidKeyboard>
       <View style={styles.modalBackground}>
@@ -180,7 +190,7 @@ class Playlists extends Component {
             <TouchableOpacity onPress={() => this.props.closeModal()} style={styles.modalButtonLeft}>
               <Text style={[styles.modalText, styles.modalTextCancel]}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity /* TODO: call this.props.createPlaylist() when endpoint is ready*/ style={styles.modalButtonRight}>
+            <TouchableOpacity onPress={this._onCreatePlaylist}/* TODO: call this.props.createPlaylist() when endpoint is ready*/ style={styles.modalButtonRight}>
               <Text style={styles.modalText}>Create</Text>
             </TouchableOpacity>
           </View>

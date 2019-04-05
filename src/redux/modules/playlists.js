@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const CREATE_PLAYLIST = 'playlists/CREATE_PLAYLIST';
 const CREATE_PLAYLIST_SUCCESS = 'playlists/CREATE_PLAYLIST_SUCCESS';
 const CREATE_PLAYLIST_FAIL = 'playlists/CREATE_PLAYLIST_FAIL';
@@ -68,9 +69,10 @@ export function updateNewPlaylistName(newPlaylistName) {
 }
 
 export function createPlaylist(userId) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch({ type: CREATE_PLAYLIST });
     try {
+      if (!getState().auth.userIsLoggedIn) return;
       let playlists = await axios.post('http://api.moodindustries.com/api/v1/playlists',
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv', userId },

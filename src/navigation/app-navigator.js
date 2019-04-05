@@ -25,13 +25,15 @@ const map = SomeComponent => class SomeClass extends React.Component {
 
 const TabBarComponent = props => <TabBar {...props} />;
 
-const MyMusicNavigator = createMaterialTopTabNavigator({
-  // TODO: give it a header same one as the mood screen or different one?
-
-  // TODO: use safe area view like here: https://github.com/react-navigation/react-navigation/issues/3832
-  //  to make iPhone X look not like shit
-  Songs: { screen: map(LibraryScreen) },
+const PlaylistNavigator = createStackNavigator({
   Playlists: { screen: map(PlaylistsScreen) },
+  PlaylistDetail: { screen: map(LibraryScreen) },
+})
+
+const MyMusicNavigator = createMaterialTopTabNavigator({
+  // TODO: give it a header component as the mood screen
+  Songs: { screen: map(LibraryScreen) },
+  Playlists: PlaylistNavigator,
 },
 {
   tabBarOptions: {

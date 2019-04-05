@@ -17,7 +17,7 @@ class Player extends Component {
 
   componentWillUnmount = () => {
     this.props.stopScoreTimer();
-  }
+  };
 
   render = () => {
     return (
