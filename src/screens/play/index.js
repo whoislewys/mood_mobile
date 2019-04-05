@@ -185,40 +185,54 @@ class PlayScreen extends Component {
 
   getAlbumArtCarousel = () => {
     return (
-      <Carousel
-        ref={(c) => { this._carouselref = c; }}
-        data={this.props.queue}
-        sliderWidth={dimensions.width}
-        itemWidth={dimensions.width}
-        renderItem={this._renderCarouselItem}
-        onBeforeSnapToItem={this._handleCarouselSnap}
-        firstItem={this.props.curTrackIndex}
-        lockScrollWhileSnapping
-      />
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => this.onSwipeDown()}
+      >
+        <Carousel
+          ref={(c) => { this._carouselref = c; }}
+          data={this.props.queue}
+          sliderWidth={dimensions.width}
+          itemWidth={dimensions.width}
+          renderItem={this._renderCarouselItem}
+          onBeforeSnapToItem={this._handleCarouselSnap}
+          firstItem={this.props.curTrackIndex}
+          lockScrollWhileSnapping
+        />
+      </GestureRecognizer>
     );
   };
 
   getTrackInfoAndPlaybar = () => {
     return (
-      <InfoText
-        setTime={this.props.setTime}
-        track={this.props.curTrack}
-      />
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => this.onSwipeDown()}
+      >
+        <InfoText
+          setTime={this.props.setTime}
+          track={this.props.curTrack}
+        />
+      </GestureRecognizer>
     );
   };
 
   getPlayControls = () => {
     return (
-      <PlayControls
-        logEvent={this.props.logEvent}
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
-        playing={this.props.playing}
-        handlePlayPress={this.props.handlePlayPress}
-        loading={this.props.loading}
-        currentTrack={this.props.curTrack}
-        navigation={this.props.navigation} // add navigation here to push it down the the star component in playcontrols
-      />
+      <GestureRecognizer
+        style={{ flex: 1 }}
+        onSwipeDown={() => this.onSwipeDown()}
+      >
+        <PlayControls
+          logEvent={this.props.logEvent}
+          skipForward={this._nextTrack}
+          skipBack={this._previousTrack}
+          playing={this.props.playing}
+          handlePlayPress={this.props.handlePlayPress}
+          loading={this.props.loading}
+          currentTrack={this.props.curTrack}
+        />
+      </GestureRecognizer>
     );
   }
 }

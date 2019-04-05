@@ -88,7 +88,7 @@ export default function events(state = initialState, action = {}) {
 }
 
 export function loadEvents() {
-  const dateTimeStart = moment().toISOString();
+  const dateTimeStart = moment({ hour: 0 }).toISOString();
   return async (dispatch) => {
     dispatch({ type: LOAD_EVENTS });
     try {

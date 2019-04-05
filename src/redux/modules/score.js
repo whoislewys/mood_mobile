@@ -9,7 +9,7 @@ const STOP_TIMER = 'score/STOP_TIMER';
 
 const SEND_SCORE_TIME = 8000; // in ms
 
-const initialState = {
+export const initialState = {
   currentScore: 0,
   scoreDelta: 0,
   timer: null,
