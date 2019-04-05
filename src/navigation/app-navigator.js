@@ -1,6 +1,6 @@
 import React from 'react';
 import { Easing, Animated } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import SplashScreen from '../screens/splash';
 import ErrorScreen from '../screens/error';
 import SettingsScreen from '../screens/settings';
@@ -12,10 +12,11 @@ import PlaylistsScreen from '../screens/playlists';
 import PlayScreen from '../screens/play';
 import LoginScreen from '../screens/login';
 import TabBar from './components/TabBar';
+import { colors } from '../assets/styles';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     render = () => {
-      const screenProps = this.props.screenProps;
+      const { screenProps } = this.props;
       // delete this.props.screenProps; // for some reason not working
       const { navigation: { state: { params } } } = this.props;
       return <SomeComponent {...params} {...this.props} {...screenProps} />;
@@ -24,8 +25,28 @@ const map = SomeComponent => class SomeClass extends React.Component {
 
 const TabBarComponent = props => <TabBar {...props} />;
 
-// TODO:
-//  figure out swipe from navbar to open playscreen
+const MyMusicNavigator = createMaterialTopTabNavigator({
+  // TODO: give it a header same one as the mood screen or different one?
+
+  // TODO: use safe area view like here: https://github.com/react-navigation/react-navigation/issues/3832
+  //  to make iPhone X look not like shit
+  Songs: { screen: map(LibraryScreen) },
+  Playlists: { screen: map(PlaylistsScreen) },
+},
+{
+  tabBarOptions: {
+    activeTintColor: colors.black,
+    inactiveTintColor: colors.gray,
+    indicatorStyle: {
+      backgroundColor: colors.black,
+      alignSelf: 'center',
+    },
+    style: {
+      backgroundColor: '#fff',
+    },
+  },
+});
+
 const TabNavigator = createBottomTabNavigator({
   Splash: { screen: map(SplashScreen) },
   Error: { screen: map(ErrorScreen) },
@@ -33,7 +54,7 @@ const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
-  Library: { screen: map(PlaylistsScreen) },
+  Library: MyMusicNavigator,
 }, {
   tabBarOptions: {
     activeTintColor: 'rgba(0, 0, 0, 1)',
