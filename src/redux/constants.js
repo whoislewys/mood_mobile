@@ -53,9 +53,9 @@ export const MOOD_TYPE = 'mood';
 export const LEADERBOARD_TYPE = 'leaderboard';
 
 // Saving
-export const SAVE_SONG = 'savingSongs/CREATE_PLAYLIST';
-export const SAVE_SONG_SUCCESS = 'savingSongs/CREATE_PLAYLIST_SUCCESS';
-export const SAVE_SONG_FAIL = 'savingSongs/CREATE_PLAYLIST_FAIL';
+export const SAVE_SONG = 'savingSongs/SAVE_SONG';
+export const SAVE_SONG_SUCCESS = 'savingSongs/SAVE_SONG_SUCCESS';
+export const SAVE_SONG_FAIL = 'savingSongs/SAVE_SONG_FAIL';
 
 // Score
 export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
