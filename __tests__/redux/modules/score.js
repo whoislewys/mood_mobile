@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { reducer, initialState, incrementScore } from '../../../src/redux/modules/score';
+import { reducer, initialState as scoreInitialState, incrementScore } from '../../../src/redux/modules/score';
 import { initialState as queueInitialState } from '../../../src/redux/modules/queue';
 import { INCREMENT_SCORE } from '../../../src/redux/constants';
 // import * as savingSongs from '../../../src/redux/modules/savingSongs';
@@ -44,7 +44,7 @@ describe('Score module', () => {
       const setup = () => {
         const mockState = {
           queue: mockQueueState,
-          score: initialState,
+          score: scoreInitialState,
         };
         store = mockStore(mockState);
       };
@@ -67,18 +67,26 @@ describe('Score module', () => {
         ]);
       });
 
-      it('should not increment score if there is no current track', async () => {
+      it('should increment score if there is no current track', async () => {
         mockQueueState.curTrack = null;
         setup();
         await store.dispatch(incrementScore());
         expect(store.getActions()).toEqual([]);
+      });
+
+      it('should increment score, but not save song if the user has already ranked this song', async () => {
+        mockQueueState.curTrack = track1;
+        scoreInitialState.currentScore = 1;
+        setup();
+        await store.dispatch(incrementScore());
+        expect(store.getActions()).toEqual([{ type: INCREMENT_SCORE }]);
       });
     });
   });
 
   describe('reducer', () => {
     it('should return the initial state', () => {
-      expect(reducer(undefined, undefined)).toEqual(initialState);
+      expect(reducer(undefined, undefined)).toEqual(scoreInitialState);
     });
   });
 });
