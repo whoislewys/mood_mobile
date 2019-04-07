@@ -1,4 +1,6 @@
-const DATA_TRACK_TOGGLE = 'settings/DATA_TRACK_TOGGLE';
+import {
+  DATA_TRACK_TOGGLE,
+} from '../constants';
 
 const initialState = {
   dataShouldBeTracked: true,

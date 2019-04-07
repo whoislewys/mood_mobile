@@ -1,14 +1,13 @@
 import axios from 'axios';
 import moment from 'moment';
 import { colors } from '../../assets/styles';
-
-const LOAD_EVENTS = 'events/LOAD';
-const LOAD_EVENTS_SUCCESS = 'events/LOAD_SUCCESS';
-const LOAD_EVENTS_FAILURE = 'events/LOAD_FAILURE';
-const EVENT_CAL_ID = 'ghd4v0jfbsr5hjoe3isfjtt62s@group.calendar.google.com';
-const GOOGLE_API_KEY = 'AIzaSyBBpspRcmIZc9XqVj3Xk6r227t1s02nnuQ';
-// const clientID = '177472004471-tktd6itgn2h4vn2of9gskvl600mcjlko.apps.googleusercontent.com';
-// const clientScrt = 'UoCupdbDxBoBhVnBEVNgpSuq';
+import {
+  LOAD_EVENTS,
+  LOAD_EVENTS_SUCCESS,
+  LOAD_EVENTS_FAILURE,
+  EVENT_CAL_ID,
+  GOOGLE_API_KEY,
+} from '../constants';
 
 const initialState = {
   events: [],

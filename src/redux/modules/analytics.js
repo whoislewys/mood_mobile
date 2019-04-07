@@ -1,10 +1,11 @@
 import axios from 'axios';
 import moment from 'moment';
-
-const LOG_EVENT = 'ANAL/LOG_EVENT';
-const SET_DEVICE_INFO = 'ANAL/SET_DEVICE_INFO';
-const SET_USER_ID = 'ANAL/SET_USER_ID';
-const API_KEY = 'c1bb5c361a35b3978494ded3f756fb65';
+import {
+  LOG_EVENT,
+  SET_DEVICE_INFO,
+  SET_USER_ID,
+  API_KEY,
+} from '../constants';
 
 const initialState = {
   userId: '',

@@ -1,9 +1,10 @@
 import axios from 'axios';
-
-const LOAD_MOODS = 'moods/LOAD';
-const LOAD_MOODS_SUCCESS = 'moods/LOAD_SUCCESS';
-const LOAD_MOODS_FAIL = 'moods/LOAD_FAIL';
-const SET_MOOD = 'moods/SET';
+import {
+  LOAD_MOODS,
+  LOAD_MOODS_SUCCESS,
+  LOAD_MOODS_FAIL,
+  SET_MOOD,
+} from '../constants';
 
 const initialState = {
   moods: [

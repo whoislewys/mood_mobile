@@ -1,8 +1,9 @@
 import axios from 'axios';
-
-const LOAD_SONGS = 'leaderboard/LOAD';
-const LOAD_SONGS_SUCCESS = 'leaderboard/LOAD_SUCCESS';
-const LOAD_SONGS_FAIL = 'leaderboard/LOAD_FAIL';
+import {
+  LEADERBOARD_LOAD_SONGS as LOAD_SONGS,
+  LEADERBOARD_LOAD_SONGS_SUCCESS as LOAD_SONGS_SUCCESS,
+  LEADERBOARD_LOAD_SONGS_FAIL as LOAD_SONGS_FAIL,
+} from '../constants';
 
 export const initialState = {
   songs: [],

@@ -1,17 +1,16 @@
 import axios from 'axios';
 
-
-const CREATE_PLAYLIST = 'playlists/CREATE_PLAYLIST';
-const CREATE_PLAYLIST_SUCCESS = 'playlists/CREATE_PLAYLIST_SUCCESS';
-const CREATE_PLAYLIST_FAIL = 'playlists/CREATE_PLAYLIST_FAIL';
-
-const LOAD_PLAYLISTS = 'playlists/LOAD';
-const LOAD_PLAYLISTS_SUCCESS = 'playlists/LOAD_SUCCESS';
-const LOAD_PLAYLISTS_FAIL = 'playlists/LOAD_FAIL';
-
-const OPEN_MODAL = 'playlists/OPEN_MODAL';
-const CLOSE_MODAL = 'playlists/CLOSE_MODAL';
-const UPDATE_NEW_PLAYLIST_NAME = 'playlists/UPDATE_NEW_PLAYLIST_NAME';
+import {
+  CREATE_PLAYLIST,
+  CREATE_PLAYLIST_SUCCESS,
+  CREATE_PLAYLIST_FAIL,
+  LOAD_PLAYLISTS,
+  LOAD_PLAYLISTS_SUCCESS,
+  LOAD_PLAYLISTS_FAIL,
+  OPEN_MODAL,
+  CLOSE_MODAL,
+  UPDATE_NEW_PLAYLIST_NAME,
+} from '../constants';
 
 const initialState = {
   playlists: [],

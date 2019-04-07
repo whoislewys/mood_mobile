@@ -1,8 +1,9 @@
 import axios from 'axios';
-
-const SAVE_SONG = 'savingsongs/CREATE_PLAYLIST';
-const SAVE_SONG_SUCCESS = 'savingsongs/CREATE_PLAYLIST_SUCCESS';
-const SAVE_SONG_FAIL = 'savingsongs/CREATE_PLAYLIST_FAIL';
+import {
+  SAVE_SONG,
+  SAVE_SONG_SUCCESS,
+  SAVE_SONG_FAIL,
+} from '../constants';
 
 const initialState = {
   loading: '',

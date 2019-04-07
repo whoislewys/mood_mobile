@@ -1,5 +1,7 @@
-const USER_LOGGED_IN = 'USER_LOGGED_IN';
-const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
+import {
+  USER_LOGGED_IN,
+  USER_LOGGED_OUT,
+} from '../constants';
 
 const initialState = {
   email: '',

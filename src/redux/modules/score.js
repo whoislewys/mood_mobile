@@ -8,10 +8,6 @@ import {
   START_TIMER,
   STOP_TIMER,
 } from '../constants';
-// const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
-// const SEND_SCORE = 'score/SEND_SCORE';
-// const START_TIMER = 'score/START_TIMER';
-// const STOP_TIMER = 'score/STOP_TIMER';
 
 const SEND_SCORE_TIME = 8000; // in ms
 
