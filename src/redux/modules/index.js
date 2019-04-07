@@ -8,6 +8,7 @@ import queue from './queue';
 import score from './score';
 import settings from './settings';
 import mood from './mood';
+import savingSongs from './savingSongs';
 
 export default combineReducers({
   analytics,
@@ -19,4 +20,5 @@ export default combineReducers({
   score,
   settings,
   mood,
+  savingSongs,
 });

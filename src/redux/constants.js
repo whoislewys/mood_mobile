@@ -10,11 +10,14 @@ export const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
 export const RESET_QUEUE = 'queue/RESET_QUEUE';
 export const PLAYBACK_STATE = 'playback/STATE';
 export const PLAYBACK_TRACK = 'playback/TRACK';
-// Queue types
 export const MOOD_TYPE = 'mood';
 export const LEADERBOARD_TYPE = 'leaderboard';
 
-// TODO: add more redux constants here
+// Score Constants
+export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
+export const SEND_SCORE = 'score/SEND_SCORE';
+export const START_TIMER = 'score/START_TIMER';
+export const STOP_TIMER = 'score/STOP_TIMER';
 
 /** Other Constants **/
 // Analytics events

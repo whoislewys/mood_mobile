@@ -26,9 +26,14 @@ const map = SomeComponent => class SomeClass extends React.Component {
 const TabBarComponent = props => <TabBar {...props} />;
 
 const PlaylistNavigator = createStackNavigator({
-  Playlists: { screen: map(PlaylistsScreen) },
+  Playlists: {
+    screen: map(PlaylistsScreen),
+    navigationOptions: {
+      header: null,
+    },
+  },
   PlaylistDetail: { screen: map(LibraryScreen) },
-})
+});
 
 const MyMusicNavigator = createMaterialTopTabNavigator({
   // TODO: give it a header component as the mood screen

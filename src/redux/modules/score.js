@@ -1,11 +1,17 @@
 import axios from 'axios';
 import { logEvent } from './analytics';
-import { anal } from '../constants';
-
-const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
-const SEND_SCORE = 'score/SEND_SCORE';
-const START_TIMER = 'score/START_TIMER';
-const STOP_TIMER = 'score/STOP_TIMER';
+import { saveSong } from './savingSongs';
+import {
+  anal,
+  INCREMENT_SCORE,
+  SEND_SCORE,
+  START_TIMER,
+  STOP_TIMER,
+} from '../constants';
+// const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
+// const SEND_SCORE = 'score/SEND_SCORE';
+// const START_TIMER = 'score/START_TIMER';
+// const STOP_TIMER = 'score/STOP_TIMER';
 
 const SEND_SCORE_TIME = 8000; // in ms
 
@@ -44,8 +50,11 @@ export default function reducer(state = initialState, action = {}) {
 export function incrementScore() {
   // called for every star press,
   // updates global score variable
-  return {
-    type: INCREMENT_SCORE,
+  return (dispatch, getState) => {
+    if (getState().score.currentScore === 0) {
+      dispatch(saveSong());
+    }
+    dispatch({ type: INCREMENT_SCORE });
   };
 }
 

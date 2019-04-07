@@ -119,7 +119,7 @@ export default function reducer(state = initialState, action = {}) {
         queue: songs1,
         curTrack: songs1[0],
         curTrackIndex: 0,
-        queueType: queueTypes.mood,
+        queueType: MOOD_TYPE,
       };
     case LOAD_SHARED_SONG_QUEUE_FAIL:
       return {
