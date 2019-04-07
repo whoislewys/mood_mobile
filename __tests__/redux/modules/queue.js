@@ -3,7 +3,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {
   reducer,
-  initialState,
+  initialState as queueInitialState,
   loadSongsForMoodId,
   loadLeaderboardSongQueue,
   loadSharedSongQueue,
@@ -61,7 +61,7 @@ describe('Queue module', () => {
       let store;
       beforeEach(() => {
         // only mock what you need in the store
-        store = mockStore(initialState);
+        store = mockStore(queueInitialState);
       });
 
       afterEach(() => {
@@ -72,8 +72,10 @@ describe('Queue module', () => {
         // mock more stuff you need
         const mockSongs = [track1, track2];
         axios.get.mockResolvedValue(mockSongs);
-        // dispatch the action
+
+        // exercise the functionality
         await store.dispatch(loadSongsForMoodId(1));
+
         // assert you get what you'd expect
         return expect(store.getActions()).toEqual([
           { type: LOAD_SONGS },
@@ -132,11 +134,11 @@ describe('Queue module', () => {
 
   describe('reducer', () => {
     it('should return the initial state', () => {
-      expect(reducer(undefined, undefined)).toEqual(initialState);
+      expect(reducer(undefined, undefined)).toEqual(queueInitialState);
     });
     it('should handle RESET_QUEUE action', () => {
       expect(reducer([], { type: RESET_QUEUE })).toEqual({
-        // why tf does this work? shouldnt the spread operator in the reducer return the rest of the state that isnt being modified?
+        // why tf does this work? shouldn't the spread operator in the reducer return the rest of the state that isnt being modified?
         // the reducer is only returning what's below...
         loading: true,
         queue: [],
