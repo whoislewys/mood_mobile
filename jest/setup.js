@@ -15,6 +15,10 @@
 //   };
 // });
 
+jest.mock('react-native-google-signin', () => {});
+
+jest.mock('react-native-firebase', () => {});
+
 // TrackPlayer
 jest.mock('react-native-track-player', () => {
   return {
