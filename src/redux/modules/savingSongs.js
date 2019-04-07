@@ -10,7 +10,7 @@ const initialState = {
   error: '',
 };
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case SAVE_SONG:
       return { ...state, loading: true };
@@ -25,7 +25,7 @@ export default function reducer(state = initialState, action = {}) {
 
 export function saveSong() {
   return (dispatch, getState) => {
-    dispatch({ SAVE_SONG });
+    dispatch({ type: SAVE_SONG });
     const curTrackId = getState().queue.curTrack.id;
     try {
       axios.post(`http://api.moodindustries.com/api/v1//songs/${curTrackId}/save`,

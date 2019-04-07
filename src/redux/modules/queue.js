@@ -279,6 +279,7 @@ export function playbackTrack(track) {
 
     // do not log analytic or start score timer for an empty queue
     if (!queue.length) return;
+
     dispatch(logEvent(anal.songPlay, songPlayAnalyticEventFactory(anal.songPlay, queueType, newCurTrack)));
     dispatch(startScoreTimer());
   };
