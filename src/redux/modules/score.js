@@ -44,9 +44,10 @@ export function reducer(state = initialState, action = {}) {
 }
 
 export function incrementScore() {
-  // called for every star press,
-  // updates global score variable
   return (dispatch, getState) => {
+    // if no current track, don't allow the user to rate
+    if (!getState().queue.curTrack) return;
+
     if (getState().score.currentScore === 0) {
       dispatch(saveSong());
     }

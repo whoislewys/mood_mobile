@@ -38,23 +38,25 @@ describe('Score module', () => {
   describe('action creator', () => {
     describe('incrementScore', () => {
       let store;
-      beforeEach(() => {
-        const mockQueueState = queueInitialState;
-        mockQueueState.curTrack = track1;
+      const mockQueueState = queueInitialState;
 
+      // mock the pieces of state you need before calling setup()
+      const setup = () => {
         const mockState = {
           queue: mockQueueState,
           score: initialState,
         };
-
         store = mockStore(mockState);
-      });
+      };
 
       afterEach(() => {
         store.clearActions();
       });
 
       it('should attempt to save a song if a song has not been starred yet', async () => {
+        mockQueueState.curTrack = track1;
+        setup();
+
         const saveSongSpy = jest.spyOn(savingSongs, 'saveSong');
 
         await store.dispatch(incrementScore());
@@ -63,6 +65,13 @@ describe('Score module', () => {
         expect(store.getActions().slice(-1)).toEqual([
           { type: INCREMENT_SCORE },
         ]);
+      });
+
+      it('should not increment score if there is no current track', async () => {
+        mockQueueState.curTrack = null;
+        setup();
+        await store.dispatch(incrementScore());
+        expect(store.getActions()).toEqual([]);
       });
     });
   });
