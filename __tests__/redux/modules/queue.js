@@ -97,9 +97,9 @@ describe('Queue module', () => {
 
       beforeEach(() => {
         // only mock what you need in the store
-        const toyLeaderboardState = leaderboardInitialState;
-        toyLeaderboardState.songs = [track1, track2];
+        leaderboardInitialState.songs = [track1, track2];
         mockState = {
+          // leaderboard: mockLeaderboardState,
           leaderboard: leaderboardInitialState,
           score: scoreInitialState,
         };
@@ -111,8 +111,9 @@ describe('Queue module', () => {
       });
 
       it('should dispatch correct queue actions', async () => {
-        const selectedLeaderboardSongIndex = 0;
+        const selectedLeaderboardSongIndex = 1;
         await store.dispatch(loadLeaderboardSongQueue(selectedLeaderboardSongIndex));
+        console.warn('actions: ', store.getActions());
         return expect(store.getActions().slice(0, 2)).toEqual([
           { type: RESET_QUEUE },
           {
