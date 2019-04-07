@@ -1,7 +1,8 @@
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import reducer, {
+import {
+  reducer,
   initialState,
   loadSongsForMoodId,
   loadLeaderboardSongQueue,
@@ -113,7 +114,6 @@ describe('Queue module', () => {
       it('should dispatch correct queue actions', async () => {
         const selectedLeaderboardSongIndex = 1;
         await store.dispatch(loadLeaderboardSongQueue(selectedLeaderboardSongIndex));
-        console.warn('actions: ', store.getActions());
         return expect(store.getActions().slice(0, 2)).toEqual([
           { type: RESET_QUEUE },
           {

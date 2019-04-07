@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import reducer, { initialState, incrementScore } from '../../../src/redux/modules/score';
+import { reducer, initialState, incrementScore } from '../../../src/redux/modules/score';
 import { initialState as queueInitialState } from '../../../src/redux/modules/queue';
 import { INCREMENT_SCORE } from '../../../src/redux/constants';
 // import * as savingSongs from '../../../src/redux/modules/savingSongs';

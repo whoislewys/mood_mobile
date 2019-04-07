@@ -18,7 +18,7 @@ export const initialState = {
   errors: [],
 };
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case INCREMENT_SCORE:
       return { ...state, currentScore: state.currentScore + 1, scoreDelta: state.scoreDelta + 1 };

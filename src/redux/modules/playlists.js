@@ -20,7 +20,7 @@ const initialState = {
   error: null,
 };
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case OPEN_MODAL:
       return { ...state, isCreatePlaylistModalOpen: true };

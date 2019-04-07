@@ -43,7 +43,7 @@ export function loadSongData(list) {
   })), 'artist');
 }
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case RESET_QUEUE:
       // used to empty queue before refilling it with songs from somewhere else

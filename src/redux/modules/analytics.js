@@ -14,7 +14,7 @@ const initialState = {
   eventsTracked: 0,
 };
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOG_EVENT:
       // can use eventsTracked to batch send events later if needed

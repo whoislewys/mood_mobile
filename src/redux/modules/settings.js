@@ -6,7 +6,7 @@ const initialState = {
   dataShouldBeTracked: true,
 };
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case DATA_TRACK_TOGGLE:
       return { ...state, dataShouldBeTracked: !state.dataShouldBeTracked };

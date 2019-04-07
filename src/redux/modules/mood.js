@@ -24,7 +24,7 @@ const initialState = {
 //   await Promise.all(imagePrefetch);
 // }
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_MOODS:
       return { ...state, loading: true };

@@ -25,7 +25,7 @@ export function mapSongsToValidTrackObjects(list) {
 }
 
 // now define reducer
-export default function leaderboard(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_SONGS:
       return { ...state, loading: true };

@@ -11,7 +11,7 @@ const initialState = {
   userIsLoggedIn: false,
 };
 
-export default function auth(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case USER_LOGGED_IN:
       const {

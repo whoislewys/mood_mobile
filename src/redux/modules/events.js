@@ -69,7 +69,7 @@ function processEventObj(event) {
   };
 }
 
-export default function events(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_EVENTS:
       return { ...state, loading: true };
