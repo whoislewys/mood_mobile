@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     height: 31,
     marginRight: '7%',
     // TODO use borderradius when wil sends actual button
-    // backgroundColor: 'tomato',
     // borderRadius: 4,
     elevation: 4,
     shadowOpacity: 0.3,

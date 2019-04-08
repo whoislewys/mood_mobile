@@ -62,7 +62,6 @@ class SavedSongs extends Component {
           data={this.props.leaderboardSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={<View style={{ height: 0, marginTop: 70 }} />}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />

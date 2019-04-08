@@ -11,6 +11,7 @@ import {
 import Images from '@assets/images';
 import Mood from './mood';
 import { fonts, colors, dimensions } from '../../../assets/styles';
+import MoodLeftHeader from '../../../components/headers/MoodLeftHeader';
 
 const styles = StyleSheet.create({
   header: {
@@ -71,20 +72,6 @@ export default class MoodList extends React.Component {
     />
   );
 
-  renderHeader = () => (
-    <View style={styles.header}>
-      <Text style={styles.headerText}>Discover</Text>
-      <View style={styles.buttonRow}>
-        <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
-          <Image source={Images.bugIcon} style={styles.bugsButton} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.settings}>
-          <Image source={Images.settingsGear} style={styles.settingsButton} />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
   render = () => {
     return (
       <FlatList
@@ -92,8 +79,7 @@ export default class MoodList extends React.Component {
         data={this.props.moods}
         keyExtractor={this.keyExtractor}
         renderItem={this._renderItem}
-        ListHeaderComponent={this.renderHeader}
-        contentContainerStyle={styles.container}
+        ListHeaderComponent={<MoodLeftHeader title='Discover' />}
         numColumns={2}
       />
     );

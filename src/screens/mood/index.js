@@ -16,24 +16,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  padding: {
-    flex: 25,
-  },
-  moodList: {
-    flex: 90,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    marginLeft: 2,
-    marginRight: 2,
-  },
-  footer: {
-    flex: 8,
-    backgroundColor: 'rgba(102, 102, 102, 1)',
-  },
-  goArrow: {
-    resizeMode: 'stretch',
-    height: 20,
-  },
 });
 
 class MoodScreen extends Component {
@@ -102,9 +84,7 @@ class MoodScreen extends Component {
 
   render = () => (
     <View style={styles.container}>
-      <View style={styles.moodList}>
         { this.getContent() }
-      </View>
     </View>
   )
 }

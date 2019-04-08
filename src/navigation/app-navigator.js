@@ -13,6 +13,8 @@ import PlayScreen from '../screens/play';
 import LoginScreen from '../screens/login';
 import TabBar from './components/TabBar';
 import { colors } from '../assets/styles';
+import MoodLeftHeaderWithSettingsButton
+  from '../components/headers/MoodLeftHeaderWithSettingsButton';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     render = () => {
@@ -26,13 +28,12 @@ const map = SomeComponent => class SomeClass extends React.Component {
 const TabBarComponent = props => <TabBar {...props} />;
 
 const PlaylistNavigator = createStackNavigator({
-  Playlists: {
-    screen: map(PlaylistsScreen),
-    navigationOptions: {
-      header: null,
-    },
-  },
+  Playlists: { screen: map(PlaylistsScreen) },
   PlaylistDetail: { screen: map(LibraryScreen) },
+}, {
+  navigationOptions: {
+    header: null,
+  },
 });
 
 const MyMusicNavigator = createMaterialTopTabNavigator({
@@ -54,6 +55,17 @@ const MyMusicNavigator = createMaterialTopTabNavigator({
   },
 });
 
+const MyMusicNavigatorWithHeader = createStackNavigator({
+  MyMusic: MyMusicNavigator,
+}, {
+  navigationOptions: {
+    header: props => <MoodLeftHeaderWithSettingsButton />,
+    headerStyle: {
+      backgroundColor: '#fff',
+    },
+  },
+});
+
 const TabNavigator = createBottomTabNavigator({
   Splash: { screen: map(SplashScreen) },
   Error: { screen: map(ErrorScreen) },
@@ -61,7 +73,7 @@ const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
-  Library: MyMusicNavigator,
+  Library: MyMusicNavigatorWithHeader,
 }, {
   tabBarOptions: {
     activeTintColor: 'rgba(0, 0, 0, 1)',
