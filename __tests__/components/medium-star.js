@@ -2,7 +2,6 @@ import React from 'react';
 import { Image } from 'react-native';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import axios from 'axios';
 import { StarButton } from '../../src/components/medium-star';
 import Images from '../../src/assets/images';
 
@@ -35,16 +34,4 @@ describe('Star Button', () => {
     starButtonInstance.clap();
     expect(mockNavigateToLoginFunc).toHaveBeenCalled();
   });
-
-  // it('should attempt to save a song when user is logged in', () => {
-  //   const starButtonInstance = shallow(
-  //     <StarButton
-  //       userIsLoggedIn={false}
-  //     />,
-  //   ).instance();
-  //
-  //   starButtonInstance.clap();
-  //   // mock api call to save song for this user
-  //   axios.get.mockResolvedValue();
-  // });
 });
