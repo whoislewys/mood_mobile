@@ -105,6 +105,13 @@ const styles = StyleSheet.create({
 });
 
 class SettingsScreen extends Component {
+  _navigateToMoodScreen = (params = {}) => {
+    this.props.navigation.navigate({
+      routeName: 'Mood',
+      params: { ...params, visible: true },
+    });
+  };
+
   render = () => {
     // const { goBack } = this.props.navigation;
     StatusBar.setBarStyle('dark-content', true);
@@ -147,7 +154,7 @@ class SettingsScreen extends Component {
           ]}
           renderItem={this.renderListItem}
           keyExtractor={this._keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'Settings', moodscreen: this.props.moodscreen.bind(this) })}
+          ListHeaderComponent={Header({ headerText: 'Settings', goBack: this._navigateToMoodScreen })}
           ListFooterComponent={this.footerElem}
         />
       </View>

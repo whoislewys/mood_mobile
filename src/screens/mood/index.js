@@ -26,12 +26,7 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   }
 
-  navigateToMoodScreen = (params = {}) => {
-    this.props.navigation.navigate({
-      routeName: 'Mood',
-      params: { ...params, visible: true },
-    });
-  }
+
 
   navigateToPlayScreenFromMoodScreen = (params = {}) => {
     const currentScreenName = 'MoodScreen';
@@ -86,7 +81,7 @@ class MoodScreen extends Component {
 
   render = () => (
     <View style={styles.container}>
-      <MoodLeftHeaderWithSettingsButton title='Discover' />
+      <MoodLeftHeaderWithSettingsButton title='Discover' navigation={this.props.navigation} />
       { this.getContent() }
     </View>
   )

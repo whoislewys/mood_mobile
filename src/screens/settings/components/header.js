@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Header = ({ headerText, moodscreen }) => (
+const Header = ({ headerText, goBack }) => (
   <View style={styles.headerStyle}>
-    <TouchableOpacity onPress={moodscreen}>
+    <TouchableOpacity onPress={goBack}>
       <Image source={Images.arrowLeft} style={styles.arrow} />
     </TouchableOpacity>
     <Text style={styles.headerText}>{headerText}</Text>

@@ -170,7 +170,7 @@ class Playlists extends Component {
 
   _onCreatePlaylist = () => {
     this.props.navigation.navigate('PlaylistDetail');
-  }
+  };
 
   getModal = () => (
     <Modal visible={this.props.isCreatePlaylistModalOpen} style={{ margin: 0 }} avoidKeyboard>

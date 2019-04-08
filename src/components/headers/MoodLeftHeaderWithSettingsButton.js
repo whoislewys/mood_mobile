@@ -26,7 +26,7 @@ const MoodLeftHeaderWithSettingsButton = props => (
       <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
         <Image source={Images.bugIcon} style={styles.icon} />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => props.navigation.navigate('Settings')}>
         <Image source={Images.settingsGear} style={styles.icon} />
       </TouchableOpacity>
     </View>
