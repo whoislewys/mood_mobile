@@ -18,25 +18,21 @@ const styles = {
   },
 };
 
-const MoodLeftHeaderWithSettingsButton = (props) => {
-  return (
+const MoodLeftHeaderWithSettingsButton = props => (
   <MoodLeftHeader
     {...props}
-    title='My Music'
-    children={(
-      <View style={styles.buttonRow}>
+  >
+    <View style={styles.buttonRow}>
+      <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
+        <Image source={Images.bugIcon} style={styles.icon} />
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Image source={Images.settingsGear} style={styles.icon} />
+      </TouchableOpacity>
+    </View>
+  </MoodLeftHeader>
 
 
-        <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
-          <Image source={Images.bugIcon} style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image source={Images.settingsGear} style={styles.icon} />
-        </TouchableOpacity>
-      </View>
-)}
-  />
 );
-};
 
 export default MoodLeftHeaderWithSettingsButton;
