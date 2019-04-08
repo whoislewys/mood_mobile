@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
-import Header from './components/header';
+import LeaderboardHeader from './components/leaderboardHeader';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
 
@@ -68,7 +68,7 @@ class LeaderboardScreen extends Component {
           data={this.props.leaderboardSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
+          ListHeaderComponent={LeaderboardHeader({ title: 'Leaderboard', showLogo: true })}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />

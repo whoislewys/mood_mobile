@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   headerStyle: {
     marginTop: '10%',
     paddingBottom: '8%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
     marginLeft: 5,
   },
   headerText: {
@@ -35,19 +35,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const renderMoodLogo = (showLogo) => {
-  return (showLogo
-    ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
-    : <View />
-  );
-};
-
-const Header = ({ headerText, showLogo }) => (
-    <View style={styles.headerStyle}>
-      {renderMoodLogo(showLogo)}
-      <Text style={styles.headerText}>{headerText}</Text>
-      <Text style={styles.headerSubText}>Songs</Text>
-    </View>
+const LeaderboardHeader = ({ title }) => (
+  <View style={styles.headerStyle}>
+    <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
+    <Text style={styles.headerText}>{title}</Text>
+    <Text style={styles.headerSubText}>Songs</Text>
+  </View>
 );
 
-export default Header;
+export default LeaderboardHeader;

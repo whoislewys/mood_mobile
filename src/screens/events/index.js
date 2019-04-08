@@ -3,16 +3,30 @@ import {
   View,
   ActivityIndicator,
   FlatList,
+  Linking,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
 import EventRow from './components/event-row';
-import Header from './components/header';
+import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
+
+const ADD_EVENT_URL = 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1';
 
 const styles = {
   background: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  addEventButton: {
+    height: 55,
+    width: 55,
+    resizeMode: 'contain',
+  },
+  addIcon: {
+    height: 55,
+    width: 55,
   },
   eventsContainer: {
     flex: 1,
@@ -27,7 +41,7 @@ class EventsScreen extends Component {
   keyExtractor = event => event.id;
 
   _renderItem = ({ item }) => (
-    <EventRow event={ item }> </EventRow>
+    <EventRow event={item} />
   );
 
   getEvents = () => (
@@ -37,15 +51,18 @@ class EventsScreen extends Component {
           data={this.props.events}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'PHX Events', showLogo: false })}
-        >
-        </FlatList>
+        />
       )
-      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+      : <ActivityIndicator color="black" size="large" animating style={{ flex: 10 }} />
   );
 
   render = () => (
     <View style={styles.background}>
+      <MoodLeftHeader title="PHX Events">
+        <TouchableOpacity style={styles.addEventButton} onPress={() => Linking.openURL(ADD_EVENT_URL)}>
+          <Image source={Images.addEventButton} style={styles.addIcon} />
+        </TouchableOpacity>
+      </MoodLeftHeader>
       <View style={styles.eventsContainer}>
         {this.getEvents()}
       </View>

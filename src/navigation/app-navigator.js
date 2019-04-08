@@ -59,7 +59,7 @@ const MyMusicNavigatorWithHeader = createStackNavigator({
   MyMusic: MyMusicNavigator,
 }, {
   navigationOptions: {
-    header: props => <MoodLeftHeaderWithSettingsButton />,
+    header: props => <MoodLeftHeaderWithSettingsButton title='My Music' />,
     headerStyle: {
       backgroundColor: '#fff',
     },

@@ -10,6 +10,8 @@ import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
 import { loadSongsForMoodId } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
+import MoodLeftHeaderWithSettingsButton
+  from '../../components/headers/MoodLeftHeaderWithSettingsButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -78,13 +80,14 @@ class MoodScreen extends Component {
     }
 
     return (
-      <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }} />
+      <ActivityIndicator style={{ flex: 10 }} color='black' size='large' animating />
     );
   }
 
   render = () => (
     <View style={styles.container}>
-        { this.getContent() }
+      <MoodLeftHeaderWithSettingsButton title='Discover' />
+      { this.getContent() }
     </View>
   )
 }

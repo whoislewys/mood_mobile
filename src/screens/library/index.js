@@ -58,7 +58,6 @@ class SavedSongs extends Component {
     this.props.leaderboardSongs.length
       ? (
         <FlatList
-          // TODO: figure out the sticky header components
           data={this.props.leaderboardSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
@@ -67,7 +66,7 @@ class SavedSongs extends Component {
         />
       )
       : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  )
+  );
 
   render = () => (
     <View style={styles.background}>

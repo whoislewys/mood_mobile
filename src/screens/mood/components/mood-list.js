@@ -79,8 +79,8 @@ export default class MoodList extends React.Component {
         data={this.props.moods}
         keyExtractor={this.keyExtractor}
         renderItem={this._renderItem}
-        ListHeaderComponent={<MoodLeftHeader title='Discover' />}
         numColumns={2}
+        scrollEnabled={false}
       />
     );
   }
