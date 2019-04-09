@@ -9,7 +9,6 @@ import {
 import Modal from 'react-native-modal';
 import { colors, dimensions, fonts } from '../../assets/styles';
 
-
 const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,

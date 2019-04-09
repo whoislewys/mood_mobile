@@ -68,14 +68,11 @@ export function updateNewPlaylistName(newPlaylistName) {
 }
 
 export function createPlaylist(userId) {
-  console.warn('in create playlist');
   return async (dispatch, getState) => {
     // start by closing the new playlist modal and checking if user is logged in
     dispatch(closeModal());
 
     if (!getState().auth.userIsLoggedIn) return;
-
-    console.warn('user is logged in');
 
     dispatch({ type: CREATE_PLAYLIST });
     try {
@@ -95,8 +92,6 @@ export function createPlaylist(userId) {
       // dispatch success action & refresh the list of playlists
       dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
     } catch (err) {
-      console.warn('error: ', err);
-      console.warn('has type: ', typeof(err));
       // in case an error happened, close the modal
       dispatch(closeModal());
       dispatch({ type: CREATE_PLAYLIST_FAIL, err });
