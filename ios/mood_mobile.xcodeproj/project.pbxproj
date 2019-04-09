@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -71,6 +72,7 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		AF1EEA2A6F924C978A6C9B8B /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1498BE35C64F8480454C35 /* libSplashScreen.a */; };
 		B22514A63877D1755460727C /* libPods-mood_mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39D1DE5F9512625FE1EC05EE /* libPods-mood_mobileTests.a */; };
+		B97C3E741C374EE992D0D96A /* playlist-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 643BFA9BAFDF4027919F9266 /* playlist-button.png */; };
 		BAC10DCF611547D59BE4D744 /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DEA69EC552F43D2B9CD8B9B /* Quicksand-Bold.ttf */; };
 		C2A166504F3B4A3D90436BF2 /* selected-share-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8F5DCEDDC0459B9A3B2401 /* selected-share-arrow.png */; };
 		C35C375D83B34D9499C73F0C /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 062263CA08E94714BA175644 /* libRNFirebase.a */; };
@@ -83,7 +85,6 @@
 		E62731E6222A166F00A13836 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
 		E62731E7222A166F00A13836 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
 		E627326E222A178300A13836 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E627326D222A178300A13836 /* LaunchScreen.storyboard */; };
-		E6A6EF5589824621B4D5A84E /* gradient-heading.png in Resources */ = {isa = PBXBuildFile; fileRef = 683C42FFB40547079C9116A5 /* gradient-heading.png */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		EE0B9F005D0B4EA18A4CE71E /* selected-round-discover.png in Resources */ = {isa = PBXBuildFile; fileRef = E821143D5EE4479CB619D579 /* selected-round-discover.png */; };
@@ -470,6 +471,7 @@
 		5C9017965E0242C2873A3B4A /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Light.ttf"; path = "../src/assets/fonts/Quicksand/Quicksand-Light.ttf"; sourceTree = "<group>"; };
+		643BFA9BAFDF4027919F9266 /* playlist-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "playlist-button.png"; path = "../src/assets/img/playlist-button.png"; sourceTree = "<group>"; };
 		652435A09D194A3150D69760 /* libPods-mood_mobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mood_mobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6748C31959D1AA8AE6CD7D82 /* Pods-mood_mobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobileTests.debug.xcconfig"; path = "Target Support Files/Pods-mood_mobileTests/Pods-mood_mobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		676E2E65EED34F26B26B46ED /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
@@ -839,6 +841,7 @@
 				720FC630E9AD4B189F15B6A5 /* Quicksand-Medium.ttf */,
 				BD295E9A5C9F4432AE86F7B6 /* Quicksand-Regular.ttf */,
 				C0CF746755FE41B0922BC480 /* settings-button.png */,
+				643BFA9BAFDF4027919F9266 /* playlist-button.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1486,7 +1489,6 @@
 				4DC44D9DB1CD4BD9982341D7 /* background-overlay.png in Resources */,
 				AA751B958F1D4D61B5DF25FA /* Color-Mood-Logo.png in Resources */,
 				F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */,
-				E6A6EF5589824621B4D5A84E /* gradient-heading.png in Resources */,
 				9B7864C8A63E4FD882C5662B /* round-bug_report.png in Resources */,
 				1F69556E3C8F43418B2BF302 /* round-pause_circle_outline-2x.png in Resources */,
 				E6184F5E223B86F70020541A /* GoogleService-Info.plist in Resources */,
@@ -1516,6 +1518,7 @@
 				26EFBA1462AD4D078C89DD6A /* Quicksand-Medium.ttf in Resources */,
 				9AB0BF98383D4563BBCD75DE /* Quicksand-Regular.ttf in Resources */,
 				689965AD2CC3442AAFF51034 /* settings-button.png in Resources */,
+				B97C3E741C374EE992D0D96A /* playlist-button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

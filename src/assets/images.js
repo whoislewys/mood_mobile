@@ -5,7 +5,11 @@ const images = {
   arrowLeft: require('./img/selected-left-chevron.png'),
   bgOverlay: require('./img/background-overlay.png'),
   bugIcon: require('./img/round-bug_report.png'),
+  playlistButton: require('./img/playlist-button.png'),
   settingsGear: require('./img/round-settings.png'),
+
+  // Events
+  addEventButton: require('./img/add-event-button.png'),
 
   // Leaderboard
   leaderboardStar: require('./img/round-stars-1.png'),
@@ -30,9 +34,10 @@ const images = {
   leaderboard: require('./img/selected-round-format-leaderboard.png'),
   events: require('./img/selected-round-events.png'),
 
+  // Playlists Screen
+
   // Settings Screen
   explicitIcon: require('./img/explicit-icon.png'),
-  addEventButton: require('./img/add-event-button.png'),
   settingsButton: require('./img/settings-button.png'),
 };
 
