@@ -15,8 +15,10 @@ import TabBar from './components/TabBar';
 import { colors } from '../assets/styles';
 import MoodLeftHeaderWithSettingsButton
   from '../components/headers/MoodLeftHeaderWithSettingsButton';
+import PlaylistDetailScreen from '../screens/playlistDetail';
 
 const map = SomeComponent => class SomeClass extends React.Component {
+    // utility function to map screenProps to and navigation params to regular props
     render = () => {
       const { screenProps } = this.props;
       // delete this.props.screenProps; // for some reason not working
@@ -27,9 +29,10 @@ const map = SomeComponent => class SomeClass extends React.Component {
 
 const TabBarComponent = props => <TabBar {...props} />;
 
+
+// https://reactnavigation.org/docs/en/2.x/headers.html
 const PlaylistNavigator = createStackNavigator({
   Playlists: { screen: map(PlaylistsScreen) },
-  PlaylistDetail: { screen: map(LibraryScreen) },
 }, {
   navigationOptions: {
     header: null,
@@ -37,7 +40,6 @@ const PlaylistNavigator = createStackNavigator({
 });
 
 const MyMusicNavigator = createMaterialTopTabNavigator({
-  // TODO: give it a header component as the mood screen
   Songs: { screen: map(LibraryScreen) },
   Playlists: PlaylistNavigator,
 },
@@ -67,9 +69,6 @@ const MyMusicNavigatorWithHeader = createStackNavigator({
 });
 
 const TabNavigator = createBottomTabNavigator({
-  Splash: { screen: map(SplashScreen) },
-  Error: { screen: map(ErrorScreen) },
-  Settings: { screen: map(SettingsScreen) },
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
@@ -84,9 +83,13 @@ const TabNavigator = createBottomTabNavigator({
 });
 
 export default createStackNavigator({
+  Splash: { screen: map(SplashScreen) },
   Home: TabNavigator,
-  Login: { screen: map(LoginScreen) },
   Play: { screen: map(PlayScreen) },
+  PlaylistDetail: { screen: map(PlaylistDetailScreen) },
+  Login: { screen: map(LoginScreen) },
+  Error: { screen: map(ErrorScreen) },
+  Settings: { screen: map(SettingsScreen) },
 }, {
   headerMode: 'none',
   navigationOptions: {
