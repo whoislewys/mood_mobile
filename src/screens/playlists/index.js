@@ -1,90 +1,29 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
-  TextInput,
   ActivityIndicator,
   FlatList,
-  TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
-import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
-import { openModal, closeModal, updateNewPlaylistName } from '../../redux/modules/playlists';
-import { colors, fonts, dimensions } from '../../assets/styles';
+import {
+  openModal,
+  closeModal,
+  updateNewPlaylistName,
+  createPlaylist,
+} from '../../redux/modules/playlists';
+import TwoButtonModal from '../../components/modals/two-button-modal';
 
-const styles = {
+const styles = StyleSheet.create({
   leaderboardContainer: {
     flex: 1,
     backgroundColor: '#fff',
     paddingLeft: 21,
     paddingRight: 21,
   },
-  modalBackground: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '72.0%',
-    height: dimensions.height * 0.2,
-    backgroundColor: '#fff',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: 4,
-    elevation: 10,
-    shadowOpacity: 0.65,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-  },
-  modalHeader: {
-    height: '30%',
-    justifyContent: 'flex-end',
-  },
-  modalInput: {
-    borderWidth: 1,
-    borderRadius: 4,
-    width: '85.93%',
-    height: '23.57%',
-    marginVertical: '4%',
-    textAlign: 'center',
-    fontFamily: fonts.primaryLight,
-    fontSize: fonts.body,
-    color: colors.black,
-  },
-  modalButtonsRow: {
-    height: '30%',
-    flexDirection: 'row',
-  },
-  modalButtonLeft: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '50%',
-    borderRightWidth: 0.25,
-    borderTopWidth: 0.5,
-  },
-  modalButtonRight: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '50%',
-    borderLeftWidth: 0.25,
-    borderTopWidth: 0.5,
-  },
-  modalText: {
-    fontFamily: fonts.primaryBold,
-    fontSize: fonts.subHeader,
-    color: colors.black,
-  },
-  modalTextCancel: {
-    fontFamily: fonts.primaryLight,
-    fontSize: fonts.subHeader,
-  },
-};
+});
 
 class Playlists extends Component {
   _navigateToPlaylistsScreen = (params = {}) => {
@@ -116,7 +55,6 @@ class Playlists extends Component {
 
   _onOpenCreatePlaylistModal = () => {
     if (!this.props.userIsLoggedIn) {
-      // TODO: move this into a util
       this.props.navigation.navigate('Login');
       return;
     }
@@ -168,34 +106,21 @@ class Playlists extends Component {
       : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
   );
 
-  _onCreatePlaylist = () => {
-    this.props.navigation.navigate('PlaylistDetail');
+  _onCreatePlaylist = async () => {
+    await this.props.createPlaylist();
+    if (this.props.playlistError === '') {
+      this.props.navigation.navigate('PlaylistDetail');
+    }
   };
 
   getModal = () => (
-    <Modal visible={this.props.isCreatePlaylistModalOpen} style={{ margin: 0 }} avoidKeyboard>
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContent}>
-          <View style={styles.modalHeader}>
-            <Text style={styles.modalText}>Create new playlist</Text>
-          </View>
-          <TextInput
-            style={styles.modalInput}
-            onChangeText={text => this.props.updateNewPlaylistName(text)}
-            value={this.props.newPlaylistName}
-            placeholder='Enter playlist title'
-          />
-          <View style={styles.modalButtonsRow}>
-            <TouchableOpacity onPress={() => this.props.closeModal()} style={styles.modalButtonLeft}>
-              <Text style={[styles.modalText, styles.modalTextCancel]}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this._onCreatePlaylist}/* TODO: call this.props.createPlaylist() when endpoint is ready*/ style={styles.modalButtonRight}>
-              <Text style={styles.modalText}>Create</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </Modal>
+    <TwoButtonModal
+      cancel={() => this.props.closeModal()}
+      confirm={this._onCreatePlaylist}
+      onChange={text => this.props.updateNewPlaylistName(text)}
+      value={this.props.newPlaylistName}
+      visible={this.props.isCreatePlaylistModalOpen}
+    />
   );
 
   render = () => (
@@ -207,9 +132,11 @@ class Playlists extends Component {
 }
 
 const mapStateToProps = state => ({
-  leaderboardSongs: state.leaderboard.songs,
   isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
+  leaderboardSongs: state.leaderboard.songs,
+  playlistError: state.playlists.error,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
+  userIsLoggedIn: state.auth.userIsLoggedIn,
 });
 
 const mapDispatchToProps = {
@@ -217,6 +144,7 @@ const mapDispatchToProps = {
   openModal,
   closeModal,
   updateNewPlaylistName,
+  createPlaylist,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlists);

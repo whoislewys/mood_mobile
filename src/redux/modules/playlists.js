@@ -17,7 +17,7 @@ const initialState = {
   isCreatePlaylistModalOpen: false,
   newPlaylistName: '',
   loading: false,
-  error: null,
+  error: {},
 };
 
 export function reducer(state = initialState, action = {}) {
@@ -68,20 +68,38 @@ export function updateNewPlaylistName(newPlaylistName) {
 }
 
 export function createPlaylist(userId) {
+  console.warn('in create playlist');
   return async (dispatch, getState) => {
+    // start by closing the new playlist modal and checking if user is logged in
+    dispatch(closeModal());
+
+    if (!getState().auth.userIsLoggedIn) return;
+
+    console.warn('user is logged in');
+
     dispatch({ type: CREATE_PLAYLIST });
     try {
-      if (!getState().auth.userIsLoggedIn) return;
-      let playlists = await axios.post('http://api.moodindustries.com/api/v1/playlists',
+      // submit new playlist
+      const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist' : getState().playlists.newPlaylistName;
+      const newPlaylistId = await axios.post('http://api.moodindustries.com/api/v1/playlists',
+        // can we make this post return a userId?
         {
-          params: { t: 'EXVbAWTqbGFl7BKuqUQv', userId },
+          params: {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+            userId,
+            playlistNameToSubmit,
+          },
           responseType: 'json',
         });
-      dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: playlists });
-      // refresh the playlists
-      this.loadPlaylists();
-    } catch (e) {
-      dispatch({ type: CREATE_PLAYLIST_FAIL });
+
+      // dispatch success action & refresh the list of playlists
+      dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
+    } catch (err) {
+      console.warn('error: ', err);
+      console.warn('has type: ', typeof(err));
+      // in case an error happened, close the modal
+      dispatch(closeModal());
+      dispatch({ type: CREATE_PLAYLIST_FAIL, err });
     }
   };
 }
@@ -90,7 +108,7 @@ export function loadPlaylists(userId) {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
-      let playlists = await axios.get('http://api.moodindustries.com/api/v1/playlists',
+      const playlists = await axios.get('http://api.moodindustries.com/api/v1/playlists',
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv', userId },
           responseType: 'json',
