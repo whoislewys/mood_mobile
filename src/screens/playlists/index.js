@@ -109,6 +109,8 @@ class Playlists extends Component {
   _onCreatePlaylist = async () => {
     await this.props.createPlaylist();
     if (this.props.playlistError === '') {
+      // TODO: load newly created playlist here by calling
+      //  whatever I replace _handleLeaderboardRowPress with
       this.props.navigation.navigate('PlaylistDetail');
     }
   };
