@@ -92,6 +92,8 @@
 		F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D94297707149471BBFE9B883 /* explicit-icon.png */; };
 		F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A5D4433A564CB3B8304205 /* saved-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
+		52B3A99FD33F47B7933A85BE /* my-music.png in Resources */ = {isa = PBXBuildFile; fileRef = F20B362BCDAA4B95A90FB79E /* my-music.png */; };
+		D023A09543BC4CAC86136B9E /* save-song.png in Resources */ = {isa = PBXBuildFile; fileRef = 9496A94BC54D4FF0869C3792 /* save-song.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -525,6 +527,8 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
+		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9496A94BC54D4FF0869C3792 /* save-song.png */ = {isa = PBXFileReference; name = "save-song.png"; path = "../src/assets/img/save-song.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -852,6 +856,8 @@
 				D0A5D4433A564CB3B8304205 /* saved-icon.png */,
 				0A175A2FF88E4BA09D83BA19 /* shuffle.png */,
 				9288211305F8420BBA866C96 /* gradient-button.png */,
+				F20B362BCDAA4B95A90FB79E /* my-music.png */,
+				9496A94BC54D4FF0869C3792 /* save-song.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1532,6 +1538,8 @@
 				F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */,
 				3C0C008BCC784CC4A9B8C5ED /* shuffle.png in Resources */,
 				4E2BBBD4AE54416795F50B8E /* gradient-button.png in Resources */,
+				52B3A99FD33F47B7933A85BE /* my-music.png in Resources */,
+				D023A09543BC4CAC86136B9E /* save-song.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
