@@ -1,27 +1,47 @@
 import axios from 'axios';
 import {
-  ADD_SONG_TO_DELETE_LIST,
+  ADD_SONG_TO_DELETED,
+  REMOVE_SONG_FROM_DELETED,
   SAVE_SONG,
   SAVE_SONG_SUCCESS,
   SAVE_SONG_FAIL,
 } from '../constants';
 
 const initialState = {
-  songsToDelete: [],
+  songsToDelete: new Set(),
   loading: '',
   error: '',
 };
 
 export function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case ADD_SONG_TO_DELETE_LIST:
-      return { ...state, songsToDelete: action.songsToDelete };
+    case ADD_SONG_TO_DELETED:
+      // get all the songs from the previous songsToDelete set
+      const newSongsToDelete = new Set();
+      state.songsToDelete.forEach(song => newSongsToDelete.add(song));
+      console.warn('adding song to del set: ', action.songToDelete);
+
+      // add the one new song to delete
+      newSongsToDelete.add(action.songToDelete.id); // TODO: why thie fucc is set.add() not working? reeeeeeeeeeeeeeeeeeeeeeee
+      console.warn('new deleted set: ', newSongsToDelete);
+      return { ...state, songsToDelete: newSongsToDelete };
+
+    case REMOVE_SONG_FROM_DELETED:
+      // get all the songs from the previous songsToDelete set
+      const songsToDeleteAfterResaving = new Set();
+      state.songsToDelete.forEach(song => songsToDeleteAfterResaving.add(song));
+
+      // remove the one new one
+      songsToDeleteAfterResaving.remove(action.songToResave);
+      return { ...state, songsToDelete: songsToDeleteAfterResaving };
+
     case SAVE_SONG:
       return { ...state, loading: true };
     case SAVE_SONG_SUCCESS:
       return { loading: false, error: '' };
     case SAVE_SONG_FAIL:
       return { loading: false, error: action.e };
+
     default:
       return state;
   }
@@ -43,16 +63,17 @@ export function saveSong() {
   };
 }
 
-export function addSongToDeleteList(savedSongToDelete) {
+export function addSongToDeleted(savedSongToDelete) {
   // for when people 'uncheck' a saved song
-  console.warn('adding song to delete list!', savedSongToDelete);
-  return { type: ADD_SONG_TO_DELETE_LIST, songsToDelete: [] };
-  return (dispatch, getState) => {
-    const songsToDelete = getState().queue.queue.splice();
-    songsToDelete.push(savedSongToDelete);
-    dispatch({
-      type: ADD_SONG_TO_DELETE_LIST,
-      songsToDelete,
-    });
+  return {
+    type: ADD_SONG_TO_DELETED,
+    songToDelete: savedSongToDelete,
+  };
+}
+
+export function removeSongFromDeleted(songToResave) {
+  return {
+    type: REMOVE_SONG_FROM_DELETED,
+    songToResave,
   };
 }

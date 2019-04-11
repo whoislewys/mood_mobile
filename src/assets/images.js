@@ -41,6 +41,7 @@ const images = {
 
   // Saved Songs Screen
   shuffle: require('./img/shuffle.png'),
+  addToSavedSongs: require('./img/save-song.png'),
 
   // Settings Screen
   explicitIcon: require('./img/explicit-icon.png'),

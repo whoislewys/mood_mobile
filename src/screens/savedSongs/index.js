@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import Images from '@assets/images';
 import { loadLeaderboardSongQueue, shufflePlay } from '../../redux/modules/queue';
-import { addSongToDeleteList } from '../../redux/modules/savingSongs';
+import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/savingSongs';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
 import { spacing } from '../../assets/styles';
@@ -79,7 +79,8 @@ class SavedSongs extends Component {
       leaderboardSong={item}
       index={index}
       _handleSongRowPress={this._handleSongRowPress}
-      addSongToDeleteList={this.props.addSongToDeleteList}
+      addSongToDeleted={this.props.addSongToDeleted}
+      removeSongFromDeleted={this.props.removeSongFromDeleted}
     />
   );
 
@@ -111,10 +112,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  addSongToDeleted,
   loadLeaderboardSongQueue,
+  removeSongFromDeleted,
   sendScoreDelta,
   shufflePlay,
-  addSongToDeleteList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedSongs);

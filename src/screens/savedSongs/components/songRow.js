@@ -66,20 +66,27 @@ class SongRow extends Component {
     };
   }
 
-  _handleDeleteSong = () => {
+  _unsaveSong = () => {
+    console.warn('unsaving leaderboard song: ', this.props.leaderboardSong);
     this.setState({ songIsSaved: false },
-      () => this.props.addSongToDeleteList(this.props.leaderboardSong));
+      () => this.props.addSongToDeleted(this.props.leaderboardSong));
+  };
+
+  _resaveSong = () => {
+    console.warn('resaving leaderboard song: ', this.props.leaderboardSong);
+    this.setState({ songIsSaved: true },
+      () => this.props.removeSongFromDeleted(this.props.leaderboardSong));
   };
 
   _getSavedSongButton = () => (this.state.songIsSaved
     ? (
-      <TouchableOpacity onPress={() => this._handleDeleteSong()}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => this._unsaveSong()}>
         <Image source={Images.savedIcon} style={styles.savedIcon} />
       </TouchableOpacity>
     )
     : (
-      <TouchableOpacity>
-        <Image source={Images.savedIcon} style={styles.savedIcon} />
+      <TouchableOpacity activeOpacity={0.7} onPress={() => this._resaveSong()}>
+        <Image source={Images.addToSavedSongs} style={styles.savedIcon} />
       </TouchableOpacity>
     )
   );
