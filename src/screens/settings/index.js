@@ -17,6 +17,7 @@ import Header from './components/header';
 import { fonts, colors } from '../../assets/styles';
 import { userLoggedOut } from '../../redux/modules/auth';
 import { handleDataToggle } from '../../redux/modules/settings';
+import GradientButton from '../../components/GradientButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,6 +35,9 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     marginRight: 35,
     height: 40,
+  },
+  buttonPadding: {
+    marginRight: '5%',
   },
   textRow: {
     fontFamily: fonts.primary,
@@ -61,8 +65,6 @@ const styles = StyleSheet.create({
     width: 71,
     height: 31,
     marginRight: '7%',
-    // TODO use borderradius when wil sends actual button
-    // borderRadius: 4,
     elevation: 4,
     shadowOpacity: 0.3,
     shadowRadius: 2,
@@ -225,15 +227,12 @@ class SettingsScreen extends Component {
             </View>
           )
           : (
-            <TouchableOpacity
-              style={styles.buttonImageContainer}
-              onPress={() => elem.item.handlePress(elem.item.url)}
-            >
-              {/* <Image source={elem.item.image} style={styles.buttonImage} /> */}
-              <ImageBackground source={elem.item.image} style={styles.buttonImage}>
-                <Text style={styles.buttonText}>{elem.item.buttonText}</Text>
-              </ImageBackground>
-            </TouchableOpacity>
+            <View style={styles.buttonPadding}>
+              <GradientButton
+                onPress={() => elem.item.handlePress(elem.item.url)}
+                text={elem.item.buttonText}
+              />
+            </View>
           )
       }
     </TouchableOpacity>

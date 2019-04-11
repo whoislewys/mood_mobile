@@ -5,13 +5,14 @@ import {
   FlatList,
   Linking,
   Image,
-  TouchableOpacity,
+  TouchableOpacity, ImageBackground, Text,
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
 import EventRow from './components/event-row';
 import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
 import { spacing } from '../../assets/styles';
+import GradientButton from '../../components/GradientButton';
 
 const ADD_EVENT_URL = 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1';
 
@@ -26,8 +27,8 @@ const styles = {
     resizeMode: 'contain',
   },
   addIcon: {
-    height: 55,
-    width: 55,
+    height: 31,
+    width: 79,
   },
   eventsContainer: {
     flex: 1,
@@ -58,10 +59,8 @@ class EventsScreen extends Component {
 
   render = () => (
     <View style={styles.background}>
-      <MoodLeftHeader title="PHX Events">
-        <TouchableOpacity style={styles.addEventButton} onPress={() => Linking.openURL(ADD_EVENT_URL)}>
-          <Image source={Images.addEventButton} style={styles.addIcon} />
-        </TouchableOpacity>
+      <MoodLeftHeader title='Phx Events'>
+        <GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={100} />
       </MoodLeftHeader>
       <View style={styles.eventsContainer}>
         {this.getEvents()}

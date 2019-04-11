@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Linking,
 } from 'react-native';
-import { colors, dimensions, fonts } from '../../assets/styles';
+import { colors, dimensions, fonts, spacing } from '../../assets/styles';
 import Images from '@assets/images';
 
 const styles = StyleSheet.create({
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: dimensions.width * 0.077,
-    marginLeft: dimensions.width * 0.077,
+    marginRight: spacing.sm,
+    marginLeft: spacing.sm,
   },
   headerText: {
     flex: 75,

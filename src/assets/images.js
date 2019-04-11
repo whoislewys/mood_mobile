@@ -5,6 +5,7 @@ const images = {
   arrowLeft: require('./img/selected-left-chevron.png'),
   bgOverlay: require('./img/background-overlay.png'),
   bugIcon: require('./img/round-bug_report.png'),
+  gradientButton: require('./img/gradient-button.png'),
   playlistButton: require('./img/playlist-button.png'),
   savedIcon: require('./img/saved-icon.png'),
   settingsGear: require('./img/round-settings.png'),
@@ -43,7 +44,6 @@ const images = {
 
   // Settings Screen
   explicitIcon: require('./img/explicit-icon.png'),
-  settingsButton: require('./img/settings-button.png'),
 };
 
 export default images;
