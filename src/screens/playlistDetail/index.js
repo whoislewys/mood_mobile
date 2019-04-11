@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
 const PlaylistDetailScreen = props => (
   <View style={styles.container}>
-    <Text>shittites</Text>
+    <Text>PLAYLIST DETAILS</Text>
     <TouchableOpacity style={{backgroundColor: 'red', height: 100, width: 100, alignSelf: 'center'}} onPress={() => props.navigation.goBack()} />
   </View>
 );

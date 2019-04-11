@@ -57,6 +57,7 @@ export const LEADERBOARD_TYPE = 'leaderboard';
 export const SAVE_SONG = 'savingSongs/SAVE_SONG';
 export const SAVE_SONG_SUCCESS = 'savingSongs/SAVE_SONG_SUCCESS';
 export const SAVE_SONG_FAIL = 'savingSongs/SAVE_SONG_FAIL';
+export const ADD_SONG_TO_DELETE_LIST = 'savingSongs/ADD_SONG_TO_DELETE_LIST';
 
 // Score
 export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';

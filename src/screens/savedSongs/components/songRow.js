@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -58,50 +58,70 @@ const styles = StyleSheet.create({
   },
 });
 
+class SongRow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      songIsSaved: true,
+    };
+  }
 
-const SongRow = ({
-  leaderboardSong,
-  index,
-  _handleSongRowPress,
-}) => {
-  const {
-    artist,
-    artwork,
-    title,
-  } = leaderboardSong;
+  _handleDeleteSong = () => {
+    this.setState({ songIsSaved: false },
+      () => this.props.addSongToDeleteList(this.props.leaderboardSong));
+  };
 
-  return (
-    <TouchableOpacity
-      style={styles.rowBackground}
-      onPress={() => _handleSongRowPress(index)}
-    >
-      <Image style={styles.albumArt} source={{ uri: artwork }} />
-      <View style={styles.detailsContainer}>
-        <Text
-          style={styles.songName}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
-          {title}
-        </Text>
-        <Text
-          style={styles.artistName}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
-          {artist}
-        </Text>
-      </View>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity>
-          <Image source={Images.savedIcon} style={styles.savedIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image source={Images.playlistButton} style={styles.playlistButton} />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+  _getSavedSongButton = () => (this.state.songIsSaved
+    ? (
+      <TouchableOpacity onPress={() => this._handleDeleteSong()}>
+        <Image source={Images.savedIcon} style={styles.savedIcon} />
+      </TouchableOpacity>
+    )
+    : (
+      <TouchableOpacity>
+        <Image source={Images.savedIcon} style={styles.savedIcon} />
+      </TouchableOpacity>
+    )
   );
-};
+
+  render() {
+    const {
+      index,
+      leaderboardSong: { artist, artwork, title },
+      _handleSongRowPress,
+    } = this.props;
+
+    return (
+      <TouchableOpacity
+        style={styles.rowBackground}
+        onPress={() => _handleSongRowPress(index)}
+      >
+        <Image style={styles.albumArt} source={{ uri: artwork }} />
+        <View style={styles.detailsContainer}>
+          <Text
+            style={styles.songName}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {title}
+          </Text>
+          <Text
+            style={styles.artistName}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {artist}
+          </Text>
+        </View>
+        <View style={styles.buttonsContainer}>
+          { this._getSavedSongButton() }
+          <TouchableOpacity>
+            <Image source={Images.playlistButton} style={styles.playlistButton} />
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 export default SongRow;
