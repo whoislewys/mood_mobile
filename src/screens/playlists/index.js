@@ -3,10 +3,10 @@ import {
   View,
   ActivityIndicator,
   FlatList,
-  StyleSheet,
+  StyleSheet, TouchableOpacity, Image,
 } from 'react-native';
 import { connect } from 'react-redux';
-import LeaderboardRow from './components/leaderboardRow';
+import PlaylistRow from './components/playlistRow';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import {
   openModal,
@@ -15,13 +15,25 @@ import {
   createPlaylist,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
+import { spacing } from '../../assets/styles';
+import Images from '../../assets/images';
 
 const styles = StyleSheet.create({
-  leaderboardContainer: {
+  container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingLeft: 21,
-    paddingRight: 21,
+    paddingHorizontal: spacing.lg,
+  },
+  playlistButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: spacing.md, // TODO: replace with global margin
+    marginBottom: spacing.md,
+  },
+  playlistButton: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
   },
 });
 
@@ -62,7 +74,7 @@ class Playlists extends Component {
   };
 
   _renderItem = ({ item, index }) => (
-    <LeaderboardRow
+    <PlaylistRow
       leaderboardSong={item}
       index={index}
       _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
@@ -70,25 +82,16 @@ class Playlists extends Component {
     />
   );
 
-  _firstItem = () => {
-    const firstItem = {
-      ...this.props.leaderboardSongs[0],
-      id: 'create-playlist',
-    };
-    return (
-    // TODO: build the object that will represent the playlist here
-    // something like
-      /*
-      {
-        id: 'create-playlist',
-        image: '<url>',
-        title: 'Create Playlist!',
-        subtitle: '',
-      }
-       */
-      firstItem
-    );
-  };
+  _playlistButton = () => (
+    <View>
+      <TouchableOpacity
+        style={styles.playlistButtonContainer}
+        onPress={() => this._onOpenCreatePlaylistModal()}
+      >
+        <Image source={Images.createPlaylist} style={styles.playlistButton} />
+      </TouchableOpacity>
+    </View>
+  );
 
 
   getLeaderBoard = () => (
@@ -96,9 +99,10 @@ class Playlists extends Component {
       ? (
         <FlatList
           // TODO: figure out the sticky header components
-          data={[this._firstItem(), ...this.props.leaderboardSongs]}
+          data={this.props.leaderboardSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
+          ListHeaderComponent={this._playlistButton()}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
@@ -126,7 +130,7 @@ class Playlists extends Component {
   );
 
   render = () => (
-    <View style={styles.leaderboardContainer}>
+    <View style={styles.container}>
       {this.getModal()}
       {this.getLeaderBoard()}
     </View>

@@ -15,19 +15,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 85,
+    height: 60,
     width: '100%',
     marginBottom: spacing.md,
   },
   albumArt: {
-    width: 54,
-    height: 54,
+    width: 60,
+    height: 60,
     borderRadius: 2,
   },
   detailsContainer: {
-    flex: 20,
+    flex: 1,
     marginLeft: 11,
-    marginTop: 15,
+    marginTop: '1%',
     alignSelf: 'flex-start',
   },
   songName: {
@@ -40,26 +40,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.body,
   },
-  buttonsContainer: {
-    flex: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  savedIcon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
-    marginRight: '10%',
-  },
-  playlistButton: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
-  },
 });
 
-const LeaderboardRow = ({
+const PlaylistRow = ({
   leaderboardSong,
   index,
   _handleLeaderboardRowPress,
@@ -101,16 +84,8 @@ const LeaderboardRow = ({
           {artist}
         </Text>
       </View>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity>
-          <Image source={Images.leaderboardStar} style={styles.savedIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image source={Images.leaderboardStar} style={styles.playlistIcon} />
-        </TouchableOpacity>
-      </View>
     </TouchableOpacity>
   );
 };
 
-export default LeaderboardRow;
+export default PlaylistRow;

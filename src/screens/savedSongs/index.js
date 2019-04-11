@@ -15,10 +15,9 @@ import SongRow from './components/songRow';
 import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
-  leaderboardContainer: {
+  container: {
     backgroundColor: '#fff',
-    paddingLeft: spacing.sm,
-    paddingRight: spacing.sm,
+    paddingHorizontal: spacing.lg,
   },
   shuffleButtonContainer: {
     flex: 1,
@@ -98,10 +97,8 @@ class SavedSongs extends Component {
   );
 
   render = () => (
-    <View style={styles.background}>
-      <View style={styles.leaderboardContainer}>
-        {this.getLeaderBoard()}
-      </View>
+    <View style={styles.container}>
+      {this.getLeaderBoard()}
     </View>
   )
 }
