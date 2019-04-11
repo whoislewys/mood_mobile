@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
-  TouchableOpacity,
   StyleSheet,
-  Linking,
 } from 'react-native';
-import { colors, dimensions, fonts, spacing } from '../../assets/styles';
-import Images from '@assets/images';
+import {
+  colors,
+  dimensions,
+  fonts,
+  spacing,
+} from '../../assets/styles';
 
 const styles = StyleSheet.create({
   header: {
@@ -42,15 +43,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const MoodLeftHeader = (props) => {
-  return (
-    <View style={styles.header}>
-      <View style={styles.headerContentsContainer}>
-        <Text style={styles.headerText}>{props.title}</Text>
-          {props.children}
-      </View>
+const MoodLeftHeader = props => (
+  <View style={styles.header}>
+    <View style={styles.headerContentsContainer}>
+      <Text style={styles.headerText}>{props.title}</Text>
+      {props.children}
     </View>
-  );
-};
+  </View>
+);
 
 export default MoodLeftHeader;
