@@ -121,7 +121,7 @@ describe('Queue module', () => {
           {
             type: LOAD_LEADERBOARD_SONG_QUEUE,
             selectedLeaderboardSongIndex,
-            leaderboardSongs: mockState.leaderboard.songs,
+            savedSongs: mockState.leaderboard.songs,
           },
         ]);
       });

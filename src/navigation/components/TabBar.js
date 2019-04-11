@@ -12,6 +12,7 @@ import Images from '@assets/images';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
+import { loadSavedSongs } from '../../redux/modules/savingSongs';
 import { handlePlayPress, skipToNext, skipToPrevious } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
@@ -85,7 +86,7 @@ const TabBar = class TabBar extends Component {
     if (label === 'Events') {
       return <Image source={Images.events} style={[styles.icon, { tintColor }]} />;
     }
-    if (label === 'Library') {
+    if (label === 'MyMusic') {
       // TODO: swap out for savedSongs icon
       return <Image source={Images.leaderboard} style={[styles.icon, { tintColor }]} />;
     }
@@ -119,9 +120,10 @@ const TabBar = class TabBar extends Component {
             } else if (navRouteName === 'Events') {
               this.props.loadEvents();
               navigation.navigate(route.routeName);
-            } else if (navRouteName === 'Library') {
+            } else if (navRouteName === 'MyMusic') {
               // TODO: replace this with a call to getLibrary action creator
-              this.props.loadLeaderboardSongs();
+              this.props.loadSavedSongs();
+              // todo: also load playlists
               navigation.navigate(route.routeName);
             } else {
               navigation.navigate(route.routeName);
@@ -198,10 +200,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   handlePlayPress,
+  loadEvents,
+  loadLeaderboardSongs,
+  loadSavedSongs,
   skipToNext,
   skipToPrevious,
-  loadLeaderboardSongs,
-  loadEvents,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabBar);

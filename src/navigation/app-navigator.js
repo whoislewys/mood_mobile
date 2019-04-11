@@ -72,7 +72,7 @@ const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: { screen: map(LeaderboardScreen) },
   Events: { screen: map(EventsScreen) },
-  Library: MyMusicNavigatorWithHeader,
+  MyMusic: MyMusicNavigatorWithHeader,
 }, {
   tabBarOptions: {
     activeTintColor: 'rgba(0, 0, 0, 1)',

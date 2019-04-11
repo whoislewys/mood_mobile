@@ -62,10 +62,10 @@ class LeaderboardScreen extends Component {
   };
 
   getLeaderBoard = () => (
-    this.props.leaderboardSongs.length
+    this.props.savedSongs.length
       ? (
         <FlatList
-          data={this.props.leaderboardSongs}
+          data={this.props.savedSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={LeaderboardHeader({ title: 'Leaderboard', showLogo: true })}
@@ -86,7 +86,7 @@ class LeaderboardScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  leaderboardSongs: state.leaderboard.songs,
+  savedSongs: state.leaderboard.songs,
   queue: state.queue.queue,
 });
 

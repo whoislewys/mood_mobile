@@ -10,11 +10,13 @@ import {
   LOAD_SAVED_SONGS_SUCCESS,
   LOAD_SAVED_SONGS_FAIL,
 } from '../constants';
+import { mapSongsToValidTrackObjects } from './leaderboard';
 
 const initialState = {
   songsToDelete: new Set(),
   loading: '',
   error: '',
+  songs: [],
 };
 
 export function reducer(state = initialState, action = {}) {
@@ -47,7 +49,8 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
     case LOAD_SAVED_SONGS_SUCCESS:
-      return { loading: false, error: '' };
+      const songs = mapSongsToValidTrackObjects(action.payload.data);
+      return { loading: false, error: '', songs };
     case LOAD_SAVED_SONGS_FAIL:
       return { loading: false, error: action.e };
 

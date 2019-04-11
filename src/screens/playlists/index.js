@@ -83,7 +83,7 @@ class Playlists extends Component {
 
   _playlistButton = () => (
     {
-      ...this.props.leaderboardSongs[0],
+      ...this.props.savedSongs[0],
       // cant pass artwork through here, the way we called images was incompatible
       id: 'create-playlist',
       title: 'Create Playlist',
@@ -92,11 +92,11 @@ class Playlists extends Component {
 
 
   getPlaylists= () => (
-    this.props.leaderboardSongs.length
+    this.props.savedSongs.length
       ? (
         <FlatList
           // TODO: figure out the sticky header components
-          data={[this._playlistButton(), ...this.props.leaderboardSongs]}
+          data={[this._playlistButton(), ...this.props.savedSongs]}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
@@ -136,7 +136,7 @@ class Playlists extends Component {
 
 const mapStateToProps = state => ({
   isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
-  leaderboardSongs: state.leaderboard.songs,
+  savedSongs: state.leaderboard.songs,
   playlistError: state.playlists.error,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
   userIsLoggedIn: state.auth.userIsLoggedIn,

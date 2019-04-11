@@ -58,7 +58,7 @@ class SavedSongs extends Component {
       <TouchableOpacity
         style={styles.shuffleButtonContainer}
         onPress={() => {
-          this.props.shufflePlay(this.props.leaderboardSongs);
+          this.props.shufflePlay(this.props.savedSongs);
           this.props.navigation.navigate('Play');
         }}
       >
@@ -85,10 +85,10 @@ class SavedSongs extends Component {
   );
 
   getSavedSongs = () => (
-    this.props.leaderboardSongs.length
+    this.props.savedSongs.length
       ? (
         <FlatList
-          data={this.props.leaderboardSongs}
+          data={this.props.savedSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={this._shuffleButton()}
@@ -107,7 +107,7 @@ class SavedSongs extends Component {
 }
 
 const mapStateToProps = state => ({
-  leaderboardSongs: state.leaderboard.songs,
+  savedSongs: state.savingSongs.songs,
   queue: state.queue.queue,
 });
 
