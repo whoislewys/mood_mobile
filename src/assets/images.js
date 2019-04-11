@@ -29,12 +29,13 @@ const images = {
 
   // Nav Bar
   discover: require('./img/selected-round-discover.png'),
+  events: require('./img/selected-round-events.png'),
   home: require('./img/selected-home-icon.png'),
-  player: require('./img/selected-round-media-player.png'),
+  leaderboard: require('./img/selected-round-format-leaderboard.png'),
+  myMusic: require('./img/my-music.png'),
   navPlayButton: require('./img/round-play_circle_outline-2x.png'),
   navPauseButton: require('./img/round-pause_circle_outline-2x.png'),
-  leaderboard: require('./img/selected-round-format-leaderboard.png'),
-  events: require('./img/selected-round-events.png'),
+  player: require('./img/selected-round-media-player.png'),
 
   // Playlists Screen
   createPlaylist: require('./img/create-playlist.png'),

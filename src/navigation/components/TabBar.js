@@ -87,8 +87,7 @@ const TabBar = class TabBar extends Component {
       return <Image source={Images.events} style={[styles.icon, { tintColor }]} />;
     }
     if (label === 'MyMusic') {
-      // TODO: swap out for savedSongs icon
-      return <Image source={Images.leaderboard} style={[styles.icon, { tintColor }]} />;
+      return <Image source={Images.myMusic} style={[styles.icon, { tintColor }]} />;
     }
     return <View />;
   };
@@ -121,7 +120,6 @@ const TabBar = class TabBar extends Component {
               this.props.loadEvents();
               navigation.navigate(route.routeName);
             } else if (navRouteName === 'MyMusic') {
-              // TODO: replace this with a call to getLibrary action creator
               this.props.loadSavedSongs();
               // todo: also load playlists
               navigation.navigate(route.routeName);
