@@ -12,7 +12,7 @@ import Images from '@assets/images';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { connect } from 'react-redux';
-import { fonts } from '../../assets/styles';
+import { dimensions, fonts, spacing } from '../../assets/styles';
 import config from './config';
 import { userLoggedIn } from '../../redux/modules/auth';
 
@@ -33,9 +33,10 @@ const styles = StyleSheet.create({
     fontSize: fonts.subHeader,
   },
   googleIcon: {
-    marginVertical: '10%',
-    width: 46,
-    height: 48,
+    marginTop: spacing.lg,
+    height: spacing.lg,
+    width: dimensions.width * 0.610,
+    borderRadius: 4,
   },
   tos: {
     fontFamily: fonts.primary,
@@ -65,11 +66,10 @@ class LoginScreen extends Component {
     return (
       <GestureRecognizer style={styles.container} onSwipe={() => this.onSwipe()}>
         <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
-        <Text style={styles.signInMessage}>Sign in with</Text>
         <GoogleSigninButton
           style={styles.googleIcon}
-          size={GoogleSigninButton.Size.Icon}
-          color={GoogleSigninButton.Color.Light}
+          size={GoogleSigninButton.Size.Wide}
+
           onPress={this._signIn}
         />
         <View style={styles.tos}>
