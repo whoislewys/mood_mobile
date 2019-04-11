@@ -4,10 +4,7 @@ import {
   ActivityIndicator,
   FlatList,
   Linking,
-  Image,
-  TouchableOpacity, ImageBackground, Text,
 } from 'react-native';
-import Images from '@assets/images';
 import { connect } from 'react-redux';
 import EventRow from './components/event-row';
 import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
