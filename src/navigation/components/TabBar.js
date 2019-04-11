@@ -13,6 +13,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { loadSavedSongs } from '../../redux/modules/savingSongs';
+import { loadPlaylists } from '../../redux/modules/playlists';
 import { handlePlayPress, skipToNext, skipToPrevious } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
@@ -121,7 +122,7 @@ const TabBar = class TabBar extends Component {
               navigation.navigate(route.routeName);
             } else if (navRouteName === 'MyMusic') {
               this.props.loadSavedSongs();
-              // todo: also load playlists
+              this.props.loadPlaylists();
               navigation.navigate(route.routeName);
             } else {
               navigation.navigate(route.routeName);
@@ -194,12 +195,14 @@ const mapStateToProps = state => ({
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
   playbackState: state.queue.playback,
+  playlists: state.playlists.playlists,
 });
 
 const mapDispatchToProps = {
   handlePlayPress,
   loadEvents,
   loadLeaderboardSongs,
+  loadPlaylists,
   loadSavedSongs,
   skipToNext,
   skipToPrevious,

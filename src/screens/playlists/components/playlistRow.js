@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
 });
 
 const PlaylistRow = ({
-  leaderboardSong,
   index,
+  playlist,
   _handleLeaderboardRowPress,
   _onCreatePlaylist,
 }) => {
@@ -52,7 +52,7 @@ const PlaylistRow = ({
     artwork,
     subtitle,
     title,
-  } = leaderboardSong;
+  } = playlist;
 
   let _onPress;
   if (index === 0) {

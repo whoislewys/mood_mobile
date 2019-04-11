@@ -67,13 +67,11 @@ class SongRow extends Component {
   }
 
   _unsaveSong = () => {
-    console.warn('unsaving leaderboard song: ', this.props.leaderboardSong);
     this.setState({ songIsSaved: false },
       () => this.props.addSongToDeleted(this.props.leaderboardSong));
   };
 
   _resaveSong = () => {
-    console.warn('resaving leaderboard song: ', this.props.leaderboardSong);
     this.setState({ songIsSaved: true },
       () => this.props.removeSongFromDeleted(this.props.leaderboardSong));
   };

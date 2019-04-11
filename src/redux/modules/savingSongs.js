@@ -49,6 +49,7 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
     case LOAD_SAVED_SONGS_SUCCESS:
+      // TODO: fuck this mapsongs, just get a well built object from api
       const songs = mapSongsToValidTrackObjects(action.payload.data);
       return { loading: false, error: '', songs };
     case LOAD_SAVED_SONGS_FAIL:

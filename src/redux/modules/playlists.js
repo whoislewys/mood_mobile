@@ -11,6 +11,7 @@ import {
   CLOSE_MODAL,
   UPDATE_NEW_PLAYLIST_NAME,
 } from '../constants';
+import { mapSongsToValidTrackObjects } from './leaderboard';
 
 const initialState = {
   playlists: [],
@@ -39,7 +40,9 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_PLAYLISTS:
       return { ...state, loading: true };
     case LOAD_PLAYLISTS_SUCCESS:
-      return { ...state, loading: false, playlists: action.payload.playlists };
+      // TODO: fuck this mapsongs, just get a well built object from api
+      const songs = mapSongsToValidTrackObjects(action.payload.data);
+      return { ...state, loading: false, playlists: songs };
     case LOAD_PLAYLISTS_FAIL:
       return { ...state, loading: false, error: 'Error while fetching playlist' };
     default:
@@ -103,9 +106,10 @@ export function loadPlaylists(userId) {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
-      const playlists = await axios.get('http://api.moodindustries.com/api/v1/playlists',
+      // TODO: hit actual endpoint
+      const playlists = await axios.get('http://api.moodindustries.com/api/v1/stats/leaderboard',
         {
-          params: { t: 'EXVbAWTqbGFl7BKuqUQv', userId },
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });

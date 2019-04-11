@@ -74,7 +74,7 @@ class Playlists extends Component {
 
   _renderItem = ({ item, index }) => (
     <PlaylistRow
-      leaderboardSong={item}
+      playlist={item}
       index={index}
       _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
       _onCreatePlaylist={this._onOpenCreatePlaylistModal}
@@ -83,16 +83,14 @@ class Playlists extends Component {
 
   _playlistButton = () => (
     {
-      ...this.props.savedSongs[0],
       // cant pass artwork through here, the way we called images was incompatible
       id: 'create-playlist',
       title: 'Create Playlist',
-      subTitle: 'Make a new bonerific playlist',
+      subtitle: 'Make a new bonerific playlist',
     });
 
-
-  getPlaylists= () => (
-    this.props.savedSongs.length
+  getPlaylists = () => (
+    !this.props.loading
       ? (
         <FlatList
           // TODO: figure out the sticky header components
@@ -135,8 +133,9 @@ class Playlists extends Component {
 }
 
 const mapStateToProps = state => ({
+  loading: state.playlists.loading,
   isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
-  savedSongs: state.leaderboard.songs,
+  savedSongs: state.playlists.playlists,
   playlistError: state.playlists.error,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
   userIsLoggedIn: state.auth.userIsLoggedIn,
