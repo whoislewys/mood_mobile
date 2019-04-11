@@ -154,8 +154,9 @@ export default class PlayControls extends Component {
       <TouchableOpacity
         style={styles.shareButton}
         activeOpacity={0.3}
-        onPress={this._handleShare}>
-        <Image source={this.state.shareIcon} style={styles.shareIcon}/>
+        onPress={this._handleShare}
+      >
+        <Image source={this.state.shareIcon} style={styles.shareIcon} />
       </TouchableOpacity>
     </View>
   )

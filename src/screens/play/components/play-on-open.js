@@ -11,6 +11,6 @@ export default class PlayOnOpen extends Component {
   }
 
   render = () => (
-      <View />
+    <View />
   )
 }

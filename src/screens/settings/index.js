@@ -4,9 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  StatusBar,
   Linking,
-  ImageBackground,
   FlatList, Alert,
 } from 'react-native';
 import Images from '@assets/images';
@@ -116,7 +114,6 @@ class SettingsScreen extends Component {
 
   render = () => {
     // const { goBack } = this.props.navigation;
-    StatusBar.setBarStyle('dark-content', true);
 
     return (
       <View style={styles.container}>

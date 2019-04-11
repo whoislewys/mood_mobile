@@ -109,8 +109,8 @@ class SplashScreen extends Component {
   };
 
   updateNumLaunches = async () => {
-    let launches = await this.getLogins();
-    let reviewed = await this.getReviewed();
+    const launches = await this.getLogins();
+    const reviewed = await this.getReviewed();
 
     try {
       if (isNaN(launches)) {
@@ -130,7 +130,7 @@ class SplashScreen extends Component {
   };
 
   getLogins = async () => {
-    let logins = await AsyncStorage.getItem('logins');
+    const logins = await AsyncStorage.getItem('logins');
     return parseInt(logins, 10);
   };
 

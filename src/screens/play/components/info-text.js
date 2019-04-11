@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -32,31 +32,30 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class InfoText extends Component {
-  render = () => {
-    const { track } = this.props;
-
-    return (
-      <View style={styles.trackInfoContainer}>
-        <View style={styles.songNameContainer}>
-          <Text
-            style={styles.songName}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            { track.title }
-          </Text>
-        </View>
-        <View style={styles.subTextContainer}>
-          <Text
-            style={styles.artistName}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            { track.artist }
-          </Text>
-        </View>
+const InfoText = (props) => {
+  const { track } = props;
+  return (
+    <View style={styles.trackInfoContainer}>
+      <View style={styles.songNameContainer}>
+        <Text
+          style={styles.songName}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          { track.title }
+        </Text>
       </View>
-    );
-  }
-}
+      <View style={styles.subTextContainer}>
+        <Text
+          style={styles.artistName}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          { track.artist }
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+export default InfoText;

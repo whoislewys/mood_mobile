@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
 });
 
 export default class AlbumArtCarouselItem extends Component {
+  // TODO: album art microinterction on componentDidMount here
   render = () => {
     return (
       <View style={styles.albumContainer}>

@@ -36,18 +36,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const renderMoodLogo = (showLogo) => {
-  return (showLogo
-    ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
-    : <View />
-  );
-};
+const renderMoodLogo = showLogo => (showLogo
+  ? <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
+  : <View />
+);
 
 const Header = ({ headerText, showLogo }) => (
-    <View style={styles.headerStyle}>
-      {renderMoodLogo(showLogo)}
-      <Text style={styles.headerText}>{headerText}</Text>
-    </View>
+  <View style={styles.headerStyle}>
+    {renderMoodLogo(showLogo)}
+    <Text style={styles.headerText}>{headerText}</Text>
+  </View>
 );
 
 export default Header;

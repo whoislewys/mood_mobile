@@ -1,17 +1,10 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
   FlatList,
   StyleSheet,
-  Linking,
 } from 'react-native';
-import Images from '@assets/images';
 import Mood from './mood';
 import { fonts, colors, dimensions } from '../../../assets/styles';
-import MoodLeftHeader from '../../../components/headers/MoodLeftHeader';
 
 const styles = StyleSheet.create({
   header: {
