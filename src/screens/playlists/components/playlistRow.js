@@ -49,8 +49,8 @@ const PlaylistRow = ({
   _onCreatePlaylist,
 }) => {
   const {
-    artist,
     artwork,
+    subtitle,
     title,
   } = leaderboardSong;
 
@@ -61,13 +61,17 @@ const PlaylistRow = ({
     _onPress = _handleLeaderboardRowPress;
   }
 
+  const _getImage = (idx, art) => (
+    index === 0 ? <Image style={styles.albumArt} source={Images.createPlaylist} />
+      : <Image style={styles.albumArt} source={{ uri: art }} />
+  );
 
   return (
     <TouchableOpacity
       style={styles.rowBackground}
       onPress={() => _onPress(index - 1)}
     >
-      <Image style={styles.albumArt} source={{ uri: artwork }} />
+      { _getImage(index, artwork) }
       <View style={styles.detailsContainer}>
         <Text
           style={styles.songName}
@@ -81,7 +85,7 @@ const PlaylistRow = ({
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {artist}
+          {subtitle}
         </Text>
       </View>
     </TouchableOpacity>

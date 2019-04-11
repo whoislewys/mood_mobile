@@ -3,7 +3,7 @@ import {
   View,
   ActivityIndicator,
   FlatList,
-  StyleSheet, TouchableOpacity, Image,
+  StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
@@ -16,7 +16,6 @@ import {
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
 import { spacing } from '../../assets/styles';
-import Images from '../../assets/images';
 
 const styles = StyleSheet.create({
   container: {
@@ -83,26 +82,24 @@ class Playlists extends Component {
   );
 
   _playlistButton = () => (
-    <View>
-      <TouchableOpacity
-        style={styles.playlistButtonContainer}
-        onPress={() => this._onOpenCreatePlaylistModal()}
-      >
-        <Image source={Images.createPlaylist} style={styles.playlistButton} />
-      </TouchableOpacity>
-    </View>
-  );
+    {
+      ...this.props.leaderboardSongs[0],
+      // cant pass artwork through here, the way we called images was incompatible
+      id: 'create-playlist',
+      title: 'Create Playlist',
+      subTitle: 'Make a new bonerific playlist',
+    });
 
 
-  getLeaderBoard = () => (
+  getPlaylists= () => (
     this.props.leaderboardSongs.length
       ? (
         <FlatList
           // TODO: figure out the sticky header components
-          data={this.props.leaderboardSongs}
+          data={[this._playlistButton(), ...this.props.leaderboardSongs]}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={this._playlistButton()}
+          ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
@@ -132,7 +129,7 @@ class Playlists extends Component {
   render = () => (
     <View style={styles.container}>
       {this.getModal()}
-      {this.getLeaderBoard()}
+      {this.getPlaylists()}
     </View>
   )
 }

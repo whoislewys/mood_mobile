@@ -81,7 +81,7 @@ class SavedSongs extends Component {
     />
   );
 
-  getLeaderBoard = () => (
+  getSavedSongs = () => (
     this.props.leaderboardSongs.length
       ? (
         <FlatList
@@ -98,7 +98,7 @@ class SavedSongs extends Component {
 
   render = () => (
     <View style={styles.container}>
-      {this.getLeaderBoard()}
+      {this.getSavedSongs()}
     </View>
   )
 }
