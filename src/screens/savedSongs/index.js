@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import Images from '@assets/images';
 import { loadLeaderboardSongQueue, shufflePlay } from '../../redux/modules/queue';
-import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/savingSongs';
+import { addSongToDeleted, removeSongFromDeleted, deleteSongs } from '../../redux/modules/savingSongs';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
 import { spacing } from '../../assets/styles';
@@ -35,6 +35,14 @@ const styles = StyleSheet.create({
 });
 
 class SavedSongs extends Component {
+  componentDidMount() {
+    this.props.navigation.addListener('willBlur', this.componentWillBlur);
+  }
+
+  componentWillBlur = () => {
+    this.props.deleteSongs();
+  }
+
   _navigateToLeaderboardScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Leaderboard',
@@ -114,6 +122,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addSongToDeleted,
+  deleteSongs,
   loadLeaderboardSongQueue,
   removeSongFromDeleted,
   sendScoreDelta,

@@ -114,7 +114,7 @@ export function loadSavedSongs() {
 export function deleteSongs() {
   // should only be called when navigating away from saved song screen
   return async (dispatch, getState) => {
-    // get the user id off state, get the songsToDelete(), make the api call to actually delete
-    dispatch({ type: DELETE_SAVED_SONG });
+    // get the user id off state, get the songsToDelete(), make the api call to actually delete from users savedSongs
+    dispatch({ type: DELETE_SAVED_SONGS });
   };
 }
