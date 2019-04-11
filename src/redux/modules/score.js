@@ -46,10 +46,11 @@ export function reducer(state = initialState, action = {}) {
 export function incrementScore() {
   return (dispatch, getState) => {
     // if no current track, don't allow the user to rate
-    if (!getState().queue.curTrack) return;
+    const { curTrack } = getState().queue;
+    if (!curTrack) return;
 
     if (getState().score.currentScore === 0) {
-      dispatch(saveSong());
+      dispatch(saveSong(curTrack));
     }
     dispatch({ type: INCREMENT_SCORE });
   };

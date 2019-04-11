@@ -102,7 +102,6 @@ describe('Queue module', () => {
         // only mock what you need in the store
         leaderboardInitialState.songs = [track1, track2];
         mockState = {
-          // leaderboard: mockLeaderboardState,
           leaderboard: leaderboardInitialState,
           score: scoreInitialState,
         };
@@ -121,7 +120,7 @@ describe('Queue module', () => {
           {
             type: LOAD_LEADERBOARD_SONG_QUEUE,
             selectedLeaderboardSongIndex,
-            savedSongs: mockState.leaderboard.songs,
+            leaderboardSongs: mockState.leaderboard.songs,
           },
         ]);
       });

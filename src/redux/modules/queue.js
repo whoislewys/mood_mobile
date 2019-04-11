@@ -247,7 +247,7 @@ export function loadLeaderboardSongQueue(selectedLeaderboardSongIndex) {
     dispatch({
       type: LOAD_LEADERBOARD_SONG_QUEUE,
       selectedLeaderboardSongIndex,
-      leaderboardSongs: savedSongs,
+      leaderboardSongs,
     });
 
     const selectedLeaderboardSong = leaderboardSongs[selectedLeaderboardSongIndex];
