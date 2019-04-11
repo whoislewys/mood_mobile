@@ -17,6 +17,7 @@ import {
   PLAYBACK_TRACK,
   MOOD_TYPE,
   LEADERBOARD_TYPE,
+  PLAY_SHUFFLED_PLAYLIST,
 } from '../constants';
 
 export const initialState = {
@@ -110,7 +111,7 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
-      let songs1 = loadSongData(action.payload.data);
+      const songs1 = loadSongData(action.payload.data);
       // add the sharedTrack to front of array
       songs1.unshift(state.sharedTrack);
       return {
@@ -127,6 +128,14 @@ export function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
         queueType: '',
+      };
+
+    case PLAY_SHUFFLED_PLAYLIST:
+      return {
+        ...state,
+        queue: action.songs,
+        curTrack: songs[0],
+        curTrackIndex: 0,
       };
 
     // Handles the dispatches from TrackPlayer event handlers
@@ -165,6 +174,20 @@ export function handlePlayPress() {
   };
 }
 
+export function shufflePlay(songs) {
+  const shuffledSongs = shuffle(songs);
+  return async (dispatch) => {
+    dispatch({ type: RESET_QUEUE });
+    await TrackPlayer.reset();
+    await TrackPlayer.add(songs);
+    await TrackPlayer.play();
+    dispatch({
+      type: PLAY_SHUFFLED_PLAYLIST,
+      songs: shuffledSongs,
+    });
+  };
+}
+
 export function skipToNext() {
   return async (dispatch) => {
     try {
@@ -200,7 +223,7 @@ export function loadSongsForMoodId(moodId) {
     await TrackPlayer.reset();
     dispatch({ type: LOAD_SONGS });
     try {
-      let songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+      const songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
@@ -241,7 +264,7 @@ export function loadSharedSongQueue(sharedTrack) {
     await TrackPlayer.reset();
     dispatch({ type: LOAD_SHARED_SONG_QUEUE, sharedTrack });
     try {
-      let songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+      const songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',

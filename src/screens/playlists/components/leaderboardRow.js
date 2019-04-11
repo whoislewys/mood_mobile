@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Images from '@assets/images';
-import { fonts, colors } from '../../../assets/styles';
+import { fonts, colors, spacing } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 85,
     width: '100%',
-    marginBottom: 15,
+    marginBottom: spacing.md,
   },
   albumArt: {
     width: 54,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginRight: '10%',
   },
-  playlistIcon: {
+  playlistButton: {
     width: 24,
     height: 24,
     resizeMode: 'contain',

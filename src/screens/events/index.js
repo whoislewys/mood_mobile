@@ -11,6 +11,7 @@ import Images from '@assets/images';
 import { connect } from 'react-redux';
 import EventRow from './components/event-row';
 import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
+import { spacing } from '../../assets/styles';
 
 const ADD_EVENT_URL = 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1';
 
@@ -32,8 +33,7 @@ const styles = {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginLeft: 16,
-    marginRight: 16,
+    marginHorizontal: spacing.sm,
   },
 };
 

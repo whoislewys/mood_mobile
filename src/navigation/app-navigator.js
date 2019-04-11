@@ -7,7 +7,7 @@ import SettingsScreen from '../screens/settings';
 import MoodScreen from '../screens/mood';
 import LeaderboardScreen from '../screens/leaderboard';
 import EventsScreen from '../screens/events';
-import LibraryScreen from '../screens/library';
+import LibraryScreen from '../screens/savedSongs';
 import PlaylistsScreen from '../screens/playlists';
 import PlayScreen from '../screens/play';
 import LoginScreen from '../screens/login';

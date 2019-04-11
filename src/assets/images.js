@@ -6,6 +6,7 @@ const images = {
   bgOverlay: require('./img/background-overlay.png'),
   bugIcon: require('./img/round-bug_report.png'),
   playlistButton: require('./img/playlist-button.png'),
+  savedIcon: require('./img/saved-icon.png'),
   settingsGear: require('./img/round-settings.png'),
 
   // Events
@@ -35,6 +36,10 @@ const images = {
   events: require('./img/selected-round-events.png'),
 
   // Playlists Screen
+  createPlaylist: require('./img/create-playlist.png'),
+
+  // Saved Songs Screen
+  shuffle: require('./img/shuffle.png'),
 
   // Settings Screen
   explicitIcon: require('./img/explicit-icon.png'),

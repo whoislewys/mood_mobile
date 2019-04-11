@@ -9,6 +9,7 @@ import LeaderboardRow from './components/leaderboardRow';
 import LeaderboardHeader from './components/leaderboardHeader';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
+import { spacing } from '../../assets/styles';
 
 const styles = {
   background: {
@@ -19,8 +20,7 @@ const styles = {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginLeft: 21,
-    marginRight: 21,
+    marginHorizontal: spacing.sm,
   },
 };
 

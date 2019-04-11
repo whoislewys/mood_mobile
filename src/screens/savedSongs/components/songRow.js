@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Images from '@assets/images';
-import { fonts, colors } from '../../../assets/styles';
+import { fonts, colors, spacing } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -15,19 +15,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 85,
-    width: '100%',
-    marginBottom: 15,
+    height: 60,
+    marginBottom: spacing.md,
   },
   albumArt: {
-    width: 54,
-    height: 54,
+    width: 60,
+    height: 60,
     borderRadius: 2,
   },
   detailsContainer: {
     flex: 30,
     marginLeft: 11,
-    marginTop: 15,
+    marginTop: '1%',
     alignSelf: 'flex-start',
   },
   songName: {
@@ -50,9 +49,9 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     resizeMode: 'contain',
-    marginRight: '10%',
+    marginRight: spacing.sm,
   },
-  playlistIcon: {
+  playlistButton: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
@@ -60,22 +59,21 @@ const styles = StyleSheet.create({
 });
 
 
-const LeaderboardRow = ({
+const SongRow = ({
   leaderboardSong,
   index,
-  _handleLeaderboardRowPress,
+  _handleSongRowPress,
 }) => {
   const {
     artist,
     artwork,
     title,
-    stars,
   } = leaderboardSong;
 
   return (
     <TouchableOpacity
       style={styles.rowBackground}
-      onPress={() => _handleLeaderboardRowPress(index)}
+      onPress={() => _handleSongRowPress(index)}
     >
       <Image style={styles.albumArt} source={{ uri: artwork }} />
       <View style={styles.detailsContainer}>
@@ -96,14 +94,14 @@ const LeaderboardRow = ({
       </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity>
-          <Image source={Images.leaderboardStar} style={styles.savedIcon} />
+          <Image source={Images.savedIcon} style={styles.savedIcon} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={Images.leaderboardStar} style={styles.playlistIcon} />
+          <Image source={Images.playlistButton} style={styles.playlistButton} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default LeaderboardRow;
+export default SongRow;

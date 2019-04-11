@@ -42,17 +42,28 @@ const styles = StyleSheet.create({
   },
   dropdownBarTouchable: {
     flex: 1,
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   backButtonContainer: {
     marginLeft: '1.8%',
-    paddingBottom: '15%',
     justifyContent: 'flex-end',
   },
   backButton: {
     height: 26,
     width: 26,
     resizeMode: 'contain',
+  },
+  playlistButtonContainer: {
+    justifyContent: 'flex-end',
+    paddingLeft: '2%',
+    paddingTop: '1.58%',
+  },
+  playlistButton: {
+    height: 30,
+    width: 30,
+    resizeMode: 'contain',
+    tintColor: '#fff',
   },
   albumArtContainer: {
     flex: 55,
@@ -164,6 +175,13 @@ class PlayScreen extends Component {
             activeOpacity={1}
           >
             <Image source={Images.arrowDown} style={styles.backButton} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Mood')}
+            style={styles.playlistButtonContainer}
+            activeOpacity={1}
+          >
+            <Image source={Images.playlistButton} style={styles.playlistButton} />
           </TouchableOpacity>
         </TouchableOpacity>
       </GestureRecognizer>

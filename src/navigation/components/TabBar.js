@@ -86,7 +86,7 @@ const TabBar = class TabBar extends Component {
       return <Image source={Images.events} style={[styles.icon, { tintColor }]} />;
     }
     if (label === 'Library') {
-      // TODO: swap out for library icon
+      // TODO: swap out for savedSongs icon
       return <Image source={Images.leaderboard} style={[styles.icon, { tintColor }]} />;
     }
     return <View />;
