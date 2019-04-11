@@ -133,8 +133,9 @@ export function reducer(state = initialState, action = {}) {
     case PLAY_SHUFFLED_PLAYLIST:
       return {
         ...state,
+        loading: false,
         queue: action.songs,
-        curTrack: songs[0],
+        curTrack: action.songs[0],
         curTrackIndex: 0,
       };
 
