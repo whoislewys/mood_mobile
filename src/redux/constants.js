@@ -54,6 +54,10 @@ export const MOOD_TYPE = 'mood';
 export const LEADERBOARD_TYPE = 'leaderboard';
 
 // Saving
+export const DELETE_SAVED_SONGS = 'savingSongs/DELETE';
+export const LOAD_SAVED_SONGS = 'savingSongs/LOAD';
+export const LOAD_SAVED_SONGS_SUCCESS = 'savingSongs/LOAD_SUCCESS';
+export const LOAD_SAVED_SONGS_FAIL = 'savingSongs/LOAD_FAIL';
 export const SAVE_SONG = 'savingSongs/SAVE_SONG';
 export const SAVE_SONG_SUCCESS = 'savingSongs/SAVE_SONG_SUCCESS';
 export const SAVE_SONG_FAIL = 'savingSongs/SAVE_SONG_FAIL';
