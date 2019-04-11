@@ -17,6 +17,7 @@ import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
     paddingHorizontal: spacing.lg,
   },
