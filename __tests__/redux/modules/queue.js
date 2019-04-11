@@ -11,7 +11,6 @@ import {
 import { initialState as leaderboardInitialState } from '../../../src/redux/modules/leaderboard';
 import { initialState as scoreInitialState } from '../../../src/redux/modules/score';
 import {
-  anal,
   LOAD_SONGS,
   LOAD_SONGS_SUCCESS,
   LOAD_SONGS_FAIL,
@@ -25,8 +24,6 @@ import {
   MOOD_TYPE,
   LEADERBOARD_TYPE,
 } from '../../../src/redux/constants';
-
-jest.mock('axios');
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -53,7 +50,6 @@ const track2 = {
   stars: 76,
   rank: 2,
 };
-
 
 describe('Queue module', () => {
   describe('action creator', () => {

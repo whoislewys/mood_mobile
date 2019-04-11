@@ -19,6 +19,8 @@ jest.mock('react-native-google-signin', () => {});
 
 jest.mock('react-native-firebase', () => {});
 
+jest.mock('axios');
+
 // TrackPlayer
 jest.mock('react-native-track-player', () => {
   return {

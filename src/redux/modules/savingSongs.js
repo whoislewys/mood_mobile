@@ -61,13 +61,14 @@ export function reducer(state = initialState, action = {}) {
 }
 
 export function saveSong(song) {
-  return (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch({ type: SAVE_SONG });
     const songToSaveId = song.id;
     try {
-      axios.post(`http://api.moodindustries.com/api/v1//songs/${songToSaveId}/save`,
+      await axios.post(`http://api.moodindustries.com/api/v1/songs/${songToSaveId}/save`,
         {
-          stars: getState().score.scoreDelta, t: 'EXVbAWTqbGFl7BKuqUQv',
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+          song,
         });
       dispatch({ type: SAVE_SONG_SUCCESS });
     } catch (e) {

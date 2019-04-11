@@ -6,8 +6,6 @@ import { INCREMENT_SCORE } from '../../../src/redux/constants';
 // import * as savingSongs from '../../../src/redux/modules/savingSongs';
 import * as savingSongs from '../../../src/redux/modules/savingSongs';
 
-jest.mock('axios');
-
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
@@ -22,17 +20,6 @@ const track1 = {
   stars: 100,
   rank: 1,
 };
-// const track2 = {
-//   id: 127,
-//   file: 'https://mood-music-api.herokuapp.com//rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBHdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--38b288068b793cb2590e021c2d263afa289a7f2a/song73.mp3',
-//   name: 'Really Love',
-//   artist: 'Dawson bailey',
-//   album_name: '',
-//   art_url: 'https://i1.sndcdn.com/artworks-000306722370-p33yx5-t500x500.jpg',
-//   mood_id: 1,
-//   stars: 76,
-//   rank: 2,
-// };
 
 describe('Score module', () => {
   describe('action creator', () => {
@@ -62,9 +49,8 @@ describe('Score module', () => {
         await store.dispatch(incrementScore());
 
         expect(saveSongSpy).toHaveBeenCalledTimes(1);
-        expect(store.getActions().slice(-1)).toEqual([
-          { type: INCREMENT_SCORE },
-        ]);
+
+        expect(store.getActions()).toContainEqual({ type: INCREMENT_SCORE });
       });
 
       it('should increment score if there is no current track', async () => {
