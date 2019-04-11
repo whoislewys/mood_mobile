@@ -17,13 +17,10 @@ export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case ADD_SONG_TO_DELETED:
       // get all the songs from the previous songsToDelete set
-      const newSongsToDelete = new Set();
-      state.songsToDelete.forEach(song => newSongsToDelete.add(song));
-      console.warn('adding song to del set: ', action.songToDelete);
-
-      // add the one new song to delete
-      newSongsToDelete.add(action.songToDelete.id); // TODO: why thie fucc is set.add() not working? reeeeeeeeeeeeeeeeeeeeeeee
+      const newSongsToDelete = new Set([action.songToDelete.id]);
+      console.log('new deleted set: ', newSongsToDelete);
       console.warn('new deleted set: ', newSongsToDelete);
+      // state.songsToDelete.forEach(song => newSongsToDelete.add(song));
       return { ...state, songsToDelete: newSongsToDelete };
 
     case REMOVE_SONG_FROM_DELETED:
