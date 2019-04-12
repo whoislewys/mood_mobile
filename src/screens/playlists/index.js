@@ -13,7 +13,7 @@ import {
   closeModal,
   updateNewPlaylistName,
   createPlaylist,
-  playlistScrollingNegative,
+  setPlaylistScrollingNegative,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
 import { spacing } from '../../assets/styles';
@@ -104,7 +104,7 @@ class Playlists extends Component {
     this.yOffset = event.nativeEvent.contentOffset.y;
     if (Math.sign(this.yOffset) === -1) {
       console.log('negative');
-      this.props.playlistScrollingNegative();
+      this.props.setPlaylistScrollingNegative();
     }
   };
 
@@ -167,7 +167,7 @@ const mapDispatchToProps = {
   loadLeaderboardSongQueue,
   openModal,
   closeModal,
-  playlistScrollingNegative,
+  setPlaylistScrollingNegative,
   updateNewPlaylistName,
   createPlaylist,
 };

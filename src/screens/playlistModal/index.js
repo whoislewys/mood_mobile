@@ -15,7 +15,7 @@ import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import {
   closeModal,
   createPlaylist, loadPlaylists,
-  openModal, playlistScrollingNotNegative,
+  openModal, setPlaylistScrollingNotNegative,
   updateNewPlaylistName,
 } from '../../redux/modules/playlists';
 
@@ -62,7 +62,7 @@ export class PlaylistModal extends Component {
 
   render() {
     if (this.props.playlistScrollIsNegative) {
-      this.props.playlistScrollingNotNegative();
+      this.props.setPlaylistScrollingNotNegative();
       this.props.navigation.goBack();
     }
     return (
@@ -102,7 +102,7 @@ const mapDispatchToProps = {
   openModal,
   closeModal,
   updateNewPlaylistName,
-  playlistScrollingNotNegative,
+  setPlaylistScrollingNotNegative,
   createPlaylist,
 };
 

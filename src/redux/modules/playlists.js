@@ -128,13 +128,13 @@ export function loadPlaylists(userId) {
   };
 }
 
-export function playlistScrollingNegative() {
+export function setPlaylistScrollingNegative() {
   return {
     type: PLAYLIST_SCROLL_IS_NEGATIVE,
   };
 }
 
-export function playlistScrollingNotNegative() {
+export function setPlaylistScrollingNotNegative() {
   return {
     type: PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
   };
