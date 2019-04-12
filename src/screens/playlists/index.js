@@ -94,7 +94,7 @@ class Playlists extends Component {
       ? (
         <FlatList
           // TODO: figure out the sticky header components
-          data={[this._playlistButton(), ...this.props.savedSongs]}
+          data={[this._playlistButton(), ...this.props.playlists]}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
@@ -135,7 +135,7 @@ class Playlists extends Component {
 const mapStateToProps = state => ({
   loading: state.playlists.loading,
   isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
-  savedSongs: state.playlists.playlists,
+  playlists: state.playlists.playlists,
   playlistError: state.playlists.error,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
   userIsLoggedIn: state.auth.userIsLoggedIn,

@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   Image,
   StyleSheet,
 } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { connect } from 'react-redux';
 import Images from '../../assets/images';
 import { spacing } from '../../assets/styles';
 import Playlists from '../playlists';
+import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
+import {
+  closeModal,
+  createPlaylist, loadPlaylists,
+  openModal,
+  updateNewPlaylistName,
+} from '../../redux/modules/playlists';
 
 const styles = StyleSheet.create({
   swipeContainer: {
@@ -34,7 +41,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class PlaylistModal extends Component {
+export class PlaylistModal extends Component {
+  constructor(props) {
+    super(props);
+    if (!this.props.playlists) {
+      this.props.loadPlaylists();
+    }
+  }
+
   render() {
     return (
       <GestureRecognizer
@@ -42,8 +56,8 @@ export default class PlaylistModal extends Component {
         style={styles.swipeContainer}
       >
         <View style={styles.modalContents}>
-          <TouchableOpacity style={styles.exitButtonContainer} >
-            <Image source={Images.playlistButton} style={styles.exitButton} />
+          <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.props.navigation.goBack()}>
+            <Image source={Images.close} style={styles.exitButton} />
           </TouchableOpacity>
           <Playlists />
         </View>
@@ -51,3 +65,23 @@ export default class PlaylistModal extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  loading: state.playlists.loading,
+  isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
+  savedSongs: state.playlists.playlists,
+  playlistError: state.playlists.error,
+  updateNewPlaylistName: state.playlists.updateNewPlaylistName,
+  userIsLoggedIn: state.auth.userIsLoggedIn,
+});
+
+const mapDispatchToProps = {
+  loadLeaderboardSongQueue,
+  loadPlaylists,
+  openModal,
+  closeModal,
+  updateNewPlaylistName,
+  createPlaylist,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistModal);

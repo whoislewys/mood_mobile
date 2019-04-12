@@ -9,6 +9,7 @@ const images = {
   playlistButton: require('./img/playlist-button.png'),
   savedIcon: require('./img/saved-icon.png'),
   settingsGear: require('./img/round-settings.png'),
+  close: require('./img/close-icon.png'),
 
   // Events
   addEventButton: require('./img/add-event-button.png'),

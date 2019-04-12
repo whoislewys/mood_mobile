@@ -94,6 +94,7 @@
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
 		52B3A99FD33F47B7933A85BE /* my-music.png in Resources */ = {isa = PBXBuildFile; fileRef = F20B362BCDAA4B95A90FB79E /* my-music.png */; };
 		D023A09543BC4CAC86136B9E /* save-song.png in Resources */ = {isa = PBXBuildFile; fileRef = 9496A94BC54D4FF0869C3792 /* save-song.png */; };
+		C476875CC91B49EDAFB7D128 /* close-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B7172E4A376474D83FC65A5 /* close-icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -529,6 +530,7 @@
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9496A94BC54D4FF0869C3792 /* save-song.png */ = {isa = PBXFileReference; name = "save-song.png"; path = "../src/assets/img/save-song.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7B7172E4A376474D83FC65A5 /* close-icon.png */ = {isa = PBXFileReference; name = "close-icon.png"; path = "../src/assets/img/close-icon.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -858,6 +860,7 @@
 				9288211305F8420BBA866C96 /* gradient-button.png */,
 				F20B362BCDAA4B95A90FB79E /* my-music.png */,
 				9496A94BC54D4FF0869C3792 /* save-song.png */,
+				7B7172E4A376474D83FC65A5 /* close-icon.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1540,6 +1543,7 @@
 				4E2BBBD4AE54416795F50B8E /* gradient-button.png in Resources */,
 				52B3A99FD33F47B7933A85BE /* my-music.png in Resources */,
 				D023A09543BC4CAC86136B9E /* save-song.png in Resources */,
+				C476875CC91B49EDAFB7D128 /* close-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
