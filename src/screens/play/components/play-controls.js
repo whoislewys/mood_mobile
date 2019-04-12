@@ -131,7 +131,6 @@ export default class PlayControls extends Component {
         </TouchableOpacity>
       );
     }
-
     return ret;
   };
 

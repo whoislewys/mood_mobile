@@ -33,15 +33,17 @@ const styles = StyleSheet.create({
   modalContents: {
     height: '58.49%',
     width: '100%',
-    backgroundColor: '#fff',
     borderRadius: 10,
-    alignItems: 'center',
     elevation: 35,
     shadowRadius: 300,
     shadowOpacity: 1.0,
+    backgroundColor: 'white',
   },
   exitButtonContainer: {
     paddingTop: spacing.sm,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   exitButton: {
     height: 33,
