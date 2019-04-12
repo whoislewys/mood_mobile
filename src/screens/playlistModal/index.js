@@ -62,8 +62,7 @@ export class PlaylistModal extends Component {
 
   render() {
     return (
-      <GestureRecognizer
-        onSwipeDown={() => this.props.navigation.goBack()}
+      <View
         style={styles.swipeContainer}
       >
         { Platform.OS === 'android'
@@ -76,7 +75,7 @@ export class PlaylistModal extends Component {
           </TouchableOpacity>
           <Playlists />
         </View>
-      </GestureRecognizer>
+      </View>
     );
   }
 }
