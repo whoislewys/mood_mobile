@@ -9,6 +9,8 @@ import {
   LOAD_PLAYLISTS_FAIL,
   OPEN_MODAL,
   CLOSE_MODAL,
+  PLAYLIST_SCROLL_IS_NEGATIVE,
+  PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
   UPDATE_NEW_PLAYLIST_NAME,
 } from '../constants';
 import { mapSongsToValidTrackObjects } from './leaderboard';
@@ -19,6 +21,7 @@ const initialState = {
   newPlaylistName: '',
   loading: false,
   error: {},
+  playlistScrollIsNegative: false,
 };
 
 export function reducer(state = initialState, action = {}) {
@@ -45,6 +48,12 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, loading: false, playlists: songs };
     case LOAD_PLAYLISTS_FAIL:
       return { ...state, loading: false, error: 'Error while fetching playlist' };
+
+    case PLAYLIST_SCROLL_IS_NEGATIVE:
+      return { ...state, playlistScrollIsNegative: true };
+    case PLAYLIST_SCROLL_IS_NOT_NEGATIVE:
+      return { ...state, playlistScrollIsNegative: false };
+
     default:
       return state;
   }
@@ -116,5 +125,17 @@ export function loadPlaylists(userId) {
     } catch (e) {
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
     }
+  };
+}
+
+export function playlistScrollingNegative() {
+  return {
+    type: PLAYLIST_SCROLL_IS_NEGATIVE,
+  };
+}
+
+export function playlistScrollingNotNegative() {
+  return {
+    type: PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
   };
 }

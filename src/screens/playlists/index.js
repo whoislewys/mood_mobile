@@ -13,6 +13,7 @@ import {
   closeModal,
   updateNewPlaylistName,
   createPlaylist,
+  playlistScrollingNegative,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
 import { spacing } from '../../assets/styles';
@@ -93,9 +94,18 @@ class Playlists extends Component {
       subtitle: 'Make a new bonerific playlist',
     });
 
+  handleScrollBegin = (event) => {
+    console.log(event.nativeEvent.contentOffset.y);
+    this.yOffset = event.nativeEvent.contentOffset.y;
+  };
+
   handleScroll = (event) => {
     console.log(event.nativeEvent.contentOffset.y);
     this.yOffset = event.nativeEvent.contentOffset.y;
+    if (Math.sign(this.yOffset) === -1) {
+      console.log('negative');
+      this.props.playlistScrollingNegative();
+    }
   };
 
   getPlaylists = () => (
@@ -109,7 +119,8 @@ class Playlists extends Component {
           ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
-          onScrollBeginDrag={this.handleScroll}
+          onScrollBeginDrag={this.handleScrollBegin}
+          onScroll={this.handleScroll}
           scrollEventThrottle={16}
         />
       )
@@ -156,6 +167,7 @@ const mapDispatchToProps = {
   loadLeaderboardSongQueue,
   openModal,
   closeModal,
+  playlistScrollingNegative,
   updateNewPlaylistName,
   createPlaylist,
 };

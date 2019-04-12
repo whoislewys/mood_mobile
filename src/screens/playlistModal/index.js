@@ -15,7 +15,7 @@ import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import {
   closeModal,
   createPlaylist, loadPlaylists,
-  openModal,
+  openModal, playlistScrollingNotNegative,
   updateNewPlaylistName,
 } from '../../redux/modules/playlists';
 
@@ -61,6 +61,10 @@ export class PlaylistModal extends Component {
   }
 
   render() {
+    if (this.props.playlistScrollIsNegative) {
+      this.props.playlistScrollingNotNegative();
+      this.props.navigation.goBack();
+    }
     return (
       <View
         style={styles.swipeContainer}
@@ -87,6 +91,7 @@ const mapStateToProps = state => ({
   isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
   savedSongs: state.playlists.playlists,
   playlistError: state.playlists.error,
+  playlistScrollIsNegative: state.playlists.playlistScrollIsNegative,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
   userIsLoggedIn: state.auth.userIsLoggedIn,
 });
@@ -97,6 +102,7 @@ const mapDispatchToProps = {
   openModal,
   closeModal,
   updateNewPlaylistName,
+  playlistScrollingNotNegative,
   createPlaylist,
 };
 
