@@ -60,11 +60,15 @@ export class PlaylistModal extends Component {
     }
   }
 
-  render() {
-    if (this.props.playlistScrollIsNegative) {
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.playlistScrollIsNegative) {
       this.props.setPlaylistScrollingNotNegative();
       this.props.navigation.goBack();
     }
+    return true;
+  }
+
+  render() {
     return (
       <View
         style={styles.swipeContainer}
