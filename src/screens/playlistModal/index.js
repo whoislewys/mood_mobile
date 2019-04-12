@@ -3,6 +3,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Platform,
   StyleSheet,
 } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -24,12 +25,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-end',
   },
+  androidBlackOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'black',
+    opacity: 0.4,
+  },
   modalContents: {
     height: '58.49%',
     width: '100%',
     backgroundColor: '#fff',
     borderRadius: 10,
     alignItems: 'center',
+    elevation: 35,
+    shadowRadius: 300,
+    shadowOpacity: 1.0,
   },
   exitButtonContainer: {
     paddingTop: spacing.sm,
@@ -55,6 +64,10 @@ export class PlaylistModal extends Component {
         onSwipeDown={() => this.props.navigation.goBack()}
         style={styles.swipeContainer}
       >
+        { Platform.OS === 'android'
+          ? <View style={styles.androidBlackOverlay} />
+          : null
+        }
         <View style={styles.modalContents}>
           <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.props.navigation.goBack()}>
             <Image source={Images.close} style={styles.exitButton} />
