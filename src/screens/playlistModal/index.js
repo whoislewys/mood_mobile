@@ -9,6 +9,7 @@ import {
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Images from '../../assets/images';
 import { spacing } from '../../assets/styles';
+import Playlists from '../playlists';
 
 const styles = StyleSheet.create({
   swipeContainer: {
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   exitButtonContainer: {
-    paddingVertical: spacing.sm,
+    paddingTop: spacing.sm,
   },
   exitButton: {
     height: 33,
@@ -44,7 +45,7 @@ export default class PlaylistModal extends Component {
           <TouchableOpacity style={styles.exitButtonContainer} >
             <Image source={Images.playlistButton} style={styles.exitButton} />
           </TouchableOpacity>
-          <Text>ballzacc</Text>
+          <Playlists />
         </View>
       </GestureRecognizer>
     );

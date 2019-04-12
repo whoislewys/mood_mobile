@@ -18,7 +18,6 @@ import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TimeBar from './components/time-bar';
 import InfoText from './components/info-text';
-import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
 import {
   handlePlayPress,
@@ -129,36 +128,6 @@ class PlayScreen extends Component {
       );
     }
 
-    // return (
-    //   <Background
-    //     image={{ uri: this.props.curTrack.artwork }}
-    //     blur={25}
-    //   >
-    //     <PlayOnOpen
-    //       playing={this.props.playing}
-    //       playByDefault={this.props.handlePlayPress}
-    //       parentScreen={this.props.parentScreen}
-    //     />
-    //     <View style={styles.playContainer}>
-    //       <View style={styles.dropdownBarContainer}>
-    //         { this.getDropdownBar() }
-    //       </View>
-    //       <View style={styles.albumArtContainer}>
-    //         { this.getAlbumArtCarousel() }
-    //       </View>
-    //       <View style={styles.playBarContainer}>
-    //         <TimeBar setTime={this.props.setTime} />
-    //       </View>
-    //       <View style={styles.trackInfoContainer}>
-    //         { this.getTrackInfoAndPlaybar() }
-    //       </View>
-    //       <View style={styles.playControlsContainer}>
-    //         { this.getPlayControls() }
-    //       </View>
-    //     </View>
-    //   </Background>
-    // );
-
     return (
       <View style={styles.container}>
         { this._getBackground() }
@@ -199,7 +168,7 @@ class PlayScreen extends Component {
         <View style={styles.imageOverlay} />
       </View>
     );
-  }
+  };
 
   _nextTrack = () => {
     this.props.skipToNext();
@@ -218,10 +187,7 @@ class PlayScreen extends Component {
       onSwipeDown={() => this.onSwipeDown()}
     >
       <TouchableOpacity
-        onPress={() => {
-          this.props.navigation.navigate('Mood');
-          console.warn('pressed back bar');
-        }}
+        onPress={() => this.props.navigation.navigate('Mood')}
         activeOpacity={1}
         style={styles.dropdownBarTouchable}
       >
@@ -233,10 +199,7 @@ class PlayScreen extends Component {
           <Image source={Images.arrowDown} style={styles.backButton} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {
-            console.warn('pressed playlist button');
-            this.props.navigation.navigate('PlaylistModal');
-          }}
+          onPress={() => this.props.navigation.navigate('PlaylistModal')}
           style={styles.playlistButtonContainer}
           activeOpacity={1}
         >

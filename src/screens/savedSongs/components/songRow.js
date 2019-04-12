@@ -120,7 +120,7 @@ class SongRow extends Component {
         </View>
         <View style={styles.buttonsContainer}>
           { this._getSavedSongButton() }
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.openPlaylistModal()}>
             <Image source={Images.playlistButton} style={styles.playlistButton} />
           </TouchableOpacity>
         </View>
