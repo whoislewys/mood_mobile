@@ -28,10 +28,18 @@ import {
 import { logEvent } from '../../redux/modules/analytics';
 
 const styles = StyleSheet.create({
-  imageBackground: {
+  container: {
     flex: 1,
     backgroundColor: 'black',
-    tintColor: 'rgba(0,0,0,0.4)',
+  },
+  imageOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'black',
+    opacity: 0.3,
+  },
+  imageBackground: {
+    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
   playContainer: {
     flex: 1,
@@ -152,11 +160,8 @@ class PlayScreen extends Component {
     // );
 
     return (
-      <ImageBackground
-        source={{ uri: this.props.curTrack.artwork }}
-        blurRadius={25}
-        style={styles.imageBackground}
-      >
+      <View style={styles.container}>
+        { this._getBackground() }
         <PlayOnOpen
           playing={this.props.playing}
           playByDefault={this.props.handlePlayPress}
@@ -179,9 +184,22 @@ class PlayScreen extends Component {
             { this.getPlayControls() }
           </View>
         </View>
-      </ImageBackground>
+      </View>
     );
   };
+
+  _getBackground = () => {
+    return (
+      <View style={styles.imageBackground}>
+        <ImageBackground
+          source={{ uri: this.props.curTrack.artwork }}
+          blurRadius={25}
+          style={styles.imageBackground}
+        />
+        <View style={styles.imageOverlay} />
+      </View>
+    );
+  }
 
   _nextTrack = () => {
     this.props.skipToNext();
@@ -202,7 +220,7 @@ class PlayScreen extends Component {
       <TouchableOpacity
         onPress={() => {
           this.props.navigation.navigate('Mood');
-          console.warn('pressed back bar')
+          console.warn('pressed back bar');
         }}
         activeOpacity={1}
         style={styles.dropdownBarTouchable}

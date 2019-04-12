@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  TouchableOpacity,
+  Image,
   StyleSheet,
 } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import Images from '../../assets/images';
+import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   swipeContainer: {
@@ -13,12 +17,19 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContents: {
-    height: '45%',
+    height: '58.49%',
     width: '100%',
     backgroundColor: '#fff',
     borderRadius: 10,
-    justifyContent: 'center',
     alignItems: 'center',
+  },
+  exitButtonContainer: {
+    paddingVertical: spacing.sm,
+  },
+  exitButton: {
+    height: 33,
+    width: 33,
+    resizeMode: 'contain',
   },
 });
 
@@ -30,7 +41,10 @@ export default class PlaylistModal extends Component {
         style={styles.swipeContainer}
       >
         <View style={styles.modalContents}>
-          <Text>Testing a modal with transparent background</Text>
+          <TouchableOpacity style={styles.exitButtonContainer} >
+            <Image source={Images.playlistButton} style={styles.exitButton} />
+          </TouchableOpacity>
+          <Text>ballzacc</Text>
         </View>
       </GestureRecognizer>
     );
