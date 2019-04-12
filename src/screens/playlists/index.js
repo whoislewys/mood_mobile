@@ -38,10 +38,6 @@ const styles = StyleSheet.create({
 });
 
 class Playlists extends Component {
-  componentDidMount() {
-    setTimeout(() => console.log(this.yOffset), 300);
-  }
-
   _navigateToPlaylistsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Playlists',
@@ -94,16 +90,9 @@ class Playlists extends Component {
       subtitle: 'Make a new bonerific playlist',
     });
 
-  handleScrollBegin = (event) => {
-    console.log(event.nativeEvent.contentOffset.y);
-    this.yOffset = event.nativeEvent.contentOffset.y;
-  };
-
   handleScroll = (event) => {
-    console.log(event.nativeEvent.contentOffset.y);
-    this.yOffset = event.nativeEvent.contentOffset.y;
-    if (Math.sign(this.yOffset) === -1) {
-      console.log('negative');
+    const yOffset = event.nativeEvent.contentOffset.y;
+    if (Math.sign(yOffset) === -1) {
       this.props.setPlaylistScrollingNegative();
     }
   };
@@ -119,9 +108,7 @@ class Playlists extends Component {
           ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
-          onScrollBeginDrag={this.handleScrollBegin}
-          onScroll={this.handleScroll}
-          scrollEventThrottle={16}
+          onScrollEndDrag={this.handleScroll}
         />
       )
       : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
