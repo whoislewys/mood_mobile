@@ -70,9 +70,11 @@ export class PlaylistModal extends Component {
           : null
         }
         <View style={styles.modalContents}>
-          <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.props.navigation.goBack()}>
-            <Image source={Images.close} style={styles.exitButton} />
-          </TouchableOpacity>
+          <GestureRecognizer onSwipeDown={() => this.props.navigation.goBack()}>
+            <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.props.navigation.goBack()}>
+              <Image source={Images.close} style={styles.exitButton} />
+            </TouchableOpacity>
+          </GestureRecognizer>
           <Playlists />
         </View>
       </View>
