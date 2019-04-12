@@ -200,7 +200,10 @@ class PlayScreen extends Component {
       onSwipeDown={() => this.onSwipeDown()}
     >
       <TouchableOpacity
-        onPress={() => this.props.navigation.navigate('Mood')}
+        onPress={() => {
+          this.props.navigation.navigate('Mood');
+          console.warn('pressed back bar')
+        }}
         activeOpacity={1}
         style={styles.dropdownBarTouchable}
       >
@@ -212,7 +215,10 @@ class PlayScreen extends Component {
           <Image source={Images.arrowDown} style={styles.backButton} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Mood')}
+          onPress={() => {
+            console.warn('pressed playlist button');
+            this.props.navigation.navigate('PlaylistModal');
+          }}
           style={styles.playlistButtonContainer}
           activeOpacity={1}
         >
