@@ -16,6 +16,7 @@ import { colors } from '../assets/styles';
 import MoodLeftHeaderWithSettingsButton
   from '../components/headers/MoodLeftHeaderWithSettingsButton';
 import PlaylistDetailScreen from '../screens/playlistDetail';
+import PlaylistModal from '../screens/playlistModal';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     // utility function to map screenProps to and navigation params to regular props
@@ -90,7 +91,11 @@ export default createStackNavigator({
   Login: { screen: map(LoginScreen) },
   Error: { screen: map(ErrorScreen) },
   Settings: { screen: map(SettingsScreen) },
+  PlaylistModal: { screen: map(PlaylistModal) },
 }, {
+  cardStyle: {
+    backgroundColor: 'transparent',
+  },
   headerMode: 'none',
   navigationOptions: {
     gesturesEnabled: false,
