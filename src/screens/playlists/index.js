@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * This component is rendered both as a full screen, and as a child of the PlaylistModal
+ */
 class Playlists extends Component {
   _navigateToPlaylistsScreen = (params = {}) => {
     this.props.navigation.navigate({
@@ -91,17 +94,22 @@ class Playlists extends Component {
     });
 
   handleScroll = (event) => {
+    // get the yoffset where the user let their finger off the screen after scrolling
     const yOffset = event.nativeEvent.contentOffset.y;
-    if (Math.sign(yOffset) === -1) {
+
+    // update the state to reflect the user is trying to scroll up past the first piece of content in the list
+    if (Math.sign(yOffset) === -1 || Math.sign(yOffset) === 0) {
       this.props.setPlaylistScrollingNegative();
     }
+
+    // if the list is between 25% of screen size
+    // update the state to show that the playlist modal should be fullscreen
   };
 
   getPlaylists = () => (
     !this.props.loading
       ? (
         <FlatList
-          // TODO: figure out the sticky header components
           data={[this._playlistButton(), ...this.props.playlists]}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
@@ -109,6 +117,7 @@ class Playlists extends Component {
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
           onScrollEndDrag={this.handleScroll}
+          scrollEventThrottle={16}
         />
       )
       : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
