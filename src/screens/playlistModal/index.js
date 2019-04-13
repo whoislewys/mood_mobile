@@ -65,6 +65,10 @@ export class PlaylistModal extends Component {
       this.props.setPlaylistScrollingNotNegative();
       this.props.navigation.goBack();
     }
+
+    if (nextProps.isPlaylistModalFullScreen) {
+      console.warn('isPlaylistModalFullScreen: ', true);
+    }
     return true;
   }
 
@@ -77,6 +81,7 @@ export class PlaylistModal extends Component {
           ? <View style={styles.androidBlackOverlay} />
           : null
         }
+        {/* TODO: make the modalcontents view an animated.view, that animates it's height to 100% when this.props.isPlaylistModalFullScreen is true*/}
         <View style={styles.modalContents}>
           <GestureRecognizer onSwipeDown={() => this.props.navigation.goBack()}>
             <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.props.navigation.goBack()}>
@@ -98,6 +103,7 @@ const mapStateToProps = state => ({
   playlistScrollIsNegative: state.playlists.playlistScrollIsNegative,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
   userIsLoggedIn: state.auth.userIsLoggedIn,
+  isPlaylistModalFullScreen: state.playlists.isPlaylistModalFullScreen,
 });
 
 const mapDispatchToProps = {

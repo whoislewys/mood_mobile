@@ -11,6 +11,7 @@ import {
   CLOSE_MODAL,
   PLAYLIST_SCROLL_IS_NEGATIVE,
   PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
+  SET_PLAYLIST_MODAL_FULL_SCREEN,
   UPDATE_NEW_PLAYLIST_NAME,
 } from '../constants';
 import { mapSongsToValidTrackObjects } from './leaderboard';
@@ -53,6 +54,9 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, playlistScrollIsNegative: true };
     case PLAYLIST_SCROLL_IS_NOT_NEGATIVE:
       return { ...state, playlistScrollIsNegative: false };
+
+    case SET_PLAYLIST_MODAL_FULL_SCREEN:
+      return { ...state, isPlaylistModalFullScreen: true };
 
     default:
       return state;
@@ -137,5 +141,11 @@ export function setPlaylistScrollingNegative() {
 export function setPlaylistScrollingNotNegative() {
   return {
     type: PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
+  };
+}
+
+export function setPlaylistModalFullScreen() {
+  return {
+    type: SET_PLAYLIST_MODAL_FULL_SCREEN,
   };
 }

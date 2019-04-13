@@ -36,6 +36,7 @@ export const LOAD_PLAYLISTS_SUCCESS = 'playlists/LOAD_SUCCESS';
 export const LOAD_PLAYLISTS_FAIL = 'playlists/LOAD_FAIL';
 export const PLAYLIST_SCROLL_IS_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NEGATIVE';
 export const PLAYLIST_SCROLL_IS_NOT_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NOT_NEGATIVE';
+export const SET_PLAYLIST_MODAL_FULL_SCREEN = 'playlists/SET_PLAYLIST_MODAL_FULL_SCREEN';
 export const OPEN_MODAL = 'playlists/OPEN_MODAL';
 export const CLOSE_MODAL = 'playlists/CLOSE_MODAL';
 export const UPDATE_NEW_PLAYLIST_NAME = 'playlists/UPDATE_NEW_PLAYLIST_NAME';

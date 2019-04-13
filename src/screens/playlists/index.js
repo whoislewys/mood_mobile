@@ -14,6 +14,7 @@ import {
   updateNewPlaylistName,
   createPlaylist,
   setPlaylistScrollingNegative,
+  setPlaylistModalFullScreen,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
 import { spacing } from '../../assets/styles';
@@ -97,13 +98,13 @@ class Playlists extends Component {
     // get the yoffset where the user let their finger off the screen after scrolling
     const yOffset = event.nativeEvent.contentOffset.y;
 
-    // update the state to reflect the user is trying to scroll up past the first piece of content in the list
     if (Math.sign(yOffset) === -1 || Math.sign(yOffset) === 0) {
+      // user is trying to scroll up past the first piece of content in the list, update the state to reflect their scrolling is negative
       this.props.setPlaylistScrollingNegative();
+    } else {
+      // update the state to show the user is trying to scroll down through the list, playlistModal should be fullscreen
+      this.props.setPlaylistModalFullScreen();
     }
-
-    // if the list is between 25% of screen size
-    // update the state to show that the playlist modal should be fullscreen
   };
 
   getPlaylists = () => (
@@ -160,12 +161,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  closeModal,
+  createPlaylist,
   loadLeaderboardSongQueue,
   openModal,
-  closeModal,
+  setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
   updateNewPlaylistName,
-  createPlaylist,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlists);
