@@ -78,7 +78,7 @@ export class PlaylistModal extends Component {
           : null
         }
         <View style={styles.modalContents}>
-          <GestureRecognizer style={{backgroundColor: 'red'}} onSwipeDown={() => this.props.navigation.goBack()}>
+          <GestureRecognizer onSwipeDown={() => this.props.navigation.goBack()}>
             <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.props.navigation.goBack()}>
               <Image source={Images.close} style={styles.exitButton} />
             </TouchableOpacity>
