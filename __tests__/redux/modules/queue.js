@@ -133,8 +133,6 @@ describe('Queue module', () => {
     });
     it('should handle RESET_QUEUE action', () => {
       expect(reducer([], { type: RESET_QUEUE })).toEqual({
-        // why tf does this work? shouldn't the spread operator in the reducer return the rest of the state that isnt being modified?
-        // the reducer is only returning what's below...
         loading: true,
         queue: [],
         curTrack: null,

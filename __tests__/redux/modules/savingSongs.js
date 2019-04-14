@@ -6,6 +6,7 @@ import {
   initialState as savingSongsInitialState,
   loadSavedSongs,
   saveSong,
+  addSongToDeleted, removeSongFromDeleted,
 } from '../../../src/redux/modules/savingSongs';
 import {
   LOAD_SAVED_SONGS,
@@ -107,7 +108,7 @@ describe('SavingSongs module', () => {
         await store.dispatch(saveSong(track1));
         return expect(store.getActions()).toEqual([
           { type: SAVE_SONG },
-          { type: SAVE_SONG_FAIL, e: e },
+          { type: SAVE_SONG_FAIL, e },
         ]);
       });
 
@@ -127,6 +128,26 @@ describe('SavingSongs module', () => {
     it('should return the initial state', () => {
       expect(reducer(undefined, undefined)).toEqual(savingSongsInitialState);
     });
-    // TODO: test the other actions...
+
+    it('should add songid to a set when unsaving a song', () => {
+      expect(reducer([], addSongToDeleted(track1)))
+        .toEqual({
+          songIdsToDelete: new Set([track1.id]),
+        });
+    });
+
+    it('should remove songid to a set when unsaving a song', () => {
+      const initState = {
+        songIdsToDelete: new Set([track1.id]),
+      };
+      expect(reducer(initState, removeSongFromDeleted(track1)))
+        .toEqual({
+          songIdsToDelete: new Set(),
+        });
+    });
+
+    it('should handle edge case when removing a song when songIdsToDelete is null', () => {
+      expect(reducer([], removeSongFromDeleted(track1))).toEqual({});
+    });
   });
 });

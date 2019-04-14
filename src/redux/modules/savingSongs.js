@@ -13,7 +13,7 @@ import {
 import { mapSongsToValidTrackObjects } from './leaderboard';
 
 export const initialState = {
-  songsToDelete: new Set(),
+  songIdsToDelete: new Set(),
   loading: '',
   error: '',
   songs: [],
@@ -22,30 +22,32 @@ export const initialState = {
 export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case ADD_SONG_TO_DELETED:
-      // get all the songs from the previous songsToDelete set
-      const newSongsToDelete = new Set();
-      if (state.songsToDelete === undefined) {
-        newSongsToDelete.add(action.songToDelete.id);
+      // get all the songs from the previous songIdsToDelete set
+      const newsongIdsToDelete = new Set();
+      if (state.songIdsToDelete === undefined) {
+        newsongIdsToDelete.add(action.songIdToDelete);
       } else {
-        state.songsToDelete.forEach(song => newSongsToDelete.add(song));
-        newSongsToDelete.add(action.songToDelete.id);
+        state.songIdsToDelete.forEach(song => newsongIdsToDelete.add(song));
+        newsongIdsToDelete.add(action.songIdToDelete);
       }
 
-      return { ...state, songsToDelete: newSongsToDelete };
+      return { ...state, songIdsToDelete: newsongIdsToDelete };
+
     case REMOVE_SONG_FROM_DELETED:
-      if (state.songsToDelete === undefined) {
+      if (state.songIdsToDelete === undefined) {
         // if somehow you can resave songs but your deleted set is empty, just return the previous state
         return { ...state };
       }
-      // copy all the songs from the previous songsToDelete set into a new set
-      const songsToDeleteAfterResaving = new Set();
-      state.songsToDelete.forEach(song => songsToDeleteAfterResaving.add(song));
+      // copy all the songs from the previous songIdsToDelete set into a new set
+      const songIdsToDeleteAfterResaving = new Set();
+      state.songIdsToDelete.forEach(song => songIdsToDeleteAfterResaving.add(song));
       // remove the songs to resave from the deleted set
-      songsToDeleteAfterResaving.delete(action.songToResave);
-      return { ...state, songsToDelete: songsToDeleteAfterResaving };
+      songIdsToDeleteAfterResaving.delete(action.songIdToResave);
+
+      return { ...state, songIdsToDelete: songIdsToDeleteAfterResaving };
 
     case DELETE_SAVED_SONGS:
-      return { ...state, songsToDelete: new Set() };
+      return { ...state, songIdsToDelete: new Set() };
 
     case SAVE_SONG:
       return { ...state, loading: true };
@@ -89,14 +91,14 @@ export function addSongToDeleted(savedSongToDelete) {
   // for when people 'uncheck' a saved song
   return {
     type: ADD_SONG_TO_DELETED,
-    songToDelete: savedSongToDelete,
+    songIdToDelete: savedSongToDelete.id,
   };
 }
 
 export function removeSongFromDeleted(songToResave) {
   return {
     type: REMOVE_SONG_FROM_DELETED,
-    songToResave,
+    songIdToResave: songToResave.id,
   };
 }
 
@@ -122,7 +124,7 @@ export function loadSavedSongs() {
 export function deleteSongs() {
   // should only be called when navigating away from saved song screen
   return async (dispatch, getState) => {
-    // get the user id off state, get the songsToDelete(), make the api call to actually delete from users savedSongs
+    // get the user id off state, get the songIdsToDelete(), make the api call to actually delete from users savedSongs
     dispatch({ type: DELETE_SAVED_SONGS });
   };
 }
