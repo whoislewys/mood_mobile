@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Animated,
   View,
   TouchableOpacity,
   Image,
@@ -9,13 +10,16 @@ import {
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { connect } from 'react-redux';
 import Images from '../../assets/images';
-import { spacing } from '../../assets/styles';
+import { dimensions, spacing } from '../../assets/styles';
 import Playlists from '../playlists';
 import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import {
   closeModal,
-  createPlaylist, loadPlaylists,
-  openModal, setPlaylistScrollingNotNegative,
+  createPlaylist,
+  loadPlaylists,
+  setPlaylistModalHalfScreen,
+  openModal,
+  setPlaylistScrollingNotNegative,
   updateNewPlaylistName,
 } from '../../redux/modules/playlists';
 
@@ -31,7 +35,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   modalContents: {
-    height: '58.49%',
+    height: '100%',
     width: '100%',
     borderRadius: 10,
     elevation: 35,
@@ -39,9 +43,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 1.0,
     backgroundColor: 'white',
   },
+  swipeBar: {
+    // for some reason giving it a background color here makes the swipe work
+    backgroundColor: 'white',
+  },
   exitButtonContainer: {
     paddingTop: spacing.sm,
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignSelf: 'center',
   },
@@ -53,26 +60,47 @@ const styles = StyleSheet.create({
 });
 
 export class PlaylistModal extends Component {
+  _handleModalClose = () => {
+    this.props.setPlaylistScrollingNotNegative();
+    this.props.setPlaylistModalHalfScreen();
+    this.props.navigation.goBack();
+  };
+
   constructor(props) {
     super(props);
+
+    // set modal to fill half screen by default
+    this.state = {
+      yPosition: new Animated.Value(dimensions.height * 0.5849),
+    };
+
     if (!this.props.playlists) {
+      // if you've opened this playlist modal but never fetched playlists, get them now
       this.props.loadPlaylists();
     }
   }
 
   shouldComponentUpdate(nextProps) {
     if (nextProps.playlistScrollIsNegative) {
-      this.props.setPlaylistScrollingNotNegative();
-      this.props.navigation.goBack();
+      // close this playlist modal if the playlist's scroll view is scrolling over the top song
+      this._handleModalClose();
     }
 
     if (nextProps.isPlaylistModalFullScreen) {
-      console.warn('isPlaylistModalFullScreen: ', true);
+      // if the store says this modal should be full screen, animate it up to be full screen
+      Animated.timing(this.state.yPosition, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
     }
     return true;
   }
 
   render() {
+    const animationStyle = {
+      transform: [{ translateY: this.state.yPosition }],
+    };
     return (
       <View
         style={styles.swipeContainer}
@@ -81,15 +109,15 @@ export class PlaylistModal extends Component {
           ? <View style={styles.androidBlackOverlay} />
           : null
         }
-        {/* TODO: make the modalcontents view an animated.view, that animates it's height to 100% when this.props.isPlaylistModalFullScreen is true*/}
-        <View style={styles.modalContents}>
-          <GestureRecognizer onSwipeDown={() => this.props.navigation.goBack()}>
-            <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.props.navigation.goBack()}>
+        {/* TODO: make the modalcontents view an animated.view, that animates it's top offset to 0 when this.props.isPlaylistModalFullScreen is true */}
+        <Animated.View style={[styles.modalContents, animationStyle]}>
+          <GestureRecognizer onSwipeDown={() => this._handleModalClose()} style={styles.swipeBar}>
+            <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this._handleModalClose()}>
               <Image source={Images.close} style={styles.exitButton} />
             </TouchableOpacity>
           </GestureRecognizer>
           <Playlists />
-        </View>
+        </Animated.View>
       </View>
     );
   }
@@ -112,6 +140,7 @@ const mapDispatchToProps = {
   openModal,
   closeModal,
   updateNewPlaylistName,
+  setPlaylistModalHalfScreen,
   setPlaylistScrollingNotNegative,
   createPlaylist,
 };
