@@ -24,8 +24,7 @@ export function reducer(state = initialState, action = {}) {
     case ADD_SONG_TO_DELETED:
       // get all the songs from the previous songsToDelete set
       const newSongsToDelete = new Set();
-      if (state.songsToDelete == null) {
-        console.warn('songs to delete: ', state.songsToDelete);
+      if (state.songsToDelete === undefined) {
         newSongsToDelete.add(action.songToDelete.id);
       } else {
         state.songsToDelete.forEach(song => newSongsToDelete.add(song));
@@ -34,6 +33,10 @@ export function reducer(state = initialState, action = {}) {
 
       return { ...state, songsToDelete: newSongsToDelete };
     case REMOVE_SONG_FROM_DELETED:
+      if (state.songsToDelete === undefined) {
+        // if somehow you can resave songs but your deleted set is empty, just return the previous state
+        return { ...state };
+      }
       // copy all the songs from the previous songsToDelete set into a new set
       const songsToDeleteAfterResaving = new Set();
       state.songsToDelete.forEach(song => songsToDeleteAfterResaving.add(song));

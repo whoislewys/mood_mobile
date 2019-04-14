@@ -66,6 +66,10 @@ class SongRow extends Component {
     };
   }
 
+  componentWillUnmount() {
+    console.warn('unmounting flatlist')
+  }
+
   _unsaveSong = () => {
     this.setState({ songIsSaved: false },
       () => this.props.addSongToDeleted(this.props.leaderboardSong));

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   shuffleButtonContainer: {
     flex: 1,
     alignItems: 'center',
-    marginTop: spacing.md, // TODO: replace with global margin
+    marginTop: spacing.md,
     marginBottom: spacing.md,
   },
   shuffleButton: {
@@ -41,7 +41,7 @@ class SavedSongs extends Component {
 
   componentWillBlur = () => {
     this.props.deleteSongs();
-  }
+  };
 
   _navigateToLeaderboardScreen = (params = {}) => {
     this.props.navigation.navigate({
