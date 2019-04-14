@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SavedSongs extends Component {
+export class SavedSongs extends Component {
   componentDidMount() {
     this.props.navigation.addListener('willBlur', this.componentWillBlur);
   }
@@ -85,7 +85,7 @@ class SavedSongs extends Component {
 
   _renderItem = ({ item, index }) => (
     <SongRow
-      leaderboardSong={item}
+      savedSong={item}
       index={index}
       _handleSongRowPress={this._handleSongRowPress}
       addSongToDeleted={this.props.addSongToDeleted}

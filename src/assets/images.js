@@ -7,7 +7,6 @@ const images = {
   bugIcon: require('./img/round-bug_report.png'),
   gradientButton: require('./img/gradient-button.png'),
   playlistButton: require('./img/playlist-button.png'),
-  savedIcon: require('./img/saved-icon.png'),
   settingsGear: require('./img/round-settings.png'),
   close: require('./img/close-icon.png'),
 
@@ -42,8 +41,9 @@ const images = {
   createPlaylist: require('./img/create-playlist.png'),
 
   // Saved Songs Screen
-  shuffle: require('./img/shuffle.png'),
   addToSavedSongs: require('./img/save-song.png'),
+  savedIcon: require('./img/saved-icon.png'),
+  shuffle: require('./img/shuffle.png'),
 
   // Settings Screen
   explicitIcon: require('./img/explicit-icon.png'),
