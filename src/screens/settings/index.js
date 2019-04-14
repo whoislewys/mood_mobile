@@ -114,8 +114,6 @@ class SettingsScreen extends Component {
   };
 
   render = () => {
-    // const { goBack } = this.props.navigation;
-
     return (
       <View style={styles.container}>
         <FlatList
@@ -134,7 +132,7 @@ class SettingsScreen extends Component {
               handlePress: this.onPressLinkButton,
               image: Images.settingsButton,
               settingInfo: 'All the stuff you need to know.',
-              settingName: 'Terms of Use',
+              settingName: 'Privacy Policy',
               url: 'http://www.moodindustries.com/privacy.pdf',
             }, {
               key: 'logout',
