@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 
 class MoodScreen extends Component {
   componentDidMount = () => {
-    StatusBar.setBarStyle('dark-content', true);
     SplashScreen.hide();
   };
 

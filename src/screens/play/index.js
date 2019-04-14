@@ -5,7 +5,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  StatusBar,
   ActivityIndicator,
   Alert,
   ImageBackground,
@@ -102,11 +101,6 @@ const styles = StyleSheet.create({
 
 class PlayScreen extends Component {
   _carouselref;
-
-  constructor(props) {
-    super(props);
-    StatusBar.setBarStyle('light-content', true);
-  }
 
   onSwipeDown() {
     if (!this.props.queue.length) {

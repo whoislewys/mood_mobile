@@ -55,8 +55,6 @@ class Playlists extends Component {
       params: {
         parentScreen: 'Playlists',
         visible: false,
-        // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToPlaylistsScreen,
       },
     });
   };

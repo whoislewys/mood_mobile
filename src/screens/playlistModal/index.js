@@ -46,9 +46,14 @@ const styles = StyleSheet.create({
   swipeBar: {
     // for some reason giving it a background color here makes the swipe work
     backgroundColor: 'white',
+    elevation: 5,
+    shadowRadius: 5,
+    shadowOpacity: 0.5,
   },
   exitButtonContainer: {
+    marginTop: Platform.OS === 'ios' ? 7 : 0,
     paddingTop: spacing.sm,
+    paddingBottom: spacing.sm,
     justifyContent: 'center',
     alignSelf: 'center',
   },
@@ -60,18 +65,12 @@ const styles = StyleSheet.create({
 });
 
 export class PlaylistModal extends Component {
-  _handleModalClose = () => {
-    this.props.setPlaylistScrollingNotNegative();
-    this.props.setPlaylistModalHalfScreen();
-    this.props.navigation.goBack();
-  };
-
   constructor(props) {
     super(props);
 
     // set modal to fill half screen by default
     this.state = {
-      yPosition: new Animated.Value(dimensions.height * 0.5849),
+      yPosition: new Animated.Value(dimensions.height * 0.4151),
     };
 
     if (!this.props.playlists) {
@@ -88,11 +87,7 @@ export class PlaylistModal extends Component {
 
     if (nextProps.isPlaylistModalFullScreen) {
       // if the store says this modal should be full screen, animate it up to be full screen
-      Animated.timing(this.state.yPosition, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
+      this._animateModalToFullscreen();
     }
     return true;
   }
@@ -111,7 +106,11 @@ export class PlaylistModal extends Component {
         }
         {/* TODO: make the modalcontents view an animated.view, that animates it's top offset to 0 when this.props.isPlaylistModalFullScreen is true */}
         <Animated.View style={[styles.modalContents, animationStyle]}>
-          <GestureRecognizer onSwipeDown={() => this._handleModalClose()} style={styles.swipeBar}>
+          <GestureRecognizer
+            style={styles.swipeBar}
+            onSwipeUp={() => this._animateModalToFullscreen()}
+            onSwipeDown={() => this._handleModalClose()}
+          >
             <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this._handleModalClose()}>
               <Image source={Images.close} style={styles.exitButton} />
             </TouchableOpacity>
@@ -121,6 +120,20 @@ export class PlaylistModal extends Component {
       </View>
     );
   }
+
+  _handleModalClose = () => {
+    this.props.setPlaylistScrollingNotNegative();
+    this.props.setPlaylistModalHalfScreen();
+    this.props.navigation.goBack();
+  };
+
+  _animateModalToFullscreen = () => {
+    Animated.timing(this.state.yPosition, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
 }
 
 const mapStateToProps = state => ({

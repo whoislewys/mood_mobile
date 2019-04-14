@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import Navigator from '../navigation/app-navigator';
@@ -10,11 +9,6 @@ import {
 import { stopScoreTimer } from '../redux/modules/score';
 
 class Player extends Component {
-  constructor(props) {
-    super(props);
-    StatusBar.setBarStyle('light-content', true);
-  }
-
   componentWillUnmount = () => {
     this.props.stopScoreTimer();
   };
