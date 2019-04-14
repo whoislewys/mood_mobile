@@ -24,16 +24,21 @@ export function reducer(state = initialState, action = {}) {
     case ADD_SONG_TO_DELETED:
       // get all the songs from the previous songsToDelete set
       const newSongsToDelete = new Set();
-      state.songsToDelete.forEach(song => newSongsToDelete.add(song));
-      newSongsToDelete.add(action.songToDelete.id);
-      console.log('new deleted set: ', newSongsToDelete);
+      if (state.songsToDelete == null) {
+        console.warn('songs to delete: ', state.songsToDelete);
+        newSongsToDelete.add(action.songToDelete.id);
+      } else {
+        state.songsToDelete.forEach(song => newSongsToDelete.add(song));
+        newSongsToDelete.add(action.songToDelete.id);
+      }
+
       return { ...state, songsToDelete: newSongsToDelete };
     case REMOVE_SONG_FROM_DELETED:
-      // get all the songs from the previous songsToDelete set
+      // copy all the songs from the previous songsToDelete set into a new set
       const songsToDeleteAfterResaving = new Set();
       state.songsToDelete.forEach(song => songsToDeleteAfterResaving.add(song));
+      // remove the songs to resave from the deleted set
       songsToDeleteAfterResaving.delete(action.songToResave);
-      console.log('new deleted set: ', newSongsToDelete);
       return { ...state, songsToDelete: songsToDeleteAfterResaving };
 
     case DELETE_SAVED_SONGS:
