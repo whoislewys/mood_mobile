@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
+  Platform,
   StyleSheet,
 } from 'react-native';
 import {
@@ -13,7 +14,7 @@ import {
 
 const styles = StyleSheet.create({
   header: {
-    height: dimensions.height * 0.15,
+    height: Platform.OS === 'android' ? dimensions.height * 0.11 : dimensions.height * 0.12,
     flexDirection: 'row',
     alignItems: 'flex-end',
     backgroundColor: '#fff',

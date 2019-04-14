@@ -30,10 +30,9 @@ const map = SomeComponent => class SomeClass extends React.Component {
 
 const TabBarComponent = props => <TabBar {...props} />;
 
-
-// https://reactnavigation.org/docs/en/2.x/headers.html
 const PlaylistNavigator = createStackNavigator({
   Playlists: { screen: map(PlaylistsScreen) },
+  PlaylistDetail: { screen: map(PlaylistDetailScreen) },
 }, {
   navigationOptions: {
     header: null,
@@ -87,7 +86,6 @@ export default createStackNavigator({
   Splash: { screen: map(SplashScreen) },
   Home: TabNavigator,
   Play: { screen: map(PlayScreen) },
-  PlaylistDetail: { screen: map(PlaylistDetailScreen) },
   Login: { screen: map(LoginScreen) },
   Error: { screen: map(ErrorScreen) },
   Settings: { screen: map(SettingsScreen) },

@@ -63,7 +63,7 @@ class Playlists extends Component {
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
     // TODO: swap loadLeaderboardSongQueue for loadPlayListSongsForId
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
+    // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this._navigateToPlaylistDetailScreen();
   };
 

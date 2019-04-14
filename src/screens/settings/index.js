@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   Linking,
-  FlatList, Alert,
+  FlatList,
+  Alert,
 } from 'react-native';
 import Images from '@assets/images';
 import { connect } from 'react-redux';
