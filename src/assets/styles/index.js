@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 export const dimensions = {
   height: Dimensions.get('window').height,
@@ -29,6 +29,7 @@ export const spacing = {
   md: dimensions.height * 0.0357,
   lg: dimensions.height * 0.0530,
   xl: 40,
+  headerHeight: Platform.OS === 'android' ? dimensions.height * 0.11 : dimensions.height * 0.12,
 };
 
 export const fonts = {

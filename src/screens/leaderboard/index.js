@@ -58,41 +58,39 @@ class LeaderboardScreen extends Component {
 
   keyExtractor = song => song.id.toString();
 
-  _renderItem = ({ item, index }) => {
-    return (
-      <LeaderboardRow
-        leaderboardSong={item}
-        index={index}
-        _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
-      />
-    );
-  };
+  _renderItem = ({ item, index }) => (
+    <LeaderboardRow
+      leaderboardSong={item}
+      index={index}
+      _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
+    />
+  );
 
 
   topComponent = () => (
-    <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
-  )
+    <Image source={Images.moodLogo} style={styles.moodLogo} />
+  );
 
-  getLeaderBoard = () => (
-    this.props.savedSongs.length
-      ? (
-        <FlatList
-          data={this.props.savedSongs}
-          renderItem={this._renderItem}
-          keyExtractor={this.keyExtractor}
-          ListHeaderComponent={
+getLeaderBoard = () => (
+  this.props.savedSongs.length
+    ? (
+      <FlatList
+        data={this.props.savedSongs}
+        renderItem={this._renderItem}
+        keyExtractor={this.keyExtractor}
+        ListHeaderComponent={
             MoodImageOnTopHeader({
               title: 'Leaderboard',
               subtitle: 'Songs',
               titleIsCentered: false,
               topComponent: this.topComponent(),
             })}
-          ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
-          showsVerticalScrollIndicator={false}
-        />
-      )
-      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  );
+        ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
+        showsVerticalScrollIndicator={false}
+      />
+    )
+    : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+);
 
   render = () => (
     <View style={styles.background}>

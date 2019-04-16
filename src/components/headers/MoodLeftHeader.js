@@ -14,7 +14,8 @@ import {
 
 const styles = StyleSheet.create({
   header: {
-    height: Platform.OS === 'android' ? dimensions.height * 0.11 : dimensions.height * 0.12,
+    // height: Platform.OS === 'android' ? dimensions.height * 0.11 : dimensions.height * 0.12,
+    height: spacing.headerHeight,
     flexDirection: 'row',
     alignItems: 'flex-end',
     backgroundColor: '#fff',
@@ -44,11 +45,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const MoodLeftHeader = props => (
+const MoodLeftHeader = ({ title, children }) => (
   <View style={styles.header}>
     <View style={styles.headerContentsContainer}>
-      <Text style={styles.headerText}>{props.title}</Text>
-      {props.children}
+      <Text style={styles.headerText}>{title}</Text>
+      {children}
     </View>
   </View>
 );

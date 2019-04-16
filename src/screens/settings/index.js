@@ -8,15 +8,15 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import Images from '@assets/images';
 import { connect } from 'react-redux';
 import { GoogleSignin } from 'react-native-google-signin';
+import Images from '@assets/images';
 import ToggleSwitch from '../../components/toggle-switch';
-import Header from './components/header';
 import { fonts, colors } from '../../assets/styles';
 import { userLoggedOut } from '../../redux/modules/auth';
 import { handleDataToggle } from '../../redux/modules/settings';
 import GradientButton from '../../components/GradientButton';
+import MoodCenterHeader from '../../components/headers/MoodCenterHeader';
 
 const styles = StyleSheet.create({
   container: {
@@ -113,6 +113,14 @@ class SettingsScreen extends Component {
     });
   };
 
+  settingsHeader = () => (
+    <MoodCenterHeader
+      title='Settingzz'
+      leftButtonIcon={Images.arrowLeft}
+      onPressLeftButton={this._navigateToMoodScreen}
+    />
+  );
+
   render = () => {
     return (
       <View style={styles.container}>
@@ -152,7 +160,8 @@ class SettingsScreen extends Component {
           ]}
           renderItem={this.renderListItem}
           keyExtractor={this._keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'Settings', goBack: this._navigateToMoodScreen })}
+          // ListHeaderComponent={Header({ headerText: 'Settings', goBack: this._navigateToMoodScreen })}
+          ListHeaderComponent={this.settingsHeader()}
           ListFooterComponent={this.footerElem}
         />
       </View>
