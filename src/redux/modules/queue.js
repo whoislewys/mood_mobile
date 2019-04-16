@@ -5,6 +5,7 @@ import { startScoreTimer } from './score';
 import { logEvent } from './analytics';
 import {
   anal,
+  LEADERBOARD_TYPE,
   LOAD_SONGS,
   LOAD_SONGS_SUCCESS,
   LOAD_SONGS_FAIL,
@@ -12,23 +13,24 @@ import {
   LOAD_SHARED_SONG_QUEUE_SUCCESS,
   LOAD_SHARED_SONG_QUEUE_FAIL,
   LOAD_LEADERBOARD_SONG_QUEUE,
-  RESET_QUEUE,
+  MOOD_TYPE,
+  PLAY_SHUFFLED_PLAYLIST,
   PLAYBACK_STATE,
   PLAYBACK_TRACK,
-  MOOD_TYPE,
-  LEADERBOARD_TYPE,
-  PLAY_SHUFFLED_PLAYLIST,
+  RESET_QUEUE,
+  SET_CUR_PLAYLIST_ID,
 } from '../constants';
 
 export const initialState = {
-  loading: false,
-  errors: null,
-  queue: [],
-  playback: null,
-  track: null,
+  curPlaylistId: -1, // the playlist id to save songs to
   curTrack: null,
   curTrackIndex: NaN,
+  errors: null,
+  loading: false,
+  playback: null,
   sharedTrack: null,
+  track: null,
+  queue: [],
   queueType: '',
 };
 
@@ -153,6 +155,12 @@ export function reducer(state = initialState, action = {}) {
         curTrackIndex: action.newCurTrackIndex,
       };
 
+    case SET_CUR_PLAYLIST_ID:
+      return {
+        ...state,
+        curPlaylistId: action.curPlaylistId,
+      };
+
     default:
       return state;
   }
@@ -275,6 +283,14 @@ export function loadSharedSongQueue(sharedTrack) {
     } catch (e) {
       dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
     }
+  };
+}
+
+// Playlist action creators
+export function setCurrentPlaylistId(curPlaylistId) {
+  return {
+    type: SET_CUR_PLAYLIST_ID,
+    curPlaylistId,
   };
 }
 

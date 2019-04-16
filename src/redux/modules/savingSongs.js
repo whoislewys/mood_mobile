@@ -1,4 +1,5 @@
 import axios from 'axios';
+import firebase from 'react-native-firebase';
 import {
   ADD_SONG_TO_DELETED,
   DELETE_SAVED_SONGS,
@@ -13,7 +14,7 @@ import {
 import { mapSongsToValidTrackObjects } from './leaderboard';
 
 export const initialState = {
-  songIdsToDelete: new Set(),
+  songIdsToDelete: new Set(), // keeps tracks of songs the user wants to remove from the cur playlist
   loading: '',
   error: '',
   songs: [],
@@ -23,15 +24,15 @@ export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case ADD_SONG_TO_DELETED:
       // get all the songs from the previous songIdsToDelete set
-      const newsongIdsToDelete = new Set();
+      const newSongIdsToDelete = new Set();
       if (state.songIdsToDelete === undefined) {
-        newsongIdsToDelete.add(action.songIdToDelete);
+        newSongIdsToDelete.add(action.songIdToDelete);
       } else {
-        state.songIdsToDelete.forEach(song => newsongIdsToDelete.add(song));
-        newsongIdsToDelete.add(action.songIdToDelete);
+        state.songIdsToDelete.forEach(song => newSongIdsToDelete.add(song));
+        newSongIdsToDelete.add(action.songIdToDelete);
       }
 
-      return { ...state, songIdsToDelete: newsongIdsToDelete };
+      return { ...state, songIdsToDelete: newSongIdsToDelete };
 
     case REMOVE_SONG_FROM_DELETED:
       if (state.songIdsToDelete === undefined) {
@@ -71,14 +72,24 @@ export function reducer(state = initialState, action = {}) {
 }
 
 export function saveSong(song) {
-  return async (dispatch) => {
+  // should save song to current playlist
+  // if there is no active curPlaylistId in queue state, it should save to current user's "saved songs" playlist
+  return async (dispatch, getState) => {
     dispatch({ type: SAVE_SONG });
+    const jwt = await firebase.auth().currentUser.getIdToken();
+    const playlistId = getState().queue.curPlaylistId;
+    if (playlistId === -1) {
+    // should default to curUsers savedSong's playlist
+    }
+
     const songToSaveId = song.id;
     try {
-      await axios.post(`http://api.moodindustries.com/api/v1/songs/${songToSaveId}/save`,
+      await axios.post('http://api.moodindustries.com/api/v1/songs/save',
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
-          song,
+          jwt,
+          playlistId,
+          songToSaveId,
         });
       dispatch({ type: SAVE_SONG_SUCCESS });
     } catch (e) {
@@ -108,7 +119,7 @@ export function loadSavedSongs() {
     dispatch({ type: LOAD_SAVED_SONGS });
     try {
       // TODO: replace leaderboard endpoint with savedSongs
-      let songs = await axios.get('http://api.moodindustries.com/api/v1/stats/leaderboard',
+      const songs = await axios.get('http://api.moodindustries.com/api/v1/stats/leaderboard',
         {
           // TODO: give the endpoint a userid
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },

@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 const PlaylistRow = ({
   index,
   playlist,
-  _handleLeaderboardRowPress,
+  _handlePlaylistRowPress,
   _onCreatePlaylist,
 }) => {
   const {
@@ -58,7 +58,7 @@ const PlaylistRow = ({
   if (index === 0) {
     _onPress = _onCreatePlaylist;
   } else {
-    _onPress = _handleLeaderboardRowPress;
+    _onPress = _handlePlaylistRowPress;
   }
 
   const _getImage = (idx, art) => (
@@ -69,7 +69,7 @@ const PlaylistRow = ({
   return (
     <TouchableOpacity
       style={styles.rowBackground}
-      onPress={() => _onPress(index - 1)}
+      onPress={() => _onPress(playlist.id)}
     >
       { _getImage(index, artwork) }
       <View style={styles.detailsContainer}>

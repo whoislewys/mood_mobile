@@ -32,7 +32,6 @@ const TabBarComponent = props => <TabBar {...props} />;
 
 const PlaylistNavigator = createStackNavigator({
   Playlists: { screen: map(PlaylistsScreen) },
-  PlaylistDetail: { screen: map(PlaylistDetailScreen) },
 }, {
   navigationOptions: {
     header: null,
@@ -89,6 +88,7 @@ export default createStackNavigator({
   Login: { screen: map(LoginScreen) },
   Error: { screen: map(ErrorScreen) },
   Settings: { screen: map(SettingsScreen) },
+  PlaylistDetail: { screen: map(PlaylistDetailScreen) },
   PlaylistModal: { screen: map(PlaylistModal) },
 }, {
   cardStyle: {

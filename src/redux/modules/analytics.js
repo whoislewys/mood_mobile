@@ -46,10 +46,8 @@ export function reducer(state = initialState, action = {}) {
  * @optional:
  *    @param: {object} eventProperties - additional data you want to track with the event
  *      e.g. {'songSource': 'Mood', 'song': {'title': 'Only Time', 'artist': 'Enya'}}
- *    @param: {object} userProperties - user data you want to track with the event
- *      e.g. {'cohort': 'Instagram Referrals'}
 */
-export function logEvent(eventName, eventProperties, userProperties) {
+export function logEvent(eventName, eventProperties) {
   return async (dispatch, getState) => {
     // if user turned off data tracking, exit this func immediately
     if (!getState().settings.dataShouldBeTracked) return;
@@ -63,6 +61,8 @@ export function logEvent(eventName, eventProperties, userProperties) {
       // if you have neither, gtfo and don't try to log an event
       return;
     }
+
+    // TODO: pull userProperties off of auth state
 
     // prepare an event object to be an event parameter
     const eventObj = { event_type: eventName };

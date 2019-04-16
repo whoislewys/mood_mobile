@@ -15,6 +15,8 @@ import { connect } from 'react-redux';
 import { dimensions, fonts, spacing } from '../../assets/styles';
 import config from './config';
 import { userLoggedIn } from '../../redux/modules/auth';
+import { logEvent } from '../../redux/modules/analytics';
+import { anal } from '../../redux/constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -100,10 +102,12 @@ class LoginScreen extends Component {
   _signIn = async () => {
     try {
       const userInfo = await GoogleSignin.signIn();
-
       const credential = firebase.auth.GoogleAuthProvider.credential(userInfo.idToken, userInfo.accessToken);
       const currentUser = await firebase.auth().signInWithCredential(credential);
+
       this.props.userLoggedIn(currentUser.user);
+      this.props.logEvent(anal.login);
+
       Alert.alert('Logged in!', null);
       this.props.navigation.goBack();
     } catch (error) {
@@ -123,6 +127,7 @@ class LoginScreen extends Component {
 
 const mapDispatchToProps = {
   userLoggedIn,
+  logEvent,
 };
 
 export default connect(null, mapDispatchToProps)(LoginScreen);

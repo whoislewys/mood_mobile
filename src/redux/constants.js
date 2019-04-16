@@ -51,6 +51,7 @@ export const LOAD_SHARED_SONG_QUEUE_SUCCESS = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD
 export const LOAD_SHARED_SONG_QUEUE_FAIL = 'queue/LOAD_SHARED_SONG_QUEUE/LOAD_FAIL';
 export const LOAD_LEADERBOARD_SONG_QUEUE = 'queue/LOAD_LEADERBOARD_SONG_QUEUE';
 export const RESET_QUEUE = 'queue/RESET_QUEUE';
+export const SET_CUR_PLAYLIST_ID = 'queue/SET_CUR_PLAYLIST_ID';
 export const PLAYBACK_STATE = 'playback/STATE';
 export const PLAYBACK_TRACK = 'playback/TRACK';
 export const PLAY_SHUFFLED_PLAYLIST = 'queue/SHUFFLE';
@@ -85,4 +86,5 @@ export const anal = {
   songPlay: 'Song Play',
   appOpen: 'App Open',
   deepLinkOpen: 'Deep Link Open',
+  login: 'Login',
 };

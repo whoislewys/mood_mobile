@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
-import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
+import { loadLeaderboardSongQueue, setCurrentPlaylistId } from '../../redux/modules/queue';
 import {
   openModal,
   closeModal,
@@ -61,10 +61,13 @@ class Playlists extends Component {
 
   keyExtractor = song => song.id.toString();
 
-  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
+  _handlePlaylistRowPress = async (pressedPlaylistId) => {
     // TODO: swap loadLeaderboardSongQueue for loadPlayListSongsForId
     // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this._navigateToPlaylistDetailScreen();
+    console.warn('pressed playlist with id: ', pressedPlaylistId);
+    this.props.setCurrentPlaylistId(pressedPlaylistId);
+    // TODO: NEED TO reset playlist id to -1 when navigating away from playlist detail screen
   };
 
   _onOpenCreatePlaylistModal = () => {
@@ -79,7 +82,7 @@ class Playlists extends Component {
     <PlaylistRow
       playlist={item}
       index={index}
-      _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
+      _handlePlaylistRowPress={this._handlePlaylistRowPress}
       _onCreatePlaylist={this._onOpenCreatePlaylistModal}
     />
   );
@@ -126,7 +129,7 @@ class Playlists extends Component {
     await this.props.createPlaylist();
     if (this.props.playlistError === '') {
       // TODO: load newly created playlist here by calling
-      //  whatever I replace _handleLeaderboardRowPress with
+      //  whatever I replace _handlePlaylistRowPress with
       this.props.navigation.navigate('PlaylistDetail');
     }
   };
@@ -163,6 +166,7 @@ const mapDispatchToProps = {
   createPlaylist,
   loadLeaderboardSongQueue,
   openModal,
+  setCurrentPlaylistId,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
   updateNewPlaylistName,

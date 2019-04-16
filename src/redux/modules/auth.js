@@ -3,7 +3,7 @@ import {
   USER_LOGGED_OUT,
 } from '../constants';
 
-const initialState = {
+export const initialState = {
   email: '',
   name: '',
   photoURL: '',
@@ -19,6 +19,7 @@ export function reducer(state = initialState, action = {}) {
         uid,
         providerData: [{ displayName: name, photoURL }],
       } = action.userInfo;
+      // toDO: get firebase JWT into newstate
       const newState = {
         ...state,
         email,
