@@ -8,6 +8,8 @@ import {
   saveSong,
   addSongToDeleted, removeSongFromDeleted,
 } from '../../../src/redux/modules/savingSongs';
+import { initialState as queueInitialState } from '../../../src/redux/modules/queue';
+import { initialState as authInitialState } from '../../../src/redux/modules/auth';
 import {
   LOAD_SAVED_SONGS,
   LOAD_SAVED_SONGS_SUCCESS,
@@ -84,8 +86,15 @@ describe('SavingSongs module', () => {
 
     describe('saveSong', () => {
       beforeEach(() => {
-        // only mock what you need in the store
-        store = mockStore(savingSongsInitialState);
+        // store = mockStore(savingSongsInitialState);
+        queueInitialState.curPlaylistId = 1;
+        authInitialState.uid = 69;
+        const mockState = {
+          auth: authInitialState,
+          savingSongs: savingSongsInitialState,
+          queue: queueInitialState,
+        };
+        store = mockStore(mockState);
       });
 
       afterEach(() => {
@@ -112,12 +121,12 @@ describe('SavingSongs module', () => {
         ]);
       });
 
-      it('should save the song it was passed', async () => {
+      it('should save the correct song to the current user\'s to the current playlist', async () => {
+        // remock the state here bc this function needs more of it, store is reset on the next test thanks to beforeEach()
+
         axios.post.mockResolvedValue();
 
         await store.dispatch(saveSong(track1));
-
-        // console.warn('axios post calls: ', axios.post.mock.calls[0][1].song);
 
         return expect(axios.post.mock.calls[0][1].song).toEqual(track1);
       });
