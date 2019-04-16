@@ -160,7 +160,6 @@ class SettingsScreen extends Component {
           ]}
           renderItem={this.renderListItem}
           keyExtractor={this._keyExtractor}
-          // ListHeaderComponent={Header({ headerText: 'Settings', goBack: this._navigateToMoodScreen })}
           ListHeaderComponent={this.settingsHeader()}
           ListFooterComponent={this.footerElem}
         />
