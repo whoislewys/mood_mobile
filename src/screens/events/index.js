@@ -49,6 +49,7 @@ class EventsScreen extends Component {
           data={this.props.events}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
+          showsVerticalScrollIndicator={false}
         />
       )
       : <ActivityIndicator color="black" size="large" animating style={{ flex: 10 }} />
