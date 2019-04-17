@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 // might have to make this so that you have to make the image yourself before passing it in
 const MoodImageOnTopHeader = ({
   title,
-  subtitle,
   titleIsCentered,
   topComponent,
 }) => (
@@ -41,10 +40,6 @@ const MoodImageOnTopHeader = ({
     { titleIsCentered
       ? <Text style={[styles.headerText, styles.headerTextCenterAlign]}>{title}</Text>
       : <Text style={styles.headerText}>{title}</Text>
-    }
-    {subtitle != null
-      ? <Text style={styles.headerSubText}>{subtitle}</Text>
-      : null
     }
   </View>
 );

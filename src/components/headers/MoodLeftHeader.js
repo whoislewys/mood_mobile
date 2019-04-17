@@ -14,7 +14,6 @@ import {
 
 const styles = StyleSheet.create({
   header: {
-    // height: Platform.OS === 'android' ? dimensions.height * 0.11 : dimensions.height * 0.12,
     height: spacing.headerHeight,
     flexDirection: 'row',
     alignItems: 'flex-end',

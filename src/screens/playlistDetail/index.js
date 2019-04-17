@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  songsContainer: {
+    flex: 1,
     paddingHorizontal: spacing.lg,
   },
   shuffleButtonContainer: {
@@ -83,16 +86,13 @@ class SavedSongs extends Component {
   };
 
   _renderHeader = () => (
-    <View>
-      <MoodCenterHeader
-        title='shit'
-        leftButtonIcon={Images.cancelPlaylist}
-        onPressleftButton={console.warn('c')}
-        rightButtonIcon={Images.savedIcon}
-        onPressRightButton={console.warn('saving')}
-      />
-      { this._shuffleButton() }
-    </View>
+    <MoodCenterHeader
+      title='shit'
+      leftButtonIcon={Images.cancelPlaylist}
+      onPressleftButton={() => this.props.navigation.goBack()}
+      rightButtonIcon={Images.savedIcon}
+      onPressRightButton={() => console.warn('saving')}
+    />
   );
 
 
@@ -105,7 +105,6 @@ class SavedSongs extends Component {
       _handleSongRowPress={this._handleSongRowPress}
       addSongToDeleted={this.props.addSongToDeleted}
       removeSongFromDeleted={this.props.removeSongFromDeleted}
-      openPlaylistModal={() => this.props.navigation.navigate('PlaylistModal')}
     />
   );
 
@@ -126,7 +125,9 @@ class SavedSongs extends Component {
 
   render = () => (
     <View style={styles.container}>
-      {this.getSavedSongs()}
+      <View style={styles.songsContainer}>
+        {this.getSavedSongs()}
+      </View>
     </View>
   )
 }

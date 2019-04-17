@@ -17,17 +17,25 @@ const styles = StyleSheet.create({
     height: spacing.headerHeight,
     flexDirection: 'row',
     alignItems: 'flex-end',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
   },
   headerContentsContainer: {
+    flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     marginRight: spacing.sm,
     marginLeft: spacing.sm,
+  },
+  headerText: {
+    flex: 75,
+    fontFamily: fonts.primary,
+    fontSize: fonts.header,
+    color: colors.header,
   },
   button: {
     flex: 12.5,
     justifyContent: 'center',
+  },
+  buttonRightAlign: {
   },
   buttonIcon: {
     height: 25,
@@ -36,16 +44,16 @@ const styles = StyleSheet.create({
     // TODO this tintcolor only used for settings screen, maybe make it a prop?
     tintColor: '#D1D1D6',
   },
-  headerText: {
-    alignSelf: 'center',
-    fontFamily: fonts.primary,
-    fontSize: fonts.header,
-    color: colors.header,
-  },
 });
 
-const renderButton = (buttonIcon, onPressButton) => (
+const renderLeftButton = (buttonIcon, onPressButton) => (
   <TouchableOpacity style={styles.button} onPress={() => onPressButton()} activeOpacity={0.6}>
+    <Image source={buttonIcon} style={styles.buttonIcon} />
+  </TouchableOpacity>
+);
+
+const renderRightButton = (buttonIcon, onPressButton) => (
+  <TouchableOpacity style={[styles.button, styles.buttonRightAlign]} onPress={() => onPressButton()} activeOpacity={0.6}>
     <Image source={buttonIcon} style={styles.buttonIcon} />
   </TouchableOpacity>
 );
@@ -59,9 +67,9 @@ const MoodCenterHeader = ({
 }) => (
   <View style={styles.header}>
     <View style={styles.headerContentsContainer}>
-      { renderButton(leftButtonIcon, onPressLeftButton) }
+      { renderLeftButton(leftButtonIcon, onPressLeftButton) }
       <Text style={styles.headerText}>{title}</Text>
-      { renderButton(rightButtonIcon, onPressRightButton) }
+      { renderRightButton(rightButtonIcon, onPressRightButton) }
     </View>
   </View>
 );

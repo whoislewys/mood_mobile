@@ -78,13 +78,6 @@ getLeaderBoard = () => (
         data={this.props.savedSongs}
         renderItem={this._renderItem}
         keyExtractor={this.keyExtractor}
-        ListHeaderComponent={
-            MoodImageOnTopHeader({
-              title: 'Leaderboard',
-              subtitle: 'Songs',
-              titleIsCentered: false,
-              topComponent: this.topComponent(),
-            })}
         ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
         showsVerticalScrollIndicator={false}
       />
@@ -94,6 +87,11 @@ getLeaderBoard = () => (
 
   render = () => (
     <View style={styles.background}>
+      <MoodImageOnTopHeader
+        title='Leaderboard'
+        titleIsCentered={false}
+        topComponent={this.topComponent()}
+      />
       <View style={styles.leaderboardContainer}>
         {this.getLeaderBoard()}
       </View>
