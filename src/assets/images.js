@@ -19,7 +19,6 @@ const images = {
 
   // Login
   googleIcon: require('./img/google-icon.png'),
-  waves: require('./img/waves.png'),
 
   // Media Player
   pauseButton: require('./img/round-pause-2x.png'),
