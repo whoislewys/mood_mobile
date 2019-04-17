@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 12.5,
     justifyContent: 'center',
-    backgroundColor: 'red',
   },
   buttonRightAlign: {
     alignItems: 'flex-end',
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     width: 25,
     resizeMode: 'contain',
     // TODO this tintcolor only used for settings screen, maybe make it a prop?
-    tintColor: '#D1D1D6',
+    tintColor: colors.black,
   },
 });
 

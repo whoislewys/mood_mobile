@@ -65,7 +65,6 @@ class Playlists extends Component {
     // TODO: swap loadLeaderboardSongQueue for loadPlayListSongsForId
     // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this._navigateToPlaylistDetailScreen();
-    console.warn('pressed playlist with id: ', pressedPlaylistId);
     this.props.setCurrentPlaylistId(pressedPlaylistId);
     // TODO: NEED TO reset playlist id to -1 when navigating away from playlist detail screen
   };

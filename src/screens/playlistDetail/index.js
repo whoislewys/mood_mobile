@@ -87,14 +87,13 @@ class SavedSongs extends Component {
 
   _renderHeader = () => (
     <MoodCenterHeader
-      title='shit'
+      title={this.props.curPlaylistId}
       leftButtonIcon={Images.cancelPlaylist}
       onPressLeftButton={this.props.navigation.goBack}
       rightButtonIcon={Images.savedIcon}
       onPressRightButton={() => console.warn('saving')}
     />
   );
-
 
   keyExtractor = song => song.id.toString();
 
@@ -136,7 +135,7 @@ class SavedSongs extends Component {
 const mapStateToProps = state => ({
   savedSongs: state.savingSongs.songs,
   queue: state.queue.queue,
-  curPlaylistId: state.queue.queue.curPlaylistId,
+  curPlaylistId: state.queue.curPlaylistId,
 });
 
 const mapDispatchToProps = {
