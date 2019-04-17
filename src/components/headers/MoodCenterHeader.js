@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   headerContentsContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
     marginRight: spacing.sm,
     marginLeft: spacing.sm,
   },
@@ -30,12 +29,15 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primary,
     fontSize: fonts.header,
     color: colors.header,
+    textAlign: 'center',
   },
-  button: {
+  buttonContainer: {
     flex: 12.5,
     justifyContent: 'center',
+    backgroundColor: 'red',
   },
   buttonRightAlign: {
+    alignItems: 'flex-end',
   },
   buttonIcon: {
     height: 25,
@@ -47,13 +49,13 @@ const styles = StyleSheet.create({
 });
 
 const renderLeftButton = (buttonIcon, onPressButton) => (
-  <TouchableOpacity style={styles.button} onPress={() => onPressButton()} activeOpacity={0.6}>
+  <TouchableOpacity style={styles.buttonContainer} onPress={() => onPressButton()} activeOpacity={0.6}>
     <Image source={buttonIcon} style={styles.buttonIcon} />
   </TouchableOpacity>
 );
 
 const renderRightButton = (buttonIcon, onPressButton) => (
-  <TouchableOpacity style={[styles.button, styles.buttonRightAlign]} onPress={() => onPressButton()} activeOpacity={0.6}>
+  <TouchableOpacity style={[styles.buttonContainer, styles.buttonRightAlign]} onPress={() => onPressButton()} activeOpacity={0.6}>
     <Image source={buttonIcon} style={styles.buttonIcon} />
   </TouchableOpacity>
 );
