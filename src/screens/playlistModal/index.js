@@ -104,7 +104,6 @@ export class PlaylistModal extends Component {
           ? <View style={styles.androidBlackOverlay} />
           : null
         }
-        {/* TODO: make the modalcontents view an animated.view, that animates it's top offset to 0 when this.props.isPlaylistModalFullScreen is true */}
         <Animated.View style={[styles.modalContents, animationStyle]}>
           <GestureRecognizer
             style={styles.swipeBar}

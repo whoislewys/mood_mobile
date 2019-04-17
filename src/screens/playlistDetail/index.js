@@ -14,6 +14,7 @@ import { addSongToDeleted, removeSongFromDeleted, deleteSongs } from '../../redu
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
 import { spacing } from '../../assets/styles';
+import MoodCenterHeader from '../../components/headers/MoodCenterHeader';
 
 const styles = StyleSheet.create({
   container: {
@@ -81,6 +82,20 @@ class SavedSongs extends Component {
     this._navigateToPlayScreen();
   };
 
+  _renderHeader = () => (
+    <View>
+      <MoodCenterHeader
+        title='shit'
+        leftButtonIcon={Images.cancelPlaylist}
+        onPressleftButton={console.warn('c')}
+        rightButtonIcon={Images.savedIcon}
+        onPressRightButton={console.warn('saving')}
+      />
+      { this._shuffleButton() }
+    </View>
+  );
+
+
   keyExtractor = song => song.id.toString();
 
   _renderItem = ({ item, index }) => (
@@ -101,7 +116,7 @@ class SavedSongs extends Component {
           data={this.props.savedSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={this._shuffleButton()}
+          ListHeaderComponent={this._renderHeader()}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
@@ -119,6 +134,7 @@ class SavedSongs extends Component {
 const mapStateToProps = state => ({
   savedSongs: state.savingSongs.songs,
   queue: state.queue.queue,
+  curPlaylistId: state.queue.queue.curPlaylistId,
 });
 
 const mapDispatchToProps = {
