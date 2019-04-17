@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
   },
   signInButtonIconContainer: {
-    flex: 19,
+    flex: 20,
     alignSelf: 'center',
     alignItems: 'center',
   },
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   signInButtonText: {
-    flex: 81,
+    flex: 80,
     alignSelf: 'center',
     fontFamily: fonts.primaryBold,
     fontSize: fonts.subHeader,
