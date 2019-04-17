@@ -21,13 +21,22 @@ import { anal } from '../../redux/constants';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+  },
+  modalContents: {
+    height: dimensions.height * 0.5849,
+    width: dimensions.width * 0.9307,
     backgroundColor: '#fff',
     alignItems: 'center',
+    borderRadius: 10,
   },
   moodLogo: {
     alignSelf: 'center',
-    width: 250,
-    height: 200,
+    width: dimensions.width * 0.5333,
+    height: dimensions.height * 0.1503,
+    marginTop: spacing.sm,
     resizeMode: 'contain',
   },
   signInMessage: {
@@ -38,14 +47,14 @@ const styles = StyleSheet.create({
     marginTop: spacing.lg,
     height: spacing.lg,
     width: dimensions.width * 0.610,
-    borderRadius: 4,
   },
   tos: {
     fontFamily: fonts.primary,
     fontSize: fonts.body,
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    width: '70%',
+    width: '90%',
     position: 'absolute',
     paddingBottom: '10%',
     bottom: 0,
@@ -66,23 +75,24 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <GestureRecognizer style={styles.container} onSwipe={() => this.onSwipe()}>
-        <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
-        <GoogleSigninButton
-          style={styles.googleIcon}
-          size={GoogleSigninButton.Size.Wide}
-
-          onPress={this._signIn}
-        />
-        <View style={styles.tos}>
-          <Text>
-            {'By signing in, you agree to Mood\'s '}
-            <Text onPress={LoginScreen._openTos} style={styles.linkText}>Terms & Conditions</Text>
-            {' and '}
-            <Text onPress={LoginScreen._ppTouch} style={styles.linkText}>Privacy Policy</Text>
-          </Text>
-        </View>
-      </GestureRecognizer>
+      <View style={styles.container}>
+        <GestureRecognizer style={styles.modalContents} onSwipe={() => this.onSwipe()}>
+          <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
+          <GoogleSigninButton
+            style={styles.googleIcon}
+            size={GoogleSigninButton.Size.Wide}
+            onPress={this._signIn}
+          />
+          <View style={styles.tos}>
+            <Text style={{ textAlign: 'center' }}>
+              {'By signing in, you agree to Mood\'s '}
+              <Text onPress={LoginScreen._openTos} style={styles.linkText}>Terms & Conditions</Text>
+              {' and '}
+              <Text onPress={LoginScreen._ppTouch} style={styles.linkText}>Privacy Policy</Text>
+            </Text>
+          </View>
+        </GestureRecognizer>
+      </View>
     );
   }
 

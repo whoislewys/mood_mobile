@@ -26,7 +26,7 @@ export const colors = {
 // TODO: customize this once wil sends padding
 export const spacing = {
   sm: dimensions.height * 0.0246,
-  md: dimensions.height * 0.0357,
+  md: dimensions.height * 0.0357, // corresponds to padding of 29 in the XD design
   lg: dimensions.height * 0.0530,
   xl: 40,
   headerHeight: Platform.OS === 'android' ? dimensions.height * 0.11 : dimensions.height * 0.12,
