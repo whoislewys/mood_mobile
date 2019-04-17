@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  TouchableOpacity,
   Alert,
   StyleSheet,
   Image,
@@ -12,7 +13,12 @@ import Images from '@assets/images';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { connect } from 'react-redux';
-import { dimensions, fonts, spacing } from '../../assets/styles';
+import {
+  colors,
+  dimensions,
+  fonts,
+  spacing,
+} from '../../assets/styles';
 import config from './config';
 import { userLoggedIn } from '../../redux/modules/auth';
 import { logEvent } from '../../redux/modules/analytics';
@@ -39,9 +45,36 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
     resizeMode: 'contain',
   },
-  signInMessage: {
-    fontFamily: fonts.primary,
+  signInButton: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    marginTop: spacing.md,
+    width: dimensions.width * 0.6107,
+    height: dimensions.width * 0.6107 / 5.725,
+    borderRadius: 4,
+    elevation: 3,
+    shadowRadius: 4.0,
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      height: 2,
+    },
+  },
+  signInButtonIconContainer: {
+    flex: 19,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  signInButtonIcon: {
+    height: 24,
+    width: 24,
+    resizeMode: 'contain',
+  },
+  signInButtonText: {
+    flex: 81,
+    alignSelf: 'center',
+    fontFamily: fonts.primaryBold,
     fontSize: fonts.subHeader,
+    color: colors.black,
   },
   googleIcon: {
     marginTop: spacing.lg,
@@ -54,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    width: '90%',
+    width: '60%',
     position: 'absolute',
     paddingBottom: '10%',
     bottom: 0,
@@ -73,21 +106,26 @@ class LoginScreen extends Component {
     });
   }
 
+  renderGoogleSigninButton = () => (
+    <TouchableOpacity style={styles.signInButton} onPress={() => this._signIn()} activeOpacity={0.6}>
+      <View style={styles.signInButtonIconContainer}>
+        <Image style={styles.signInButtonIcon} source={Images.googleIcon} />
+      </View>
+      <Text style={styles.signInButtonText}>Login with Google</Text>
+    </TouchableOpacity>
+  );
+
   render() {
     return (
       <View style={styles.container}>
         <GestureRecognizer style={styles.modalContents} onSwipe={() => this.onSwipe()}>
           <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
-          <GoogleSigninButton
-            style={styles.googleIcon}
-            size={GoogleSigninButton.Size.Wide}
-            onPress={this._signIn}
-          />
+          { this.renderGoogleSigninButton() }
           <View style={styles.tos}>
             <Text style={{ textAlign: 'center' }}>
               {'By signing in, you agree to Mood\'s '}
-              <Text onPress={LoginScreen._openTos} style={styles.linkText}>Terms & Conditions</Text>
-              {' and '}
+              {/* <Text onPress={LoginScreen._openTos} style={styles.linkText}>Terms & Conditions</Text> */}
+              {/* {' and '} */}
               <Text onPress={LoginScreen._ppTouch} style={styles.linkText}>Privacy Policy</Text>
             </Text>
           </View>
@@ -100,9 +138,9 @@ class LoginScreen extends Component {
     this.props.navigation.goBack();
   };
 
-  static _openTos() {
-    Linking.openURL('https://www.example.com');
-  }
+  // static _openTos() {
+  //   Linking.openURL('https://www.example.com');
+  // }
 
   static _ppTouch() {
     Linking.openURL('http://www.moodindustries.com/privacy.pdf');

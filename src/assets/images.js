@@ -17,6 +17,10 @@ const images = {
   leaderboardStar: require('./img/round-stars-1.png'),
   moodLogo: require('./img/Color-Mood-Logo.png'),
 
+  // Login
+  googleIcon: require('./img/google-icon.png'),
+  waves: require('./img/waves.png'),
+
   // Media Player
   pauseButton: require('./img/round-pause-2x.png'),
   playButton: require('./img/round-play-2x.png'),
