@@ -115,17 +115,7 @@ class SavedSongs extends Component {
           data={this.props.savedSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          // ListHeaderComponent={(
-          //   <TouchableOpacity
-          //     style={{
-          //       backgroundColor: 'red',
-          //       height: 200,
-          //       width: 200,
-          //     }}
-          //     onPress={() => this.props.navigation.goBack()}
-          //   />
-          // )}
-          ListHeaderComponent={this._renderHeader}
+          ListHeaderComponent={this._shuffleButton()}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
@@ -135,6 +125,7 @@ class SavedSongs extends Component {
 
   render = () => (
     <View style={styles.container}>
+      {this._renderHeader()}
       <View style={styles.songsContainer}>
         {this.getSavedSongs()}
       </View>
