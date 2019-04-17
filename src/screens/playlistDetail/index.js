@@ -89,7 +89,7 @@ class SavedSongs extends Component {
     <MoodCenterHeader
       title='shit'
       leftButtonIcon={Images.cancelPlaylist}
-      onPressleftButton={() => this.props.navigation.goBack()}
+      onPressLeftButton={this.props.navigation.goBack}
       rightButtonIcon={Images.savedIcon}
       onPressRightButton={() => console.warn('saving')}
     />
@@ -115,7 +115,17 @@ class SavedSongs extends Component {
           data={this.props.savedSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={this._renderHeader()}
+          // ListHeaderComponent={(
+          //   <TouchableOpacity
+          //     style={{
+          //       backgroundColor: 'red',
+          //       height: 200,
+          //       width: 200,
+          //     }}
+          //     onPress={() => this.props.navigation.goBack()}
+          //   />
+          // )}
+          ListHeaderComponent={this._renderHeader}
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />

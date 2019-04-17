@@ -21,12 +21,6 @@ const styles = StyleSheet.create({
   headerTextCenterAlign: {
     alignSelf: 'center',
   },
-  headerSubText: {
-    marginTop: 5,
-    fontFamily: fonts.primary,
-    fontSize: fonts.subHeader,
-    color: colors.subHeader,
-  },
 });
 
 // might have to make this so that you have to make the image yourself before passing it in
