@@ -3,20 +3,22 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
 import { loadSongsForMoodId } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
-import MoodLeftHeaderWithSettingsButton
-  from '../../components/headers/MoodLeftHeaderWithSettingsButton';
+import MoodLeftHeaderWithSettingsButton from '../../components/headers/MoodLeftHeaderWithSettingsButton';
+import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  flatListContainer: {
+    marginTop: spacing.sm * 0.731, // for some reason there's some padding on the moodlist i can't get rid of, so i hacked together this custom margin so it looks the same as the events screen
   },
 });
 
@@ -80,7 +82,9 @@ class MoodScreen extends Component {
   render = () => (
     <View style={styles.container}>
       <MoodLeftHeaderWithSettingsButton title='Discover' navigation={this.props.navigation} />
-      { this.getContent() }
+      <View style={styles.flatListContainer}>
+        { this.getContent() }
+      </View>
     </View>
   )
 }

@@ -92,21 +92,21 @@ const EventRow = ({ event }) => {
       {/* <Image style={styles.albumArt} source={{ uri: art_url }}/> */}
       <View style={styles.detailsContainer}>
         <Text
-        style={styles.name}
-        numberOfLines={1}
-        ellipsizeMode="tail"
+          style={styles.name}
+          numberOfLines={1}
+          ellipsizeMode="tail"
         >
           {summary}
         </Text>
         <Text
-        style={styles.location}
-        numberOfLines={1}
-        ellipsizeMode="tail"
+          style={styles.location}
+          numberOfLines={1}
+          ellipsizeMode="tail"
         >
           {timeAndPlace}
         </Text>
       </View>
-    {/*   <View style={styles.starsContainer}>
+      {/*   <View style={styles.starsContainer}>
     //     <Image source={Images.leaderboardStar}/>
     //     <Text style={styles.starCount}>{stars}</Text>
     //   </View> */}

@@ -30,6 +30,7 @@ const styles = {
   eventsContainer: {
     flex: 1,
     justifyContent: 'flex-start',
+    marginTop: spacing.md,
     alignItems: 'stretch',
     marginHorizontal: spacing.sm,
   },
@@ -58,7 +59,7 @@ class EventsScreen extends Component {
   render = () => (
     <View style={styles.background}>
       <MoodLeftHeader title='Phx Events'>
-        <GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={100} />
+        <GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={90} />
       </MoodLeftHeader>
       <View style={styles.eventsContainer}>
         {this.getEvents()}

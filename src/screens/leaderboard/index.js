@@ -19,6 +19,7 @@ const styles = {
   },
   leaderboardContainer: {
     flex: 1,
+    paddingTop: spacing.sm,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     marginHorizontal: spacing.sm,
