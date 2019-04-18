@@ -69,7 +69,7 @@ const PlaylistRow = ({
   return (
     <TouchableOpacity
       style={styles.rowBackground}
-      onPress={() => _onPress(playlist.id)}
+      onPress={() => _onPress(playlist)}
     >
       { _getImage(index, artwork) }
       <View style={styles.detailsContainer}>

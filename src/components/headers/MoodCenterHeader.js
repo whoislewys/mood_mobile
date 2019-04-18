@@ -69,7 +69,7 @@ const MoodCenterHeader = ({
   <View style={styles.header}>
     <View style={styles.headerContentsContainer}>
       { renderLeftButton(leftButtonIcon, onPressLeftButton) }
-      <Text style={styles.headerText}>{title}</Text>
+      <Text style={styles.headerText} numberOfLines={1} ellipsizeMode='tail'>{title}</Text>
       { renderRightButton(rightButtonIcon, onPressRightButton) }
     </View>
   </View>

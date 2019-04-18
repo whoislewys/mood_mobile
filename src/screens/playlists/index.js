@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
-import { loadLeaderboardSongQueue, setCurrentPlaylistId } from '../../redux/modules/queue';
+import { loadLeaderboardSongQueue, setCurrentPlaylist } from '../../redux/modules/queue';
 import {
   openModal,
   closeModal,
@@ -61,11 +61,11 @@ class Playlists extends Component {
 
   keyExtractor = song => song.id.toString();
 
-  _handlePlaylistRowPress = async (pressedPlaylistId) => {
+  _handlePlaylistRowPress = async (pressedPlaylist) => {
     // TODO: swap loadLeaderboardSongQueue for loadPlayListSongsForId
     // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this._navigateToPlaylistDetailScreen();
-    this.props.setCurrentPlaylistId(pressedPlaylistId);
+    this.props.setCurrentPlaylist(pressedPlaylist);
     // TODO: NEED TO reset playlist id to -1 when navigating away from playlist detail screen
   };
 
@@ -165,7 +165,7 @@ const mapDispatchToProps = {
   createPlaylist,
   loadLeaderboardSongQueue,
   openModal,
-  setCurrentPlaylistId,
+  setCurrentPlaylist,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
   updateNewPlaylistName,

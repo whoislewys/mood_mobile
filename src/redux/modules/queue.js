@@ -23,6 +23,7 @@ import {
 
 export const initialState = {
   curPlaylistId: -1, // the playlist id to save songs to
+  curPlaylistTitle: '',
   curTrack: null,
   curTrackIndex: NaN,
   errors: null,
@@ -159,6 +160,7 @@ export function reducer(state = initialState, action = {}) {
       return {
         ...state,
         curPlaylistId: action.curPlaylistId,
+        curPlaylistTitle: action.curPlaylistTitle,
       };
 
     default:
@@ -287,10 +289,11 @@ export function loadSharedSongQueue(sharedTrack) {
 }
 
 // Playlist action creators
-export function setCurrentPlaylistId(curPlaylistId) {
+export function setCurrentPlaylist(curPlaylist) {
   return {
     type: SET_CUR_PLAYLIST_ID,
-    curPlaylistId,
+    curPlaylistId: curPlaylist.id,
+    curPlaylistTitle: curPlaylist.title,
   };
 }
 

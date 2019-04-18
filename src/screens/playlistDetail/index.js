@@ -87,7 +87,7 @@ class SavedSongs extends Component {
 
   _renderHeader = () => (
     <MoodCenterHeader
-      title={this.props.curPlaylistId}
+      title={this.props.curPlaylistTitle}
       leftButtonIcon={Images.cancelPlaylist}
       onPressLeftButton={this.props.navigation.goBack}
       rightButtonIcon={Images.savedIcon}
@@ -136,6 +136,7 @@ const mapStateToProps = state => ({
   savedSongs: state.savingSongs.songs,
   queue: state.queue.queue,
   curPlaylistId: state.queue.curPlaylistId,
+  curPlaylistTitle: state.queue.curPlaylistTitle,
 });
 
 const mapDispatchToProps = {
