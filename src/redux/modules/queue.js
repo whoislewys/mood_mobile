@@ -324,3 +324,13 @@ export function playbackTrack(track) {
     dispatch(startScoreTimer());
   };
 }
+
+export function handleDuck(data) {
+  return async () => {
+    const { permanent, ducking, paused } = data;
+    if (permanent === true) await TrackPlayer.stop();
+    if (ducking) await TrackPlayer.pause(); // could just change vol here
+    if (paused) await TrackPlayer.pause();
+    if (!ducking && !paused && !permanent) await TrackPlayer.play();
+  };
+}

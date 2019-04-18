@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import {
+  handleDuck,
   handlePlayPress,
   skipToNext,
   skipToPrevious,
@@ -39,6 +40,8 @@ async function eventHandler(store, data) {
     case 'playback-error':
       Alert.alert('An error ocurred', data.error);
       break;
+    case 'remote-duck':
+      store.dispatch(handleDuck(data));
     default:
   }
 }

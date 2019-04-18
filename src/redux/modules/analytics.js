@@ -67,7 +67,8 @@ export function logEvent(eventName, eventProperties) {
     // prepare an event object to be an event parameter
     const eventObj = { event_type: eventName };
     if (eventProperties != null) eventObj.event_properties = eventProperties;
-    if (userProperties != null) eventObj.user_properties = userProperties;
+    // TODO: add userproperties on login
+    // if (userProperties != null) eventObj.user_properties = userProperties;
     if (userId.length > 0) eventObj.userId = userId;
     if (deviceId.length > 0) eventObj.device_id = deviceId;
 
