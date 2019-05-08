@@ -75,7 +75,7 @@ export function setMood(moodObj) {
 // export function loadMoods() {
 //   return async (dispatch) => {
 //     dispatch({ type: LOAD_MOODS });
-//     let queuePromise = axios.get(`http://api.moodindustries.com/api/v1/moods/`,
+//     let queuePromise = axios.get(`https://api.moodindustries.com/api/v1/moods/`,
 //       {
 //         params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
 //         responseType: 'json',
@@ -92,7 +92,7 @@ export function setMood(moodObj) {
 export function loadMoods() {
   return async (dispatch) => {
     dispatch({ type: LOAD_MOODS });
-    return axios.get('http://api.moodindustries.com/api/v1/moods/',
+    return axios.get('https://api.moodindustries.com/api/v1/moods/',
       {
         params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
         responseType: 'json',

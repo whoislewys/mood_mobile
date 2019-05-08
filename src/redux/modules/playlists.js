@@ -97,7 +97,7 @@ export function createPlaylist(userId) {
     try {
       // submit new playlist
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist' : getState().playlists.newPlaylistName;
-      const newPlaylistId = await axios.post('http://api.moodindustries.com/api/v1/playlists',
+      const newPlaylistId = await axios.post('https://api.moodindustries.com/api/v1/playlists',
         // can we make this post return a userId?
         {
           params: {
@@ -123,7 +123,7 @@ export function loadPlaylists(userId) {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
       // TODO: hit actual endpoint
-      const playlists = await axios.get('http://api.moodindustries.com/api/v1/stats/leaderboard',
+      const playlists = await axios.get('https://api.moodindustries.com/api/v1/stats/leaderboard',
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',

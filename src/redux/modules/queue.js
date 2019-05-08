@@ -234,7 +234,7 @@ export function loadSongsForMoodId(moodId) {
     await TrackPlayer.reset();
     dispatch({ type: LOAD_SONGS });
     try {
-      const songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
@@ -275,7 +275,7 @@ export function loadSharedSongQueue(sharedTrack) {
     await TrackPlayer.reset();
     dispatch({ type: LOAD_SHARED_SONG_QUEUE, sharedTrack });
     try {
-      const songs = await axios.get(`http://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',

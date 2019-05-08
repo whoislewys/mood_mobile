@@ -47,7 +47,7 @@ export function loadLeaderboardSongs() {
   return async (dispatch) => {
     dispatch({ type: LOAD_SONGS });
     try {
-      let songs = await axios.get('http://api.moodindustries.com/api/v1/stats/leaderboard',
+      let songs = await axios.get('https://api.moodindustries.com/api/v1/stats/leaderboard',
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
