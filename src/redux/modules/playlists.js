@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import firebase from 'react-native-firebase';
 import {
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
@@ -96,40 +96,45 @@ export function createPlaylist(userId) {
     dispatch({ type: CREATE_PLAYLIST });
     try {
       // submit new playlist
-      const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist' : getState().playlists.newPlaylistName;
+      const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist'
+        : getState().playlists.newPlaylistName;
+      console.warn('creating playlist: ', playlistNameToSubmit);
       const newPlaylistId = await axios.post('https://api.moodindustries.com/api/v1/playlists',
-        // can we make this post return a userId?
         {
           params: {
             t: 'EXVbAWTqbGFl7BKuqUQv',
-            userId,
-            playlistNameToSubmit,
+            name: playlistNameToSubmit,
+            description: 'shit',
+            song_ids: [39],
           },
+          headers: { Authorization: `Bearer ${await firebase.auth().currentUser.getIdToken(true)}` },
           responseType: 'json',
         });
-
+      console.warn(`new playlistid: ${newPlaylistId}`);
       // dispatch success action & refresh the list of playlists
       dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
     } catch (err) {
       // in case an error happened, close the modal
       dispatch(closeModal());
+      console.warn('err creating: ', err);
       dispatch({ type: CREATE_PLAYLIST_FAIL, err });
     }
   };
 }
 
-export function loadPlaylists(userId) {
+export function loadPlaylists() {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
-      // TODO: hit actual endpoint
-      const playlists = await axios.get('https://api.moodindustries.com/api/v1/stats/leaderboard',
+      const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          headers: { Authorization: `Bearer ${await firebase.auth().currentUser.getIdToken(true)}` },
           responseType: 'json',
         });
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
     } catch (e) {
+      console.warn(e);
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
     }
   };

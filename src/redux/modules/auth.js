@@ -7,7 +7,6 @@ export const initialState = {
   email: '',
   name: '',
   photoURL: '',
-  uid: '',
   userIsLoggedIn: false,
 };
 
@@ -16,7 +15,6 @@ export function reducer(state = initialState, action = {}) {
     case USER_LOGGED_IN:
       const {
         email,
-        uid,
         providerData: [{ displayName: name, photoURL }],
       } = action.userInfo;
       // toDO: get firebase JWT into newstate
@@ -25,7 +23,6 @@ export function reducer(state = initialState, action = {}) {
         email,
         name,
         photoURL,
-        uid,
         userIsLoggedIn: true,
       };
       return newState;

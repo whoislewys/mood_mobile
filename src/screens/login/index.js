@@ -146,7 +146,6 @@ class LoginScreen extends Component {
     Linking.openURL('http://www.moodindustries.com/privacy.pdf');
   }
 
-  // react-native-firebase
   _signIn = async () => {
     try {
       const userInfo = await GoogleSignin.signIn();
