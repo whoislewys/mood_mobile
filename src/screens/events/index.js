@@ -59,7 +59,8 @@ class EventsScreen extends Component {
   render = () => (
     <View style={styles.background}>
       <MoodLeftHeader title='Phx Events'>
-        <GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={90} />
+        {/*<GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={90} />*/}
+        <GradientButton text='ADD EVENT' onPress={() => this.props.navigation.navigate('EventsForm')} />
       </MoodLeftHeader>
       <View style={styles.eventsContainer}>
         {this.getEvents()}

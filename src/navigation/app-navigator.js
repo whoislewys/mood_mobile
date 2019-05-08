@@ -1,22 +1,29 @@
 import React from 'react';
-import { Easing, Animated } from 'react-native';
-import { createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
-import SplashScreen from '../screens/splash';
+import { Animated, Easing } from 'react-native';
+import {
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
+  createStackNavigator,
+} from 'react-navigation';
+
 import ErrorScreen from '../screens/error';
-import SettingsScreen from '../screens/settings';
-import MoodScreen from '../screens/mood';
-import LeaderboardScreen from '../screens/leaderboard';
+import EventsForm from '../screens/events/events-form';
 import EventsScreen from '../screens/events';
-import LibraryScreen from '../screens/savedSongs';
-import PlaylistsScreen from '../screens/playlists';
-import PlayScreen from '../screens/play';
+import LeaderboardScreen from '../screens/leaderboard';
 import LoginScreen from '../screens/login';
-import TabBar from './components/TabBar';
-import { colors } from '../assets/styles';
-import MoodLeftHeaderWithSettingsButton
-  from '../components/headers/MoodLeftHeaderWithSettingsButton';
+import LibraryScreen from '../screens/savedSongs';
+import MoodScreen from '../screens/mood';
 import PlaylistDetailScreen from '../screens/playlistDetail';
 import PlaylistModal from '../screens/playlistModal';
+import PlaylistsScreen from '../screens/playlists';
+import PlayScreen from '../screens/play';
+import SettingsScreen from '../screens/settings';
+import SplashScreen from '../screens/splash';
+import TabBar from './components/TabBar';
+
+import MoodLeftHeaderWithSettingsButton
+  from '../components/headers/MoodLeftHeaderWithSettingsButton';
+import { colors } from '../assets/styles';
 
 const map = SomeComponent => class SomeClass extends React.Component {
     // utility function to map screenProps to and navigation params to regular props
@@ -83,6 +90,7 @@ const TabNavigator = createBottomTabNavigator({
 
 export default createStackNavigator({
   Splash: { screen: map(SplashScreen) },
+  EventsForm: { screen: map(EventsForm) },
   Home: TabNavigator,
   Play: { screen: map(PlayScreen) },
   Login: { screen: map(LoginScreen) },
