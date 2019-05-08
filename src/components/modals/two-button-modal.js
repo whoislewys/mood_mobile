@@ -89,7 +89,7 @@ const TwoButtonModal = props => (
         <TextInput
           autoFocus
           blurOnSubmit
-          onChangeText={props.onChangeText}
+          onChangeText={text => props.onChangeText(text)}
           onSubmitEditing={props.confirm}
           placeholder='Enter playlist title'
           style={styles.modalInput}

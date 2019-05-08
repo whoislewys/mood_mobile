@@ -137,7 +137,7 @@ class Playlists extends Component {
     <TwoButtonModal
       cancel={() => this.props.closeModal()}
       confirm={this._onCreatePlaylist}
-      onChange={text => this.props.updateNewPlaylistName(text)}
+      onChangeText={text => this.props.updateNewPlaylistName(text)}
       value={this.props.newPlaylistName}
       visible={this.props.isCreatePlaylistModalOpen}
     />
