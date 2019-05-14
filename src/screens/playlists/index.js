@@ -7,14 +7,14 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
-import { loadLeaderboardSongQueue, setCurrentPlaylist } from '../../redux/modules/queue';
+import { loadLeaderboardSongQueue, loadSongsForPlaylistId, setCurrentPlaylist } from '../../redux/modules/queue';
 import {
-  openModal,
   closeModal,
-  updateNewPlaylistName,
   createPlaylist,
-  setPlaylistScrollingNegative,
+  openModal,
   setPlaylistModalFullScreen,
+  setPlaylistScrollingNegative,
+  updateNewPlaylistName,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
 import { spacing } from '../../assets/styles';
@@ -66,6 +66,7 @@ class Playlists extends Component {
     // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this._navigateToPlaylistDetailScreen();
     this.props.setCurrentPlaylist(pressedPlaylist);
+    this.props.loadSongsForPlaylistId(pressedPlaylist.id);
     // TODO: NEED TO reset playlist id to -1 when navigating away from playlist detail screen
   };
 
@@ -164,6 +165,7 @@ const mapDispatchToProps = {
   closeModal,
   createPlaylist,
   loadLeaderboardSongQueue,
+  loadSongsForPlaylistId,
   openModal,
   setCurrentPlaylist,
   setPlaylistModalFullScreen,

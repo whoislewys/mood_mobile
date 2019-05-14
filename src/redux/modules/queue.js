@@ -240,7 +240,7 @@ export function loadSongsForMoodId(moodId) {
           responseType: 'json',
         });
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
-      // dispatch(startScoreTimer());
+      dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
     }
@@ -294,6 +294,24 @@ export function setCurrentPlaylist(curPlaylist) {
     type: SET_CUR_PLAYLIST_ID,
     curPlaylistId: curPlaylist.id,
     curPlaylistTitle: curPlaylist.title,
+  };
+}
+
+export function loadSongsForPlaylistId(moodId) {
+  return async (dispatch) => {
+    await TrackPlayer.reset();
+    dispatch({ type: LOAD_SONGS });
+    try {
+      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          responseType: 'json',
+        });
+      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+      // dispatch(startScoreTimer());
+    } catch (e) {
+      dispatch({ type: LOAD_SONGS_FAIL });
+    }
   };
 }
 
