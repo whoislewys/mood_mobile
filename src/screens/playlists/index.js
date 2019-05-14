@@ -90,8 +90,8 @@ class Playlists extends Component {
     {
       // cant pass artwork through here, the way we called images was incompatible
       id: 'create-playlist',
-      title: 'Create Playlist',
-      subtitle: 'Make a new bonerific playlist',
+      name: 'Create Playlist',
+      description: 'Make a new bonerific playlist',
     });
 
   handleScroll = (event) => {

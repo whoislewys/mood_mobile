@@ -50,9 +50,11 @@ const PlaylistRow = ({
 }) => {
   const {
     artwork,
-    subtitle,
-    title,
+    description,
+    name,
   } = playlist;
+
+  // TODO: return artwork from api
 
   let _onPress;
   if (index === 0) {
@@ -78,14 +80,14 @@ const PlaylistRow = ({
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {title}
+          {name}
         </Text>
         <Text
           style={styles.artistName}
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {subtitle}
+          {description}
         </Text>
       </View>
     </TouchableOpacity>

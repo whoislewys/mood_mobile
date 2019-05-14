@@ -46,7 +46,7 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, loading: true };
     case LOAD_PLAYLISTS_SUCCESS:
       // TODO: fuck this mapsongs, just get a well built object from api
-      const songs = mapSongsToValidTrackObjects(action.payload.data);
+      const songs = action.payload.data;
       return { ...state, loading: false, playlists: songs };
     case LOAD_PLAYLISTS_FAIL:
       return { ...state, loading: false, error: 'Error while fetching playlist' };
@@ -99,8 +99,8 @@ export function createPlaylist() {
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist'
         : getState().playlists.newPlaylistName;
       console.warn('creating playlist: ', playlistNameToSubmit);
-      // const newPlaylistId = await axios.post('https://api.moodindustries.com/api/v1/playlists',
       const token = await firebase.auth().currentUser.getIdToken(true);
+      // const newPlaylistId = await axios.post('https://api.moodindustries.com/api/v1/playlists',
       const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
         {
           params: {
@@ -128,12 +128,14 @@ export function loadPlaylists() {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
-      const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
+      const token = await firebase.auth().currentUser.getIdToken(true);
+      // const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
+      const playlists = await axios.get('http://localhost:3000/api/v1/playlists',
         {
+          headers: { Authorization: token },
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
-          headers: { Authorization: `Bearer ${await firebase.auth().currentUser.getIdToken(true)}` },
-          responseType: 'json',
         });
+      console.warn('playlists: ', playlists);
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
     } catch (e) {
       console.warn(e);
