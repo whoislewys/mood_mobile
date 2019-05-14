@@ -20,6 +20,7 @@ import {
   RESET_QUEUE,
   SET_CUR_PLAYLIST_ID,
 } from '../constants';
+import firebase from "react-native-firebase";
 
 export const initialState = {
   curPlaylistId: -1, // the playlist id to save songs to
@@ -132,6 +133,8 @@ export function reducer(state = initialState, action = {}) {
         error: 'Error while loading songs.',
         queueType: '',
       };
+
+    // TODO: make reducer cases for playlist song here
 
     case PLAY_SHUFFLED_PLAYLIST:
       return {
@@ -297,19 +300,27 @@ export function setCurrentPlaylist(curPlaylist) {
   };
 }
 
-export function loadSongsForPlaylistId(moodId) {
+export function loadSongsForPlaylistId(playlistId) {
   return async (dispatch) => {
     await TrackPlayer.reset();
+    // TODO: dispatch playlist actions instead
     dispatch({ type: LOAD_SONGS });
     try {
-      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+      const token = await firebase.auth().currentUser.getIdToken(true);
+      // const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+      const songs = await axios.get('http://localhost:3000/api/v1/playlists',
         {
-          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
-          responseType: 'json',
+          headers: { Authorization: token },
+          params: {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+            id: playlistId,
+          },
         });
+      // TODO: dispatch playlist actions instead
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
       // dispatch(startScoreTimer());
     } catch (e) {
+      // TODO: dispatch playlist actions instead
       dispatch({ type: LOAD_SONGS_FAIL });
     }
   };

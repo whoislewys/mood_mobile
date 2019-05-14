@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SavedSongs extends Component {
+class PlaylistDetail extends Component {
   componentDidMount() {
     this.props.navigation.addListener('willBlur', this.componentWillBlur);
   }
@@ -71,7 +71,7 @@ class SavedSongs extends Component {
       <TouchableOpacity
         style={styles.shuffleButtonContainer}
         onPress={() => {
-          this.props.shufflePlay(this.props.savedSongs);
+          this.props.shufflePlay(this.props.queue);
           this.props.navigation.navigate('Play');
         }}
       >
@@ -107,11 +107,11 @@ class SavedSongs extends Component {
     />
   );
 
-  getSavedSongs = () => (
-    this.props.savedSongs.length
+  getPlaylistSongs = () => (
+    this.props.queue.length
       ? (
         <FlatList
-          data={this.props.savedSongs}
+          data={this.props.queue}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={this._shuffleButton()}
@@ -126,14 +126,13 @@ class SavedSongs extends Component {
     <View style={styles.container}>
       {this._renderHeader()}
       <View style={styles.songsContainer}>
-        {this.getSavedSongs()}
+        {this.getPlaylistSongs()}
       </View>
     </View>
   )
 }
 
 const mapStateToProps = state => ({
-  savedSongs: state.savingSongs.songs,
   queue: state.queue.queue,
   curPlaylistId: state.queue.curPlaylistId,
   curPlaylistTitle: state.queue.curPlaylistTitle,
@@ -148,4 +147,4 @@ const mapDispatchToProps = {
   shufflePlay,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedSongs);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistDetail);

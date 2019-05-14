@@ -62,11 +62,9 @@ class Playlists extends Component {
   keyExtractor = song => song.id.toString();
 
   _handlePlaylistRowPress = async (pressedPlaylist) => {
-    // TODO: swap loadLeaderboardSongQueue for loadPlayListSongsForId
-    // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
-    this._navigateToPlaylistDetailScreen();
     this.props.setCurrentPlaylist(pressedPlaylist);
     this.props.loadSongsForPlaylistId(pressedPlaylist.id);
+    this._navigateToPlaylistDetailScreen();
     // TODO: NEED TO reset playlist id to -1 when navigating away from playlist detail screen
   };
 
@@ -130,6 +128,7 @@ class Playlists extends Component {
     if (this.props.playlistError === '') {
       // TODO: load newly created playlist here by calling
       //  whatever I replace _handlePlaylistRowPress with
+      this._handlePlaylistRowPress()
       this.props.navigation.navigate('PlaylistDetail');
     }
   };

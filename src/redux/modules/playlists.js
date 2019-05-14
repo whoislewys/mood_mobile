@@ -15,7 +15,6 @@ import {
   SET_PLAYLIST_MODAL_HALF_SCREEN,
   UPDATE_NEW_PLAYLIST_NAME,
 } from '../constants';
-import { mapSongsToValidTrackObjects } from './leaderboard';
 
 const initialState = {
   playlists: [],
@@ -45,7 +44,6 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_PLAYLISTS:
       return { ...state, loading: true };
     case LOAD_PLAYLISTS_SUCCESS:
-      // TODO: fuck this mapsongs, just get a well built object from api
       const songs = action.payload.data;
       return { ...state, loading: false, playlists: songs };
     case LOAD_PLAYLISTS_FAIL:
