@@ -86,7 +86,7 @@ export function updateNewPlaylistName(newPlaylistName) {
   };
 }
 
-export function createPlaylist(userId) {
+export function createPlaylist() {
   return async (dispatch, getState) => {
     // start by closing the new playlist modal and checking if user is logged in
     dispatch(closeModal());
@@ -99,18 +99,20 @@ export function createPlaylist(userId) {
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist'
         : getState().playlists.newPlaylistName;
       console.warn('creating playlist: ', playlistNameToSubmit);
-      const newPlaylistId = await axios.post('https://api.moodindustries.com/api/v1/playlists',
+      // const newPlaylistId = await axios.post('https://api.moodindustries.com/api/v1/playlists',
+      const token = await firebase.auth().currentUser.getIdToken(true);
+      const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
         {
           params: {
             t: 'EXVbAWTqbGFl7BKuqUQv',
             name: playlistNameToSubmit,
             description: 'shit',
-            song_ids: [39],
+            song_ids: [111],
           },
-          headers: { Authorization: `Bearer ${await firebase.auth().currentUser.getIdToken(true)}` },
-          responseType: 'json',
-        });
-      console.warn(`new playlistid: ${newPlaylistId}`);
+        },
+        { headers: { Authorization: token } });
+      console.log('new playlist:', newPlaylist);
+      const newPlaylistId = newPlaylist.data.id;
       // dispatch success action & refresh the list of playlists
       dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
     } catch (err) {
