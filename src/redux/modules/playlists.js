@@ -97,9 +97,8 @@ export function createPlaylist() {
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist'
         : getState().playlists.newPlaylistName;
       console.warn('creating playlist: ', playlistNameToSubmit);
-      const token = await firebase.auth().currentUser.getIdToken(true);
-      // const newPlaylistId = await axios.post('https://api.moodindustries.com/api/v1/playlists',
-      const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
+      const token = await firebase.auth().currentUser.getIdToken();
+      const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
         {
           params: {
             t: 'EXVbAWTqbGFl7BKuqUQv',
@@ -126,9 +125,8 @@ export function loadPlaylists() {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
-      const token = await firebase.auth().currentUser.getIdToken(true);
-      // const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
-      const playlists = await axios.get('http://localhost:3000/api/v1/playlists',
+      const token = await firebase.auth().currentUser.getIdToken();
+      const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
         {
           headers: { Authorization: token },
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
