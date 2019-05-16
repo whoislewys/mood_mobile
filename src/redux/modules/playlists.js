@@ -14,6 +14,9 @@ import {
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
   UPDATE_NEW_PLAYLIST_NAME,
+  UPDATE_PLAYLIST,
+  UPDATE_PLAYLIST_SUCCESS,
+  UPDATE_PLAYLIST_FAIL,
   PLAYLIST_LOAD_SONGS,
   PLAYLIST_LOAD_SONGS_SUCCESS,
   PLAYLIST_LOAD_SONGS_FAIL,
@@ -154,16 +157,38 @@ export function loadPlaylists() {
   };
 }
 
-export function loadPlaylistSongs(id) {
+export function loadSongsForPlaylistId(id) {
   return async (dispatch) => {
     dispatch({ type: PLAYLIST_LOAD_SONGS });
     try {
-      // let songs = await axios.get('https://api.moodindustries.com/api/v1/stats/leaderboard',
-      let songs = await axios.get(`http://localhost:3000/api/v1/playlists/${id}`,
+      const token = await firebase.auth().currentUser.getIdToken();
+      const songs = await axios.get(`http://localhost:3000/api/v1/playlists/${id}`,
         {
-          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          headers: { Authorization: token },
+          t: 'EXVbAWTqbGFl7BKuqUQv',
           responseType: 'json',
         });
+      dispatch({
+        type: PLAYLIST_LOAD_SONGS_SUCCESS,
+        payload: songs,
+      });
+    } catch (e) {
+      dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL });
+    }
+  };
+}
+
+export function updatePlaylist(id) {
+  return async (dispatch) => {
+    dispatch({ type: UPDATE_PLAYLIST });
+    try {
+      const token = await firebase.auth().currentUser.getIdToken();
+      const songs = await axios.patch(`http://localhost:3000/api/v1/playlists/${id}`,
+        {
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+          // can change name, description, & song_ids in here
+        },
+        { headers: { Authorization: token } });
       dispatch({
         type: PLAYLIST_LOAD_SONGS_SUCCESS,
         payload: songs,

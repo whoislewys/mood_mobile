@@ -7,10 +7,11 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
-import { loadLeaderboardSongQueue, loadSongsForPlaylistId, setCurrentPlaylist } from '../../redux/modules/queue';
+import { loadLeaderboardSongQueue, setCurrentPlaylist } from '../../redux/modules/queue';
 import {
   closeModal,
   createPlaylist,
+  loadSongsForPlaylistId,
   openModal,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
@@ -128,7 +129,7 @@ class Playlists extends Component {
     if (this.props.playlistError === '') {
       // TODO: load newly created playlist here by calling
       //  whatever I replace _handlePlaylistRowPress with
-      this._handlePlaylistRowPress()
+      this._handlePlaylistRowPress();
       this.props.navigation.navigate('PlaylistDetail');
     }
   };

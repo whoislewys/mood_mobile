@@ -28,15 +28,24 @@ export const LOAD_MOODS_FAIL = 'moods/LOAD_FAIL';
 export const SET_MOOD = 'moods/SET';
 
 // Playlists
+// C
 export const CREATE_PLAYLIST = 'playlists/CREATE_PLAYLIST';
 export const CREATE_PLAYLIST_SUCCESS = 'playlists/CREATE_PLAYLIST_SUCCESS';
 export const CREATE_PLAYLIST_FAIL = 'playlists/CREATE_PLAYLIST_FAIL';
+// R
 export const LOAD_PLAYLISTS = 'playlists/LOAD';
 export const LOAD_PLAYLISTS_SUCCESS = 'playlists/LOAD_SUCCESS';
 export const LOAD_PLAYLISTS_FAIL = 'playlists/LOAD_FAIL';
 export const PLAYLIST_LOAD_SONGS = 'playlists/LOAD';
 export const PLAYLIST_LOAD_SONGS_SUCCESS = 'playlists/LOAD_SUCCESS';
 export const PLAYLIST_LOAD_SONGS_FAIL = 'playlists/LOAD_FAIL';
+// U
+export const UPDATE_PLAYLIST = 'playlists/UPDATE';
+export const UPDATE_PLAYLIST_SUCCESS = 'playlists/UPDATE_SUCCESS';
+export const UPDATE_PLAYLIST_FAIL = 'playlists/UPDATE_FAIL';
+//D
+
+// Other shit
 export const PLAYLIST_SCROLL_IS_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NEGATIVE';
 export const PLAYLIST_SCROLL_IS_NOT_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NOT_NEGATIVE';
 export const SET_PLAYLIST_MODAL_FULL_SCREEN = 'playlists/SET_PLAYLIST_MODAL_FULL_SCREEN';
