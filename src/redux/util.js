@@ -1,5 +1,18 @@
 import { anal } from './constants';
 
+export function mapSongsToValidTrackObjects(list) {
+  return list.map(t => ({
+    album: t.album_name,
+    artist: t.artist,
+    artwork: t.art_url,
+    id: t.id.toString(),
+    mood_id: t.mood_id,
+    title: t.name,
+    url: t.file,
+    stars: t.stars,
+  }));
+}
+
 /**
  * (A non-destructive) Durstenfeld Shuffle https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
  * @param: {list} arr

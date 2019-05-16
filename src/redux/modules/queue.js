@@ -1,6 +1,7 @@
 import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
-import { shuffle, songPlayAnalyticEventFactory } from '../util';
+import firebase from 'react-native-firebase';
+import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
 import { logEvent } from './analytics';
 import {
@@ -20,7 +21,6 @@ import {
   RESET_QUEUE,
   SET_CUR_PLAYLIST_ID,
 } from '../constants';
-import firebase from "react-native-firebase";
 
 export const initialState = {
   curPlaylistId: -1, // the playlist id to save songs to
@@ -35,18 +35,6 @@ export const initialState = {
   queue: [],
   queueType: '',
 };
-
-export function loadSongData(list) {
-  return shuffle(list.map(t => ({
-    id: t.id.toString(),
-    url: t.file,
-    title: t.name ? t.name : '',
-    artist: t.artist ? t.artist : '',
-    album: t.album_name ? t.album_name : '',
-    artwork: t.art_url ? t.art_url : '',
-    mood_id: t.mood_id ? t.mood_id : '',
-  })), 'artist');
-}
 
 export function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -73,7 +61,7 @@ export function reducer(state = initialState, action = {}) {
       };
     case LOAD_SONGS_SUCCESS:
       let songs = null;
-      songs = loadSongData(action.payload.data);
+      songs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
       return {
         ...state,
         loading: false,
@@ -115,7 +103,7 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
     case LOAD_SHARED_SONG_QUEUE_SUCCESS:
-      const songs1 = loadSongData(action.payload.data);
+      const songs1 = shuffle(mapSongsToValidTrackObjects(action.payload.data));
       // add the sharedTrack to front of array
       songs1.unshift(state.sharedTrack);
       return {
@@ -134,7 +122,7 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
 
-    // TODO: make reducer cases for playlist song here
+      // TODO: make reducer cases for playlist song here
 
     case PLAY_SHUFFLED_PLAYLIST:
       return {

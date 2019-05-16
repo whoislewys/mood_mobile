@@ -11,7 +11,7 @@ import {
   LOAD_SAVED_SONGS_SUCCESS,
   LOAD_SAVED_SONGS_FAIL,
 } from '../constants';
-import { mapSongsToValidTrackObjects } from './leaderboard';
+import { mapSongsToValidTrackObjects } from '../util';
 
 export const initialState = {
   songIdsToDelete: new Set(), // keeps tracks of songs the user wants to remove from the cur playlist
@@ -132,10 +132,11 @@ export function loadSavedSongs() {
   };
 }
 
-export function deleteSongs() {
-  // should only be called when navigating away from saved song screen
-  return async (dispatch, getState) => {
-    // get the user id off state, get the songIdsToDelete(), make the api call to actually delete from users savedSongs
-    dispatch({ type: DELETE_SAVED_SONGS });
-  };
-}
+// export function deleteSongs() {
+//   // should only be called when navigating away from saved song screen
+//   return async (dispatch, getState) => {
+//     // get the user id off state, get the songIdsToDelete(), make the api call to actually delete from users savedSongs
+//     axios.patch('')
+//     dispatch({ type: DELETE_SAVED_SONGS });
+//   };
+// }

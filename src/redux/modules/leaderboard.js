@@ -4,25 +4,13 @@ import {
   LEADERBOARD_LOAD_SONGS_SUCCESS as LOAD_SONGS_SUCCESS,
   LEADERBOARD_LOAD_SONGS_FAIL as LOAD_SONGS_FAIL,
 } from '../constants';
+import { mapSongsToValidTrackObjects } from '../util';
 
 export const initialState = {
   songs: [],
   loading: false,
   error: null,
 };
-
-export function mapSongsToValidTrackObjects(list) {
-  return list.map(t => ({
-    album: t.album_name,
-    artist: t.artist,
-    artwork: t.art_url,
-    id: t.id.toString(),
-    mood_id: t.mood_id,
-    title: t.name,
-    url: t.file,
-    stars: t.stars,
-  }));
-}
 
 // now define reducer
 export function reducer(state = initialState, action = {}) {

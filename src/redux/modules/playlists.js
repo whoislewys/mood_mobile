@@ -14,7 +14,11 @@ import {
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
   UPDATE_NEW_PLAYLIST_NAME,
+  PLAYLIST_LOAD_SONGS,
+  PLAYLIST_LOAD_SONGS_SUCCESS,
+  PLAYLIST_LOAD_SONGS_FAIL,
 } from '../constants';
+import { mapSongsToValidTrackObjects } from '../util';
 
 const initialState = {
   playlists: [],
@@ -44,10 +48,22 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_PLAYLISTS:
       return { ...state, loading: true };
     case LOAD_PLAYLISTS_SUCCESS:
-      const songs = action.payload.data;
-      return { ...state, loading: false, playlists: songs };
+      const playlists = action.payload.data;
+      return { ...state, loading: false, playlists };
     case LOAD_PLAYLISTS_FAIL:
       return { ...state, loading: false, error: 'Error while fetching playlist' };
+
+    case PLAYLIST_LOAD_SONGS:
+      return { ...state, loading: true };
+    case PLAYLIST_LOAD_SONGS_SUCCESS:
+      const songs = mapSongsToValidTrackObjects(action.payload.data);
+      return { ...state, loading: false, songs };
+    case PLAYLIST_LOAD_SONGS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching leaderboard.',
+      };
 
     case PLAYLIST_SCROLL_IS_NEGATIVE:
       return { ...state, playlistScrollIsNegative: true };
@@ -98,14 +114,12 @@ export function createPlaylist() {
         : getState().playlists.newPlaylistName;
       console.warn('creating playlist: ', playlistNameToSubmit);
       const token = await firebase.auth().currentUser.getIdToken();
-      const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
+      const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
         {
-          params: {
-            t: 'EXVbAWTqbGFl7BKuqUQv',
-            name: playlistNameToSubmit,
-            description: 'shit',
-            song_ids: [111],
-          },
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+          name: playlistNameToSubmit,
+          description: '',
+          song_ids: [111],
         },
         { headers: { Authorization: token } });
       console.log('new playlist:', newPlaylist);
@@ -126,16 +140,36 @@ export function loadPlaylists() {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
-      const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
+      const playlists = await axios.get('http://localhost:3000/api/v1/playlists',
         {
           headers: { Authorization: token },
-          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          t: 'EXVbAWTqbGFl7BKuqUQv',
         });
       console.warn('playlists: ', playlists);
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
     } catch (e) {
       console.warn(e);
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
+    }
+  };
+}
+
+export function loadPlaylistSongs(id) {
+  return async (dispatch) => {
+    dispatch({ type: PLAYLIST_LOAD_SONGS });
+    try {
+      // let songs = await axios.get('https://api.moodindustries.com/api/v1/stats/leaderboard',
+      let songs = await axios.get(`http://localhost:3000/api/v1/playlists/${id}`,
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          responseType: 'json',
+        });
+      dispatch({
+        type: PLAYLIST_LOAD_SONGS_SUCCESS,
+        payload: songs,
+      });
+    } catch (e) {
+      dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL });
     }
   };
 }
