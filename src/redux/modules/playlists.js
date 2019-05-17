@@ -1,6 +1,7 @@
 import axios from 'axios';
 import firebase from 'react-native-firebase';
 import {
+  ADD_TO_NEW_PLAYLIST_SONGS,
   ADD_SONG_TO_DELETED,
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
@@ -19,13 +20,14 @@ import {
   SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
+  SET_SAVED_SONG_PLAYLIST_ID,
   UPDATE_NEW_PLAYLIST_NAME,
   UPDATE_PLAYLIST,
   UPDATE_PLAYLIST_SUCCESS,
   UPDATE_PLAYLIST_FAIL,
   PLAYLIST_LOAD_SONGS,
   PLAYLIST_LOAD_SONGS_SUCCESS,
-  PLAYLIST_LOAD_SONGS_FAIL,
+  PLAYLIST_LOAD_SONGS_FAIL, RESET_SAVED_SONGS_SET,
 } from '../constants';
 import { mapSongsToValidTrackObjects } from '../util';
 
@@ -38,14 +40,16 @@ export const initialState = {
   playlists: [],
   playlistScrollIsNegative: false,
   savedSongsPlaylistId: -1,
-  songIdsToDelete: new Set(), // keeps tracks of songs the user wants to remove from the cur playlist
+  newPlaylistSongs: new Set(), // keeps track of songs to add to a new playlist
+  songIdsToAdd: new Set(),
+  songIdsToDelete: new Set(), // keeps track of songs the user wants to remove from the cur playlist
   songs: [],
 };
 
 export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // Client
-    // new playlist modal
+
     case ADD_SONG_TO_DELETED:
       // get all the songs from the previous songIdsToDelete set
       const newSongIdsToDelete = new Set();
@@ -69,6 +73,10 @@ export function reducer(state = initialState, action = {}) {
       songIdsToDeleteAfterResaving.delete(action.songIdToResave);
       return { ...state, songIdsToDelete: songIdsToDeleteAfterResaving };
 
+    case SET_SAVED_SONG_PLAYLIST_ID:
+      return { ...state, savedSongsPlaylistId: action.savedSongsPlaylistId };
+
+    // new playlist modal
     case OPEN_MODAL:
       return { ...state, isCreatePlaylistModalOpen: true };
     case CLOSE_MODAL:
@@ -76,12 +84,22 @@ export function reducer(state = initialState, action = {}) {
     case UPDATE_NEW_PLAYLIST_NAME:
       return { ...state, newPlaylistName: action.newPlaylistName };
 
+    case ADD_TO_NEW_PLAYLIST_SONGS:
+      const newestPlaylistSongs = new Set();
+      if (state.newPlaylistSongs === undefined) {
+        newestPlaylistSongs.add(action.songIdToSave);
+      } else {
+        state.newPlaylistSongs.forEach(song => newestPlaylistSongs.add(song));
+        newestPlaylistSongs.add(action.songIdToSave);
+      }
+      return { ...state, newPlaylistSongs: newestPlaylistSongs };
+    case RESET_SAVED_SONGS_SET:
+      return { ...state, newPlaylistSongs: new Set() };
 
     case PLAYLIST_SCROLL_IS_NEGATIVE:
       return { ...state, playlistScrollIsNegative: true };
     case PLAYLIST_SCROLL_IS_NOT_NEGATIVE:
       return { ...state, playlistScrollIsNegative: false };
-
     case SET_PLAYLIST_MODAL_FULL_SCREEN:
       return { ...state, isPlaylistModalFullScreen: true };
     case SET_PLAYLIST_MODAL_HALF_SCREEN:
@@ -133,6 +151,13 @@ export function closeModal() {
   };
 }
 
+export function addToNewPlaylistSongs(newPlaylistSong) {
+  return {
+    type: ADD_TO_NEW_PLAYLIST_SONGS,
+    songIdToSave: newPlaylistSong.id,
+  };
+}
+
 export function addSongToDeleted(savedSongToDelete) {
   // for when people 'uncheck' a saved song
   return {
@@ -156,16 +181,6 @@ export function setCurrentPlaylist(curPlaylist) {
 }
 
 // Service
-export function getSavedSongPlaylist() {
-  // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
-
-  // check for playlists
-  // if (getState()) {
-  }
-  // if they're not there, load them
-  // if they're there, filter for the id
-  // if they're there, but the filter didn't find a playlist, create the playlist
-}
 
 export function updateNewPlaylistName(newPlaylistName) {
   return {
@@ -193,7 +208,7 @@ export function createPlaylist() {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           name: playlistNameToSubmit,
           description: '',
-          song_ids: [111],
+          song_ids: Array.from(getState().playlists.newPlaylistSongs),
         },
         { headers: { Authorization: token } });
       console.log('new playlist:', newPlaylist);
@@ -270,12 +285,44 @@ export function updatePlaylist(id) {
   };
 }
 
+export function resetNewPlaylistSongs() {
+  return ({ type: RESET_SAVED_SONGS_SET });
+}
+
+export function getSavedSongPlaylist() {
+  // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
+  return async (dispatch, getState) => {
+    // check for playlists
+    const playlists = getState().playlists.songs;
+    if (playlists.length) {
+      // if they're not there, load them
+      dispatch(loadPlaylists());
+    } else {
+      const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs');
+      if (savedSongsPlaylistId !== -1) {
+        // if we couldn't find the 'Saved Songs' playlist, create it
+        dispatch({
+          type: SET_SAVED_SONG_PLAYLIST_ID,
+          savedSongsPlaylistId,
+        });
+      } else {
+        // createPlaylist gets new playlist data from the store,
+        // so let's get the store in a place where there's no songs to add to the new playlist
+        // and let's name the new playlist 'Saved Songs' before creation
+        dispatch(resetNewPlaylistSongs());
+        dispatch(updateNewPlaylistName('Saved Songs'));
+        dispatch(createPlaylist());
+      }
+    }
+  };
+}
+
 export function saveSong(song) {
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
     dispatch({ type: SAVE_RANKED_SONG });
 
-    const savedSongsPlaylistId = getState().savingSongs.savedSongsPlaylistId;
+    const { savedSongsPlaylistId } = getState().savingSongs;
     if (savedSongsPlaylistId === -1) {
       // -1 means the saved song playlist has not been found yet. fix that
       dispatch(getSavedSongPlaylist); // todo: implement this func

@@ -67,6 +67,7 @@ class SongRow extends Component {
   }
 
   _unsaveSong = () => {
+    // toDO: instead of this.setState, do a contains() on the store set to get the right image
     this.setState({ songIsSaved: false },
       () => this.props.addSongToDeleted(this.props.savedSong));
   };
@@ -94,6 +95,7 @@ class SongRow extends Component {
       index,
       savedSong: { artist, artwork, title },
       _handleSongRowPress,
+      openPlaylistModal,
     } = this.props;
 
     return (
@@ -120,7 +122,7 @@ class SongRow extends Component {
         </View>
         <View style={styles.buttonsContainer}>
           { this._getSavedSongButton() }
-          <TouchableOpacity onPress={this.props.openPlaylistModal}>
+          <TouchableOpacity onPress={openPlaylistModal}>
             <Image source={Images.playlistButton} style={styles.playlistButton} />
           </TouchableOpacity>
         </View>
