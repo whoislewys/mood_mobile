@@ -305,12 +305,64 @@ export function resetNewPlaylistSongs() {
   return ({ type: RESET_SAVED_SONGS_SET });
 }
 
+
+export function getSavedSongPlaylist() {
+  // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
+  return async (dispatch, getState) => {
+    // check for playlists
+    const playlists = getState().playlists.songs;
+    if (!playlists.length) {
+      // if they're not there, load them
+      console.warn('no playlists');
+      dispatch(loadPlaylists());
+    }
+
+    // now playlists should be loaded
+    const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs');
+    console.warn('found: ', savedSongsPlaylistId);
+    if (savedSongsPlaylistId !== undefined) {
+      // 'Saved Songs' playlist found, save the id and the songs
+      dispatch({
+        type: SET_SAVED_SONG_PLAYLIST_ID,
+        savedSongsPlaylistId,
+      });
+      // dispatch({
+      //   type: LOAD_PLAYLISTS_SUCCESS,
+      //   savedSongsPlaylistId,
+      // });
+    } else {
+      // if we couldn't find the 'Saved Songs' playlist, create it
+      // createPlaylist gets new playlist data from the store,
+      // so let's get the store in a place where there's no songs to add to the new playlist
+      // and let's name the new playlist 'Saved Songs' before creation
+      const token = await firebase.auth().currentUser.getIdToken();
+      const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
+        {
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+          name: 'Saved Songs',
+          description: '',
+          song_ids: null,
+        },
+        { headers: { Authorization: token } });
+      console.log('new playlist:', newPlaylist);
+      const newPlaylistId = newPlaylist.data.id;
+      dispatch({
+        type: SET_SAVED_SONG_PLAYLIST_ID,
+        newPlaylistId,
+      });
+    }
+  };
+}
+
 export function loadSavedSongs() {
   return async (dispatch, getState) => {
     dispatch({
       type: LOAD_SAVED_SONGS,
     });
     try {
+      if (getState().playlists.savedSongsPlaylistId === -1) {
+        dispatch(getSavedSongPlaylist());
+      }
       const token = await firebase.auth().currentUser.getIdToken();
       const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${getState().playlists.savedSongsPlaylistId}`,
         {
@@ -330,50 +382,13 @@ export function loadSavedSongs() {
   };
 }
 
-export function getSavedSongPlaylist() {
-  // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
-  return async (dispatch, getState) => {
-    // check for playlists
-    const playlists = getState().playlists.songs;
-    if (playlists.length) {
-      // if they're not there, load them
-      dispatch(loadPlaylists());
-    }
-
-    // now playlists should be loaded
-    const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs');
-    if (savedSongsPlaylistId !== -1) {
-      // 'Saved Songs' playlist found, save the id and the songs
-      dispatch({
-        type: SET_SAVED_SONG_PLAYLIST_ID,
-        savedSongsPlaylistId,
-      });
-      // dispatch({
-      //   type: LOAD_PLAYLISTS_SUCCESS,
-      //   savedSongsPlaylistId,
-      // });
-    } else {
-      // if we couldn't find the 'Saved Songs' playlist, create it
-      // createPlaylist gets new playlist data from the store,
-      // so let's get the store in a place where there's no songs to add to the new playlist
-      // and let's name the new playlist 'Saved Songs' before creation
-      dispatch(resetNewPlaylistSongs());
-      dispatch(updateNewPlaylistName('Saved Songs'));
-      dispatch(createPlaylist());
-      dispatch({
-        type: SET_SAVED_SONG_PLAYLIST_ID,
-        savedSongsPlaylistId,
-      });
-    }
-  };
-}
-
 export function saveSong(song) {
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
     dispatch({ type: SAVE_RANKED_SONG });
 
     const { savedSongsPlaylistId } = getState().savingSongs;
+    console.warn('saved songs playlisid: ', savedSongsPlaylistId);
     if (savedSongsPlaylistId === -1) {
       // -1 means the saved song playlist has not been found yet. fix that
       dispatch(getSavedSongPlaylist);

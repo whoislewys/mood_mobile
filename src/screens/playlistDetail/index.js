@@ -44,7 +44,7 @@ class PlaylistDetail extends Component {
   }
 
   componentWillBlur = () => {
-    // TODO: call update() with the songs
+    // TODO: call update() with the changed songs
   }
 
   _navigateToLeaderboardScreen = (params = {}) => {
