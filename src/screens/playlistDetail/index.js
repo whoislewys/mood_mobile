@@ -108,10 +108,10 @@ class PlaylistDetail extends Component {
   );
 
   getPlaylistSongs = () => (
-    this.props.queue.length
+    this.props.playlistSongs.length
       ? (
         <FlatList
-          data={this.props.queue}
+          data={this.props.playlistSongs}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={this._shuffleButton()}
@@ -133,9 +133,10 @@ class PlaylistDetail extends Component {
 }
 
 const mapStateToProps = state => ({
-  queue: state.queue.queue,
+  playlistSongs: state.playlists.songs,
   curPlaylistId: state.queue.curPlaylistId,
   curPlaylistTitle: state.queue.curPlaylistTitle,
+
 });
 
 const mapDispatchToProps = {

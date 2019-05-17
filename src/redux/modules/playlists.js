@@ -121,7 +121,7 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_PLAYLISTS:
       return { ...state, loading: true };
     case LOAD_PLAYLISTS_SUCCESS:
-      const playlists = action.payload.data;
+      const playlists = action.payload;
       return { ...state, loading: false, playlists };
     case LOAD_PLAYLISTS_FAIL:
       return { ...state, loading: false, error: 'Error while fetching playlist' };
@@ -250,8 +250,9 @@ export function loadPlaylists() {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
-      console.warn('playlists: ', playlists);
-      dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
+      console.warn('playlists res: ', playlists);
+      const playlists_no_saved_song = playlists.data.filter(p => p.name !== 'Saved Songs');
+      dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists_no_saved_song });
     } catch (e) {
       console.warn(e);
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
@@ -347,6 +348,10 @@ export function getSavedSongPlaylist() {
         type: SET_SAVED_SONG_PLAYLIST_ID,
         savedSongsPlaylistId,
       });
+      // dispatch({
+      //   type: LOAD_PLAYLISTS_SUCCESS,
+      //   savedSongsPlaylistId,
+      // });
     } else {
       // if we couldn't find the 'Saved Songs' playlist, create it
       // createPlaylist gets new playlist data from the store,
@@ -371,7 +376,7 @@ export function saveSong(song) {
     const { savedSongsPlaylistId } = getState().savingSongs;
     if (savedSongsPlaylistId === -1) {
       // -1 means the saved song playlist has not been found yet. fix that
-      dispatch(getSavedSongPlaylist); // todo: implement this func
+      dispatch(getSavedSongPlaylist);
     }
     const songToSaveId = [song.id];
     try {
