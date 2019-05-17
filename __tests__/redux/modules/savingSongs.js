@@ -4,10 +4,10 @@ import thunk from 'redux-thunk';
 import {
   reducer,
   initialState as savingSongsInitialState,
-  loadSavedSongs,
   saveSong,
-  addSongToDeleted, removeSongFromDeleted,
-} from '../../../src/redux/modules/savingSongs';
+  addSongToDeleted,
+  removeSongFromDeleted,
+} from '../../../src/redux/modules/playlists';
 import { initialState as queueInitialState } from '../../../src/redux/modules/queue';
 import { initialState as authInitialState } from '../../../src/redux/modules/auth';
 import {

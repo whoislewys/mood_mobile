@@ -1,6 +1,5 @@
 import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
-import firebase from 'react-native-firebase';
 import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
 import { logEvent } from './analytics';
@@ -19,12 +18,9 @@ import {
   PLAYBACK_STATE,
   PLAYBACK_TRACK,
   RESET_QUEUE,
-  SET_CUR_PLAYLIST_ID,
 } from '../constants';
 
 export const initialState = {
-  curPlaylistId: -1, // the playlist id to save songs to
-  curPlaylistTitle: '',
   curTrack: null,
   curTrackIndex: NaN,
   errors: null,
@@ -145,13 +141,6 @@ export function reducer(state = initialState, action = {}) {
         track: action.track,
         curTrack: action.newCurTrack,
         curTrackIndex: action.newCurTrackIndex,
-      };
-
-    case SET_CUR_PLAYLIST_ID:
-      return {
-        ...state,
-        curPlaylistId: action.curPlaylistId,
-        curPlaylistTitle: action.curPlaylistTitle,
       };
 
     default:
@@ -275,41 +264,6 @@ export function loadSharedSongQueue(sharedTrack) {
       dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
-    }
-  };
-}
-
-// Playlist action creators
-export function setCurrentPlaylist(curPlaylist) {
-  return {
-    type: SET_CUR_PLAYLIST_ID,
-    curPlaylistId: curPlaylist.id,
-    curPlaylistTitle: curPlaylist.title,
-  };
-}
-
-export function loadSongsForPlaylistId(playlistId) {
-  return async (dispatch) => {
-    await TrackPlayer.reset();
-    // TODO: dispatch playlist actions instead
-    dispatch({ type: LOAD_SONGS });
-    try {
-      const token = await firebase.auth().currentUser.getIdToken(true);
-      // const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
-      const songs = await axios.get('http://localhost:3000/api/v1/playlists',
-        {
-          headers: { Authorization: token },
-          params: {
-            t: 'EXVbAWTqbGFl7BKuqUQv',
-            id: playlistId,
-          },
-        });
-      // TODO: dispatch playlist actions instead
-      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
-      // dispatch(startScoreTimer());
-    } catch (e) {
-      // TODO: dispatch playlist actions instead
-      dispatch({ type: LOAD_SONGS_FAIL });
     }
   };
 }

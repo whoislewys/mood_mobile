@@ -7,12 +7,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
-import { loadLeaderboardSongQueue, setCurrentPlaylist } from '../../redux/modules/queue';
+import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import {
   closeModal,
   createPlaylist,
   loadSongsForPlaylistId,
   openModal,
+  setCurrentPlaylist,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
   updateNewPlaylistName,

@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import Images from '@assets/images';
 import { loadLeaderboardSongQueue, shufflePlay } from '../../redux/modules/queue';
-import { addSongToDeleted, removeSongFromDeleted, deleteSongs } from '../../redux/modules/savingSongs';
+import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
 import { spacing } from '../../assets/styles';
@@ -44,7 +44,7 @@ class PlaylistDetail extends Component {
   }
 
   componentWillBlur = () => {
-    this.props.deleteSongs();
+    // TODO: call update() with the songs
   }
 
   _navigateToLeaderboardScreen = (params = {}) => {
@@ -140,7 +140,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addSongToDeleted,
-  deleteSongs,
   loadLeaderboardSongQueue,
   removeSongFromDeleted,
   sendScoreDelta,

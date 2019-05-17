@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { logEvent } from './analytics';
-import { saveSong } from './savingSongs';
+import { saveSong } from './playlists';
 import {
   anal,
   INCREMENT_SCORE,

@@ -45,9 +45,17 @@ export const UPDATE_PLAYLIST_SUCCESS = 'playlists/UPDATE_SUCCESS';
 export const UPDATE_PLAYLIST_FAIL = 'playlists/UPDATE_FAIL';
 //D
 
-// Other shit
+// Client
+// checkmark screen stuff
+export const DELETE_SAVED_SONGS = 'savingSongs/DELETE';
+export const ADD_SONG_TO_DELETED = 'savingSongs/ADD_SONG_TO_DELETED';
+export const REMOVE_SONG_FROM_DELETED = 'savingSongs/REMOVE_SONG_FROM_DELETED';
+
 export const PLAYLIST_SCROLL_IS_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NEGATIVE';
 export const PLAYLIST_SCROLL_IS_NOT_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NOT_NEGATIVE';
+export const SAVE_RANKED_SONG = 'savingSongs/SAVE_SONG';
+export const SAVE_RANKED_SONG_SUCCESS = 'savingSongs/SAVE_SONG_SUCCESS';
+export const SAVE_RANKED_SONG_FAIL = 'savingSongs/SAVE_SONG_FAIL';
 export const SET_PLAYLIST_MODAL_FULL_SCREEN = 'playlists/SET_PLAYLIST_MODAL_FULL_SCREEN';
 export const SET_PLAYLIST_MODAL_HALF_SCREEN = 'playlists/SET_PLAYLIST_MODAL_HALF_SCREEN';
 export const OPEN_MODAL = 'playlists/OPEN_MODAL';
@@ -71,15 +79,6 @@ export const MOOD_TYPE = 'mood';
 export const LEADERBOARD_TYPE = 'leaderboard';
 
 // Saving
-export const DELETE_SAVED_SONGS = 'savingSongs/DELETE';
-export const LOAD_SAVED_SONGS = 'savingSongs/LOAD';
-export const LOAD_SAVED_SONGS_SUCCESS = 'savingSongs/LOAD_SUCCESS';
-export const LOAD_SAVED_SONGS_FAIL = 'savingSongs/LOAD_FAIL';
-export const SAVE_SONG = 'savingSongs/SAVE_SONG';
-export const SAVE_SONG_SUCCESS = 'savingSongs/SAVE_SONG_SUCCESS';
-export const SAVE_SONG_FAIL = 'savingSongs/SAVE_SONG_FAIL';
-export const ADD_SONG_TO_DELETED = 'savingSongs/ADD_SONG_TO_DELETED';
-export const REMOVE_SONG_FROM_DELETED = 'savingSongs/REMOVE_SONG_FROM_DELETED';
 
 // Score
 export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';

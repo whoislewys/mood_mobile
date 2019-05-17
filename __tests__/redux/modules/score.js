@@ -3,8 +3,7 @@ import thunk from 'redux-thunk';
 import { reducer, initialState as scoreInitialState, incrementScore } from '../../../src/redux/modules/score';
 import { initialState as queueInitialState } from '../../../src/redux/modules/queue';
 import { INCREMENT_SCORE } from '../../../src/redux/constants';
-// import * as savingSongs from '../../../src/redux/modules/savingSongs';
-import * as savingSongs from '../../../src/redux/modules/savingSongs';
+import * as savingSongs from '../../../src/redux/modules/playlists';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);

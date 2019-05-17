@@ -1,6 +1,7 @@
 import axios from 'axios';
 import firebase from 'react-native-firebase';
 import {
+  ADD_SONG_TO_DELETED,
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
   CREATE_PLAYLIST_FAIL,
@@ -11,6 +12,11 @@ import {
   CLOSE_MODAL,
   PLAYLIST_SCROLL_IS_NEGATIVE,
   PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
+  REMOVE_SONG_FROM_DELETED,
+  SAVE_RANKED_SONG,
+  SAVE_RANKED_SONG_SUCCESS,
+  SAVE_RANKED_SONG_FAIL,
+  SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
   UPDATE_NEW_PLAYLIST_NAME,
@@ -23,17 +29,46 @@ import {
 } from '../constants';
 import { mapSongsToValidTrackObjects } from '../util';
 
-const initialState = {
-  playlists: [],
-  isCreatePlaylistModalOpen: false,
-  newPlaylistName: '',
-  loading: false,
+export const initialState = {
+  curPlaylistTitle: '',
   error: {},
+  isCreatePlaylistModalOpen: false,
+  loading: false,
+  newPlaylistName: '',
+  playlists: [],
   playlistScrollIsNegative: false,
+  savedSongsPlaylistId: -1,
+  songIdsToDelete: new Set(), // keeps tracks of songs the user wants to remove from the cur playlist
+  songs: [],
 };
 
 export function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    // Client
+    // new playlist modal
+    case ADD_SONG_TO_DELETED:
+      // get all the songs from the previous songIdsToDelete set
+      const newSongIdsToDelete = new Set();
+      if (state.songIdsToDelete === undefined) {
+        newSongIdsToDelete.add(action.songIdToDelete);
+      } else {
+        state.songIdsToDelete.forEach(song => newSongIdsToDelete.add(song));
+        newSongIdsToDelete.add(action.songIdToDelete);
+      }
+      return { ...state, songIdsToDelete: newSongIdsToDelete };
+
+    case REMOVE_SONG_FROM_DELETED:
+      if (state.songIdsToDelete === undefined) {
+        // if somehow you can resave songs but your deleted set is empty, just return the previous state
+        return { ...state };
+      }
+      // copy all the songs from the previous songIdsToDelete set into a new set
+      const songIdsToDeleteAfterResaving = new Set();
+      state.songIdsToDelete.forEach(song => songIdsToDeleteAfterResaving.add(song));
+      // remove the songs to resave from the deleted set
+      songIdsToDeleteAfterResaving.delete(action.songIdToResave);
+      return { ...state, songIdsToDelete: songIdsToDeleteAfterResaving };
+
     case OPEN_MODAL:
       return { ...state, isCreatePlaylistModalOpen: true };
     case CLOSE_MODAL:
@@ -41,6 +76,18 @@ export function reducer(state = initialState, action = {}) {
     case UPDATE_NEW_PLAYLIST_NAME:
       return { ...state, newPlaylistName: action.newPlaylistName };
 
+
+    case PLAYLIST_SCROLL_IS_NEGATIVE:
+      return { ...state, playlistScrollIsNegative: true };
+    case PLAYLIST_SCROLL_IS_NOT_NEGATIVE:
+      return { ...state, playlistScrollIsNegative: false };
+
+    case SET_PLAYLIST_MODAL_FULL_SCREEN:
+      return { ...state, isPlaylistModalFullScreen: true };
+    case SET_PLAYLIST_MODAL_HALF_SCREEN:
+      return { ...state, isPlaylistModalFullScreen: false };
+
+    // Service
     case CREATE_PLAYLIST:
       return { ...state, loading: true };
     case CREATE_PLAYLIST_SUCCESS:
@@ -67,23 +114,13 @@ export function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while fetching leaderboard.',
       };
-
-    case PLAYLIST_SCROLL_IS_NEGATIVE:
-      return { ...state, playlistScrollIsNegative: true };
-    case PLAYLIST_SCROLL_IS_NOT_NEGATIVE:
-      return { ...state, playlistScrollIsNegative: false };
-
-    case SET_PLAYLIST_MODAL_FULL_SCREEN:
-      return { ...state, isPlaylistModalFullScreen: true };
-    case SET_PLAYLIST_MODAL_HALF_SCREEN:
-      return { ...state, isPlaylistModalFullScreen: false };
-
     default:
       return state;
   }
 }
 
 /* Action Creators */
+// Client side
 export function openModal() {
   return {
     type: OPEN_MODAL,
@@ -94,6 +131,40 @@ export function closeModal() {
   return {
     type: CLOSE_MODAL,
   };
+}
+
+export function addSongToDeleted(savedSongToDelete) {
+  // for when people 'uncheck' a saved song
+  return {
+    type: ADD_SONG_TO_DELETED,
+    songIdToDelete: savedSongToDelete.id,
+  };
+}
+
+export function removeSongFromDeleted(songToResave) {
+  return {
+    type: REMOVE_SONG_FROM_DELETED,
+    songIdToResave: songToResave.id,
+  };
+}
+
+export function setCurrentPlaylist(curPlaylist) {
+  return {
+    type: SET_CUR_PLAYLIST_ID,
+    curPlaylistTitle: curPlaylist.title,
+  };
+}
+
+// Service
+export function getSavedSongPlaylist() {
+  // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
+
+  // check for playlists
+  // if (getState()) {
+  }
+  // if they're not there, load them
+  // if they're there, filter for the id
+  // if they're there, but the filter didn't find a playlist, create the playlist
 }
 
 export function updateNewPlaylistName(newPlaylistName) {
@@ -190,11 +261,38 @@ export function updatePlaylist(id) {
         },
         { headers: { Authorization: token } });
       dispatch({
-        type: PLAYLIST_LOAD_SONGS_SUCCESS,
+        type: UPDATE_PLAYLIST_SUCCESS,
         payload: songs,
       });
     } catch (e) {
-      dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL });
+      dispatch({ type: UPDATE_PLAYLIST_FAIL });
+    }
+  };
+}
+
+export function saveSong(song) {
+  // should save song to saved songs playlist
+  return async (dispatch, getState) => {
+    dispatch({ type: SAVE_RANKED_SONG });
+
+    const savedSongsPlaylistId = getState().savingSongs.savedSongsPlaylistId;
+    if (savedSongsPlaylistId === -1) {
+      // -1 means the saved song playlist has not been found yet. fix that
+      dispatch(getSavedSongPlaylist); // todo: implement this func
+    }
+    const songToSaveId = song.id;
+    try {
+      await axios.post('http://api.moodindustries.com/api/v1/songs/save',
+        {
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+          savedSongsPlaylistId,
+          songToSaveId,
+        });
+      dispatch({ type: SAVE_RANKED_SONG_SUCCESS });
+    } catch (e) {
+      dispatch({
+        type: SAVE_RANKED_SONG_FAIL,
+      });
     }
   };
 }
