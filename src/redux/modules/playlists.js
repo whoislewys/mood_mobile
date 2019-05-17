@@ -121,7 +121,7 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_PLAYLISTS:
       return { ...state, loading: true };
     case LOAD_PLAYLISTS_SUCCESS:
-      const playlists = action.payload;
+      const playlists = action.payload.data;
       return { ...state, loading: false, playlists };
     case LOAD_PLAYLISTS_FAIL:
       return { ...state, loading: false, error: 'Error while fetching playlist' };
@@ -250,9 +250,8 @@ export function loadPlaylists() {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
-      console.warn('playlists res: ', playlists);
-      const playlists_no_saved_song = playlists.data.filter(p => p.name !== 'Saved Songs');
-      dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists_no_saved_song });
+      dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
+      console.warn('playlists loaded: ', playlists);
     } catch (e) {
       console.warn(e);
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
@@ -310,18 +309,21 @@ export function getSavedSongPlaylist() {
   // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
   return async (dispatch, getState) => {
     // check for playlists
-    const playlists = getState().playlists.songs;
+    let playlists = getState().playlists.playlists;
     if (!playlists.length) {
       // if they're not there, load them
       console.warn('no playlists');
-      dispatch(loadPlaylists());
+      await dispatch(loadPlaylists());
     }
 
-    // now playlists should be loaded
-    const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs');
-    console.warn('found: ', savedSongsPlaylistId);
+    // now that playlists are loaded, look for saved song playlist
+    playlists = getState().playlists.playlists;
+    console.warn('playlists after loading: ', playlists);
+    const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs').id;
+    console.warn('found playlist id: ', savedSongsPlaylistId);
     if (savedSongsPlaylistId !== undefined) {
       // 'Saved Songs' playlist found, save the id and the songs
+      console.warn('setting savedsongid to: ', savedSongsPlaylistId);
       dispatch({
         type: SET_SAVED_SONG_PLAYLIST_ID,
         savedSongsPlaylistId,
@@ -335,17 +337,19 @@ export function getSavedSongPlaylist() {
       // createPlaylist gets new playlist data from the store,
       // so let's get the store in a place where there's no songs to add to the new playlist
       // and let's name the new playlist 'Saved Songs' before creation
+      console.warn('creating saved song playlist: ', savedSongsPlaylistId);
       const token = await firebase.auth().currentUser.getIdToken();
       const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           name: 'Saved Songs',
           description: '',
-          song_ids: null,
+          song_ids: [],
         },
         { headers: { Authorization: token } });
-      console.log('new playlist:', newPlaylist);
+      console.warn('saved songs playlist created:', newPlaylist);
       const newPlaylistId = newPlaylist.data.id;
+      console.warn('savedsong playlistid: ', newPlaylistId);
       dispatch({
         type: SET_SAVED_SONG_PLAYLIST_ID,
         newPlaylistId,
