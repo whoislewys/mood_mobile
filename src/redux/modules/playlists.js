@@ -297,22 +297,28 @@ export function getSavedSongPlaylist() {
     if (playlists.length) {
       // if they're not there, load them
       dispatch(loadPlaylists());
+    }
+
+    // now playlists should be loaded
+    const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs');
+    if (savedSongsPlaylistId !== -1) {
+      // 'Saved Songs' playlist found, save the id
+      dispatch({
+        type: SET_SAVED_SONG_PLAYLIST_ID,
+        savedSongsPlaylistId,
+      });
     } else {
-      const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs');
-      if (savedSongsPlaylistId !== -1) {
-        // if we couldn't find the 'Saved Songs' playlist, create it
-        dispatch({
-          type: SET_SAVED_SONG_PLAYLIST_ID,
-          savedSongsPlaylistId,
-        });
-      } else {
-        // createPlaylist gets new playlist data from the store,
-        // so let's get the store in a place where there's no songs to add to the new playlist
-        // and let's name the new playlist 'Saved Songs' before creation
-        dispatch(resetNewPlaylistSongs());
-        dispatch(updateNewPlaylistName('Saved Songs'));
-        dispatch(createPlaylist());
-      }
+      // if we couldn't find the 'Saved Songs' playlist, create it
+      // createPlaylist gets new playlist data from the store,
+      // so let's get the store in a place where there's no songs to add to the new playlist
+      // and let's name the new playlist 'Saved Songs' before creation
+      dispatch(resetNewPlaylistSongs());
+      dispatch(updateNewPlaylistName('Saved Songs'));
+      dispatch(createPlaylist());
+      dispatch({
+        type: SET_SAVED_SONG_PLAYLIST_ID,
+        savedSongsPlaylistId,
+      });
     }
   };
 }
