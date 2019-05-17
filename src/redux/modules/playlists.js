@@ -9,6 +9,9 @@ import {
   LOAD_PLAYLISTS,
   LOAD_PLAYLISTS_SUCCESS,
   LOAD_PLAYLISTS_FAIL,
+  LOAD_SAVED_SONGS,
+  LOAD_SAVED_SONGS_SUCCESS,
+  LOAD_SAVED_SONGS_FAIL,
   OPEN_MODAL,
   CLOSE_MODAL,
   PLAYLIST_SCROLL_IS_NEGATIVE,
@@ -27,7 +30,8 @@ import {
   UPDATE_PLAYLIST_FAIL,
   PLAYLIST_LOAD_SONGS,
   PLAYLIST_LOAD_SONGS_SUCCESS,
-  PLAYLIST_LOAD_SONGS_FAIL, RESET_SAVED_SONGS_SET,
+  PLAYLIST_LOAD_SONGS_FAIL,
+  RESET_SAVED_SONGS_SET,
 } from '../constants';
 import { mapSongsToValidTrackObjects } from '../util';
 
@@ -39,6 +43,7 @@ export const initialState = {
   newPlaylistName: '',
   playlists: [],
   playlistScrollIsNegative: false,
+  savedSongs: [],
   savedSongsPlaylistId: -1,
   newPlaylistSongs: new Set(), // keeps track of songs to add to a new playlist
   songIdsToAdd: new Set(),
@@ -120,6 +125,17 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, loading: false, playlists };
     case LOAD_PLAYLISTS_FAIL:
       return { ...state, loading: false, error: 'Error while fetching playlist' };
+
+    case LOAD_SAVED_SONGS:
+      return { ...state, loading: true };
+    case LOAD_SAVED_SONGS_SUCCESS:
+      return {
+        ...state,
+        savedSongs: mapSongsToValidTrackObjects(action.savedSongs),
+        loading: false,
+      };
+    case LOAD_SAVED_SONGS_FAIL:
+      return { ...state, loading: false, error: action.e };
 
     case PLAYLIST_LOAD_SONGS:
       return { ...state, loading: true };
@@ -252,7 +268,6 @@ export function loadSongsForPlaylistId(id) {
         {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
-          responseType: 'json',
         });
       dispatch({
         type: PLAYLIST_LOAD_SONGS_SUCCESS,
@@ -289,6 +304,31 @@ export function resetNewPlaylistSongs() {
   return ({ type: RESET_SAVED_SONGS_SET });
 }
 
+export function loadSavedSongs() {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: LOAD_SAVED_SONGS,
+    });
+    try {
+      const token = await firebase.auth().currentUser.getIdToken();
+      const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${getState().playlists.savedSongsPlaylistId}`,
+        {
+          headers: { Authorization: token },
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        });
+      dispatch({
+        type: LOAD_SAVED_SONGS_SUCCESS,
+        savedSongs,
+      });
+    } catch (e) {
+      dispatch({
+        type: LOAD_SAVED_SONGS_FAIL,
+        error: e,
+      });
+    }
+  };
+}
+
 export function getSavedSongPlaylist() {
   // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
   return async (dispatch, getState) => {
@@ -302,7 +342,7 @@ export function getSavedSongPlaylist() {
     // now playlists should be loaded
     const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs');
     if (savedSongsPlaylistId !== -1) {
-      // 'Saved Songs' playlist found, save the id
+      // 'Saved Songs' playlist found, save the id and the songs
       dispatch({
         type: SET_SAVED_SONG_PLAYLIST_ID,
         savedSongsPlaylistId,
@@ -333,9 +373,9 @@ export function saveSong(song) {
       // -1 means the saved song playlist has not been found yet. fix that
       dispatch(getSavedSongPlaylist); // todo: implement this func
     }
-    const songToSaveId = song.id;
+    const songToSaveId = [song.id];
     try {
-      await axios.post('http://api.moodindustries.com/api/v1/songs/save',
+      await axios.post(`http://localhost:3000/api/v1/playlists/${savedSongsPlaylistId}`,
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           savedSongsPlaylistId,

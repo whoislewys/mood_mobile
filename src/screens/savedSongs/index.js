@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
   TouchableOpacity,
   Image,
   ActivityIndicator,
@@ -13,13 +14,24 @@ import { loadLeaderboardSongQueue, shufflePlay } from '../../redux/modules/queue
 import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
-import { spacing } from '../../assets/styles';
+import { colors, fonts, spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingHorizontal: spacing.lg,
+  },
+  noSongsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noSongsText: {
+    textAlign: 'center',
+    fontFamily: fonts.primary,
+    fontSize: fonts.subHeader,
+    color: colors.gray,
   },
   shuffleButtonContainer: {
     flex: 1,
@@ -40,7 +52,8 @@ export class SavedSongs extends Component {
   }
 
   componentWillBlur = () => {
-    this.props.deleteSongs();
+    // this.props.deleteSongs();
+    // TODO: call playlists update() func with the savedsongplaylistid
   };
 
   _navigateToLeaderboardScreen = (params = {}) => {
@@ -94,9 +107,9 @@ export class SavedSongs extends Component {
     />
   );
 
-  getSavedSongs = () => (
-    this.props.savedSongs.length
-      ? (
+  getSavedSongs = () => {
+    if (this.props.savedSongs.length) {
+      return (
         <FlatList
           data={this.props.savedSongs}
           renderItem={this._renderItem}
@@ -105,20 +118,32 @@ export class SavedSongs extends Component {
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
-      )
-      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  );
+      );
+    }
+    if (this.props.loading) {
+      return (
+        <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+      );
+    }
+
+    return (
+      <View style={styles.noSongsContainer}>
+        <Text style={styles.noSongsText}>Rank some songs!</Text>
+      </View>
+    );
+  };
 
   render = () => (
     <View style={styles.container}>
       {this.getSavedSongs()}
     </View>
-  )
+  );
 }
 
 const mapStateToProps = state => ({
-  savedSongs: state.savingSongs.songs,
+  loading: state.playlists.loading,
   queue: state.queue.queue,
+  savedSongs: state.playlists.savedSongs,
 });
 
 const mapDispatchToProps = {

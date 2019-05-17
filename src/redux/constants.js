@@ -52,15 +52,19 @@ export const ADD_SONG_TO_DELETED = 'savingSongs/ADD_SONG_TO_DELETED';
 export const REMOVE_SONG_FROM_DELETED = 'savingSongs/REMOVE_SONG_FROM_DELETED';
 
 export const ADD_TO_NEW_PLAYLIST_SONGS = 'playlists/ADD_TO_NEW_PLAYLIST_SONGS';
-export const RESET_SAVED_SONGS_SET = 'playlists/RESET';
+export const LOAD_SAVED_SONGS = 'playlists/LOAD_SAVED_SONGS';
+export const LOAD_SAVED_SONGS_SUCCESS = 'playlists/LOAD_SAVED_SONGS_SUCCESS';
+export const LOAD_SAVED_SONGS_FAIL = 'playlists/LOAD_SAVED_SONGS_FAIL';
 export const PLAYLIST_SCROLL_IS_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NEGATIVE';
 export const PLAYLIST_SCROLL_IS_NOT_NEGATIVE = 'playlists/PLAYLIST_SCROLL_IS_NOT_NEGATIVE';
+export const RESET_SAVED_SONGS_SET = 'playlists/RESET';
 export const SAVE_RANKED_SONG = 'savingSongs/SAVE_SONG';
 export const SAVE_RANKED_SONG_SUCCESS = 'savingSongs/SAVE_SONG_SUCCESS';
 export const SAVE_RANKED_SONG_FAIL = 'savingSongs/SAVE_SONG_FAIL';
 export const SET_PLAYLIST_MODAL_FULL_SCREEN = 'playlists/SET_PLAYLIST_MODAL_FULL_SCREEN';
 export const SET_PLAYLIST_MODAL_HALF_SCREEN = 'playlists/SET_PLAYLIST_MODAL_HALF_SCREEN';
 export const SET_SAVED_SONG_PLAYLIST_ID = 'playlists/SET_SAVED_SONG_PLAYLIST_ID';
+
 export const OPEN_MODAL = 'playlists/OPEN_MODAL';
 export const CLOSE_MODAL = 'playlists/CLOSE_MODAL';
 export const UPDATE_NEW_PLAYLIST_NAME = 'playlists/UPDATE_NEW_PLAYLIST_NAME';
