@@ -65,9 +65,9 @@ class Playlists extends Component {
 
   _handlePlaylistRowPress = async (pressedPlaylist) => {
     this.props.setCurrentPlaylist(pressedPlaylist);
+    // TODO: make sure the state.playlists.songs are filled after this call
     this.props.loadSongsForPlaylistId(pressedPlaylist.id);
     this._navigateToPlaylistDetailScreen();
-    // TODO: NEED TO reset playlist id to -1 when navigating away from playlist detail screen
   };
 
   _onOpenCreatePlaylistModal = () => {

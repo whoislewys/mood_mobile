@@ -45,14 +45,14 @@ class PlaylistDetail extends Component {
 
   componentWillBlur = () => {
     // TODO: call update() with the changed songs
-  }
+  };
 
   _navigateToLeaderboardScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Leaderboard',
       params: { ...params, visible: true },
     });
-  }
+  };
 
   _navigateToPlayScreen = () => {
     this.props.navigation.navigate({

@@ -129,9 +129,10 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
     case LOAD_SAVED_SONGS_SUCCESS:
+      const savedSongs = mapSongsToValidTrackObjects(action.savedSongs.data.songs);
       return {
         ...state,
-        savedSongs: mapSongsToValidTrackObjects(action.savedSongs),
+        savedSongs,
         loading: false,
       };
     case LOAD_SAVED_SONGS_FAIL:
@@ -227,14 +228,12 @@ export function createPlaylist() {
           song_ids: Array.from(getState().playlists.newPlaylistSongs),
         },
         { headers: { Authorization: token } });
-      console.log('new playlist:', newPlaylist);
       const newPlaylistId = newPlaylist.data.id;
       // dispatch success action & refresh the list of playlists
       dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
     } catch (err) {
       // in case an error happened, close the modal
       dispatch(closeModal());
-      console.warn('err creating: ', err);
       dispatch({ type: CREATE_PLAYLIST_FAIL, err });
     }
   };
@@ -251,9 +250,7 @@ export function loadPlaylists() {
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
-      console.warn('playlists loaded: ', playlists);
     } catch (e) {
-      console.warn(e);
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
     }
   };
@@ -279,7 +276,7 @@ export function loadSongsForPlaylistId(id) {
   };
 }
 
-export function updatePlaylist(id) {
+export function updatePlaylist(id, song_ids) {
   return async (dispatch) => {
     dispatch({ type: UPDATE_PLAYLIST });
     try {
@@ -288,6 +285,7 @@ export function updatePlaylist(id) {
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           // can change name, description, & song_ids in here
+          song_ids,
         },
         { headers: { Authorization: token } });
       dispatch({
@@ -311,68 +309,66 @@ export function getSavedSongPlaylist() {
     // check for playlists
     let playlists = getState().playlists.playlists;
     if (!playlists.length) {
-      // if they're not there, load them
-      console.warn('no playlists');
+      // if playlists haven't been loaded, load them
       await dispatch(loadPlaylists());
     }
 
-    // now that playlists are loaded, look for saved song playlist
+    // // now that playlists are loaded, look for saved song playlist
     playlists = getState().playlists.playlists;
-    console.warn('playlists after loading: ', playlists);
-    const savedSongsPlaylistId = playlists.find(p => p.name === 'Saved Songs').id;
-    console.warn('found playlist id: ', savedSongsPlaylistId);
-    if (savedSongsPlaylistId !== undefined) {
+    const savedSongsPlaylist = playlists.find(p => p.name === 'Saved Songs');
+    if (savedSongsPlaylist !== undefined) {
+      const savedSongsPlaylistId = savedSongsPlaylist.id;
       // 'Saved Songs' playlist found, save the id and the songs
-      console.warn('setting savedsongid to: ', savedSongsPlaylistId);
       dispatch({
         type: SET_SAVED_SONG_PLAYLIST_ID,
         savedSongsPlaylistId,
       });
-      // dispatch({
-      //   type: LOAD_PLAYLISTS_SUCCESS,
-      //   savedSongsPlaylistId,
-      // });
     } else {
       // if we couldn't find the 'Saved Songs' playlist, create it
-      // createPlaylist gets new playlist data from the store,
-      // so let's get the store in a place where there's no songs to add to the new playlist
-      // and let's name the new playlist 'Saved Songs' before creation
-      console.warn('creating saved song playlist: ', savedSongsPlaylistId);
-      const token = await firebase.auth().currentUser.getIdToken();
-      const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
-        {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-          name: 'Saved Songs',
-          description: '',
-          song_ids: [],
-        },
-        { headers: { Authorization: token } });
-      console.warn('saved songs playlist created:', newPlaylist);
-      const newPlaylistId = newPlaylist.data.id;
-      console.warn('savedsong playlistid: ', newPlaylistId);
-      dispatch({
-        type: SET_SAVED_SONG_PLAYLIST_ID,
-        newPlaylistId,
-      });
+      try {
+        const token = await firebase.auth()
+          .currentUser
+          .getIdToken();
+        const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
+          {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+            name: 'Saved Songs',
+            description: '',
+            song_ids: [],
+          },
+          { headers: { Authorization: token } });
+        const newPlaylistId = newPlaylist.data.id;
+        console.warn('new saved song playlist:', newPlaylistId);
+        dispatch({
+          type: SET_SAVED_SONG_PLAYLIST_ID,
+          newPlaylistId,
+        });
+      } catch (e) {
+        console.warn(e);
+      }
     }
   };
 }
 
 export function loadSavedSongs() {
   return async (dispatch, getState) => {
+    console.warn('loading saved songs');
     dispatch({
       type: LOAD_SAVED_SONGS,
     });
     try {
       if (getState().playlists.savedSongsPlaylistId === -1) {
-        dispatch(getSavedSongPlaylist());
+        await dispatch(getSavedSongPlaylist());
       }
+      const savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
+      console.warn('loading savedsongs from id: ', savedSongsPlaylistId);
       const token = await firebase.auth().currentUser.getIdToken();
-      const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${getState().playlists.savedSongsPlaylistId}`,
+      const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${savedSongsPlaylistId}`,
         {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
+      console.warn('loaded saved songs: ', savedSongs);
       dispatch({
         type: LOAD_SAVED_SONGS_SUCCESS,
         savedSongs,
@@ -391,26 +387,17 @@ export function saveSong(song) {
   return async (dispatch, getState) => {
     dispatch({ type: SAVE_RANKED_SONG });
 
-    const { savedSongsPlaylistId } = getState().savingSongs;
-    console.warn('saved songs playlisid: ', savedSongsPlaylistId);
+    let savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
     if (savedSongsPlaylistId === -1) {
-      // -1 means the saved song playlist has not been found yet. fix that
-      dispatch(getSavedSongPlaylist);
+      // saved songs playlist has not been found yet. create it
+      await dispatch(getSavedSongPlaylist());
     }
-    const songToSaveId = [song.id];
-    try {
-      await axios.post(`http://localhost:3000/api/v1/playlists/${savedSongsPlaylistId}`,
-        {
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-          savedSongsPlaylistId,
-          songToSaveId,
-        });
-      dispatch({ type: SAVE_RANKED_SONG_SUCCESS });
-    } catch (e) {
-      dispatch({
-        type: SAVE_RANKED_SONG_FAIL,
-      });
-    }
+
+    savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
+    const savedSongs = getState().playlists.savedSongs;
+    const savedSongIds = savedSongs.map(s => s.id);
+    savedSongIds.push(song.id);
+    dispatch(updatePlaylist(savedSongsPlaylistId, savedSongIds));
   };
 }
 

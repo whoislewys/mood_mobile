@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   },
   noSongsContainer: {
     flex: 1,
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -142,7 +143,6 @@ export class SavedSongs extends Component {
 
 const mapStateToProps = state => ({
   loading: state.playlists.loading,
-  queue: state.queue.queue,
   savedSongs: state.playlists.savedSongs,
 });
 
