@@ -73,11 +73,8 @@ class MoodScreen extends Component {
         />
       );
     }
-
-    return (
-      <ActivityIndicator style={{ flex: 10 }} color='black' size='large' animating />
-    );
-  }
+    return null;
+  };
 
   render = () => (
     <View style={styles.container}>

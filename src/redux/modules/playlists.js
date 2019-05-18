@@ -351,6 +351,7 @@ export function getSavedSongPlaylist() {
 }
 
 export function loadSavedSongs() {
+  // loads the current user's saved songs playlist into the store
   return async (dispatch, getState) => {
     console.warn('loading saved songs');
     dispatch({
@@ -385,6 +386,10 @@ export function loadSavedSongs() {
 export function saveSong(song) {
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
+    if (getState().playlists.savedSongs) {
+      // if the user hasn't loaded their saved songs yet, load it for them
+      await dispatch(loadSavedSongs());
+    }
     dispatch({ type: SAVE_RANKED_SONG });
 
     let savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
