@@ -13,7 +13,6 @@ import {
   LOAD_SHARED_SONG_QUEUE,
   LOAD_SHARED_SONG_QUEUE_SUCCESS,
   LOAD_SHARED_SONG_QUEUE_FAIL,
-  LOAD_LEADERBOARD_SONG_QUEUE,
   MOOD_TYPE,
   PLAY_SHUFFLED_PLAYLIST,
   PLAYBACK_STATE,
@@ -73,18 +72,6 @@ export function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while loading songs.',
         queueType: '',
-      };
-
-    // Loading songs for a leaderboard
-    case LOAD_LEADERBOARD_SONG_QUEUE:
-      const { selectedLeaderboardSongIndex, leaderboardSongs } = action;
-      return {
-        ...state,
-        loading: false,
-        queue: leaderboardSongs,
-        curTrack: leaderboardSongs[selectedLeaderboardSongIndex],
-        curTrackIndex: selectedLeaderboardSongIndex,
-        queueType: LEADERBOARD_TYPE,
       };
 
     case LOAD_QUEUE_STARTING_AT_ID:
@@ -260,28 +247,6 @@ export function loadQueueStartingAtId(startSongIndex, songs) {
     dispatch(startScoreTimer());
   };
 }
-
-// Leaderboard queue action creators
-// export function loadLeaderboardSongQueue(selectedLeaderboardSongIndex) {
-//   return async (dispatch, getState) => {
-//     await TrackPlayer.reset();
-//     dispatch({ type: RESET_QUEUE });
-//
-//     const leaderboardSongs = getState().leaderboard.songs;
-//     dispatch({
-//       type: LOAD_LEADERBOARD_SONG_QUEUE,
-//       selectedLeaderboardSongIndex,
-//       leaderboardSongs,
-//     });
-//
-//     const selectedLeaderboardSong = leaderboardSongs[selectedLeaderboardSongIndex];
-//     // maybe move this into a helper function
-//     await TrackPlayer.add(leaderboardSongs);
-//     await TrackPlayer.skip(selectedLeaderboardSong.id);
-//     await TrackPlayer.play();
-//     dispatch(startScoreTimer());
-//   };
-// }
 
 // Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {
