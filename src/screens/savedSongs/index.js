@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
-import { loadLeaderboardSongQueue, shufflePlay } from '../../redux/modules/queue';
+import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
 import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
@@ -90,8 +90,8 @@ export class SavedSongs extends Component {
     </View>
   );
 
-  _handleSongRowPress = async (pressedLeaderboardSongIndex) => {
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
+  _handleSongRowPress = async (pressedSongIndex) => {
+    this.props.loadQueueStartingAtId(pressedSongIndex, this.props.savedSongs);
     this._navigateToPlayScreen();
   };
 
@@ -148,7 +148,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addSongToDeleted,
-  loadLeaderboardSongQueue,
+  loadQueueStartingAtId,
   removeSongFromDeleted,
   sendScoreDelta,
   shufflePlay,

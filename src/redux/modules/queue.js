@@ -6,6 +6,7 @@ import { logEvent } from './analytics';
 import {
   anal,
   LEADERBOARD_TYPE,
+  LOAD_QUEUE_STARTING_AT_ID,
   LOAD_SONGS,
   LOAD_SONGS_SUCCESS,
   LOAD_SONGS_FAIL,
@@ -56,13 +57,13 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
     case LOAD_SONGS_SUCCESS:
-      let songs = null;
-      songs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
+      let moodSongs = null;
+      moodSongs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
       return {
         ...state,
         loading: false,
-        queue: songs,
-        curTrack: songs[0],
+        queue: moodSongs,
+        curTrack: moodSongs[0],
         curTrackIndex: 0,
         queueType: MOOD_TYPE,
       };
@@ -84,6 +85,17 @@ export function reducer(state = initialState, action = {}) {
         curTrack: leaderboardSongs[selectedLeaderboardSongIndex],
         curTrackIndex: selectedLeaderboardSongIndex,
         queueType: LEADERBOARD_TYPE,
+      };
+
+    case LOAD_QUEUE_STARTING_AT_ID:
+      const { startSongIndex, songs } = action;
+      return {
+        ...state,
+        loading: false,
+        queue: songs,
+        curTrack: songs[startSongIndex],
+        curTrackIndex: startSongIndex,
+        queueType: '',
       };
 
     // Loading a shared song, with a queue of the same mood right after
@@ -227,27 +239,49 @@ export function loadSongsForMoodId(moodId) {
   };
 }
 
-// Leaderboard queue action creators
-export function loadLeaderboardSongQueue(selectedLeaderboardSongIndex) {
-  return async (dispatch, getState) => {
+export function loadQueueStartingAtId(startSongIndex, songs) {
+  return async (dispatch) => {
     await TrackPlayer.reset();
     dispatch({ type: RESET_QUEUE });
 
-    const leaderboardSongs = getState().leaderboard.songs;
+    // const leaderboardSongs = songs;
     dispatch({
-      type: LOAD_LEADERBOARD_SONG_QUEUE,
-      selectedLeaderboardSongIndex,
-      leaderboardSongs,
+      type: LOAD_QUEUE_STARTING_AT_ID,
+      startSongIndex,
+      songs,
     });
 
-    const selectedLeaderboardSong = leaderboardSongs[selectedLeaderboardSongIndex];
+    const selectedLeaderboardSong = songs[startSongIndex];
+
     // maybe move this into a helper function
-    await TrackPlayer.add(leaderboardSongs);
+    await TrackPlayer.add(songs);
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     await TrackPlayer.play();
     dispatch(startScoreTimer());
   };
 }
+
+// Leaderboard queue action creators
+// export function loadLeaderboardSongQueue(selectedLeaderboardSongIndex) {
+//   return async (dispatch, getState) => {
+//     await TrackPlayer.reset();
+//     dispatch({ type: RESET_QUEUE });
+//
+//     const leaderboardSongs = getState().leaderboard.songs;
+//     dispatch({
+//       type: LOAD_LEADERBOARD_SONG_QUEUE,
+//       selectedLeaderboardSongIndex,
+//       leaderboardSongs,
+//     });
+//
+//     const selectedLeaderboardSong = leaderboardSongs[selectedLeaderboardSongIndex];
+//     // maybe move this into a helper function
+//     await TrackPlayer.add(leaderboardSongs);
+//     await TrackPlayer.skip(selectedLeaderboardSong.id);
+//     await TrackPlayer.play();
+//     dispatch(startScoreTimer());
+//   };
+// }
 
 // Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {

@@ -70,6 +70,7 @@ export const CLOSE_MODAL = 'playlists/CLOSE_MODAL';
 export const UPDATE_NEW_PLAYLIST_NAME = 'playlists/UPDATE_NEW_PLAYLIST_NAME';
 
 // Queue
+export const LOAD_QUEUE_STARTING_AT_ID = 'queue/LOAD_QUEUE_STARTING_FROM_ID';
 export const LOAD_SONGS = 'queue/LOAD';
 export const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
 export const LOAD_SONGS_FAIL = 'queue/LOAD_FAIL';

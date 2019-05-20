@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Images from '@assets/images';
 import LeaderboardRow from './components/leaderboardRow';
 import MoodImageOnTopHeader from '../../components/headers/MoodImageOnTopHeader';
-import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
+import { loadQueueStartingAtId } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
 import { spacing } from '../../assets/styles';
 
@@ -53,7 +53,8 @@ class LeaderboardScreen extends Component {
   };
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
+    // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
+    this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
     this._navigateToPlayScreen();
   };
 
@@ -73,10 +74,10 @@ class LeaderboardScreen extends Component {
   );
 
 getLeaderBoard = () => (
-  this.props.savedSongs.length
+  this.props.leaderboardSongs.length
     ? (
       <FlatList
-        data={this.props.savedSongs}
+        data={this.props.leaderboardSongs}
         renderItem={this._renderItem}
         keyExtractor={this.keyExtractor}
         ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
@@ -101,12 +102,13 @@ getLeaderBoard = () => (
 }
 
 const mapStateToProps = state => ({
-  savedSongs: state.leaderboard.songs,
+  leaderboardSongs: state.leaderboard.songs,
   queue: state.queue.queue,
 });
 
 const mapDispatchToProps = {
-  loadLeaderboardSongQueue,
+  // loadLeaderboardSongQueue,
+  loadQueueStartingAtId,
   sendScoreDelta,
 };
 
