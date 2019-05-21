@@ -73,9 +73,9 @@ class Playlists extends Component {
     // For the case where you add songs to playlists through this screen,
     // call the func that lets people add a song to the selected playlist.
     // For the other case, show the songs within that playlist
-    return (this.props.isCreatePlaylistModalOpen
-      ? () => this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist)
-      : () => this._showCurrentPlaylist(pressedPlaylist)
+    return (this.props.isPlaylistModalOpen
+      ? this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist)
+      : this._showCurrentPlaylist(pressedPlaylist)
     );
   };
 
@@ -170,6 +170,7 @@ class Playlists extends Component {
 const mapStateToProps = state => ({
   loading: state.playlists.loading,
   isCreatePlaylistModalOpen: state.playlists.isCreatePlaylistModalOpen,
+  isPlaylistModalOpen: state.playlists.isPlaylistModalOpen,
   playlists: state.playlists.playlists,
   playlistError: state.playlists.error,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,

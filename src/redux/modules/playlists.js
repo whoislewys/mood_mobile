@@ -21,6 +21,8 @@ import {
   SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
+  SET_PLAYLIST_MODAL_OPEN,
+  SET_PLAYLIST_MODAL_CLOSED,
   SET_SAVED_SONG_PLAYLIST_ID,
   UPDATE_NEW_PLAYLIST_NAME,
   UPDATE_PLAYLIST,
@@ -38,6 +40,7 @@ export const initialState = {
   curPlaylistTitle: '',
   error: {},
   isCreatePlaylistModalOpen: false,
+  isPlaylistModalOpen: false,
   loading: false,
   newPlaylistName: '',
   playlists: [],
@@ -108,6 +111,10 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, isPlaylistModalFullScreen: true };
     case SET_PLAYLIST_MODAL_HALF_SCREEN:
       return { ...state, isPlaylistModalFullScreen: false };
+    case SET_PLAYLIST_MODAL_OPEN:
+      return { ...state, isPlaylistModalOpen: true };
+    case SET_PLAYLIST_MODAL_CLOSED:
+      return { ...state, isPlaylistModalOpen: false };
 
     case SET_CUR_PLAYLIST_ID:
       const { curPlaylistTitle, curPlaylistId } = action;
@@ -195,7 +202,6 @@ export function removeSongFromDeleted(songToResave) {
 }
 
 export function setCurrentPlaylist(curPlaylist) {
-  console.warn(curPlaylist);
   return {
     type: SET_CUR_PLAYLIST_ID,
     curPlaylistTitle: curPlaylist.name,
@@ -288,7 +294,6 @@ export function loadSongsForPlaylistId(id) {
         payload: songs,
       });
     } catch (e) {
-      console.warn('error: ', e);
       dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL });
     }
   };
@@ -362,7 +367,7 @@ export function getSavedSongPlaylist() {
           newPlaylistId,
         });
       } catch (e) {
-        console.warn(e);
+        console.log(e);
       }
     }
   };
@@ -403,6 +408,7 @@ export function loadSavedSongs() {
  * @param: {int} playlistId - should be passed in from a selected playlist row
  */
 export function saveSongToPlaylist(songId, playlistId) {
+  console.warn(`attempting to save songid ${songId} to playlistId: ${playlistId}`);
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
     if (getState().playlists.savedSongs) {
@@ -414,12 +420,7 @@ export function saveSongToPlaylist(songId, playlistId) {
     // try and fetch the songs. if they fail, just short circuit out of this function
     let playlistSongs;
     try {
-      const token = await firebase.auth().currentUser.getIdToken();
-      playlistSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${playlistId}`,
-        {
-          headers: { Authorization: token },
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        });
+      playlistSongs = loadSongsForPlaylistIdHelper(playlistId);
     } catch (e) {
       dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL, error: e });
       return;
@@ -476,4 +477,14 @@ export function setPlaylistModalHalfScreen() {
   return {
     type: SET_PLAYLIST_MODAL_HALF_SCREEN,
   };
+}
+
+export function setPlaylistModalOpen() {
+  console.warn('modal open');
+  return { type: SET_PLAYLIST_MODAL_OPEN };
+}
+
+export function setPlaylistModalClosed() {
+  console.warn('modal close');
+  return { type: SET_PLAYLIST_MODAL_CLOSED };
 }

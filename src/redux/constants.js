@@ -44,6 +44,7 @@ export const UPDATE_PLAYLIST = 'playlists/UPDATE';
 export const UPDATE_PLAYLIST_SUCCESS = 'playlists/UPDATE_SUCCESS';
 export const UPDATE_PLAYLIST_FAIL = 'playlists/UPDATE_FAIL';
 //D
+// todo
 
 // Client
 // checkmark screen stuff
@@ -61,6 +62,8 @@ export const RESET_SAVED_SONGS_SET = 'playlists/RESET';
 export const SAVE_RANKED_SONG = 'savingSongs/SAVE_SONG';
 export const SET_PLAYLIST_MODAL_FULL_SCREEN = 'playlists/SET_PLAYLIST_MODAL_FULL_SCREEN';
 export const SET_PLAYLIST_MODAL_HALF_SCREEN = 'playlists/SET_PLAYLIST_MODAL_HALF_SCREEN';
+export const SET_PLAYLIST_MODAL_OPEN = 'playlists/SET_PLAYLIST_MODAL_OPEN';
+export const SET_PLAYLIST_MODAL_CLOSED = 'playlists/SET_PLAYLIST_MODAL_CLOSED';
 export const SET_SAVED_SONG_PLAYLIST_ID = 'playlists/SET_SAVED_SONG_PLAYLIST_ID';
 
 export const OPEN_MODAL = 'playlists/OPEN_MODAL';

@@ -18,7 +18,8 @@ import {
   createPlaylist,
   loadPlaylists,
   setPlaylistModalHalfScreen,
-  openModal,
+  setPlaylistModalOpen,
+  setPlaylistModalClosed,
   setPlaylistScrollingNotNegative,
   updateNewPlaylistName,
 } from '../../redux/modules/playlists';
@@ -78,6 +79,19 @@ export class PlaylistModal extends Component {
       this.props.loadPlaylists();
     }
   }
+
+  componentDidMount() {
+    this.props.navigation.addListener('willFocus', this.componentWillFocus);
+    this.props.navigation.addListener('willBlur', this.componentWillBlur);
+  }
+
+  componentWillFocus = () => {
+    this.props.setPlaylistModalOpen();
+  };
+
+  componentWillBlur = () => {
+    this.props.setPlaylistModalClosed();
+  };
 
   shouldComponentUpdate(nextProps) {
     if (nextProps.playlistScrollIsNegative) {
@@ -148,10 +162,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadPlaylists,
-  openModal,
   closeModal,
   updateNewPlaylistName,
   setPlaylistModalHalfScreen,
+  setPlaylistModalOpen,
+  setPlaylistModalClosed,
   setPlaylistScrollingNotNegative,
   createPlaylist,
 };
