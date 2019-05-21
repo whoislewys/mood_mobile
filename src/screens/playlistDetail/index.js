@@ -134,8 +134,8 @@ class PlaylistDetail extends Component {
 
 const mapStateToProps = state => ({
   playlistSongs: state.playlists.songs,
-  curPlaylistId: state.queue.curPlaylistId,
-  curPlaylistTitle: state.queue.curPlaylistTitle,
+  curPlaylistId: state.playlists.curPlaylistId,
+  curPlaylistTitle: state.playlists.curPlaylistTitle,
 });
 
 const mapDispatchToProps = {

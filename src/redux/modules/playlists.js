@@ -34,6 +34,7 @@ import {
 import { mapSongsToValidTrackObjects } from '../util';
 
 export const initialState = {
+  curPlaylistId: NaN,
   curPlaylistTitle: '',
   error: {},
   isCreatePlaylistModalOpen: false,
@@ -108,6 +109,10 @@ export function reducer(state = initialState, action = {}) {
     case SET_PLAYLIST_MODAL_HALF_SCREEN:
       return { ...state, isPlaylistModalFullScreen: false };
 
+    case SET_CUR_PLAYLIST_ID:
+      const { curPlaylistTitle, curPlaylistId } = action;
+      return { ...state, curPlaylistTitle, curPlaylistId };
+
     // Service
     case CREATE_PLAYLIST:
       return { ...state, loading: true };
@@ -139,16 +144,13 @@ export function reducer(state = initialState, action = {}) {
     case PLAYLIST_LOAD_SONGS:
       return { ...state, loading: true };
     case PLAYLIST_LOAD_SONGS_SUCCESS:
-      console.warn('success action: ', action);
       const songs = mapSongsToValidTrackObjects(action.payload.data.songs);
-      console.warn('putting these songs in the store: ', songs);
       return { ...state, loading: false, songs };
     case PLAYLIST_LOAD_SONGS_FAIL:
-      console.warn('load failed');
       return {
         ...state,
         loading: false,
-        error: 'Error while fetching leaderboard.',
+        error: 'Error while fetching playlist songs',
       };
     default:
       return state;
@@ -192,14 +194,15 @@ export function removeSongFromDeleted(songToResave) {
 }
 
 export function setCurrentPlaylist(curPlaylist) {
+  console.warn(curPlaylist);
   return {
     type: SET_CUR_PLAYLIST_ID,
-    curPlaylistTitle: curPlaylist.title,
+    curPlaylistTitle: curPlaylist.name,
+    curPlaylistId: curPlaylist.id,
   };
 }
 
 // Service
-
 export function updateNewPlaylistName(newPlaylistName) {
   return {
     type: UPDATE_NEW_PLAYLIST_NAME,
