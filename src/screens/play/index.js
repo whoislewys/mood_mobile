@@ -194,7 +194,7 @@ class PlayScreen extends Component {
           onPress={() => (
             this.props.navigation.navigate({
               routeName: 'PlaylistModal',
-              params: { songIdToAdd: this.props.curTrack.id },
+              params: { songIdToAdd: parseInt(this.props.curTrack.id, 10) },
             })
           )}
           style={styles.playlistButtonContainer}

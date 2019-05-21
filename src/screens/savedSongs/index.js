@@ -62,7 +62,7 @@ export class SavedSongs extends Component {
       routeName: 'Leaderboard',
       params: { ...params, visible: true },
     });
-  }
+  };
 
   _navigateToPlayScreen = () => {
     this.props.navigation.navigate({
@@ -107,7 +107,7 @@ export class SavedSongs extends Component {
       openPlaylistModal={() => (
         this.props.navigation.navigate({
           routeName: 'PlaylistModal',
-          params: { songIdToAdd: item.id },
+          params: { songIdToAdd: parseInt(item.id, 10) },
         })
       )}
       songIdToAdd={() => item.id}

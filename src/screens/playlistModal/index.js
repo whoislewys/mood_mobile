@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Images from '../../assets/images';
 import { dimensions, spacing } from '../../assets/styles';
 import Playlists from '../playlists';
@@ -153,6 +154,10 @@ const mapDispatchToProps = {
   setPlaylistModalHalfScreen,
   setPlaylistScrollingNotNegative,
   createPlaylist,
+};
+
+PlaylistModal.propTypes = {
+  songIdToAdd: PropTypes.number,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistModal);
