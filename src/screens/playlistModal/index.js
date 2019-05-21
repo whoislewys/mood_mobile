@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import Images from '../../assets/images';
 import { dimensions, spacing } from '../../assets/styles';
 import Playlists from '../playlists';
-import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import {
   closeModal,
   createPlaylist,
@@ -147,7 +146,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadLeaderboardSongQueue,
   loadPlaylists,
   openModal,
   closeModal,

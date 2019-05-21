@@ -12,6 +12,7 @@ import {
   createPlaylist,
   loadSongsForPlaylistId,
   openModal,
+  saveSongToPlaylist,
   setCurrentPlaylist,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
@@ -62,12 +63,21 @@ class Playlists extends Component {
 
   keyExtractor = song => song.id.toString();
 
-  _handlePlaylistRowPress = async (pressedPlaylist) => {
+  _showCurrentPlaylist = async (pressedPlaylist) => {
     this.props.setCurrentPlaylist(pressedPlaylist);
-    // TODO: make sure the state.playlists.songs are filled after this call
     this.props.loadSongsForPlaylistId(pressedPlaylist.id);
     this._navigateToPlaylistDetailScreen();
   };
+
+  _handlePlaylistRowPress = (pressedPlaylist) => {
+    // this playlist screen
+    return (this.props.isModal
+      ? () => this._showCurrentPlaylist(pressedPlaylist)
+        // TODO: add comment & use redux action creator for add to playlist
+      : () => this.props.saveSongToPlaylist(pressedPlaylist)
+    );
+  };
+
 
   _onOpenCreatePlaylistModal = () => {
     if (!this.props.userIsLoggedIn) {
@@ -128,8 +138,6 @@ class Playlists extends Component {
   _onCreatePlaylist = async () => {
     await this.props.createPlaylist();
     if (this.props.playlistError === '') {
-      // TODO: load newly created playlist here by calling
-      //  whatever I replace _handlePlaylistRowPress with
       this._handlePlaylistRowPress();
       this.props.navigation.navigate('PlaylistDetail');
     }
@@ -146,6 +154,11 @@ class Playlists extends Component {
   );
 
   render = () => (
+    // This screen can render in two contexts.
+    // 1. As a modal
+    // 2. As a standalone screen
+    // A different function is called in each case when clicking a playlist row
+    // See more in the _handlePlaylistRowPress func
     <View style={styles.container}>
       {this.getModal()}
       {this.getPlaylists()}
@@ -167,6 +180,7 @@ const mapDispatchToProps = {
   createPlaylist,
   loadSongsForPlaylistId,
   openModal,
+  saveSongToPlaylist,
   setCurrentPlaylist,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,

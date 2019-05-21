@@ -142,15 +142,16 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, loading: false, error: action.e };
 
     case PLAYLIST_LOAD_SONGS:
-      return { ...state, loading: true };
+      return { ...state, loading: true, songs: [] };
     case PLAYLIST_LOAD_SONGS_SUCCESS:
       const songs = mapSongsToValidTrackObjects(action.payload.data.songs);
       return { ...state, loading: false, songs };
     case PLAYLIST_LOAD_SONGS_FAIL:
       return {
         ...state,
-        loading: false,
         error: 'Error while fetching playlist songs',
+        loading: false,
+        songs: [],
       };
     default:
       return state;
@@ -260,17 +261,28 @@ export function loadPlaylists() {
   };
 }
 
+// Actually loads songs
+async function loadSongsForPlaylistIdHelper(id) {
+  const token = await firebase.auth().currentUser.getIdToken();
+  try {
+    const songs = await axios.get(`http://localhost:3000/api/v1/playlists/${id}`,
+      {
+        headers: { Authorization: token },
+        t: 'EXVbAWTqbGFl7BKuqUQv',
+      });
+    return songs;
+  } catch (e) {
+    throw e;
+  }
+}
+
+// TODO: rename this function more betterer
+// Used to load songs for current playlist into redux store
 export function loadSongsForPlaylistId(id) {
   return async (dispatch) => {
     dispatch({ type: PLAYLIST_LOAD_SONGS });
     try {
-      const token = await firebase.auth().currentUser.getIdToken();
-      const songs = await axios.get(`http://localhost:3000/api/v1/playlists/${id}`,
-        {
-          headers: { Authorization: token },
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        });
-      console.warn('fetchec songs: ', songs);
+      const songs = await loadSongsForPlaylistIdHelper(id);
       dispatch({
         type: PLAYLIST_LOAD_SONGS_SUCCESS,
         payload: songs,
@@ -383,6 +395,36 @@ export function loadSavedSongs() {
         error: e,
       });
     }
+  };
+}
+
+export function saveSongToPlaylist(song, playlistId) {
+  // should save song to saved songs playlist
+  return async (dispatch, getState) => {
+    if (getState().playlists.savedSongs) {
+      // if the user hasn't loaded their saved songs yet, load it for them
+      await dispatch(loadSavedSongs());
+    }
+    dispatch({ type: SAVE_RANKED_SONG });
+
+    // try and fetch the songs. if they fail, just short circuit out of this function
+    let playlistSongs;
+    try {
+      const token = await firebase.auth().currentUser.getIdToken();
+      playlistSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${playlistId}`,
+        {
+          headers: { Authorization: token },
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        });
+    } catch (e) {
+      console.warn('error: ', e);
+      dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL });
+      return;
+    }
+
+    const playlistSongIds = playlistSongs.map(s => s.id);
+    playlistSongIds.push(song.id);
+    dispatch(updatePlaylist(playlistId, playlistSongIds));
   };
 }
 
