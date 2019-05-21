@@ -36,9 +36,9 @@ export const CREATE_PLAYLIST_FAIL = 'playlists/CREATE_PLAYLIST_FAIL';
 export const LOAD_PLAYLISTS = 'playlists/LOAD';
 export const LOAD_PLAYLISTS_SUCCESS = 'playlists/LOAD_SUCCESS';
 export const LOAD_PLAYLISTS_FAIL = 'playlists/LOAD_FAIL';
-export const PLAYLIST_LOAD_SONGS = 'playlists/LOAD';
-export const PLAYLIST_LOAD_SONGS_SUCCESS = 'playlists/LOAD_SUCCESS';
-export const PLAYLIST_LOAD_SONGS_FAIL = 'playlists/LOAD_FAIL';
+export const PLAYLIST_LOAD_SONGS = 'playlists/LOAD_SONGS';
+export const PLAYLIST_LOAD_SONGS_SUCCESS = 'playlists/LOAD_SONGS_SUCCESS';
+export const PLAYLIST_LOAD_SONGS_FAIL = 'playlists/LOAD_SONGS_FAIL';
 // U
 export const UPDATE_PLAYLIST = 'playlists/UPDATE';
 export const UPDATE_PLAYLIST_SUCCESS = 'playlists/UPDATE_SUCCESS';

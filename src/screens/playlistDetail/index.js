@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
-import { loadLeaderboardSongQueue, shufflePlay } from '../../redux/modules/queue';
+import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
 import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
@@ -81,7 +81,7 @@ class PlaylistDetail extends Component {
   );
 
   _handleSongRowPress = async (pressedLeaderboardSongIndex) => {
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
+    this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.playlistSongs);
     this._navigateToPlayScreen();
   };
 
@@ -108,7 +108,7 @@ class PlaylistDetail extends Component {
   );
 
   getPlaylistSongs = () => (
-    this.props.playlistSongs.length
+    this.props.playlistSongs !== undefined
       ? (
         <FlatList
           data={this.props.playlistSongs}
@@ -136,12 +136,11 @@ const mapStateToProps = state => ({
   playlistSongs: state.playlists.songs,
   curPlaylistId: state.queue.curPlaylistId,
   curPlaylistTitle: state.queue.curPlaylistTitle,
-
 });
 
 const mapDispatchToProps = {
   addSongToDeleted,
-  loadLeaderboardSongQueue,
+  loadQueueStartingAtId,
   removeSongFromDeleted,
   sendScoreDelta,
   shufflePlay,

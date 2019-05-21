@@ -139,10 +139,12 @@ export function reducer(state = initialState, action = {}) {
     case PLAYLIST_LOAD_SONGS:
       return { ...state, loading: true };
     case PLAYLIST_LOAD_SONGS_SUCCESS:
-      console.warn('songs for playlist: ', action.payload.data.songs);
-      // const songs = mapSongsToValidTrackObjects(action.payload.data.songs);
-      return { ...state };
+      console.warn('success action: ', action);
+      const songs = mapSongsToValidTrackObjects(action.payload.data.songs);
+      console.warn('putting these songs in the store: ', songs);
+      return { ...state, loading: false, songs };
     case PLAYLIST_LOAD_SONGS_FAIL:
+      console.warn('load failed');
       return {
         ...state,
         loading: false,
@@ -265,6 +267,7 @@ export function loadSongsForPlaylistId(id) {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
+      console.warn('fetchec songs: ', songs);
       dispatch({
         type: PLAYLIST_LOAD_SONGS_SUCCESS,
         payload: songs,

@@ -63,10 +63,10 @@ class Playlists extends Component {
   keyExtractor = song => song.id.toString();
 
   _handlePlaylistRowPress = async (pressedPlaylist) => {
-    // this.props.setCurrentPlaylist(pressedPlaylist);
+    this.props.setCurrentPlaylist(pressedPlaylist);
     // TODO: make sure the state.playlists.songs are filled after this call
     this.props.loadSongsForPlaylistId(pressedPlaylist.id);
-    // this._navigateToPlaylistDetailScreen();
+    this._navigateToPlaylistDetailScreen();
   };
 
   _onOpenCreatePlaylistModal = () => {
