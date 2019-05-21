@@ -74,7 +74,7 @@ class Playlists extends Component {
     // call the func that lets people add a song to the selected playlist.
     // For the other case, show the songs within that playlist
     return (this.props.isPlaylistModalOpen
-      ? this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist)
+      ? this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id)
       : this._showCurrentPlaylist(pressedPlaylist)
     );
   };

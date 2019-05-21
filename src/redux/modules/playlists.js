@@ -404,7 +404,8 @@ export function loadSavedSongs() {
 }
 
 /**
- * @param: {int} songId - should be passed down from wherever the song was selected (for example, state.queue.curTrack when adding a track from the PlayScreen)
+ * @param: {int} songId - should be passed down from wherever the song was selected (for example,
+ * state.queue.curTrack when adding a track from the PlayScreen)
  * @param: {int} playlistId - should be passed in from a selected playlist row
  */
 export function saveSongToPlaylist(songId, playlistId) {
@@ -420,13 +421,15 @@ export function saveSongToPlaylist(songId, playlistId) {
     // try and fetch the songs. if they fail, just short circuit out of this function
     let playlistSongs;
     try {
-      playlistSongs = loadSongsForPlaylistIdHelper(playlistId);
+      playlistSongs = await loadSongsForPlaylistIdHelper(playlistId);
     } catch (e) {
       dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL, error: e });
       return;
     }
 
-    const playlistSongIds = playlistSongs.map(s => s.id);
+    console.warn('songs for playlist to add to: ', playlistSongs.data.songs);
+
+    const playlistSongIds = playlistSongs.data.songs.map(s => s.id);
     playlistSongIds.push(songId);
     dispatch(updatePlaylist(playlistId, playlistSongIds));
   };
