@@ -70,11 +70,12 @@ class Playlists extends Component {
   };
 
   _handlePlaylistRowPress = (pressedPlaylist) => {
-    // this playlist screen
-    return (this.props.isModal
-      ? () => this._showCurrentPlaylist(pressedPlaylist)
-        // TODO: add comment & use redux action creator for add to playlist
-      : () => this.props.saveSongToPlaylist(pressedPlaylist)
+    // For the case where you add songs to playlists through this screen,
+    // call the func that lets people add a song to the selected playlist.
+    // For the other case, show the songs within that playlist
+    return (this.props.isCreatePlaylistModalOpen
+      ? () => this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist)
+      : () => this._showCurrentPlaylist(pressedPlaylist)
     );
   };
 
@@ -155,8 +156,8 @@ class Playlists extends Component {
 
   render = () => (
     // This screen can render in two contexts.
-    // 1. As a modal
-    // 2. As a standalone screen
+    // 1. As a modal that lets you add songs to a playlist
+    // 2. As a standalone screen that you can play music through
     // A different function is called in each case when clicking a playlist row
     // See more in the _handlePlaylistRowPress func
     <View style={styles.container}>

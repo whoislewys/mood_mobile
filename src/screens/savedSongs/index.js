@@ -104,7 +104,13 @@ export class SavedSongs extends Component {
       _handleSongRowPress={this._handleSongRowPress}
       addSongToDeleted={this.props.addSongToDeleted}
       removeSongFromDeleted={this.props.removeSongFromDeleted}
-      openPlaylistModal={() => this.props.navigation.navigate('PlaylistModal')}
+      openPlaylistModal={() => (
+        this.props.navigation.navigate({
+          routeName: 'PlaylistModal',
+          params: { songIdToAdd: item.id },
+        })
+      )}
+      songIdToAdd={() => item.id}
     />
   );
 

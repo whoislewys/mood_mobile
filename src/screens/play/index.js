@@ -151,18 +151,16 @@ class PlayScreen extends Component {
     );
   };
 
-  _getBackground = () => {
-    return (
-      <View style={styles.imageBackground}>
-        <ImageBackground
-          source={{ uri: this.props.curTrack.artwork }}
-          blurRadius={25}
-          style={styles.imageBackground}
-        />
-        <View style={styles.imageOverlay} />
-      </View>
-    );
-  };
+  _getBackground = () => (
+    <View style={styles.imageBackground}>
+      <ImageBackground
+        source={{ uri: this.props.curTrack.artwork }}
+        blurRadius={25}
+        style={styles.imageBackground}
+      />
+      <View style={styles.imageOverlay} />
+    </View>
+  );
 
   _nextTrack = () => {
     this.props.skipToNext();
@@ -193,7 +191,12 @@ class PlayScreen extends Component {
           <Image source={Images.arrowDown} style={styles.backButton} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('PlaylistModal')}
+          onPress={() => (
+            this.props.navigation.navigate({
+              routeName: 'PlaylistModal',
+              params: { songIdToAdd: this.props.curTrack.id },
+            })
+          )}
           style={styles.playlistButtonContainer}
           activeOpacity={1}
         >

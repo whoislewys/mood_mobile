@@ -398,7 +398,11 @@ export function loadSavedSongs() {
   };
 }
 
-export function saveSongToPlaylist(song, playlistId) {
+/**
+ * @param: {int} songId - should be passed down from wherever the song was selected (for example, state.queue.curTrack when adding a track from the PlayScreen)
+ * @param: {int} playlistId - should be passed in from a selected playlist row
+ */
+export function saveSongToPlaylist(songId, playlistId) {
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
     if (getState().playlists.savedSongs) {
@@ -417,13 +421,12 @@ export function saveSongToPlaylist(song, playlistId) {
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
     } catch (e) {
-      console.warn('error: ', e);
-      dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL });
+      dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL, error: e });
       return;
     }
 
     const playlistSongIds = playlistSongs.map(s => s.id);
-    playlistSongIds.push(song.id);
+    playlistSongIds.push(songId);
     dispatch(updatePlaylist(playlistId, playlistSongIds));
   };
 }

@@ -113,7 +113,7 @@ export class PlaylistModal extends Component {
               <Image source={Images.close} style={styles.exitButton} />
             </TouchableOpacity>
           </GestureRecognizer>
-          <Playlists />
+          <Playlists songIdToAdd={this.props.songIdToAdd} />
         </Animated.View>
       </View>
     );
