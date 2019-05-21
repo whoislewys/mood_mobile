@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
-import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
 import {
   closeModal,
   createPlaylist,
@@ -64,10 +63,10 @@ class Playlists extends Component {
   keyExtractor = song => song.id.toString();
 
   _handlePlaylistRowPress = async (pressedPlaylist) => {
-    this.props.setCurrentPlaylist(pressedPlaylist);
+    // this.props.setCurrentPlaylist(pressedPlaylist);
     // TODO: make sure the state.playlists.songs are filled after this call
     this.props.loadSongsForPlaylistId(pressedPlaylist.id);
-    this._navigateToPlaylistDetailScreen();
+    // this._navigateToPlaylistDetailScreen();
   };
 
   _onOpenCreatePlaylistModal = () => {
@@ -109,10 +108,10 @@ class Playlists extends Component {
   };
 
   getPlaylists = () => (
-    !this.props.loading
+    !this.props.loading && this.props.playlists !== undefined
       ? (
         <FlatList
-          data={[this._playlistButton(), ...this.props.playlists]}
+          data={[this._playlistButton()].concat(this.props.playlists)}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
           ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
@@ -124,6 +123,7 @@ class Playlists extends Component {
       )
       : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
   );
+
 
   _onCreatePlaylist = async () => {
     await this.props.createPlaylist();
@@ -165,7 +165,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   closeModal,
   createPlaylist,
-  loadLeaderboardSongQueue,
   loadSongsForPlaylistId,
   openModal,
   setCurrentPlaylist,

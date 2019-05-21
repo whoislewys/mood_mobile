@@ -18,8 +18,6 @@ import {
   PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
   REMOVE_SONG_FROM_DELETED,
   SAVE_RANKED_SONG,
-  SAVE_RANKED_SONG_SUCCESS,
-  SAVE_RANKED_SONG_FAIL,
   SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
@@ -48,7 +46,7 @@ export const initialState = {
   newPlaylistSongs: new Set(), // keeps track of songs to add to a new playlist
   songIdsToAdd: new Set(),
   songIdsToDelete: new Set(), // keeps track of songs the user wants to remove from the cur playlist
-  songs: [],
+  songz: [],
 };
 
 export function reducer(state = initialState, action = {}) {
@@ -141,8 +139,9 @@ export function reducer(state = initialState, action = {}) {
     case PLAYLIST_LOAD_SONGS:
       return { ...state, loading: true };
     case PLAYLIST_LOAD_SONGS_SUCCESS:
-      const songs = mapSongsToValidTrackObjects(action.payload.data);
-      return { ...state, loading: false, songs };
+      console.warn('songs for playlist: ', action.payload.data.songs);
+      // const songs = mapSongsToValidTrackObjects(action.payload.data.songs);
+      return { ...state };
     case PLAYLIST_LOAD_SONGS_FAIL:
       return {
         ...state,
@@ -271,6 +270,7 @@ export function loadSongsForPlaylistId(id) {
         payload: songs,
       });
     } catch (e) {
+      console.warn('error: ', e);
       dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL });
     }
   };
@@ -353,7 +353,6 @@ export function getSavedSongPlaylist() {
 export function loadSavedSongs() {
   // loads the current user's saved songs playlist into the store
   return async (dispatch, getState) => {
-    console.warn('loading saved songs');
     dispatch({
       type: LOAD_SAVED_SONGS,
     });
@@ -362,14 +361,12 @@ export function loadSavedSongs() {
         await dispatch(getSavedSongPlaylist());
       }
       const savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
-      console.warn('loading savedsongs from id: ', savedSongsPlaylistId);
       const token = await firebase.auth().currentUser.getIdToken();
       const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${savedSongsPlaylistId}`,
         {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
-      console.warn('loaded saved songs: ', savedSongs);
       dispatch({
         type: LOAD_SAVED_SONGS_SUCCESS,
         savedSongs,
