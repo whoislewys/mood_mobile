@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
+  deleteSongsFromPlaylists,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   shuffleButtonContainer: {
     flex: 1,
     alignItems: 'center',
-    marginTop: spacing.md, // TODO: replace with global margin
+    marginTop: spacing.md,
     marginBottom: spacing.md,
   },
   shuffleButton: {
@@ -83,6 +84,10 @@ class PlaylistDetail extends Component {
   _handleSongRowPress = async (pressedLeaderboardSongIndex) => {
     this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.playlistSongs);
     this._navigateToPlayScreen();
+  };
+
+  _handleSaveButtonPress = () => {
+    this.props.deleteSongsFromPlaylists();
   };
 
   _renderHeader = () => (

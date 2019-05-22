@@ -48,8 +48,8 @@ export const UPDATE_PLAYLIST_FAIL = 'playlists/UPDATE_FAIL';
 
 // Client
 // checkmark screen stuff
-export const DELETE_SAVED_SONGS = 'savingSongs/DELETE';
 export const ADD_SONG_TO_TO_DELETE_SET = 'savingSongs/ADD_SONG_TO_TO_DELETE_SET';
+export const DELETE_SAVED_SONGS = 'savingSongs/DELETE_SAVED_SONGS';
 export const REMOVE_SONG_FROM_TO_DELETE_SET = 'savingSongs/REMOVE_SONG_FROM_TO_DELETE_SET';
 export const RESET_TO_DELETE_SET = 'savingSongs/RESET_TO_DELETE_SET';
 

@@ -11,7 +11,12 @@ import {
 import { connect } from 'react-redux';
 import Images from '@assets/images';
 import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
-import { addSongToDeleted, removeSongFromDeleted, resetToDeleteSet } from '../../redux/modules/playlists';
+import {
+  addSongToDeleted,
+  removeSongFromDeleted,
+  resetToDeleteSet,
+  deleteSongsFromPlaylist,
+} from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
 import { colors, fonts, spacing } from '../../assets/styles';
@@ -53,7 +58,7 @@ export class SavedSongs extends Component {
   }
 
   componentWillBlur = () => {
-    // this.props.deleteSongs();
+    // this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
     this.props.resetToDeleteSet();
     // TODO: call playlists update() func with the savedsongplaylistid
   };
@@ -151,12 +156,14 @@ export class SavedSongs extends Component {
 
 const mapStateToProps = state => ({
   loading: state.playlists.loading,
-  savedSongs: state.playlists.savedSongs,
   songIdsToDelete: state.playlists.songIdsToDelete,
+  savedSongs: state.playlists.savedSongs,
+  savedSongsPlaylistId: state.playlists.savedSongsPlaylistId,
 });
 
 const mapDispatchToProps = {
   addSongToDeleted,
+  deleteSongsFromPlaylist,
   loadQueueStartingAtId,
   removeSongFromDeleted,
   resetToDeleteSet,

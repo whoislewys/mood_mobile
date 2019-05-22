@@ -6,6 +6,7 @@ import {
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
   CREATE_PLAYLIST_FAIL,
+  DELETE_SAVED_SONGS,
   LOAD_PLAYLISTS,
   LOAD_PLAYLISTS_SUCCESS,
   LOAD_PLAYLISTS_FAIL,
@@ -51,7 +52,7 @@ export const initialState = {
   newPlaylistSongs: new Set(), // keeps track of songs to add to a new playlist
   songIdsToAdd: new Set(),
   songIdsToDelete: new Set(), // keeps track of songs the user wants to remove from the cur playlist
-  songz: [],
+  songs: [],
 };
 
 export function reducer(state = initialState, action = {}) {
@@ -142,6 +143,7 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
     case LOAD_SAVED_SONGS_SUCCESS:
+      console.warn('updating savedSongs state with payload: ', action.savedSongs.data.songs);
       const savedSongs = mapSongsToValidTrackObjects(action.savedSongs.data.songs);
       return {
         ...state,
@@ -206,6 +208,10 @@ export function removeSongFromDeleted(songToResave) {
 
 export function resetToDeleteSet() {
   return { type: RESET_TO_DELETE_SET };
+}
+
+export function deleteToDeleteSet() {
+
 }
 
 export function setCurrentPlaylist(curPlaylist) {
@@ -306,6 +312,88 @@ export function loadSongsForPlaylistId(id) {
   };
 }
 
+export function getSavedSongPlaylist() {
+  // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
+  return async (dispatch, getState) => {
+    // check for playlists
+    let { playlists } = getState().playlists;
+    if (!playlists.length) {
+      // if playlists haven't been loaded, load them
+      await dispatch(loadPlaylists());
+    }
+
+    // now that playlists are loaded, look for saved song playlist
+    playlists = getState().playlists.playlists;
+    const savedSongsPlaylist = playlists.find(p => p.name === 'Saved Songs');
+    if (savedSongsPlaylist !== undefined) {
+      // 'Saved Songs' playlist found, save the id
+      // TODO: also fill the state's savedSongs
+      const savedSongsPlaylistId = savedSongsPlaylist.id;
+      dispatch({
+        type: SET_SAVED_SONG_PLAYLIST_ID,
+        savedSongsPlaylistId,
+      });
+    } else {
+      // if we couldn't find the 'Saved Songs' playlist, create it
+      try {
+        const token = await firebase.auth()
+          .currentUser
+          .getIdToken();
+        const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
+          {
+            t: 'EXVbAWTqbGFl7BKuqUQv',
+            name: 'Saved Songs',
+            description: '',
+            song_ids: [],
+          },
+          { headers: { Authorization: token } });
+
+        // TODO: also fill the state's savedSongs
+        const newPlaylistId = newPlaylist.data.id;
+        console.warn('new playlist created: ', newPlaylist);
+        console.warn('here\'s it\'s id: ', newPlaylistId);
+        dispatch({
+          type: SET_SAVED_SONG_PLAYLIST_ID,
+          newPlaylistId,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+}
+export function loadSavedSongs() {
+  // loads the current user's saved songs playlist into the store
+  console.warn('loading saved songs');
+  return async (dispatch, getState) => {
+    dispatch({
+      type: LOAD_SAVED_SONGS,
+    });
+    try {
+      if (getState().playlists.savedSongsPlaylistId === -1) {
+        await dispatch(getSavedSongPlaylist());
+      }
+      const { savedSongsPlaylistId } = getState().playlists;
+      const token = await firebase.auth().currentUser.getIdToken();
+      const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${savedSongsPlaylistId}`,
+        {
+          headers: { Authorization: token },
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        });
+      console.warn('loaded saved songs from playlist id: ', savedSongsPlaylistId);
+      dispatch({
+        type: LOAD_SAVED_SONGS_SUCCESS,
+        savedSongs,
+      });
+    } catch (e) {
+      dispatch({
+        type: LOAD_SAVED_SONGS_FAIL,
+        error: e,
+      });
+    }
+  };
+}
+
 export function updatePlaylist(id, song_ids) {
   return async (dispatch) => {
     dispatch({ type: UPDATE_PLAYLIST });
@@ -328,86 +416,41 @@ export function updatePlaylist(id, song_ids) {
   };
 }
 
+/**
+ * @param {int} playlistId - you know what it is
+ * @param {Set} songIdsToDelete - a set of songIds to deleted
+ *              (like from state.playlists.songIdsToDelete)
+ */
+export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
+  return async (dispatch, getState) => {
+    dispatch({ type: DELETE_SAVED_SONGS });
+
+    let updatedSongIds = [];
+
+    if (playlistId === getState().playlists.savedSongsPlaylistId) {
+      // if playlist to update is the saved songs playlist,
+      // remove any song from the savedSongs playlist that has an id in songIdsToDelete
+      const savedSongs = getState().playlists.savedSongs;
+      updatedSongIds = savedSongs.filter(song => songIdsToDelete.has(song.id))
+        .map(song => song.id);
+      await dispatch(updatePlaylist(playlistId, updatedSongIds));
+      await dispatch(loadSavedSongs());
+    }
+
+    // If 'Saved Songs' playlist isn't being updated, then the curPlaylist should be updated.
+    // Filter out item from curPlaylist that has an id in songIdsToDelete.
+    const curPlaylistSongs = getState().playlists.songs;
+    updatedSongIds = curPlaylistSongs.filter(song => songIdsToDelete.has(song.id))
+      .map(song => song.id);
+    await dispatch(updatePlaylist(playlistId, updatedSongIds));
+    await dispatch(loadSongsForPlaylistId(playlistId));
+  };
+}
+
 export function resetNewPlaylistSongs() {
   return ({ type: RESET_SAVED_SONGS_SET });
 }
 
-export function getSavedSongPlaylist() {
-  // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
-  return async (dispatch, getState) => {
-    // check for playlists
-    let playlists = getState().playlists.playlists;
-    if (!playlists.length) {
-      // if playlists haven't been loaded, load them
-      await dispatch(loadPlaylists());
-    }
-
-    // // now that playlists are loaded, look for saved song playlist
-    playlists = getState().playlists.playlists;
-    const savedSongsPlaylist = playlists.find(p => p.name === 'Saved Songs');
-    if (savedSongsPlaylist !== undefined) {
-      const savedSongsPlaylistId = savedSongsPlaylist.id;
-      // 'Saved Songs' playlist found, save the id and the songs
-      dispatch({
-        type: SET_SAVED_SONG_PLAYLIST_ID,
-        savedSongsPlaylistId,
-      });
-    } else {
-      // if we couldn't find the 'Saved Songs' playlist, create it
-      try {
-        const token = await firebase.auth()
-          .currentUser
-          .getIdToken();
-        const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
-          {
-            t: 'EXVbAWTqbGFl7BKuqUQv',
-            name: 'Saved Songs',
-            description: '',
-            song_ids: [],
-          },
-          { headers: { Authorization: token } });
-        const newPlaylistId = newPlaylist.data.id;
-        console.warn('new saved song playlist:', newPlaylistId);
-        dispatch({
-          type: SET_SAVED_SONG_PLAYLIST_ID,
-          newPlaylistId,
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
-}
-
-export function loadSavedSongs() {
-  // loads the current user's saved songs playlist into the store
-  return async (dispatch, getState) => {
-    dispatch({
-      type: LOAD_SAVED_SONGS,
-    });
-    try {
-      if (getState().playlists.savedSongsPlaylistId === -1) {
-        await dispatch(getSavedSongPlaylist());
-      }
-      const savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
-      const token = await firebase.auth().currentUser.getIdToken();
-      const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${savedSongsPlaylistId}`,
-        {
-          headers: { Authorization: token },
-          t: 'EXVbAWTqbGFl7BKuqUQv',
-        });
-      dispatch({
-        type: LOAD_SAVED_SONGS_SUCCESS,
-        savedSongs,
-      });
-    } catch (e) {
-      dispatch({
-        type: LOAD_SAVED_SONGS_FAIL,
-        error: e,
-      });
-    }
-  };
-}
 
 /**
  * @param: {int} songId - should be passed down from wherever the song was selected (for example,
@@ -444,23 +487,33 @@ export function saveSongToPlaylist(songId, playlistId) {
 export function saveSong(song) {
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
-    if (getState().playlists.savedSongs) {
+    if (!getState().playlists.savedSongs.length) {
       // if the user hasn't loaded their saved songs yet, load it for them
+      console.warn('user hasn\'t loaded saved songs playlist. loading', getState().playlists.savedSongsPlaylistId);
       await dispatch(loadSavedSongs());
     }
+    console.warn('user ranked a song! saving...');
     dispatch({ type: SAVE_RANKED_SONG });
 
-    let savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
+    let { savedSongsPlaylistId } = getState().playlists;
     if (savedSongsPlaylistId === -1) {
       // saved songs playlist has not been found yet. create it
       await dispatch(getSavedSongPlaylist());
+      console.warn('no saved song playlist yet, creating...');
     }
 
     savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
-    const savedSongs = getState().playlists.savedSongs;
+    const { savedSongs } = getState().playlists;
     const savedSongIds = savedSongs.map(s => s.id);
+    console.warn('savedSongIds before push:', savedSongIds);
+    console.warn('pushing songId:', song.id);
     savedSongIds.push(song.id);
-    dispatch(updatePlaylist(savedSongsPlaylistId, savedSongIds));
+    console.warn('[after push] saving these songs:', savedSongIds);
+    console.warn('to playlistid: ', savedSongsPlaylistId);
+    await dispatch(updatePlaylist(savedSongsPlaylistId, savedSongIds));
+
+    // refresh songs after update is complete
+    await dispatch(loadSavedSongs());
   };
 }
 
