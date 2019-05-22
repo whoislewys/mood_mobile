@@ -58,7 +58,7 @@ export class SavedSongs extends Component {
   }
 
   componentWillBlur = () => {
-    // this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
+    this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
     this.props.resetToDeleteSet();
     // TODO: call playlists update() func with the savedsongplaylistid
   };

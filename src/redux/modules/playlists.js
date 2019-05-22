@@ -143,7 +143,7 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
     case LOAD_SAVED_SONGS_SUCCESS:
-      console.warn('updating savedSongs state with payload: ', action.savedSongs.data.songs);
+      console.warn('updating savedSongs state with songs: ', action.savedSongs.data.songs);
       const savedSongs = mapSongsToValidTrackObjects(action.savedSongs.data.songs);
       return {
         ...state,
@@ -423,7 +423,8 @@ export function updatePlaylist(id, song_ids) {
  */
 export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
   return async (dispatch, getState) => {
-    console
+    console.warn('deleting songIds', songIdsToDelete);
+    console.warn('from playlistId: ', playlistId);
     dispatch({ type: DELETE_SAVED_SONGS });
 
     let updatedSongIds = [];
@@ -431,10 +432,16 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
     if (playlistId === getState().playlists.savedSongsPlaylistId) {
       // if playlist to update is the saved songs playlist,
       // remove any song from the savedSongs playlist that has an id in songIdsToDelete
+      console.warn('playlist to del from is saved songs');
       const savedSongs = getState().playlists.savedSongs;
-      updatedSongIds = savedSongs.filter(song => songIdsToDelete.has(song.id))
-        .map(song => song.id);
+      console.warn('saved songs: ', savedSongs);
+      const savedSongsMinusSongIdsToDelete = savedSongs.filter(song => !songIdsToDelete.has(song.id));
+      console.warn('saved Song Ids Minus SongIds To Delete: ', savedSongsMinusSongIdsToDelete);
+      updatedSongIds = savedSongsMinusSongIdsToDelete.map(song => song.id);
+      console.warn('updated song ids: ', updatedSongIds);
       await dispatch(updatePlaylist(playlistId, updatedSongIds));
+
+      // don't forget to refresh our savedSongs after making a change
       await dispatch(loadSavedSongs());
     }
 
