@@ -68,16 +68,14 @@ class SongRow extends Component {
 
   _unsaveSong = () => {
     // toDO: instead of this.setState, do a contains() on the store set to get the right image
-    this.setState({ songIsSaved: false },
-      () => this.props.addSongToDeleted(this.props.savedSong));
+    this.props.addSongToDeleted(this.props.savedSong);
   };
 
   _resaveSong = () => {
-    this.setState({ songIsSaved: true },
-      () => this.props.removeSongFromDeleted(this.props.savedSong));
+    this.props.removeSongFromDeleted(this.props.savedSong);
   };
 
-  _getSavedSongButton = () => (this.state.songIsSaved
+  _getSavedSongButton = () => (!this.props.songIdsToDelete.has(this.props.savedSong.id)
     ? (
       <TouchableOpacity activeOpacity={0.7} onPress={() => this._unsaveSong()} testId='saved-song-button'>
         <Image source={Images.savedIcon} style={styles.savedIcon} testId='saved-song-image' />

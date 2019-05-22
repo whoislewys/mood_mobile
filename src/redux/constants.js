@@ -49,8 +49,9 @@ export const UPDATE_PLAYLIST_FAIL = 'playlists/UPDATE_FAIL';
 // Client
 // checkmark screen stuff
 export const DELETE_SAVED_SONGS = 'savingSongs/DELETE';
-export const ADD_SONG_TO_DELETED = 'savingSongs/ADD_SONG_TO_DELETED';
-export const REMOVE_SONG_FROM_DELETED = 'savingSongs/REMOVE_SONG_FROM_DELETED';
+export const ADD_SONG_TO_TO_DELETE_SET = 'savingSongs/ADD_SONG_TO_TO_DELETE_SET';
+export const REMOVE_SONG_FROM_TO_DELETE_SET = 'savingSongs/REMOVE_SONG_FROM_TO_DELETE_SET';
+export const RESET_TO_DELETE_SET = 'savingSongs/RESET_TO_DELETE_SET';
 
 export const ADD_TO_NEW_PLAYLIST_SONGS = 'playlists/ADD_TO_NEW_PLAYLIST_SONGS';
 export const LOAD_SAVED_SONGS = 'playlists/LOAD_SAVED_SONGS';

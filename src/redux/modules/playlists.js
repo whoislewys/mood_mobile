@@ -2,7 +2,7 @@ import axios from 'axios';
 import firebase from 'react-native-firebase';
 import {
   ADD_TO_NEW_PLAYLIST_SONGS,
-  ADD_SONG_TO_DELETED,
+  ADD_SONG_TO_TO_DELETE_SET,
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
   CREATE_PLAYLIST_FAIL,
@@ -16,7 +16,8 @@ import {
   CLOSE_MODAL,
   PLAYLIST_SCROLL_IS_NEGATIVE,
   PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
-  REMOVE_SONG_FROM_DELETED,
+  REMOVE_SONG_FROM_TO_DELETE_SET,
+  RESET_TO_DELETE_SET,
   SAVE_RANKED_SONG,
   SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
@@ -57,7 +58,7 @@ export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // Client
 
-    case ADD_SONG_TO_DELETED:
+    case ADD_SONG_TO_TO_DELETE_SET:
       // get all the songs from the previous songIdsToDelete set
       const newSongIdsToDelete = new Set();
       if (state.songIdsToDelete === undefined) {
@@ -67,8 +68,7 @@ export function reducer(state = initialState, action = {}) {
         newSongIdsToDelete.add(action.songIdToDelete);
       }
       return { ...state, songIdsToDelete: newSongIdsToDelete };
-
-    case REMOVE_SONG_FROM_DELETED:
+    case REMOVE_SONG_FROM_TO_DELETE_SET:
       if (state.songIdsToDelete === undefined) {
         // if somehow you can resave songs but your deleted set is empty, just return the previous state
         return { ...state };
@@ -79,6 +79,9 @@ export function reducer(state = initialState, action = {}) {
       // remove the songs to resave from the deleted set
       songIdsToDeleteAfterResaving.delete(action.songIdToResave);
       return { ...state, songIdsToDelete: songIdsToDeleteAfterResaving };
+    case RESET_TO_DELETE_SET:
+      console.warn('resetting');
+      return { ...state, songIdsToDelete: new Set() };
 
     case SET_SAVED_SONG_PLAYLIST_ID:
       return { ...state, savedSongsPlaylistId: action.savedSongsPlaylistId };
@@ -189,16 +192,20 @@ export function addToNewPlaylistSongs(newPlaylistSong) {
 export function addSongToDeleted(savedSongToDelete) {
   // for when people 'uncheck' a saved song
   return {
-    type: ADD_SONG_TO_DELETED,
+    type: ADD_SONG_TO_TO_DELETE_SET,
     songIdToDelete: savedSongToDelete.id,
   };
 }
 
 export function removeSongFromDeleted(songToResave) {
   return {
-    type: REMOVE_SONG_FROM_DELETED,
+    type: REMOVE_SONG_FROM_TO_DELETE_SET,
     songIdToResave: songToResave.id,
   };
+}
+
+export function resetToDeleteSet() {
+  return { type: RESET_TO_DELETE_SET };
 }
 
 export function setCurrentPlaylist(curPlaylist) {
@@ -324,7 +331,6 @@ export function updatePlaylist(id, song_ids) {
 export function resetNewPlaylistSongs() {
   return ({ type: RESET_SAVED_SONGS_SET });
 }
-
 
 export function getSavedSongPlaylist() {
   // TODO: add logic in splash when handling shares to check that they are logged in before navigating to playlists
