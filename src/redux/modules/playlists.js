@@ -380,7 +380,9 @@ export function loadSavedSongs() {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
+      console.warn('saved songs loaded: ', savedSongs);
       console.warn('loaded saved songs from playlist id: ', savedSongsPlaylistId);
+
       dispatch({
         type: LOAD_SAVED_SONGS_SUCCESS,
         savedSongs,
@@ -394,16 +396,18 @@ export function loadSavedSongs() {
   };
 }
 
-export function updatePlaylist(id, song_ids) {
+export function updatePlaylist(playlistId, songIds) {
   return async (dispatch) => {
+    console.warn('updating playlist id: ', playlistId);
+    console.warn('...with song ids: ', songIds);
     dispatch({ type: UPDATE_PLAYLIST });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
-      const songs = await axios.patch(`http://localhost:3000/api/v1/playlists/${id}`,
+      const songs = await axios.patch(`http://localhost:3000/api/v1/playlists/${playlistId}`,
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           // can change name, description, & song_ids in here
-          song_ids,
+          songIds,
         },
         { headers: { Authorization: token } });
       dispatch({
