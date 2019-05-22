@@ -423,6 +423,7 @@ export function updatePlaylist(id, song_ids) {
  */
 export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
   return async (dispatch, getState) => {
+    console
     dispatch({ type: DELETE_SAVED_SONGS });
 
     let updatedSongIds = [];
@@ -504,6 +505,7 @@ export function saveSong(song) {
 
     savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
     const { savedSongs } = getState().playlists;
+    // TODO: make it so that user cannot save a duplicate saved song (filter here instead of map?)
     const savedSongIds = savedSongs.map(s => s.id);
     console.warn('savedSongIds before push:', savedSongIds);
     console.warn('pushing songId:', song.id);
