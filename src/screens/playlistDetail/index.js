@@ -6,12 +6,16 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
-  deleteSongsFromPlaylists,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
 import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
-import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/playlists';
+import {
+  addSongToDeleted,
+  removeSongFromDeleted,
+  deleteSongsFromPlaylist,
+  resetToDeleteSet,
+} from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
 // import SongRow from './components/songRow';
 import SongRow from '../savedSongs/components/songRow';
@@ -46,8 +50,8 @@ class PlaylistDetail extends Component {
   }
 
   componentWillBlur = async () => {
-    await this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
-    this.props.resetToDeleteSet();
+    await this.props.deleteSongsFromPlaylist(this.props.curPlaylistId, this.props.songIdsToDelete);
+    // this.props.resetToDeleteSet();
     // TODO: call playlists update() func with the savedsongplaylistid
   };
 
@@ -96,9 +100,9 @@ class PlaylistDetail extends Component {
   _renderHeader = () => (
     <MoodCenterHeader
       title={this.props.curPlaylistTitle}
-      leftButtonIcon={Images.cancelPlaylist}
+      leftButtonIcon={Images.arrowLeft}
       onPressLeftButton={this.props.navigation.goBack}
-      rightButtonIcon={Images.savedIcon}
+      // rightButtonIcon={Images.savedIcon}
       onPressRightButton={() => console.warn('saving')}
     />
   );
@@ -156,8 +160,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addSongToDeleted,
+  deleteSongsFromPlaylist,
   loadQueueStartingAtId,
   removeSongFromDeleted,
+  resetToDeleteSet,
   sendScoreDelta,
   shufflePlay,
 };
