@@ -61,12 +61,11 @@ export class SavedSongs extends Component {
 
   componentWillFocus = async () => {
     await this.props.loadSavedSongs();
-  }
+  };
 
   componentWillBlur = async () => {
     await this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
     this.props.resetToDeleteSet();
-    // TODO: call playlists update() func with the savedsongplaylistid
   };
 
   _navigateToLeaderboardScreen = (params = {}) => {
