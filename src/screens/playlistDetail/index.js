@@ -52,7 +52,6 @@ class PlaylistDetail extends Component {
   componentWillBlur = async () => {
     await this.props.deleteSongsFromPlaylist(this.props.curPlaylistId, this.props.songIdsToDelete);
     this.props.resetToDeleteSet();
-    // TODO: call playlists update() func with the savedsongplaylistid
   };
 
   _navigateToLeaderboardScreen = (params = {}) => {
