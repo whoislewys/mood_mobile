@@ -67,7 +67,6 @@ class SongRow extends Component {
   }
 
   _unsaveSong = () => {
-    // toDO: instead of this.setState, do a contains() on the store set to get the right image
     this.props.addSongToDeleted(this.props.savedSong);
   };
 

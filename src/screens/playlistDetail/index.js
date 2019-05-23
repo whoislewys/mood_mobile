@@ -13,7 +13,8 @@ import Images from '@assets/images';
 import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
 import { addSongToDeleted, removeSongFromDeleted } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
-import SongRow from './components/songRow';
+// import SongRow from './components/songRow';
+import SongRow from '../savedSongs/components/songRow';
 import { spacing } from '../../assets/styles';
 import MoodCenterHeader from '../../components/headers/MoodCenterHeader';
 
@@ -44,8 +45,10 @@ class PlaylistDetail extends Component {
     this.props.navigation.addListener('willBlur', this.componentWillBlur);
   }
 
-  componentWillBlur = () => {
-    // TODO: call update() with the changed songs
+  componentWillBlur = async () => {
+    await this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
+    this.props.resetToDeleteSet();
+    // TODO: call playlists update() func with the savedsongplaylistid
   };
 
   _navigateToLeaderboardScreen = (params = {}) => {
@@ -104,11 +107,18 @@ class PlaylistDetail extends Component {
 
   _renderItem = ({ item, index }) => (
     <SongRow
-      leaderboardSong={item}
+      savedSong={item}
       index={index}
       _handleSongRowPress={this._handleSongRowPress}
       addSongToDeleted={this.props.addSongToDeleted}
       removeSongFromDeleted={this.props.removeSongFromDeleted}
+      openPlaylistModal={() => (
+        this.props.navigation.navigate({
+          routeName: 'PlaylistModal',
+          params: { songIdToAdd: parseInt(item.id, 10) },
+        })
+      )}
+      songIdsToDelete={this.props.songIdsToDelete}
     />
   );
 
@@ -138,9 +148,10 @@ class PlaylistDetail extends Component {
 }
 
 const mapStateToProps = state => ({
-  playlistSongs: state.playlists.songs,
   curPlaylistId: state.playlists.curPlaylistId,
   curPlaylistTitle: state.playlists.curPlaylistTitle,
+  songIdsToDelete: state.playlists.songIdsToDelete,
+  playlistSongs: state.playlists.songs,
 });
 
 const mapDispatchToProps = {

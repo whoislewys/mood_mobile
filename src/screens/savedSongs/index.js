@@ -13,9 +13,10 @@ import Images from '@assets/images';
 import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
 import {
   addSongToDeleted,
+  deleteSongsFromPlaylist,
+  loadSavedSongs,
   removeSongFromDeleted,
   resetToDeleteSet,
-  deleteSongsFromPlaylist,
 } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
@@ -54,12 +55,17 @@ const styles = StyleSheet.create({
 
 export class SavedSongs extends Component {
   componentDidMount() {
+    this.props.navigation.addListener('willFocus', this.componentWillFocus);
     this.props.navigation.addListener('willBlur', this.componentWillBlur);
+  }
+
+  componentWillFocus = async () => {
+    await this.props.loadSavedSongs();
   }
 
   componentWillBlur = async () => {
     await this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
-    this.props.resetToDeleteSet();
+    // this.props.resetToDeleteSet();
     // TODO: call playlists update() func with the savedsongplaylistid
   };
 
@@ -116,7 +122,6 @@ export class SavedSongs extends Component {
           params: { songIdToAdd: parseInt(item.id, 10) },
         })
       )}
-      songIdToAdd={() => item.id}
       songIdsToDelete={this.props.songIdsToDelete}
     />
   );
@@ -165,6 +170,7 @@ const mapDispatchToProps = {
   addSongToDeleted,
   deleteSongsFromPlaylist,
   loadQueueStartingAtId,
+  loadSavedSongs,
   removeSongFromDeleted,
   resetToDeleteSet,
   sendScoreDelta,

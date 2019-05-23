@@ -122,7 +122,7 @@ const TabBar = class TabBar extends Component {
             } else if (navRouteName === 'MyMusic') {
               // this call also loads all playlists for cur user,
               // because 'Saved Songs' is just a playlist with a special name
-              this.props.loadSavedSongs();
+              // this.props.loadSavedSongs();
               navigation.navigate(route.routeName);
             } else {
               navigation.navigate(route.routeName);

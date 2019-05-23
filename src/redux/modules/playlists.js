@@ -70,10 +70,8 @@ export function reducer(state = initialState, action = {}) {
       }
       return { ...state, songIdsToDelete: newSongIdsToDelete };
     case REMOVE_SONG_FROM_TO_DELETE_SET:
-      if (state.songIdsToDelete === undefined) {
-        // if somehow you can resave songs but your deleted set is empty, just return the previous state
-        return { ...state };
-      }
+      // if somehow you can resave songs but your deleted set is empty, just return the previous state
+      if (state.songIdsToDelete === undefined) return { ...state };
       // copy all the songs from the previous songIdsToDelete set into a new set
       const songIdsToDeleteAfterResaving = new Set();
       state.songIdsToDelete.forEach(song => songIdsToDeleteAfterResaving.add(song));
@@ -165,6 +163,21 @@ export function reducer(state = initialState, action = {}) {
         loading: false,
         songs: [],
       };
+
+
+    case UPDATE_PLAYLIST:
+      return { ...state, loading: true };
+    case UPDATE_PLAYLIST_SUCCESS:
+      const { playlistId, updatedSongs } = action;
+      if (playlistId === state.savedSongsPlaylistId) {
+        // need to update the store's saved songs because you might call update again with your old saved songs
+        return { ...state, loading: false, savedSongs: updatedSongs };
+      }
+      // on the other hand, your playlist songs will always be up to date,
+      // because you're guaranteed to get a fresh songs for the current playlist everytime you load the playlist detail screen
+      // return { ...state, loading: false };
+    case UPDATE_PLAYLIST_FAIL:
+      return { ...state, loading: false };
     default:
       return state;
   }
@@ -348,9 +361,9 @@ export function getSavedSongPlaylist() {
           },
           { headers: { Authorization: token } });
 
-        // TODO: also fill the state's savedSongs
+        // TODO: also fill the state's savedSongs?
         const newPlaylistId = newPlaylist.data.id;
-        console.warn('new playlist created: ', newPlaylist);
+        console.warn('new savedSongs playlist created: ', newPlaylist);
         console.warn('here\'s it\'s id: ', newPlaylistId);
         dispatch({
           type: SET_SAVED_SONG_PLAYLIST_ID,
@@ -397,24 +410,26 @@ export function loadSavedSongs() {
 }
 
 export function updatePlaylist(playlistId, songIds) {
-  // TODO: figure out why update is getting called with [] when navigating away from saved songs tab
-  //  and how to fix it
   return async (dispatch) => {
     console.warn('updating playlist id: ', playlistId);
     console.warn('...with song ids: ', songIds);
     dispatch({ type: UPDATE_PLAYLIST });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
-      const songs = await axios.patch(`http://localhost:3000/api/v1/playlists/${playlistId}`,
+      const url = `http://localhost:3000/api/v1/playlists/${playlistId}`;
+      console.warn('patching UPDATE to url: ', url);
+      const songsResp = await axios.patch(url,
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           // can change name, description, & song_ids in here
-          songIds,
+          song_ids: songIds,
         },
         { headers: { Authorization: token } });
+      console.warn('updated playlist: ', songsResp);
       dispatch({
         type: UPDATE_PLAYLIST_SUCCESS,
-        payload: songs,
+        updatedSongs: songsResp.data,
+        playlistId,
       });
     } catch (e) {
       dispatch({ type: UPDATE_PLAYLIST_FAIL });
@@ -448,7 +463,7 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
       await dispatch(updatePlaylist(playlistId, updatedSongIds));
 
       // don't forget to refresh our savedSongs after making a change
-      await dispatch(loadSavedSongs());
+      // await dispatch(loadSavedSongs());
     } else {
       // If 'Saved Songs' playlist isn't being updated, then the curPlaylist should be updated.
       // Filter out item from curPlaylist that has an id in songIdsToDelete.
