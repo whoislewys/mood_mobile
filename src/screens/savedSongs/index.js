@@ -57,8 +57,8 @@ export class SavedSongs extends Component {
     this.props.navigation.addListener('willBlur', this.componentWillBlur);
   }
 
-  componentWillBlur = () => {
-    this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
+  componentWillBlur = async () => {
+    await this.props.deleteSongsFromPlaylist(this.props.savedSongsPlaylistId, this.props.songIdsToDelete);
     this.props.resetToDeleteSet();
     // TODO: call playlists update() func with the savedsongplaylistid
   };

@@ -397,6 +397,8 @@ export function loadSavedSongs() {
 }
 
 export function updatePlaylist(playlistId, songIds) {
+  // TODO: figure out why update is getting called with [] when navigating away from saved songs tab
+  //  and how to fix it
   return async (dispatch) => {
     console.warn('updating playlist id: ', playlistId);
     console.warn('...with song ids: ', songIds);
@@ -447,15 +449,17 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
 
       // don't forget to refresh our savedSongs after making a change
       await dispatch(loadSavedSongs());
+    } else {
+      // If 'Saved Songs' playlist isn't being updated, then the curPlaylist should be updated.
+      // Filter out item from curPlaylist that has an id in songIdsToDelete.
+      console.warn('NOT SAVED SONGS. Deleting from curPlaylist w/ id: ', playlistId);
+      const curPlaylistSongs = getState().playlists.songs;
+      updatedSongIds = curPlaylistSongs.filter(song => songIdsToDelete.has(song.id))
+        .map(song => song.id);
+      console.warn('updated playlist song ids: ', curPlaylistSongs);
+      await dispatch(updatePlaylist(playlistId, updatedSongIds));
+      await dispatch(loadSongsForPlaylistId(playlistId));
     }
-
-    // If 'Saved Songs' playlist isn't being updated, then the curPlaylist should be updated.
-    // Filter out item from curPlaylist that has an id in songIdsToDelete.
-    const curPlaylistSongs = getState().playlists.songs;
-    updatedSongIds = curPlaylistSongs.filter(song => songIdsToDelete.has(song.id))
-      .map(song => song.id);
-    await dispatch(updatePlaylist(playlistId, updatedSongIds));
-    await dispatch(loadSongsForPlaylistId(playlistId));
   };
 }
 
