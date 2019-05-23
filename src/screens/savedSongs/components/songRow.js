@@ -59,13 +59,6 @@ const styles = StyleSheet.create({
 });
 
 class SongRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      songIsSaved: true,
-    };
-  }
-
   _unsaveSong = () => {
     this.props.addSongToDeleted(this.props.savedSong);
   };
