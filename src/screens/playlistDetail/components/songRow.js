@@ -59,24 +59,15 @@ const styles = StyleSheet.create({
 });
 
 class SongRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      songIsSaved: true,
-    };
-  }
-
   _unsaveSong = () => {
-    this.setState({ songIsSaved: false },
-      () => this.props.addSongToDeleted(this.props.leaderboardSong));
+    this.props.addSongToDeleted(this.props.savedSong);
   };
 
   _resaveSong = () => {
-    this.setState({ songIsSaved: true },
-      () => this.props.removeSongFromDeleted(this.props.leaderboardSong));
+    this.props.removeSongFromDeleted(this.props.savedSong);
   };
 
-  _getSavedSongButton = () => (this.state.songIsSaved
+  _getSavedSongButton = () => (!this.props.songIdsToDelete.has(this.props.savedSong.id)
     ? (
       <TouchableOpacity activeOpacity={0.7} onPress={() => this._unsaveSong()}>
         <Image source={Images.savedIcon} style={styles.savedIcon} />
@@ -92,7 +83,7 @@ class SongRow extends Component {
   render() {
     const {
       index,
-      leaderboardSong: { artist, artwork, title },
+      savedSong: { artist, artwork, title },
       _handleSongRowPress,
     } = this.props;
 

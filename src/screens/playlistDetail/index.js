@@ -17,8 +17,9 @@ import {
   resetToDeleteSet,
 } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
-// import SongRow from './components/songRow';
-import SongRow from '../savedSongs/components/songRow';
+// todo: DRY up this SongRow component
+import SongRow from './components/songRow';
+// import SongRow from '../savedSongs/components/songRow';
 import { spacing } from '../../assets/styles';
 import MoodCenterHeader from '../../components/headers/MoodCenterHeader';
 
@@ -50,7 +51,7 @@ class PlaylistDetail extends Component {
   }
 
   componentWillBlur = async () => {
-    await this.props.deleteSongsFromPlaylist(this.props.curPlaylistId, this.props.songIdsToDelete);
+    // await this.props.deleteSongsFromPlaylist(this.props.curPlaylistId, this.props.songIdsToDelete);
     this.props.resetToDeleteSet();
   };
 
