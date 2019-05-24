@@ -128,7 +128,7 @@ export class PlaylistModal extends Component {
               <Image source={Images.close} style={styles.exitButton} />
             </TouchableOpacity>
           </GestureRecognizer>
-          <Playlists songIdToAdd={this.props.songIdToAdd} />
+          <Playlists songIdToAdd={this.props.songIdToAdd} navigation={this.props.navigation} />
         </Animated.View>
       </View>
     );
