@@ -3,23 +3,36 @@ import {
   View,
   ActivityIndicator,
   FlatList,
+  Linking,
 } from 'react-native';
-import Images from '@assets/images';
 import { connect } from 'react-redux';
 import EventRow from './components/event-row';
-import Header from './components/header';
+import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
+import { spacing } from '../../assets/styles';
+import GradientButton from '../../components/GradientButton';
+
+const ADD_EVENT_URL = 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1';
 
 const styles = {
   background: {
     flex: 1,
     backgroundColor: '#fff',
   },
+  addEventButton: {
+    height: 55,
+    width: 55,
+    resizeMode: 'contain',
+  },
+  addIcon: {
+    height: 31,
+    width: 79,
+  },
   eventsContainer: {
     flex: 1,
     justifyContent: 'flex-start',
+    marginTop: spacing.md,
     alignItems: 'stretch',
-    marginLeft: 16,
-    marginRight: 16,
+    marginHorizontal: spacing.sm,
   },
 };
 
@@ -27,7 +40,7 @@ class EventsScreen extends Component {
   keyExtractor = event => event.id;
 
   _renderItem = ({ item }) => (
-    <EventRow event={ item }> </EventRow>
+    <EventRow event={item} />
   );
 
   getEvents = () => (
@@ -37,15 +50,22 @@ class EventsScreen extends Component {
           data={this.props.events}
           renderItem={this._renderItem}
           keyExtractor={this.keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'PHX Events', showLogo: false })}
-        >
-        </FlatList>
+          showsVerticalScrollIndicator={false}
+        />
       )
-      : <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }}/>
+      : <ActivityIndicator color="black" size="large" animating style={{ flex: 10 }} />
   );
 
   render = () => (
     <View style={styles.background}>
+      <MoodLeftHeader title='Phx Events'>
+        {/*<GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={90} />*/}
+        <GradientButton
+          text='ADD EVENT'
+          onPress={() => this.props.navigation.navigate('EventsForm')}
+          width={90}
+        />
+      </MoodLeftHeader>
       <View style={styles.eventsContainer}>
         {this.getEvents()}
       </View>

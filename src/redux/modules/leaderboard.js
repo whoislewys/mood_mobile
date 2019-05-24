@@ -1,8 +1,10 @@
 import axios from 'axios';
-
-const LOAD_SONGS = 'leaderboard/LOAD';
-const LOAD_SONGS_SUCCESS = 'leaderboard/LOAD_SUCCESS';
-const LOAD_SONGS_FAIL = 'leaderboard/LOAD_FAIL';
+import {
+  LEADERBOARD_LOAD_SONGS as LOAD_SONGS,
+  LEADERBOARD_LOAD_SONGS_SUCCESS as LOAD_SONGS_SUCCESS,
+  LEADERBOARD_LOAD_SONGS_FAIL as LOAD_SONGS_FAIL,
+} from '../constants';
+import { mapSongsToValidTrackObjects } from '../util';
 
 export const initialState = {
   songs: [],
@@ -10,21 +12,8 @@ export const initialState = {
   error: null,
 };
 
-export function mapSongsToValidTrackObjects(list) {
-  return list.map(t => ({
-    album: t.album_name,
-    artist: t.artist,
-    artwork: t.art_url,
-    id: t.id.toString(),
-    mood_id: t.mood_id,
-    title: t.name,
-    url: t.file,
-    stars: t.stars,
-  }));
-}
-
 // now define reducer
-export default function leaderboard(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_SONGS:
       return { ...state, loading: true };
@@ -46,7 +35,7 @@ export function loadLeaderboardSongs() {
   return async (dispatch) => {
     dispatch({ type: LOAD_SONGS });
     try {
-      let songs = await axios.get('http://api.moodindustries.com/api/v1/stats/leaderboard',
+      let songs = await axios.get('https://api.moodindustries.com/api/v1/stats/leaderboard',
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',

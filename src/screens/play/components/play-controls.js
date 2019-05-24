@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Share,
 } from 'react-native';
 import Images from '@assets/images';
 import branch from 'react-native-branch';
@@ -51,6 +52,8 @@ const styles = StyleSheet.create({
 });
 
 export default class PlayControls extends Component {
+  _buo;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +61,37 @@ export default class PlayControls extends Component {
     };
   }
 
-  createBUO = async () => {
+  async componentDidMount() {
+    this._buo = await this._createBUO();
+  }
+
+  render = () => (
+    <View style={styles.playControls}>
+      <StarButton
+        extraStyles={{ tintColor: '#fff' }}
+        textColor={{ color: colors.gold }}
+        shootFrom={{ x: 0, y: 0 }}
+        spray={23}
+        navigation={this.props.navigation}
+      />
+      <TouchableOpacity onPress={this.props.skipBack}>
+        <Image source={Images.skip} style={styles.skipLeftIcon} />
+      </TouchableOpacity>
+      { this.playButton() }
+      <TouchableOpacity onPress={this.props.skipForward}>
+        <Image source={Images.skip} style={styles.skipRightIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.shareButton}
+        activeOpacity={0.3}
+        onPress={this._handleShare}
+      >
+        <Image source={this.state.shareIcon} style={styles.shareIcon} />
+      </TouchableOpacity>
+    </View>
+  )
+
+  _createBUO = async () => {
     // first param is $canonical_identifier. allows you to keep track of each link.
     // It must be a unique ID. branch will dedupe these on the back end!
     const {
@@ -80,7 +113,7 @@ export default class PlayControls extends Component {
         contentDescription: 'Check out this track on Mood!',
         contentImageUrl: artwork,
         contentMetadata: {
-          ratingAverage: 4.2,
+          ratingAverage: 5.0,
           customMetadata: {
             // only strings allowed in customMetadata
             album: album === null ? '' : album,
@@ -96,21 +129,19 @@ export default class PlayControls extends Component {
 
   _handleShare = async () => {
     this.setState({ shareIcon: Images.share });
-    const buo = await this.createBUO();
 
     this.props.logEvent(anal.songShare, this.props.currentTrack);
 
     // TODO: randomize message body to make sharing a little more novel
-    const shareOptions = { messageHeader: 'I got some new music for you!', messageBody: 'Check out this bop on Mood!\n ' };
     const linkProperties = { feature: 'share', channel: 'RNApp' };
     const controlParams = {
       $desktop_url: 'http://www.moodindustries.com',
       $ios_url: 'https://moodmusic.app.link/ZIFgV4QdLS',
     };
-    const { channel, completed, error } = await buo.showShareSheet(shareOptions, linkProperties, controlParams);
-    if (!error) {
-      this.setState({ shareIcon: Images.shareOutline });
-    }
+    const { url } = await this._buo.generateShortUrl(linkProperties, controlParams);
+    await Share.share({ message: `Check out this bop on mood! ${url}`, title: 'I have some new music for you!' });
+
+    this.setState({ shareIcon: Images.shareOutline });
   };
 
   playButton = () => {
@@ -131,31 +162,6 @@ export default class PlayControls extends Component {
         </TouchableOpacity>
       );
     }
-
     return ret;
   };
-
-  render = () => (
-    <View style={styles.playControls}>
-      <StarButton
-        extraStyles={{ tintColor: '#fff' }}
-        textColor={{ color: colors.gold }}
-        shootFrom={{ x: 0, y: 0 }}
-        spray={23}
-      />
-      <TouchableOpacity onPress={this.props.skipBack}>
-        <Image source={Images.skip} style={styles.skipLeftIcon} />
-      </TouchableOpacity>
-      { this.playButton() }
-      <TouchableOpacity onPress={this.props.skipForward}>
-        <Image source={Images.skip} style={styles.skipRightIcon} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.shareButton}
-        activeOpacity={0.3}
-        onPress={this._handleShare}>
-        <Image source={this.state.shareIcon} style={styles.shareIcon}/>
-      </TouchableOpacity>
-    </View>
-  )
 }

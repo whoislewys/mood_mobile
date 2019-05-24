@@ -1,31 +1,21 @@
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import reducer, {
-  initialState,
+import {
+  reducer,
+  initialState as queueInitialState,
   loadSongsForMoodId,
-  loadLeaderboardSongQueue,
-  loadSharedSongQueue,
+  loadQueueStartingAtId,
 } from '../../../src/redux/modules/queue';
 import { initialState as leaderboardInitialState } from '../../../src/redux/modules/leaderboard';
 import { initialState as scoreInitialState } from '../../../src/redux/modules/score';
 import {
-  anal,
   LOAD_SONGS,
   LOAD_SONGS_SUCCESS,
   LOAD_SONGS_FAIL,
-  LOAD_SHARED_SONG_QUEUE,
-  LOAD_SHARED_SONG_QUEUE_SUCCESS,
-  LOAD_SHARED_SONG_QUEUE_FAIL,
-  LOAD_LEADERBOARD_SONG_QUEUE,
+  LOAD_QUEUE_STARTING_AT_ID,
   RESET_QUEUE,
-  PLAYBACK_STATE,
-  PLAYBACK_TRACK,
-  MOOD_TYPE,
-  LEADERBOARD_TYPE,
 } from '../../../src/redux/constants';
-
-jest.mock('axios');
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -53,14 +43,13 @@ const track2 = {
   rank: 2,
 };
 
-
 describe('Queue module', () => {
   describe('action creator', () => {
     describe('loadSongsForMoodId', () => {
       let store;
       beforeEach(() => {
         // only mock what you need in the store
-        store = mockStore(initialState);
+        store = mockStore({ queue: queueInitialState, score: scoreInitialState });
       });
 
       afterEach(() => {
@@ -68,16 +57,15 @@ describe('Queue module', () => {
       });
 
       it('should dispatch LOAD_SONGS_SUCCESS on success', async () => {
-        // mock more stuff you need
+        // Arrange
         const mockSongs = [track1, track2];
         axios.get.mockResolvedValue(mockSongs);
-        // dispatch the action
+
+        // Act
         await store.dispatch(loadSongsForMoodId(1));
-        // assert you get what you'd expect
-        return expect(store.getActions()).toEqual([
-          { type: LOAD_SONGS },
-          { type: LOAD_SONGS_SUCCESS, payload: mockSongs },
-        ]);
+        // Assert
+        expect(store.getActions()).toContainEqual({ type: LOAD_SONGS });
+        expect(store.getActions()).toContainEqual({ type: LOAD_SONGS_SUCCESS, payload: mockSongs });
       });
 
       it('should dispatch LOAD_SONGS_FAIL on fail', async () => {
@@ -97,8 +85,7 @@ describe('Queue module', () => {
 
       beforeEach(() => {
         // only mock what you need in the store
-        const toyLeaderboardState = leaderboardInitialState;
-        toyLeaderboardState.songs = [track1, track2];
+        leaderboardInitialState.songs = [track1, track2];
         mockState = {
           leaderboard: leaderboardInitialState,
           score: scoreInitialState,
@@ -111,14 +98,14 @@ describe('Queue module', () => {
       });
 
       it('should dispatch correct queue actions', async () => {
-        const selectedLeaderboardSongIndex = 0;
-        await store.dispatch(loadLeaderboardSongQueue(selectedLeaderboardSongIndex));
+        const selectedLeaderboardSongIndex = 1;
+        await store.dispatch(loadQueueStartingAtId(selectedLeaderboardSongIndex, [track1, track2]));
         return expect(store.getActions().slice(0, 2)).toEqual([
           { type: RESET_QUEUE },
           {
-            type: LOAD_LEADERBOARD_SONG_QUEUE,
-            selectedLeaderboardSongIndex,
-            leaderboardSongs: mockState.leaderboard.songs,
+            type: LOAD_QUEUE_STARTING_AT_ID,
+            startSongIndex: selectedLeaderboardSongIndex,
+            songs: mockState.leaderboard.songs,
           },
         ]);
       });
@@ -131,12 +118,10 @@ describe('Queue module', () => {
 
   describe('reducer', () => {
     it('should return the initial state', () => {
-      expect(reducer(undefined, undefined)).toEqual(initialState);
+      expect(reducer(undefined, undefined)).toEqual(queueInitialState);
     });
     it('should handle RESET_QUEUE action', () => {
       expect(reducer([], { type: RESET_QUEUE })).toEqual({
-        // why tf does this work? shouldnt the spread operator in the reducer return the rest of the state that isnt being modified?
-        // the reducer is only returning what's below...
         loading: true,
         queue: [],
         curTrack: null,

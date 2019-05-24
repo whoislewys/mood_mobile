@@ -5,9 +5,9 @@ import {
   View,
   Image,
   TouchableOpacity,
-  StatusBar,
   ActivityIndicator,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import Images from '@assets/images';
 import Carousel from 'react-native-snap-carousel';
@@ -17,7 +17,6 @@ import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TimeBar from './components/time-bar';
 import InfoText from './components/info-text';
-import Background from '../../components/background';
 import { dimensions } from '../../assets/styles';
 import {
   handlePlayPress,
@@ -27,6 +26,19 @@ import {
 import { logEvent } from '../../redux/modules/analytics';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  imageOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'black',
+    opacity: 0.3,
+  },
+  imageBackground: {
+    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+  },
   playContainer: {
     flex: 1,
     alignSelf: 'stretch',
@@ -42,17 +54,28 @@ const styles = StyleSheet.create({
   },
   dropdownBarTouchable: {
     flex: 1,
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   backButtonContainer: {
     marginLeft: '1.8%',
-    paddingBottom: '15%',
     justifyContent: 'flex-end',
   },
   backButton: {
     height: 26,
     width: 26,
     resizeMode: 'contain',
+  },
+  playlistButtonContainer: {
+    justifyContent: 'flex-end',
+    paddingLeft: '2%',
+    paddingTop: '1.58%',
+  },
+  playlistButton: {
+    height: 30,
+    width: 30,
+    resizeMode: 'contain',
+    tintColor: '#fff',
   },
   albumArtContainer: {
     flex: 55,
@@ -79,11 +102,6 @@ const styles = StyleSheet.create({
 class PlayScreen extends Component {
   _carouselref;
 
-  constructor(props) {
-    super(props);
-    StatusBar.setBarStyle('light-content', true);
-  }
-
   onSwipeDown() {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
@@ -105,11 +123,8 @@ class PlayScreen extends Component {
     }
 
     return (
-      <Background
-        image={{ uri: this.props.curTrack.artwork }}
-        blur={25}
-        bottom={0}
-      >
+      <View style={styles.container}>
+        { this._getBackground() }
         <PlayOnOpen
           playing={this.props.playing}
           playByDefault={this.props.handlePlayPress}
@@ -132,9 +147,20 @@ class PlayScreen extends Component {
             { this.getPlayControls() }
           </View>
         </View>
-      </Background>
+      </View>
     );
   };
+
+  _getBackground = () => (
+    <View style={styles.imageBackground}>
+      <ImageBackground
+        source={{ uri: this.props.curTrack.artwork }}
+        blurRadius={25}
+        style={styles.imageBackground}
+      />
+      <View style={styles.imageOverlay} />
+    </View>
+  );
 
   _nextTrack = () => {
     this.props.skipToNext();
@@ -147,28 +173,38 @@ class PlayScreen extends Component {
     this._carouselref.snapToItem(this.props.curTrackIndex);
   };
 
-  getDropdownBar = () => {
-    return (
-      <GestureRecognizer
-        style={styles.dropdownBarSwipeable}
-        onSwipeDown={() => this.onSwipeDown()}
+  getDropdownBar = () => (
+    <GestureRecognizer
+      style={styles.dropdownBarSwipeable}
+      onSwipeDown={() => this.onSwipeDown()}
+    >
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate('Mood')}
+        activeOpacity={1}
+        style={styles.dropdownBarTouchable}
       >
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Mood')}
+          style={styles.backButtonContainer}
           activeOpacity={1}
-          style={styles.dropdownBarTouchable}
         >
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Mood')}
-            style={styles.backButtonContainer}
-            activeOpacity={1}
-          >
-            <Image source={Images.arrowDown} style={styles.backButton} />
-          </TouchableOpacity>
+          <Image source={Images.arrowDown} style={styles.backButton} />
         </TouchableOpacity>
-      </GestureRecognizer>
-    );
-  };
+        <TouchableOpacity
+          onPress={() => (
+            this.props.navigation.navigate({
+              routeName: 'PlaylistModal',
+              params: { songIdToAdd: parseInt(this.props.curTrack.id, 10) },
+            })
+          )}
+          style={styles.playlistButtonContainer}
+          activeOpacity={1}
+        >
+          <Image source={Images.playlistButton} style={styles.playlistButton} />
+        </TouchableOpacity>
+      </TouchableOpacity>
+    </GestureRecognizer>
+  );
 
   _renderCarouselItem = ({ item }) => {
     const art = item.artwork;
@@ -183,58 +219,52 @@ class PlayScreen extends Component {
     }
   };
 
-  getAlbumArtCarousel = () => {
-    return (
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeDown={() => this.onSwipeDown()}
-      >
-        <Carousel
-          ref={(c) => { this._carouselref = c; }}
-          data={this.props.queue}
-          sliderWidth={dimensions.width}
-          itemWidth={dimensions.width}
-          renderItem={this._renderCarouselItem}
-          onBeforeSnapToItem={this._handleCarouselSnap}
-          firstItem={this.props.curTrackIndex}
-          lockScrollWhileSnapping
-        />
-      </GestureRecognizer>
-    );
-  };
+  getAlbumArtCarousel = () => (
+    <View
+      style={{ flex: 1 }}
+    >
+      <Carousel
+        ref={(c) => { this._carouselref = c; }}
+        data={this.props.queue}
+        sliderWidth={dimensions.width}
+        itemWidth={dimensions.width}
+        renderItem={this._renderCarouselItem}
+        onBeforeSnapToItem={this._handleCarouselSnap}
+        firstItem={this.props.curTrackIndex}
+        lockScrollWhileSnapping
+      />
+    </View>
+  );
 
-  getTrackInfoAndPlaybar = () => {
-    return (
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeDown={() => this.onSwipeDown()}
-      >
-        <InfoText
-          setTime={this.props.setTime}
-          track={this.props.curTrack}
-        />
-      </GestureRecognizer>
-    );
-  };
+  getTrackInfoAndPlaybar = () => (
+    <GestureRecognizer
+      style={{ flex: 1 }}
+      onSwipeDown={() => this.onSwipeDown()}
+    >
+      <InfoText
+        setTime={this.props.setTime}
+        track={this.props.curTrack}
+      />
+    </GestureRecognizer>
+  );
 
-  getPlayControls = () => {
-    return (
-      <GestureRecognizer
-        style={{ flex: 1 }}
-        onSwipeDown={() => this.onSwipeDown()}
-      >
-        <PlayControls
-          logEvent={this.props.logEvent}
-          skipForward={this._nextTrack}
-          skipBack={this._previousTrack}
-          playing={this.props.playing}
-          handlePlayPress={this.props.handlePlayPress}
-          loading={this.props.loading}
-          currentTrack={this.props.curTrack}
-        />
-      </GestureRecognizer>
-    );
-  }
+  getPlayControls = () => (
+    <GestureRecognizer
+      style={{ flex: 1 }}
+      onSwipeDown={() => this.onSwipeDown()}
+    >
+      <PlayControls
+        logEvent={this.props.logEvent}
+        skipForward={this._nextTrack}
+        skipBack={this._previousTrack}
+        playing={this.props.playing}
+        handlePlayPress={this.props.handlePlayPress}
+        loading={this.props.loading}
+        currentTrack={this.props.curTrack}
+        navigation={this.props.navigation}
+      />
+    </GestureRecognizer>
+  )
 }
 
 const mapStateToProps = state => ({

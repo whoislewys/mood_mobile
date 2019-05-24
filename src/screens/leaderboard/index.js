@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import {
   View,
   ActivityIndicator,
-  FlatList,
+  FlatList, Image,
 } from 'react-native';
 import { connect } from 'react-redux';
+import Images from '@assets/images';
 import LeaderboardRow from './components/leaderboardRow';
-import Header from './components/header';
-import { loadLeaderboardSongQueue } from '../../redux/modules/queue';
+import MoodImageOnTopHeader from '../../components/headers/MoodImageOnTopHeader';
+import { loadQueueStartingAtId } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
+import { spacing } from '../../assets/styles';
 
 const styles = {
   background: {
@@ -17,10 +19,16 @@ const styles = {
   },
   leaderboardContainer: {
     flex: 1,
+    paddingTop: spacing.sm,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginLeft: 21,
-    marginRight: 21,
+    marginHorizontal: spacing.sm,
+  },
+  moodLogo: {
+    alignSelf: 'center',
+    width: 200,
+    height: 100,
+    resizeMode: 'contain',
   },
 };
 
@@ -30,7 +38,7 @@ class LeaderboardScreen extends Component {
       routeName: 'Leaderboard',
       params: { ...params, visible: true },
     });
-  }
+  };
 
   _navigateToPlayScreen = () => {
     this.props.navigation.navigate({
@@ -42,42 +50,50 @@ class LeaderboardScreen extends Component {
         moodscreen: this._navigateToLeaderboardScreen,
       },
     });
-  }
+  };
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
+    // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
+    this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
     this._navigateToPlayScreen();
-  }
+  };
 
   keyExtractor = song => song.id.toString();
 
-  _renderItem = ({ item, index }) => {
-    return (
-      <LeaderboardRow
-        leaderboardSong={item}
-        index={index}
-        _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
-      />
-    );
-  };
+  _renderItem = ({ item, index }) => (
+    <LeaderboardRow
+      leaderboardSong={item}
+      index={index}
+      _handleLeaderboardRowPress={this._handleLeaderboardRowPress}
+    />
+  );
 
-  getLeaderBoard = () => (
-    this.props.leaderboardSongs.length
-      ? (
-        <FlatList
-          data={this.props.leaderboardSongs}
-          renderItem={this._renderItem}
-          keyExtractor={this.keyExtractor}
-          ListHeaderComponent={Header({ headerText: 'Leaderboard', showLogo: true })}
-          ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
-          showsVerticalScrollIndicator={false}
-        />
-      )
-      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  )
+
+  topComponent = () => (
+    <Image source={Images.moodLogo} style={styles.moodLogo} />
+  );
+
+getLeaderBoard = () => (
+  this.props.leaderboardSongs.length
+    ? (
+      <FlatList
+        data={this.props.leaderboardSongs}
+        renderItem={this._renderItem}
+        keyExtractor={this.keyExtractor}
+        ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
+        showsVerticalScrollIndicator={false}
+      />
+    )
+    : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+);
 
   render = () => (
     <View style={styles.background}>
+      <MoodImageOnTopHeader
+        title='Leaderboard'
+        titleIsCentered={false}
+        topComponent={this.topComponent()}
+      />
       <View style={styles.leaderboardContainer}>
         {this.getLeaderBoard()}
       </View>
@@ -91,7 +107,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadLeaderboardSongQueue,
+  // loadLeaderboardSongQueue,
+  loadQueueStartingAtId,
   sendScoreDelta,
 };
 

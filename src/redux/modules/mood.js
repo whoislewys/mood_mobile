@@ -1,9 +1,10 @@
 import axios from 'axios';
-
-const LOAD_MOODS = 'moods/LOAD';
-const LOAD_MOODS_SUCCESS = 'moods/LOAD_SUCCESS';
-const LOAD_MOODS_FAIL = 'moods/LOAD_FAIL';
-const SET_MOOD = 'moods/SET';
+import {
+  LOAD_MOODS,
+  LOAD_MOODS_SUCCESS,
+  LOAD_MOODS_FAIL,
+  SET_MOOD,
+} from '../constants';
 
 const initialState = {
   moods: [
@@ -23,7 +24,7 @@ const initialState = {
 //   await Promise.all(imagePrefetch);
 // }
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_MOODS:
       return { ...state, loading: true };
@@ -57,41 +58,10 @@ export function setMood(moodObj) {
   };
 }
 
-// export function loadMoods() {
-//   return {
-//     type: LOAD_MOODS,
-//     payload: {
-//       request: {
-//         url: '/moods',
-//         params: {
-//           t: 'EXVbAWTqbGFl7BKuqUQv',
-//         },
-//       },
-//     },
-//   };
-// }
-
-// export function loadMoods() {
-//   return async (dispatch) => {
-//     dispatch({ type: LOAD_MOODS });
-//     let queuePromise = axios.get(`http://api.moodindustries.com/api/v1/moods/`,
-//       {
-//         params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
-//         responseType: 'json',
-//       });
-//     try {
-//       let moods = await queuePromise;
-//       dispatch({ type: LOAD_MOODS_SUCCESS, payload: moods });
-//     } catch (e) {
-//       dispatch({ type: LOAD_MOODS_FAIL });
-//     }
-//   };
-// }
-
 export function loadMoods() {
   return async (dispatch) => {
     dispatch({ type: LOAD_MOODS });
-    return axios.get('http://api.moodindustries.com/api/v1/moods/',
+    return axios.get('https://api.moodindustries.com/api/v1/moods/',
       {
         params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
         responseType: 'json',
