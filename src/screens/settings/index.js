@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { GoogleSignin } from 'react-native-google-signin';
+import firebase from 'react-native-firebase';
 import Images from '@assets/images';
 import ToggleSwitch from '../../components/toggle-switch';
 import { fonts, colors } from '../../assets/styles';
@@ -170,13 +170,12 @@ class SettingsScreen extends Component {
   _keyExtractor = item => item.key;
 
   logout = async () => {
-    if (!this.props.userIsLoggedIn) {
-      Alert.alert('Already logged out!', null);
-      return;
-    }
+    // if (!this.props.userIsLoggedIn) {
+    //   Alert.alert('Already logged out!', null);
+    //   return;
+    // }
     try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
+      firebase.auth().signOut();
       this.props.userLoggedOut();
       Alert.alert('Logout Successful!', null);
     } catch (error) {
