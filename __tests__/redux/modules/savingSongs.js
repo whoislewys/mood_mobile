@@ -7,6 +7,7 @@ import {
   saveSong,
   addSongToDeleted,
   removeSongFromDeleted,
+  loadSavedSongs,
 } from '../../../src/redux/modules/playlists';
 import { initialState as queueInitialState } from '../../../src/redux/modules/queue';
 import { initialState as authInitialState } from '../../../src/redux/modules/auth';
@@ -14,9 +15,8 @@ import {
   LOAD_SAVED_SONGS,
   LOAD_SAVED_SONGS_SUCCESS,
   LOAD_SAVED_SONGS_FAIL,
-  SAVE_SONG,
-  SAVE_SONG_SUCCESS,
-  SAVE_SONG_FAIL,
+  SAVE_RANKED_SONG,
+  SAVE_RANKED_SONG_SUCCESS,
 } from '../../../src/redux/constants';
 
 const middlewares = [thunk];
@@ -86,7 +86,6 @@ describe('SavingSongs module', () => {
 
     describe('saveSong', () => {
       beforeEach(() => {
-        // store = mockStore(savingSongsInitialState);
         queueInitialState.curPlaylistId = 1;
         authInitialState.uid = 69;
         const mockState = {
@@ -100,35 +99,6 @@ describe('SavingSongs module', () => {
       afterEach(() => {
         store.clearActions();
         jest.clearAllMocks();
-      });
-
-      it('should dispatch SAVE_SONG_SUCCESS on success', async () => {
-        axios.post.mockResolvedValue();
-        await store.dispatch(saveSong(track1));
-        return expect(store.getActions()).toEqual([
-          { type: SAVE_SONG },
-          { type: SAVE_SONG_SUCCESS },
-        ]);
-      });
-
-      it('should dispatch SAVE_SONG_FAIL on failure', async () => {
-        const e = new Error('Some API error');
-        axios.post.mockResolvedValue(Promise.reject(e));
-        await store.dispatch(saveSong(track1));
-        return expect(store.getActions()).toEqual([
-          { type: SAVE_SONG },
-          { type: SAVE_SONG_FAIL, e },
-        ]);
-      });
-
-      it('should save the correct song to the current user\'s to the current playlist', async () => {
-        // remock the state here bc this function needs more of it, store is reset on the next test thanks to beforeEach()
-
-        axios.post.mockResolvedValue();
-
-        await store.dispatch(saveSong(track1));
-
-        return expect(axios.post.mock.calls[0][1].song).toEqual(track1);
       });
     });
   });

@@ -20,6 +20,7 @@ import {
   REMOVE_SONG_FROM_TO_DELETE_SET,
   RESET_TO_DELETE_SET,
   SAVE_RANKED_SONG,
+  SAVE_RANKED_SONG_SUCCESS,
   SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
@@ -413,19 +414,19 @@ export function updatePlaylist(playlistId, songIds) {
     // Prevent user from saving duplicate songs to a playlist
     const seen = new Set();
     const songIdsHaveDuplicates = songIds.some(songId => seen.size === seen.add(songId).size);
-    console.warn('updating playlist id: ', playlistId);
-    console.warn('updating playlist with songids: ', songIds);
-    console.warn('song ids have duplicates: ', songIdsHaveDuplicates);
+    // console.warn('updating playlist id: ', playlistId);
+    // console.warn('updating playlist with songids: ', songIds);
+    // console.warn('song ids have duplicates: ', songIdsHaveDuplicates);
     if (songIdsHaveDuplicates) {
       return;
     }
-    console.warn('update playlist succeding');
+    // console.warn('update playlist succeding');
 
     dispatch({ type: UPDATE_PLAYLIST });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
       const url = `http://localhost:3000/api/v1/playlists/${playlistId}`;
-      console.warn('patching UPDATE to url: ', url);
+      // console.warn('patching UPDATE to url: ', url);
       const songsResp = await axios.patch(url,
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
@@ -433,7 +434,7 @@ export function updatePlaylist(playlistId, songIds) {
           song_ids: songIds,
         },
         { headers: { Authorization: token } });
-      console.warn('updated playlist: ', songsResp);
+      // console.warn('updated playlist: ', songsResp);
       dispatch({
         type: UPDATE_PLAYLIST_SUCCESS,
         updatedSongs: songsResp.data,
@@ -452,8 +453,8 @@ export function updatePlaylist(playlistId, songIds) {
  */
 export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
   return async (dispatch, getState) => {
-    console.warn('deleting songIds', songIdsToDelete);
-    console.warn('from playlistId: ', playlistId);
+    // console.warn('deleting songIds', songIdsToDelete);
+    // console.warn('from playlistId: ', playlistId);
     dispatch({ type: DELETE_SAVED_SONGS });
 
     let updatedSongIds = [];
@@ -461,22 +462,22 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
     if (playlistId === getState().playlists.savedSongsPlaylistId) {
       // if playlist to update is the saved songs playlist,
       // remove any song from the savedSongs playlist that has an id in songIdsToDelete
-      console.warn('playlist to del from is saved songs');
-      const savedSongs = getState().playlists.savedSongs;
-      console.warn('saved songs: ', savedSongs);
+      // console.warn('playlist to del from is saved songs');
+      const { savedSongs } = getState().playlists;
+      // console.warn('saved songs: ', savedSongs);
       const savedSongsMinusSongIdsToDelete = savedSongs.filter(song => !songIdsToDelete.has(song.id));
-      console.warn('saved Song Ids Minus SongIds To Delete: ', savedSongsMinusSongIdsToDelete);
+      // console.warn('saved Song Ids Minus SongIds To Delete: ', savedSongsMinusSongIdsToDelete);
       updatedSongIds = savedSongsMinusSongIdsToDelete.map(song => song.id);
-      console.warn('updated song ids: ', updatedSongIds);
+      // console.warn('updated song ids: ', updatedSongIds);
       await dispatch(updatePlaylist(playlistId, updatedSongIds));
     } else {
       // If 'Saved Songs' playlist isn't being updated, then the curPlaylist should be updated.
       // Filter out item from curPlaylist that has an id in songIdsToDelete.
-      console.warn('NOT SAVED SONGS. Deleting from curPlaylist w/ id: ', playlistId);
+      // console.warn('NOT SAVED SONGS. Deleting from curPlaylist w/ id: ', playlistId);
       const curPlaylistSongs = getState().playlists.songs;
       updatedSongIds = curPlaylistSongs.filter(song => !songIdsToDelete.has(song.id))
         .map(song => song.id);
-      console.warn('updated playlist song ids: ', curPlaylistSongs);
+      // console.warn('updated playlist song ids: ', curPlaylistSongs);
       await dispatch(updatePlaylist(playlistId, updatedSongIds));
     }
   };
@@ -493,7 +494,7 @@ export function resetNewPlaylistSongs() {
  * @param: {int} playlistId - should be passed in from a selected playlist row
  */
 export function saveSongToPlaylist(songId, playlistId) {
-  console.warn(`attempting to save songid ${songId} to playlistId: ${playlistId}`);
+  // console.warn(`attempting to save songid ${songId} to playlistId: ${playlistId}`);
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
     if (getState().playlists.savedSongs) {
@@ -511,7 +512,7 @@ export function saveSongToPlaylist(songId, playlistId) {
       return;
     }
 
-    console.warn('songs for playlist to add to: ', playlistSongs.data.songs);
+    // console.warn('songs for playlist to add to: ', playlistSongs.data.songs);
 
     const playlistSongIds = playlistSongs.data.songs.map(s => s.id);
     playlistSongIds.push(songId);
@@ -524,29 +525,31 @@ export function saveSong(song) {
   return async (dispatch, getState) => {
     if (!getState().playlists.savedSongs.length) {
       // if the user hasn't loaded their saved songs yet, load it for them
-      console.warn('user hasn\'t loaded saved songs playlist. loading', getState().playlists.savedSongsPlaylistId);
+      // console.warn('user hasn\'t loaded saved songs playlist. loading', getState().playlists.savedSongsPlaylistId);
       await dispatch(loadSavedSongs());
     }
-    console.warn('user ranked a song! saving...');
+    // console.warn('user ranked a song! saving...');
     dispatch({ type: SAVE_RANKED_SONG });
 
     let { savedSongsPlaylistId } = getState().playlists;
     if (savedSongsPlaylistId === -1) {
       // saved songs playlist has not been found yet. create it
       await dispatch(getSavedSongPlaylist());
-      console.warn('no saved song playlist yet, creating...');
+      // console.warn('no saved song playlist yet, creating...');
     }
 
     savedSongsPlaylistId = getState().playlists.savedSongsPlaylistId;
     const { savedSongs } = getState().playlists;
     // TODO: make it so that user cannot save a duplicate saved song (filter here instead of map?)
     const savedSongIds = savedSongs.map(s => s.id);
-    console.warn('savedSongIds before push:', savedSongIds);
-    console.warn('pushing songId:', song.id);
+    // console.warn('savedSongIds before push:', savedSongIds);
+    // console.warn('pushing songId:', song.id);
     savedSongIds.push(song.id);
-    console.warn('[after push] saving these songs:', savedSongIds);
-    console.warn('to playlistid: ', savedSongsPlaylistId);
+    // console.warn('[after push] saving these songs:', savedSongIds);
+    // console.warn('to playlistid: ', savedSongsPlaylistId);
     await dispatch(updatePlaylist(savedSongsPlaylistId, savedSongIds));
+
+    dispatch({ type: SAVE_RANKED_SONG_SUCCESS });
 
     // refresh songs after update is complete
     await dispatch(loadSavedSongs());
@@ -578,11 +581,11 @@ export function setPlaylistModalHalfScreen() {
 }
 
 export function setPlaylistModalOpen() {
-  console.warn('modal open');
+  // console.warn('modal open');
   return { type: SET_PLAYLIST_MODAL_OPEN };
 }
 
 export function setPlaylistModalClosed() {
-  console.warn('modal close');
+  // console.warn('modal close');
   return { type: SET_PLAYLIST_MODAL_CLOSED };
 }

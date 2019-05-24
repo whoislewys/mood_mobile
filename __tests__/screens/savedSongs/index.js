@@ -20,8 +20,10 @@ const track1 = {
 
 describe('SongRow Component', () => {
   it('should show correct images when saving and unsaving songs', () => {
-    const mockAddSongToDeleted = jest.fn();
-    const mockRemoveSongFromDeleted = jest.fn();
+    const songIds = new Set();
+    songIds.add(27);
+    const mockAddSongToDeleted = jest.fn(savedSong => songIds.add(savedSong.id));
+    const mockRemoveSongFromDeleted = jest.fn(savedSong => songIds.delete(savedSong.id));
 
     const wrapper = shallow(
       <SongRow
@@ -29,6 +31,7 @@ describe('SongRow Component', () => {
         index={0}
         addSongToDeleted={mockAddSongToDeleted}
         removeSongFromDeleted={mockRemoveSongFromDeleted}
+        songIdsToDelete={songIds}
       />,
     );
 
