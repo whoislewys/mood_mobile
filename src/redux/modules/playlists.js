@@ -460,9 +460,6 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
       updatedSongIds = savedSongsMinusSongIdsToDelete.map(song => song.id);
       console.warn('updated song ids: ', updatedSongIds);
       await dispatch(updatePlaylist(playlistId, updatedSongIds));
-
-      // don't forget to refresh our savedSongs after making a change
-      // await dispatch(loadSavedSongs());
     } else {
       // If 'Saved Songs' playlist isn't being updated, then the curPlaylist should be updated.
       // Filter out item from curPlaylist that has an id in songIdsToDelete.
@@ -472,7 +469,6 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
         .map(song => song.id);
       console.warn('updated playlist song ids: ', curPlaylistSongs);
       await dispatch(updatePlaylist(playlistId, updatedSongIds));
-      // await dispatch(loadSongsForPlaylistId(playlistId));
     }
   };
 }
