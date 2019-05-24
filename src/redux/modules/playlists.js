@@ -257,7 +257,7 @@ export function createPlaylist() {
         : getState().playlists.newPlaylistName;
       // console.warn('creating playlist: ', playlistNameToSubmit);
       const token = await firebase.auth().currentUser.getIdToken();
-      const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
+      const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           name: playlistNameToSubmit,
@@ -281,7 +281,7 @@ export function loadPlaylists() {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
-      const playlists = await axios.get('http://localhost:3000/api/v1/playlists',
+      const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
         {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
@@ -297,7 +297,7 @@ export function loadPlaylists() {
 async function loadSongsForPlaylistIdHelper(id) {
   const token = await firebase.auth().currentUser.getIdToken();
   try {
-    const songs = await axios.get(`http://localhost:3000/api/v1/playlists/${id}`,
+    const songs = await axios.get(`https://api.moodindustries.com/api/v1/playlists/${id}`,
       {
         headers: { Authorization: token },
         t: 'EXVbAWTqbGFl7BKuqUQv',
@@ -352,7 +352,7 @@ export function getSavedSongPlaylist() {
         const token = await firebase.auth()
           .currentUser
           .getIdToken();
-        const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
+        const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
           {
             t: 'EXVbAWTqbGFl7BKuqUQv',
             name: 'Saved Songs',
@@ -388,7 +388,7 @@ export function loadSavedSongs() {
       }
       const { savedSongsPlaylistId } = getState().playlists;
       const token = await firebase.auth().currentUser.getIdToken();
-      const savedSongs = await axios.get(`http://localhost:3000/api/v1/playlists/${savedSongsPlaylistId}`,
+      const savedSongs = await axios.get(`https://api.moodindustries.com/api/v1/playlists/${savedSongsPlaylistId}`,
         {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
@@ -425,7 +425,7 @@ export function updatePlaylist(playlistId, songIds) {
     dispatch({ type: UPDATE_PLAYLIST });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
-      const url = `http://localhost:3000/api/v1/playlists/${playlistId}`;
+      const url = `https://api.moodindustries.com/api/v1/playlists/${playlistId}`;
       // console.warn('patching UPDATE to url: ', url);
       const songsResp = await axios.patch(url,
         {
