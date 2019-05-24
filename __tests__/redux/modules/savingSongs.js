@@ -49,41 +49,6 @@ const track2 = {
 describe('SavingSongs module', () => {
   describe('action creator', () => {
     let store;
-    describe('loadSavedSongs', () => {
-      beforeEach(() => {
-        // only mock what you need in the store
-        store = mockStore(savingSongsInitialState);
-      });
-
-      afterEach(() => {
-        store.clearActions();
-        jest.clearAllMocks();
-      });
-
-      it('should dispatch LOAD_SAVED_SONGS_SUCCESS on success', async () => {
-        const mockSongs = [track1, track2];
-        axios.get.mockResolvedValue(mockSongs);
-
-        await store.dispatch(loadSavedSongs());
-
-        return expect(store.getActions()).toEqual([
-          { type: LOAD_SAVED_SONGS },
-          { type: LOAD_SAVED_SONGS_SUCCESS, payload: mockSongs },
-        ]);
-      });
-
-      it('should dispatch LOAD_SAVED_SONGS_FAIL on fail', async () => {
-        axios.get.mockResolvedValue(Promise.reject(new Error('Some API error')));
-
-        await store.dispatch(loadSavedSongs());
-
-        return expect(store.getActions()).toEqual([
-          { type: LOAD_SAVED_SONGS },
-          { type: LOAD_SAVED_SONGS_FAIL },
-        ]);
-      });
-    });
-
     describe('saveSong', () => {
       beforeEach(() => {
         queueInitialState.curPlaylistId = 1;

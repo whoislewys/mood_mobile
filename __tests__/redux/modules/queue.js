@@ -5,8 +5,7 @@ import {
   reducer,
   initialState as queueInitialState,
   loadSongsForMoodId,
-  loadLeaderboardSongQueue,
-  loadSharedSongQueue,
+  loadQueueStartingAtId,
 } from '../../../src/redux/modules/queue';
 import { initialState as leaderboardInitialState } from '../../../src/redux/modules/leaderboard';
 import { initialState as scoreInitialState } from '../../../src/redux/modules/score';
@@ -14,15 +13,8 @@ import {
   LOAD_SONGS,
   LOAD_SONGS_SUCCESS,
   LOAD_SONGS_FAIL,
-  LOAD_SHARED_SONG_QUEUE,
-  LOAD_SHARED_SONG_QUEUE_SUCCESS,
-  LOAD_SHARED_SONG_QUEUE_FAIL,
-  LOAD_LEADERBOARD_SONG_QUEUE,
+  LOAD_QUEUE_STARTING_AT_ID,
   RESET_QUEUE,
-  PLAYBACK_STATE,
-  PLAYBACK_TRACK,
-  MOOD_TYPE,
-  LEADERBOARD_TYPE,
 } from '../../../src/redux/constants';
 
 const middlewares = [thunk];
@@ -57,7 +49,7 @@ describe('Queue module', () => {
       let store;
       beforeEach(() => {
         // only mock what you need in the store
-        store = mockStore(queueInitialState);
+        store = mockStore({ queue: queueInitialState, score: scoreInitialState });
       });
 
       afterEach(() => {
@@ -65,18 +57,15 @@ describe('Queue module', () => {
       });
 
       it('should dispatch LOAD_SONGS_SUCCESS on success', async () => {
-        // mock more stuff you need
+        // Arrange
         const mockSongs = [track1, track2];
         axios.get.mockResolvedValue(mockSongs);
 
-        // exercise the functionality
+        // Act
         await store.dispatch(loadSongsForMoodId(1));
-
-        // assert you get what you'd expect
-        return expect(store.getActions()).toEqual([
-          { type: LOAD_SONGS },
-          { type: LOAD_SONGS_SUCCESS, payload: mockSongs },
-        ]);
+        // Assert
+        expect(store.getActions()).toContainEqual({ type: LOAD_SONGS });
+        expect(store.getActions()).toContainEqual({ type: LOAD_SONGS_SUCCESS, payload: mockSongs });
       });
 
       it('should dispatch LOAD_SONGS_FAIL on fail', async () => {
@@ -110,13 +99,13 @@ describe('Queue module', () => {
 
       it('should dispatch correct queue actions', async () => {
         const selectedLeaderboardSongIndex = 1;
-        await store.dispatch(loadLeaderboardSongQueue(selectedLeaderboardSongIndex));
+        await store.dispatch(loadQueueStartingAtId(selectedLeaderboardSongIndex, [track1, track2]));
         return expect(store.getActions().slice(0, 2)).toEqual([
           { type: RESET_QUEUE },
           {
-            type: LOAD_LEADERBOARD_SONG_QUEUE,
-            selectedLeaderboardSongIndex,
-            leaderboardSongs: mockState.leaderboard.songs,
+            type: LOAD_QUEUE_STARTING_AT_ID,
+            startSongIndex: selectedLeaderboardSongIndex,
+            songs: mockState.leaderboard.songs,
           },
         ]);
       });
