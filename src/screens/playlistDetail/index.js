@@ -51,7 +51,7 @@ class PlaylistDetail extends Component {
   }
 
   componentWillBlur = async () => {
-    // await this.props.deleteSongsFromPlaylist(this.props.curPlaylistId, this.props.songIdsToDelete);
+    await this.props.deleteSongsFromPlaylist(this.props.curPlaylistId, this.props.songIdsToDelete);
     this.props.resetToDeleteSet();
   };
 

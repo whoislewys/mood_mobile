@@ -164,7 +164,6 @@ export function reducer(state = initialState, action = {}) {
         songs: [],
       };
 
-
     case UPDATE_PLAYLIST:
       return { ...state, loading: true };
     case UPDATE_PLAYLIST_SUCCESS:
@@ -175,7 +174,7 @@ export function reducer(state = initialState, action = {}) {
       }
       // on the other hand, your playlist songs will always be up to date,
       // because you're guaranteed to get a fresh songs for the current playlist everytime you load the playlist detail screen
-      // return { ...state, loading: false };
+      return { ...state, loading: false, songs: updatedSongs };
     case UPDATE_PLAYLIST_FAIL:
       return { ...state, loading: false };
     default:
@@ -469,11 +468,11 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
       // Filter out item from curPlaylist that has an id in songIdsToDelete.
       console.warn('NOT SAVED SONGS. Deleting from curPlaylist w/ id: ', playlistId);
       const curPlaylistSongs = getState().playlists.songs;
-      updatedSongIds = curPlaylistSongs.filter(song => songIdsToDelete.has(song.id))
+      updatedSongIds = curPlaylistSongs.filter(song => !songIdsToDelete.has(song.id))
         .map(song => song.id);
       console.warn('updated playlist song ids: ', curPlaylistSongs);
       await dispatch(updatePlaylist(playlistId, updatedSongIds));
-      await dispatch(loadSongsForPlaylistId(playlistId));
+      // await dispatch(loadSongsForPlaylistId(playlistId));
     }
   };
 }
