@@ -79,7 +79,7 @@ export function reducer(state = initialState, action = {}) {
       songIdsToDeleteAfterResaving.delete(action.songIdToResave);
       return { ...state, songIdsToDelete: songIdsToDeleteAfterResaving };
     case RESET_TO_DELETE_SET:
-      console.warn('resetting');
+      // console.warn('resetting');
       return { ...state, songIdsToDelete: new Set() };
 
     case SET_SAVED_SONG_PLAYLIST_ID:
@@ -141,7 +141,7 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
     case LOAD_SAVED_SONGS_SUCCESS:
-      console.warn('updating savedSongs state with songs: ', action.savedSongs.data.songs);
+      // console.warn('updating savedSongs state with songs: ', action.savedSongs.data.songs);
       const savedSongs = mapSongsToValidTrackObjects(action.savedSongs.data.songs);
       return {
         ...state,
@@ -176,7 +176,7 @@ export function reducer(state = initialState, action = {}) {
       // because you're guaranteed to get a fresh songs for the current playlist everytime you load the playlist detail screen
       return { ...state, loading: false, songs: updatedSongs };
     case UPDATE_PLAYLIST_FAIL:
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: action.e };
     default:
       return state;
   }
@@ -254,7 +254,7 @@ export function createPlaylist() {
       // submit new playlist
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist'
         : getState().playlists.newPlaylistName;
-      console.warn('creating playlist: ', playlistNameToSubmit);
+      // console.warn('creating playlist: ', playlistNameToSubmit);
       const token = await firebase.auth().currentUser.getIdToken();
       const newPlaylist = await axios.post('http://localhost:3000/api/v1/playlists',
         {
@@ -362,8 +362,8 @@ export function getSavedSongPlaylist() {
 
         // TODO: also fill the state's savedSongs?
         const newPlaylistId = newPlaylist.data.id;
-        console.warn('new savedSongs playlist created: ', newPlaylist);
-        console.warn('here\'s it\'s id: ', newPlaylistId);
+        // console.warn('new savedSongs playlist created: ', newPlaylist);
+        // console.warn('here\'s it\'s id: ', newPlaylistId);
         dispatch({
           type: SET_SAVED_SONG_PLAYLIST_ID,
           newPlaylistId,
@@ -376,7 +376,7 @@ export function getSavedSongPlaylist() {
 }
 export function loadSavedSongs() {
   // loads the current user's saved songs playlist into the store
-  console.warn('loading saved songs');
+  // console.warn('loading saved songs');
   return async (dispatch, getState) => {
     dispatch({
       type: LOAD_SAVED_SONGS,
@@ -392,8 +392,8 @@ export function loadSavedSongs() {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
-      console.warn('saved songs loaded: ', savedSongs);
-      console.warn('loaded saved songs from playlist id: ', savedSongsPlaylistId);
+      // console.warn('saved songs loaded: ', savedSongs);
+      // console.warn('loaded saved songs from playlist id: ', savedSongsPlaylistId);
 
       dispatch({
         type: LOAD_SAVED_SONGS_SUCCESS,
@@ -410,8 +410,17 @@ export function loadSavedSongs() {
 
 export function updatePlaylist(playlistId, songIds) {
   return async (dispatch) => {
+    // Prevent user from saving duplicate songs to a playlist
+    const seen = new Set();
+    const songIdsHaveDuplicates = songIds.some(songId => seen.size === seen.add(songId).size);
     console.warn('updating playlist id: ', playlistId);
-    console.warn('...with song ids: ', songIds);
+    console.warn('updating playlist with songids: ', songIds);
+    console.warn('song ids have duplicates: ', songIdsHaveDuplicates);
+    if (songIdsHaveDuplicates) {
+      return;
+    }
+    console.warn('update playlist succeding');
+
     dispatch({ type: UPDATE_PLAYLIST });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
@@ -431,7 +440,7 @@ export function updatePlaylist(playlistId, songIds) {
         playlistId,
       });
     } catch (e) {
-      dispatch({ type: UPDATE_PLAYLIST_FAIL });
+      dispatch({ type: UPDATE_PLAYLIST_FAIL, e });
     }
   };
 }
