@@ -118,22 +118,26 @@ class Playlists extends Component {
     }
   };
 
-  getPlaylists = () => (
-    !this.props.loading && this.props.playlists !== undefined
-      ? (
-        <FlatList
-          data={[this._playlistButton()].concat(this.props.playlists)}
-          renderItem={this._renderItem}
-          keyExtractor={this.keyExtractor}
-          ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
-          ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
-          showsVerticalScrollIndicator={false}
-          onScrollEndDrag={this.handleScroll}
-          scrollEventThrottle={16}
-        />
-      )
-      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  );
+  getPlaylists = () => {
+    const playlistsNoSavedSongs = this.props.playlists.filter(playlist => playlist.name !== 'Saved Songs');
+
+    return (
+      !this.props.loading && this.props.playlists !== undefined
+        ? (
+          <FlatList
+            data={[this._playlistButton()].concat(playlistsNoSavedSongs)}
+            renderItem={this._renderItem}
+            keyExtractor={this.keyExtractor}
+            ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
+            ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
+            showsVerticalScrollIndicator={false}
+            onScrollEndDrag={this.handleScroll}
+            scrollEventThrottle={16}
+          />
+        )
+        : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+    );
+  };
 
 
   _onCreatePlaylist = async () => {
