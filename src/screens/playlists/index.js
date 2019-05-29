@@ -69,15 +69,14 @@ class Playlists extends Component {
     this._navigateToPlaylistDetailScreen();
   };
 
-  _handlePlaylistRowPress = (pressedPlaylist) => {
-    // For the case where you add songs to playlists through this screen,
-    // call the func that lets people add a song to the selected playlist.
-    // For the other case, show the songs within that playlist
-    return (this.props.isPlaylistModalOpen
-      ? this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id)
-      : this._showCurrentPlaylist(pressedPlaylist)
-    );
-  };
+  _handlePlaylistRowPress = // For the case where you add songs to playlists through this screen,
+                            // call the func that lets people add a song to the selected playlist.
+                            // For the other case, show the songs within that playlist
+                            pressedPlaylist => (this.props.isPlaylistModalOpen
+                              ? this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id)
+                              : this._showCurrentPlaylist(pressedPlaylist)
+                            )
+  ;
 
 
   _onOpenCreatePlaylistModal = () => {
@@ -164,10 +163,14 @@ class Playlists extends Component {
     // 2. As a standalone screen that you can play music through
     // A different function is called in each case when clicking a playlist row
     // See more in the _handlePlaylistRowPress func
-    <View style={styles.container}>
-      {this.getModal()}
-      {this.getPlaylists()}
-    </View>
+    !this.props.loading
+      ? (
+        <View style={styles.container}>
+          {this.getModal()}
+          {this.getPlaylists()}
+        </View>
+      )
+      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
   )
 }
 

@@ -27,7 +27,7 @@ platform :ios do
       type: 'appstore',
       git_url: 'https://github.com/SamRond/mood_mobile_certs'
     ) # more info: https://codesigning.guide
-    # increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
+    increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
     gym(scheme: 'mood_mobile', workspace: './ios/mood_mobile.xcworkspace')
     upload_to_testflight
   end
