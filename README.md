@@ -1,6 +1,6 @@
 # Setup
 
-First setup your react-native platform. Start with iOS - it's easier to set up.
+First setup your react-native platform. 
 
 ### Android
 Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.58/getting-started.html) doc. Make sure you use `Google APIs Intel x86 Atom System Image` for your simulator for 0.58.
@@ -12,6 +12,12 @@ Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.5
 Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.58/getting-started.html) doc for 0.58.
 
 Make sure you run `cd ios && pod install`
+
+Download [XCode 10.1](https://developer.apple.com/download/more/?name=Xcode).
+
+Open your up-to-date XCode.
+
+Go to the tabs in the menu bar and navigate to XCode -> Preferences -> Locations and in the "Command Line Tools:" dropdown, select `XCode 10.1`.
 
 ## Running App 
 1. `yarn`
