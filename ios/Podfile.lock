@@ -1,4 +1,7 @@
 PODS:
+  - Branch (0.27.0):
+    - Branch/Core (= 0.27.0)
+  - Branch/Core (0.27.0)
   - Firebase/Auth (5.15.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.2.0)
@@ -72,12 +75,14 @@ PODS:
   - nanopb/encode (0.3.901)
 
 DEPENDENCIES:
+  - Branch (= 0.27.0)
   - Firebase/Auth (~> 5.15.0)
   - Firebase/Core (~> 5.15.0)
   - GoogleSignIn (~> 4.4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Branch
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -92,6 +97,7 @@ SPEC REPOS:
     - nanopb
 
 SPEC CHECKSUMS:
+  Branch: e4f2a9c361ebdc960c823d16014c187bf19b508c
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
   FirebaseAuth: 02e969ff430e156d99d4cb842d77b806b71ad7bb
@@ -105,6 +111,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
 
-PODFILE CHECKSUM: dfc0ef0df779b236a4f4e58cf9a73dd2ad12dacc
+PODFILE CHECKSUM: 1675d4877f9953979d5ecd37612d07604c1073f3
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.0
