@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "979028939811-05jmsph9ef5f4qdjsnfchroin23pp2gq.apps.googleusercontent.com",
+          "client_id": "979028939811-cg0pfg1i2rhddto6vh98migetjo98ovm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mood_mobile",
-            "certificate_hash": "45f8609873260c035882167a8fb14016ebe936c5"
+            "certificate_hash": "ee8e5bfcd0322d71962e05fe5741f83e214d59d3"
           }
         },
         {
@@ -28,6 +28,14 @@
           "android_info": {
             "package_name": "com.mood_mobile",
             "certificate_hash": "9f2821d5785d8e94b5a5f79825dc92bd106c1590"
+          }
+        },
+        {
+          "client_id": "979028939811-05jmsph9ef5f4qdjsnfchroin23pp2gq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mood_mobile",
+            "certificate_hash": "45f8609873260c035882167a8fb14016ebe936c5"
           }
         },
         {
