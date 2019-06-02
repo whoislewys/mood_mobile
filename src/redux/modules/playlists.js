@@ -366,7 +366,7 @@ export function getSavedSongPlaylist() {
         console.warn('here\'s it\'s id: ', newPlaylistId);
         dispatch({
           type: SET_SAVED_SONG_PLAYLIST_ID,
-          newPlaylistId,
+          savedSongsPlaylistId: newPlaylistId,
         });
       } catch (e) {
         console.log(e);
