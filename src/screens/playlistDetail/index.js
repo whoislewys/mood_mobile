@@ -79,7 +79,7 @@ class PlaylistDetail extends Component {
       <TouchableOpacity
         style={styles.shuffleButtonContainer}
         onPress={() => {
-          this.props.shufflePlay(this.props.queue);
+          this.props.shufflePlay(this.props.playlistSongs);
           this.props.navigation.navigate('Play');
         }}
       >
