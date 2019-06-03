@@ -29,7 +29,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.7)',
+  },
+  blackBackground: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'black',
+    opacity: 0.5,
+    top: -1 * dimensions.height,
   },
   modalContents: {
     height: dimensions.height * 0.5849,
@@ -118,6 +123,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.blackBackground} />
         <GestureRecognizer style={styles.modalContents} onSwipe={() => this.onSwipe()}>
           <Image source={Images.moodLogo} style={styles.moodLogo} borderRadius={10} />
           { this.renderGoogleSigninButton() }

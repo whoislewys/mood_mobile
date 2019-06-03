@@ -136,7 +136,7 @@ export default createStackNavigator({
       if (route.routeName === 'Settings') {
         return { opacity, transform: [{ translateX }] };
       }
-      if (route.routeName === 'PlaylistModal') {
+      if (route.routeName === 'PlaylistModal' || route.routeName === 'LoginScreen') {
         return { opacity, transform: [{ translateY: 0 }, { translateX: 0 }] };
       }
       return { opacity, transform: [{ translateY }] };
