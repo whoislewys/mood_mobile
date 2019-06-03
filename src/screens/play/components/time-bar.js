@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -10,
     width: 55,
-    height: '110%',
+    height: '140%',
+    backgroundColor: 'transparent',
   },
   time: {
     backgroundColor: 'transparent',
