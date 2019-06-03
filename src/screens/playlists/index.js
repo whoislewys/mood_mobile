@@ -63,20 +63,24 @@ class Playlists extends Component {
 
   keyExtractor = song => song.id.toString();
 
-  _showCurrentPlaylist = async (pressedPlaylist) => {
+  _showCurrentPlaylist = (pressedPlaylist) => {
     this.props.setCurrentPlaylist(pressedPlaylist);
     this.props.loadSongsForPlaylistId(pressedPlaylist.id);
     this._navigateToPlaylistDetailScreen();
   };
 
-  _handlePlaylistRowPress = // For the case where you add songs to playlists through this screen,
-                            // call the func that lets people add a song to the selected playlist.
-                            // For the other case, show the songs within that playlist
-                            pressedPlaylist => (this.props.isPlaylistModalOpen
-                              ? this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id)
-                              : this._showCurrentPlaylist(pressedPlaylist)
-                            )
-  ;
+  // For the case where you add songs to playlists through this screen,
+  // call the func that lets people add a song to the selected playlist.
+  // For the other case, show the songs within that playlist
+  _handlePlaylistRowPress =
+    (pressedPlaylist) => {
+      if (this.props.isPlaylistModalOpen) {
+        this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id);
+        this.props.handleModalClose();
+      } else {
+        this._showCurrentPlaylist(pressedPlaylist);
+      }
+    };
 
 
   _onOpenCreatePlaylistModal = () => {

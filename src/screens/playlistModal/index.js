@@ -122,23 +122,17 @@ export class PlaylistModal extends Component {
           <GestureRecognizer
             style={styles.swipeBar}
             onSwipeUp={() => this._animateModalToFullscreen()}
-            onSwipeDown={() => this._handleModalClose()}
+            onSwipeDown={() => this.handleModalClose()}
           >
-            <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this._handleModalClose()}>
+            <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.handleModalClose()}>
               <Image source={Images.close} style={styles.exitButton} />
             </TouchableOpacity>
           </GestureRecognizer>
-          <Playlists songIdToAdd={this.props.songIdToAdd} navigation={this.props.navigation} />
+          <Playlists songIdToAdd={this.props.songIdToAdd} navigation={this.props.navigation} handleModalClose={this.handleModalClose} />
         </Animated.View>
       </View>
     );
   }
-
-  _handleModalClose = () => {
-    this.props.setPlaylistScrollingNotNegative();
-    this.props.setPlaylistModalHalfScreen();
-    this.props.navigation.goBack();
-  };
 
   _animateModalToFullscreen = () => {
     Animated.timing(this.state.yPosition, {
@@ -147,6 +141,13 @@ export class PlaylistModal extends Component {
       useNativeDriver: true,
     }).start();
   };
+
+  handleModalClose = () => {
+    this.props.setPlaylistScrollingNotNegative();
+    this.props.setPlaylistModalHalfScreen();
+    this.props.navigation.goBack();
+  };
+
 }
 
 const mapStateToProps = state => ({
