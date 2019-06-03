@@ -96,7 +96,7 @@ export class PlaylistModal extends Component {
   shouldComponentUpdate(nextProps) {
     if (nextProps.playlistScrollIsNegative) {
       // close this playlist modal if the playlist's scroll view is scrolling over the top song
-      this._handleModalClose();
+      this.handleModalClose();
     }
 
     if (nextProps.isPlaylistModalFullScreen) {
