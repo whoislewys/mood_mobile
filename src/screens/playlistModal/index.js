@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   androidBlackOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'black',
-    opacity: 0.4,
+    opacity: 0.5,
   },
   modalContents: {
     height: '100%',
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   swipeBar: {
     // for some reason giving it a background color here makes the swipe work
     backgroundColor: 'white',
-    elevation: 5,
     shadowRadius: 5,
     shadowOpacity: 0.5,
   },
@@ -66,12 +65,14 @@ const styles = StyleSheet.create({
 });
 
 export class PlaylistModal extends Component {
+  aboutHalfScreen = dimensions.height * 0.2451;
+
   constructor(props) {
     super(props);
 
     // set modal to fill half screen by default
     this.state = {
-      yPosition: new Animated.Value(dimensions.height * 0.4151),
+      yPosition: new Animated.Value(dimensions.height),
     };
 
     if (!this.props.playlists) {
@@ -87,10 +88,12 @@ export class PlaylistModal extends Component {
 
   componentWillFocus = () => {
     this.props.setPlaylistModalOpen();
+    this._animateModalToHalfScreen();
   };
 
   componentWillBlur = () => {
     this.props.setPlaylistModalClosed();
+    this._animateModalOffScreen();
   };
 
   shouldComponentUpdate(nextProps) {
@@ -110,29 +113,52 @@ export class PlaylistModal extends Component {
     const animationStyle = {
       transform: [{ translateY: this.state.yPosition }],
     };
+
+    const initialAnimateUp = {
+      transform: [{ translateY: this.state.yPosition }],
+    };
+
     return (
-      <View
-        style={styles.swipeContainer}
-      >
+      <View style={styles.swipeContainer}>
         { Platform.OS === 'android'
           ? <View style={styles.androidBlackOverlay} />
           : null
         }
-        <Animated.View style={[styles.modalContents, animationStyle]}>
-          <GestureRecognizer
-            style={styles.swipeBar}
-            onSwipeUp={() => this._animateModalToFullscreen()}
-            onSwipeDown={() => this.handleModalClose()}
-          >
-            <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.handleModalClose()}>
-              <Image source={Images.close} style={styles.exitButton} />
-            </TouchableOpacity>
-          </GestureRecognizer>
-          <Playlists songIdToAdd={this.props.songIdToAdd} navigation={this.props.navigation} handleModalClose={this.handleModalClose} />
+        <Animated.View
+          style={[styles.swipeContainer, initialAnimateUp]}
+        >
+          <Animated.View style={[styles.modalContents, animationStyle]}>
+            <GestureRecognizer
+              style={styles.swipeBar}
+              onSwipeUp={() => this._animateModalToFullscreen()}
+              onSwipeDown={() => this.handleModalClose()}
+            >
+              <TouchableOpacity style={styles.exitButtonContainer} onPress={() => this.handleModalClose()}>
+                <Image source={Images.close} style={styles.exitButton} />
+              </TouchableOpacity>
+            </GestureRecognizer>
+            <Playlists songIdToAdd={this.props.songIdToAdd} navigation={this.props.navigation} handleModalClose={this.handleModalClose} />
+          </Animated.View>
         </Animated.View>
       </View>
     );
   }
+
+  _animateModalToHalfScreen = () => {
+    Animated.timing(this.state.yPosition, {
+      toValue: this.aboutHalfScreen,
+      duration: 320,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  _animateModalOffScreen = () => {
+    Animated.timing(this.state.yPosition, {
+      toValue: dimensions.height,
+      duration: 320,
+      useNativeDriver: true,
+    }).start();
+  };
 
   _animateModalToFullscreen = () => {
     Animated.timing(this.state.yPosition, {

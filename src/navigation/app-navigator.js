@@ -115,7 +115,6 @@ export default createStackNavigator({
     screenInterpolator: (sceneProps) => {
       const { layout, position, scene } = sceneProps;
       const { index, route } = scene;
-      const last = index - 1;
       const height = layout.initHeight;
       const width = layout.initWidth;
 
@@ -126,7 +125,7 @@ export default createStackNavigator({
 
       const translateY = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [width, 0, 0],
+        outputRange: [height, 0, 0],
       });
 
       const translateX = position.interpolate({
@@ -134,7 +133,12 @@ export default createStackNavigator({
         outputRange: [width, 0, 0],
       });
 
-      if (route.routeName === 'Settings') return { opacity, transform: [{ translateX }] };
+      if (route.routeName === 'Settings') {
+        return { opacity, transform: [{ translateX }] };
+      }
+      if (route.routeName === 'PlaylistModal') {
+        return { opacity, transform: [{ translateY: 0 }, { translateX: 0 }] };
+      }
       return { opacity, transform: [{ translateY }] };
     },
   }),
