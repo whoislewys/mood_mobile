@@ -226,6 +226,37 @@ export function loadSongsForMoodId(moodId) {
   };
 }
 
+export function loadSongsForAllMoods(moodIds) {
+  return async (dispatch) => {
+    await TrackPlayer.reset();
+    dispatch({ type: LOAD_SONGS });
+    try {
+      const songsPromises = [];
+      for (let i = 0; i < moodIds.length; i++) {
+        const songsPromise = axios.get(`https://api.moodindustries.com/api/v1/moods/${moodIds[i]}/songs`,
+          {
+            params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+            responseType: 'json',
+          });
+        songsPromises.push(songsPromise);
+      }
+
+      const songsLists = await Promise.all(songsPromises);
+      console.warn('songs lists: ', songsLists);
+
+      // fill allMoodSongs with the list of songs associated with each mood
+      const allMoodSongs = [];
+      Object.values(songsLists)
+        .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs));
+
+      dispatch({ type: LOAD_SONGS_SUCCESS, payload: allMoodSongs });
+      dispatch(startScoreTimer());
+    } catch (e) {
+      dispatch({ type: LOAD_SONGS_FAIL });
+    }
+  };
+}
+
 export function loadQueueStartingAtId(startSongIndex, songs) {
   return async (dispatch) => {
     await TrackPlayer.reset();

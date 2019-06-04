@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
-import { loadSongsForMoodId } from '../../redux/modules/queue';
+import { loadSongsForAllMoods, loadSongsForMoodId } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
 import MoodLeftHeaderWithSettingsButton from '../../components/headers/MoodLeftHeaderWithSettingsButton';
 import { spacing } from '../../assets/styles';
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   flatListContainer: {
+    flex: 1,
     marginTop: spacing.sm * 0.731, // for some reason there's some padding on the moodlist i can't get rid of, so i hacked together this custom margin so it looks the same as the events screen
   },
 });
@@ -65,6 +66,7 @@ class MoodScreen extends Component {
       return (
         <MoodList
           loadSongsForMoodId={this.props.loadSongsForMoodId}
+          loadSongsForAllMoods={this.props.loadSongsForAllMoods}
           setMood={this.props.setMood}
           moods={this.props.moods}
           selected={this.props.mood}
@@ -96,6 +98,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setMood,
+  loadSongsForAllMoods,
   loadSongsForMoodId,
 };
 
