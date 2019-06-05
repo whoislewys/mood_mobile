@@ -141,7 +141,7 @@ class SettingsScreen extends Component {
               image: Images.settingsButton,
               settingInfo: 'All the stuff you need to know.',
               settingName: 'Privacy Policy',
-              url: 'http://www.moodindustries.com/privacy.pdf',
+              url: 'https://docs.google.com/document/d/1c2Os5qrUO1vPD-noTqL-6KTLI_uOqhZ_W0HhoYsPVlE/edit?usp=sharing',
             }, {
               key: 'logout',
               buttonText: 'LOGOUT',

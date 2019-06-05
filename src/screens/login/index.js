@@ -149,7 +149,7 @@ class LoginScreen extends Component {
   // }
 
   static _ppTouch() {
-    Linking.openURL('http://www.moodindustries.com/privacy.pdf');
+    Linking.openURL('https://docs.google.com/document/d/1c2Os5qrUO1vPD-noTqL-6KTLI_uOqhZ_W0HhoYsPVlE/edit?usp=sharing');
   }
 
   _signIn = async () => {
