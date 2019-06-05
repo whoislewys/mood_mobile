@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
+import { LEADERBOARDS } from '../../redux/constants';
 import LeaderboardRow from './components/leaderboardRow';
+import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { loadQueueStartingAtId } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
 import { spacing } from '../../assets/styles';
@@ -33,6 +35,15 @@ const styles = StyleSheet.create({
 });
 
 class LeaderboardScreen extends Component {
+  componentDidMount() {
+    this.props.navigation.addListener('willFocus', this.componentWillFocus);
+  }
+
+  componentWillFocus = () => {
+    const leaderboardType = this.props.navigation.state.key;
+    this.props.loadLeaderboardSongs(LEADERBOARDS[leaderboardType]);
+  };
+
   _navigateToLeaderboardScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Leaderboard',
@@ -53,7 +64,6 @@ class LeaderboardScreen extends Component {
   };
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
     this._navigateToPlayScreen();
   };
@@ -102,7 +112,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  // loadLeaderboardSongQueue,
+  loadLeaderboardSongs,
   loadQueueStartingAtId,
   sendScoreDelta,
 };
