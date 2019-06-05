@@ -13,6 +13,9 @@ const images = {
   // Events
   addEventButton: require('./img/add-event-button.png'),
 
+  // Home Screen (Mood Screen)
+  mysteryMoodTile: require('./img/mystery-mood-tile.png'),
+
   // Leaderboard
   leaderboardStar: require('./img/round-stars-1.png'),
   moodLogo: require('./img/Color-Mood-Logo.png'),

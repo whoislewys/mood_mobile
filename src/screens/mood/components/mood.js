@@ -28,19 +28,23 @@ const styles = StyleSheet.create({
 });
 
 export default class Mood extends React.Component {
-  handlePress = () => {
-    this.props.onPressItem(this.props.mood);
-  }
-
   render = () => (
     <TouchableOpacity
       style={styles.container}
-      onPress={this.handlePress}
+      onPress={() => this.props.onPressMoodTile(this.props.mood)}
       activeOpacity={0.5}
     >
       <View style={styles.tile}>
-        <Image style={styles.moodArt} source={{ uri: this.props.mood.file }} />
+        { this.getMoodTileImage(this.props.mood.id) }
+
       </View>
     </TouchableOpacity>
-  )
+  );
+
+  getMoodTileImage = (id) => {
+    if (id === 69) {
+      return <Image style={styles.moodArt} source={this.props.mood.file} />;
+    }
+    return <Image style={styles.moodArt} source={{ uri: this.props.mood.file }} />;
+  };
 }

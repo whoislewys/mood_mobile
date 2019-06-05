@@ -3,38 +3,46 @@ import {
   FlatList,
 } from 'react-native';
 import Mood from './mood';
+import Images from '@assets/images'
 
 export default class MoodList extends React.Component {
-  keyExtractor = mood => mood.name;
+  render = () => (
+    <FlatList
+      data={this._getMoodTiles()}
+      keyExtractor={this._keyExtractor}
+      renderItem={this._renderItem}
+      numColumns={2}
+    />
+  );
 
-  settings = () => {
-    this.props.settings();
+  _getMoodTiles = () => {
+    // Images.mysteryMoodTile;
+    const mysteryMoodTile = {
+      file: Images.mysteryMoodTile,
+      id: 69,
+    };
+    return this.props.moods.concat([mysteryMoodTile]);
   };
 
-  onPressItem = (moodObj) => {
+  _keyExtractor = mood => mood.name;
+
+  onPressMoodTile = (moodObj) => {
+    if (moodObj.id === 69) {
+      const ids = this.props.moods.map(mood => mood.id);
+      this.props.loadSongsForAllMoods(ids);
+      this.props.playscreen();
+    }
     this.props.loadSongsForMoodId(moodObj.id);
     this.props.playscreen();
   };
 
-  // renderItem called when rendering FlatList. returns a Mood component
   _renderItem = ({ item }) => (
     <Mood
       mood={item}
       playscreen={this.props.playscreen}
       selected={this.props.selected}
-      onPressItem={this.onPressItem}
+      onPressMoodTile={this.onPressMoodTile}
     />
   );
 
-  render = () => {
-    return (
-      <FlatList
-        data={this.props.moods}
-        keyExtractor={this.keyExtractor}
-        renderItem={this._renderItem}
-        numColumns={2}
-        scrollEnabled={false}
-      />
-    );
-  }
 }
