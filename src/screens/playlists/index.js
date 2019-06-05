@@ -82,7 +82,6 @@ class Playlists extends Component {
       }
     };
 
-
   _onOpenCreatePlaylistModal = () => {
     if (!this.props.userIsLoggedIn) {
       this.props.navigation.navigate('Login');
