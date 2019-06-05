@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import Images from '@assets/images';
-import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { connect } from 'react-redux';
 import {
