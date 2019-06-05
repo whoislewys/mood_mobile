@@ -36,7 +36,6 @@ export function loadLeaderboardSongs(leaderboardType) {
     dispatch({ type: LOAD_SONGS });
     try {
       const url = `https://api.moodindustries.com/api/v1/stats/${leaderboardType}`;
-      console.warn('getting from url: ', url);
       const songs = await axios.get(url,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
