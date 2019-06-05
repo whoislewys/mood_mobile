@@ -29,7 +29,7 @@ import TabBar from './components/TabBar';
 
 import MoodLeftHeaderWithSettingsButton
   from '../components/headers/MoodLeftHeaderWithSettingsButton';
-import { colors } from '../assets/styles';
+import { colors, fonts } from '../assets/styles';
 import MoodImageOnTopHeader from '../components/headers/MoodImageOnTopHeader';
 
 const styles = StyleSheet.create({
@@ -73,6 +73,10 @@ const MyMusicNavigator = createMaterialTopTabNavigator({
       backgroundColor: colors.black,
       alignSelf: 'center',
     },
+    labelStyle: {
+      fontSize: 13,
+      fontFamily: fonts.primary,
+    },
     style: {
       backgroundColor: '#fff',
     },
@@ -91,6 +95,9 @@ const MyMusicNavigatorWithHeader = createStackNavigator({
 });
 
 const leaderboardNavigator = createMaterialTopTabNavigator({
+  Daily: { screen: map(LeaderboardScreen) },
+  Weekly: { screen: map(LeaderboardScreen) },
+  Monthly: { screen: map(LeaderboardScreen) },
   'All Time': { screen: map(LeaderboardScreen) },
 },
 {
@@ -100,6 +107,10 @@ const leaderboardNavigator = createMaterialTopTabNavigator({
     indicatorStyle: {
       backgroundColor: colors.black,
       alignSelf: 'center',
+    },
+    labelStyle: {
+      fontSize: 13,
+      fontFamily: fonts.primary,
     },
     style: {
       backgroundColor: '#fff',
