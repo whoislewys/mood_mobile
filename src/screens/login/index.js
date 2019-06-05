@@ -6,7 +6,7 @@ import {
   Alert,
   StyleSheet,
   Image,
-  Linking,
+  Linking, ActivityIndicator,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import Images from '@assets/images';
@@ -104,6 +104,14 @@ const styles = StyleSheet.create({
 });
 
 class LoginScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSpinner: false,
+    };
+  }
+
+
   async componentDidMount() {
     GoogleSignin.configure({
       webClientId: config.webClientId,
@@ -112,12 +120,16 @@ class LoginScreen extends Component {
   }
 
   renderGoogleSigninButton = () => (
-    <TouchableOpacity style={styles.signInButton} onPress={() => this._signIn()} activeOpacity={0.6}>
-      <View style={styles.signInButtonIconContainer}>
-        <Image style={styles.signInButtonIcon} source={Images.googleIcon} />
-      </View>
-      <Text style={styles.signInButtonText}>Login with Google</Text>
-    </TouchableOpacity>
+    this.state.showSpinner
+      ? <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+      : (
+        <TouchableOpacity style={styles.signInButton} onPress={() => this._signIn()} activeOpacity={0.6}>
+          <View style={styles.signInButtonIconContainer}>
+            <Image style={styles.signInButtonIcon} source={Images.googleIcon} />
+          </View>
+          <Text style={styles.signInButtonText}>Login with Google</Text>
+        </TouchableOpacity>
+      )
   );
 
   render() {
@@ -154,6 +166,7 @@ class LoginScreen extends Component {
 
   _signIn = async () => {
     try {
+      this.setState({ showSpinner: true });
       const userInfo = await GoogleSignin.signIn();
       const credential = firebase.auth.GoogleAuthProvider.credential(userInfo.idToken, userInfo.accessToken);
       const currentUser = await firebase.auth().signInWithCredential(credential);
@@ -174,6 +187,8 @@ class LoginScreen extends Component {
       } else {
         Alert.alert('Something Went Wrong', error.toString());
       }
+    } finally {
+      this.setState({ showSpinner: false });
     }
   };
 }
