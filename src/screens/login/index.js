@@ -121,7 +121,7 @@ class LoginScreen extends Component {
 
   renderGoogleSigninButton = () => (
     this.state.showSpinner
-      ? <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+      ? <ActivityIndicator color='black' size='large' animating style={{ marginTop: spacing.lg }} />
       : (
         <TouchableOpacity style={styles.signInButton} onPress={() => this._signIn()} activeOpacity={0.6}>
           <View style={styles.signInButtonIconContainer}>
