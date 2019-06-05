@@ -242,14 +242,13 @@ export function loadSongsForAllMoods(moodIds) {
       }
 
       const songsLists = await Promise.all(songsPromises);
-      console.warn('songs lists: ', songsLists);
 
       // fill allMoodSongs with the list of songs associated with each mood
       const allMoodSongs = [];
       Object.values(songsLists)
-        .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs));
+        .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
 
-      dispatch({ type: LOAD_SONGS_SUCCESS, payload: allMoodSongs });
+      dispatch({ type: LOAD_SONGS_SUCCESS, payload: { data: allMoodSongs } });
       dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
