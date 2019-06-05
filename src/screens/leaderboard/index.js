@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import {
   View,
   ActivityIndicator,
-  FlatList, Image,
+  FlatList,
+  Image,
+  StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
 import LeaderboardRow from './components/leaderboardRow';
-import MoodImageOnTopHeader from '../../components/headers/MoodImageOnTopHeader';
 import { loadQueueStartingAtId } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
 import { spacing } from '../../assets/styles';
 
-const styles = {
+const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#fff',
   },
   leaderboardContainer: {
     flex: 1,
-    paddingTop: spacing.sm,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     marginHorizontal: spacing.sm,
@@ -30,7 +30,7 @@ const styles = {
     height: 100,
     resizeMode: 'contain',
   },
-};
+});
 
 class LeaderboardScreen extends Component {
   _navigateToLeaderboardScreen = (params = {}) => {
@@ -89,11 +89,6 @@ getLeaderBoard = () => (
 
   render = () => (
     <View style={styles.background}>
-      <MoodImageOnTopHeader
-        title='Leaderboard'
-        titleIsCentered={false}
-        topComponent={this.topComponent()}
-      />
       <View style={styles.leaderboardContainer}>
         {this.getLeaderBoard()}
       </View>
