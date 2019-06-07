@@ -74,15 +74,17 @@ export default class Mood extends React.Component {
       return <Image style={styles.moodArt} source={this.props.mood.file} />;
     }
     if (id === tileConstants.FEATURED_SONG) {
-      return (
-        <View style={styles.moodArt}>
-          <ImageBackground style={styles.featuredTile} source={{ uri: this.props.mood.file }}>
-            <View style={styles.subTextContainer}>
-              <Text style={styles.textStyle}>Song of the Week</Text>
-            </View>
-          </ImageBackground>
-        </View>
-      );
+      return this.props.mood.file
+        ? (
+          <View style={styles.moodArt}>
+            <ImageBackground style={styles.featuredTile} source={{ uri: this.props.mood.file }}>
+              <View style={styles.subTextContainer}>
+                <Text style={styles.textStyle}>Song of the Week</Text>
+              </View>
+            </ImageBackground>
+          </View>
+        )
+        : null;
     }
     return <Image style={styles.moodArt} source={{ uri: this.props.mood.file }} />;
   };

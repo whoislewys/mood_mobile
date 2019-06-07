@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
-import { loadSongsForAllMoods, loadSongsForMoodId } from '../../redux/modules/queue';
+import { loadSongsForAllMoods, loadSongsForMoodId, loadSharedSongQueue } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
 import MoodLeftHeaderWithSettingsButton from '../../components/headers/MoodLeftHeaderWithSettingsButton';
 import { spacing } from '../../assets/styles';
@@ -68,6 +68,7 @@ class MoodScreen extends Component {
           featuredSong={this.props.featuredSong}
           loadSongsForMoodId={this.props.loadSongsForMoodId}
           loadSongsForAllMoods={this.props.loadSongsForAllMoods}
+          loadSharedSongQueue={this.props.loadSharedSongQueue}
           setMood={this.props.setMood}
           moods={this.props.moods}
           selected={this.props.mood}
@@ -100,6 +101,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setMood,
+  loadSharedSongQueue,
   loadSongsForAllMoods,
   loadSongsForMoodId,
 };
