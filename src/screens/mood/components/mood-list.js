@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Mood from './mood';
 import Images from '@assets/images'
+import { tileConstants } from '../../../redux/constants';
 
 export default class MoodList extends React.Component {
   render = () => (
@@ -21,19 +22,28 @@ export default class MoodList extends React.Component {
       file: Images.mysteryMoodTile,
       id: 69,
     };
-    return this.props.moods.concat([mysteryMoodTile]);
+    const featuredSongTile = {
+      file: this.props.featuredSong.artwork,
+      id: 99,
+    };
+    const tiles = this.props.moods.concat([mysteryMoodTile, featuredSongTile]);
+    return tiles;
   };
 
   _keyExtractor = mood => mood.name;
 
   onPressMoodTile = (moodObj) => {
-    if (moodObj.id === 69) {
+    if (moodObj.id === tileConstants.MYSTERY) {
       const ids = this.props.moods.map(mood => mood.id);
       this.props.loadSongsForAllMoods(ids);
       this.props.playscreen();
+    } else if (moodObj.id === tileConstants.FEATURED_SONG) {
+      this.props.loadSharedSongQueue(this.props.featuredSong);
+      this.props.playscreen();
+    } else {
+      this.props.loadSongsForMoodId(moodObj.id);
+      this.props.playscreen();
     }
-    this.props.loadSongsForMoodId(moodObj.id);
-    this.props.playscreen();
   };
 
   _renderItem = ({ item }) => (

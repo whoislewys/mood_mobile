@@ -25,7 +25,13 @@ export const LEADERBOARD_LOAD_SONGS_FAIL = 'leaderboard/LOAD_FAIL';
 export const LOAD_MOODS = 'moods/LOAD';
 export const LOAD_MOODS_SUCCESS = 'moods/LOAD_SUCCESS';
 export const LOAD_MOODS_FAIL = 'moods/LOAD_FAIL';
+export const LOAD_FEATURED_SUCCESS = 'tiles/LOAD_FEATURED_SUCCESS';
+export const LOAD_FEATURED_FAIL = 'tiles/LOAD_FEATURED_SUCCESS';
 export const SET_MOOD = 'moods/SET';
+export const tileConstants = {
+  MYSTERY: 69,
+  FEATURED_SONG: 99,
+};
 
 // Playlists
 // C
@@ -85,6 +91,7 @@ export const SET_CUR_PLAYLIST_ID = 'queue/SET_CUR_PLAYLIST_ID';
 export const PLAYBACK_STATE = 'playback/STATE';
 export const PLAYBACK_TRACK = 'playback/TRACK';
 export const PLAY_SHUFFLED_PLAYLIST = 'queue/SHUFFLE';
+
 export const MOOD_TYPE = 'mood';
 export const LEADERBOARD_TYPE = 'leaderboard';
 
@@ -92,7 +99,8 @@ export const LEADERBOARD_TYPE = 'leaderboard';
 
 // Score
 export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
-export const SEND_SCORE = 'score/SEND_SCORE';
+export const SEND_SCORE_SUCCESS = 'score/SEND_SCORE_SUCCESS';
+export const SEND_SCORE_FAIL = 'score/SEND_SCORE_FAIL';
 export const START_TIMER = 'score/START_TIMER';
 export const STOP_TIMER = 'score/STOP_TIMER';
 

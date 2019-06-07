@@ -117,8 +117,6 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
 
-      // TODO: make reducer cases for playlist song here
-
     case PLAY_SHUFFLED_PLAYLIST:
       return {
         ...state,
@@ -261,7 +259,6 @@ export function loadQueueStartingAtId(startSongIndex, songs) {
     await TrackPlayer.reset();
     dispatch({ type: RESET_QUEUE });
 
-    // const leaderboardSongs = songs;
     dispatch({
       type: LOAD_QUEUE_STARTING_AT_ID,
       startSongIndex,
