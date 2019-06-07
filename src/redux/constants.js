@@ -99,7 +99,8 @@ export const LEADERBOARD_TYPE = 'leaderboard';
 
 // Score
 export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
-export const SEND_SCORE = 'score/SEND_SCORE';
+export const SEND_SCORE_SUCCESS = 'score/SEND_SCORE_SUCCESS';
+export const SEND_SCORE_FAIL = 'score/SEND_SCORE_FAIL';
 export const START_TIMER = 'score/START_TIMER';
 export const STOP_TIMER = 'score/STOP_TIMER';
 
