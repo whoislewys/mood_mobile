@@ -22,13 +22,13 @@ export default class MoodList extends React.Component {
       file: Images.mysteryMoodTile,
       id: 69,
     };
-    const tiles = this.props.moods.push(mysteryMoodTile);
+    const tiles = this.props.moods.concat([mysteryMoodTile]);
     if (this.props.featuredSong != null) {
       const featuredSongTile = {
         file: this.props.featuredSong.artwork,
         id: 99,
       };
-      tiles.push(featuredSongTile);
+      tiles.concat([featuredSongTile]);
     }
     return tiles;
   };
