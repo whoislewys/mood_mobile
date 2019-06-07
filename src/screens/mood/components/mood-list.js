@@ -2,8 +2,8 @@ import React from 'react';
 import {
   FlatList,
 } from 'react-native';
-import Mood from './mood';
 import Images from '@assets/images'
+import Mood from './mood';
 import { tileConstants } from '../../../redux/constants';
 
 export default class MoodList extends React.Component {
@@ -30,9 +30,7 @@ export default class MoodList extends React.Component {
   _getMoodTiles = () => {
     const newTiles = [];
     for (const tile of this._generateMoodTiles()) {
-      // todo: catch generator errors
       newTiles.push(tile);
-      console.warn('new tiles: ', newTiles);
     }
     return newTiles;
   };
@@ -48,11 +46,17 @@ export default class MoodList extends React.Component {
     };
     yield mysteryMoodTile;
 
-    const featuredSongTile = {
-      file: this.props.featuredSong.artwork,
-      id: 99,
-    };
-    yield featuredSongTile;
+    try {
+      // If there is no featured song, `this.props.featuredSong.artwork` will throw an error
+      // let's catch it.
+      const featuredSongTile = {
+        file: this.props.featuredSong.artwork,
+        id: 99,
+      };
+      yield featuredSongTile;
+    } catch (e) {
+      console.warn(e);
+    }
   }
 
 
