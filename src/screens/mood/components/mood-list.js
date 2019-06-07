@@ -29,9 +29,7 @@ export default class MoodList extends React.Component {
 
   _getMoodTiles = () => {
     const newTiles = [];
-    for (const tile of this._generateMoodTiles()) {
-      newTiles.push(tile);
-    }
+    newTiles.push(...this._generateMoodTiles());
     return newTiles;
   };
 
