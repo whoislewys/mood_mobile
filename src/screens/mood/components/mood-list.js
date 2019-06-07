@@ -17,7 +17,6 @@ export default class MoodList extends React.Component {
   );
 
   _getMoodTiles = () => {
-    // Images.mysteryMoodTile;
     const mysteryMoodTile = {
       file: Images.mysteryMoodTile,
       id: 69,
