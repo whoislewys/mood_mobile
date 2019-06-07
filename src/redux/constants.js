@@ -25,6 +25,8 @@ export const LEADERBOARD_LOAD_SONGS_FAIL = 'leaderboard/LOAD_FAIL';
 export const LOAD_MOODS = 'moods/LOAD';
 export const LOAD_MOODS_SUCCESS = 'moods/LOAD_SUCCESS';
 export const LOAD_MOODS_FAIL = 'moods/LOAD_FAIL';
+export const LOAD_FEATURED_SUCCESS = 'tiles/LOAD_FEATURED_SUCCESS';
+export const LOAD_FEATURED_FAIL = 'tiles/LOAD_FEATURED_SUCCESS';
 export const SET_MOOD = 'moods/SET';
 
 // Playlists

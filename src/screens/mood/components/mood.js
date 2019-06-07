@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: width * 0.49,
     height: width * 0.49,
+    backgroundColor: 'red',
   },
   tile: {
     flex: 1,
@@ -36,7 +37,6 @@ export default class Mood extends React.Component {
     >
       <View style={styles.tile}>
         { this.getMoodTileImage(this.props.mood.id) }
-
       </View>
     </TouchableOpacity>
   );

@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import branch from 'react-native-branch';
 import DeviceInfo from 'react-native-device-info';
 import { logEvent, setDeviceInfo } from '../../redux/modules/analytics';
-import { loadMoods } from '../../redux/modules/mood';
+import { loadMoods, loadFeaturedSong } from '../../redux/modules/mood';
 import { loadSharedSongQueue } from '../../redux/modules/queue';
 import { anal } from '../../redux/constants';
 
@@ -32,6 +32,7 @@ class SplashScreen extends Component {
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
 
     this.props.loadMoods();
+    this.props.loadFeaturedSong();
 
     this.updateNumLaunches();
 
@@ -202,6 +203,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadMoods,
+  loadFeaturedSong,
   loadSharedSongQueue,
   setDeviceInfo,
   logEvent,

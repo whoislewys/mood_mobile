@@ -65,6 +65,7 @@ class MoodScreen extends Component {
     if (!this.props.loading) {
       return (
         <MoodList
+          featuredSong={this.props.featuredSong}
           loadSongsForMoodId={this.props.loadSongsForMoodId}
           loadSongsForAllMoods={this.props.loadSongsForAllMoods}
           setMood={this.props.setMood}
@@ -90,6 +91,7 @@ class MoodScreen extends Component {
 
 const mapStateToProps = state => ({
   moods: state.mood.moods,
+  featuredSong: state.mood.featuredSong,
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,

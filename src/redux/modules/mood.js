@@ -4,34 +4,28 @@ import {
   LOAD_MOODS_SUCCESS,
   LOAD_MOODS_FAIL,
   SET_MOOD,
+  LOAD_FEATURED_SUCCESS,
+  LOAD_FEATURED_FAIL,
 } from '../constants';
+import { mapSongsToValidTrackObjects } from '../util';
 
 const initialState = {
   moods: [
 
   ],
+  featuredSong: {},
   selected: null,
   loading: false,
   error: null,
 };
-
-// export async function preloadImages(list) {
-//   const imagePrefetch = [];
-//   for (let i = 0; i < list.length; i++) {
-//     const mood = list[i];
-//     imagePrefetch.push(Image.prefetch(mood.file));
-//   }
-//   await Promise.all(imagePrefetch);
-// }
 
 export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_MOODS:
       return { ...state, loading: true };
     case LOAD_MOODS_SUCCESS:
-      let data = action.payload.data;
+      let { data } = action.payload;
       data = Object.keys(data).map(key => data[key]);
-      // preloadImages(data);
       return {
         ...state,
         loading: false,
@@ -43,6 +37,12 @@ export function reducer(state = initialState, action = {}) {
         loading: false,
         error: 'Error while fetching moods.',
       };
+
+    case LOAD_FEATURED_SUCCESS:
+      return { ...state, featuredSong: mapSongsToValidTrackObjects(action.featuredResp.data)[0] };
+    case LOAD_FEATURED_FAIL:
+      return { ...state, featuredSong: {}, error: action.e };
+
     case SET_MOOD:
       const newMood = { selected: action.mood };
       return { ...state, ...newMood };
@@ -69,5 +69,19 @@ export function loadMoods() {
       moods => dispatch({ type: LOAD_MOODS_SUCCESS, payload: moods }),
       error => dispatch({ type: LOAD_MOODS_FAIL, error }),
     );
+  };
+}
+
+export function loadFeaturedSong() {
+  return async (dispatch) => {
+    try {
+      const featuredResp = await axios.get('http://api.mood.local:3000/api/v1/featured',
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+        });
+      dispatch({ type: LOAD_FEATURED_SUCCESS, featuredResp });
+    } catch (e) {
+      dispatch({ type: LOAD_FEATURED_FAIL, e });
+    }
   };
 }

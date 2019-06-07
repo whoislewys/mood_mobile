@@ -21,7 +21,12 @@ export default class MoodList extends React.Component {
       file: Images.mysteryMoodTile,
       id: 69,
     };
-    return this.props.moods.concat([mysteryMoodTile]);
+    const featuredSongTile = {
+      file: this.props.featuredSong.artwork,
+      id: 99,
+    };
+    const tiles = this.props.moods.concat([mysteryMoodTile, featuredSongTile]);
+    return tiles;
   };
 
   _keyExtractor = mood => mood.name;
