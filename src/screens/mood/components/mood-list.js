@@ -16,21 +16,45 @@ export default class MoodList extends React.Component {
     />
   );
 
+  _keyExtractor = mood => mood.name;
+
+  _renderItem = ({ item }) => (
+    <Mood
+      mood={item}
+      playscreen={this.props.playscreen}
+      selected={this.props.selected}
+      onPressMoodTile={this.onPressMoodTile}
+    />
+  );
+
   _getMoodTiles = () => {
+    const newTiles = [];
+    for (const tile of this._generateMoodTiles()) {
+      // todo: catch generator errors
+      newTiles.push(tile);
+      console.warn('new tiles: ', newTiles);
+    }
+    return newTiles;
+  };
+
+  * _generateMoodTiles() {
+    for (let i = 0; i < this.props.moods.length; i++) {
+      yield this.props.moods[i];
+    }
+
     const mysteryMoodTile = {
       file: Images.mysteryMoodTile,
       id: 69,
     };
-    // todo: figure out an elegant way to catch the featured song tile not being here
+    yield mysteryMoodTile;
+
     const featuredSongTile = {
       file: this.props.featuredSong.artwork,
       id: 99,
     };
-    const tiles = this.props.moods.concat([mysteryMoodTile, featuredSongTile]);
-    return tiles;
-  };
+    yield featuredSongTile;
+  }
 
-  _keyExtractor = mood => mood.name;
 
   onPressMoodTile = (moodObj) => {
     if (moodObj.id === tileConstants.MYSTERY) {
@@ -45,14 +69,4 @@ export default class MoodList extends React.Component {
       this.props.playscreen();
     }
   };
-
-  _renderItem = ({ item }) => (
-    <Mood
-      mood={item}
-      playscreen={this.props.playscreen}
-      selected={this.props.selected}
-      onPressMoodTile={this.onPressMoodTile}
-    />
-  );
-
 }
