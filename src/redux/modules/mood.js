@@ -75,7 +75,7 @@ export function loadMoods() {
 export function loadFeaturedSong() {
   return async (dispatch) => {
     try {
-      const featuredResp = await axios.get('http://api.mood.local:3000/api/v1/featured',
+      const featuredResp = await axios.get('https://api.moodindustries.com/api/v1/featured',
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
         });
