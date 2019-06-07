@@ -62,7 +62,7 @@ class MoodScreen extends Component {
   };
 
   getContent = () => {
-    if (!this.props.loading) {
+    if (!this.props.loading && this.props.moods.length) {
       return (
         <MoodList
           featuredSong={this.props.featuredSong}
