@@ -2,7 +2,7 @@ import React from 'react';
 import {
   FlatList,
 } from 'react-native';
-import Images from '@assets/images'
+import Images from '@assets/images';
 import Mood from './mood';
 import { tileConstants } from '../../../redux/constants';
 
@@ -27,32 +27,24 @@ export default class MoodList extends React.Component {
     />
   );
 
-  _getMoodTiles = () => [...this._generateMoodTiles()];
-
-  * _generateMoodTiles() {
-    for (let i = 0; i < this.props.moods.length; i++) {
-      yield this.props.moods[i];
-    }
-
+  _getMoodTiles = () => {
     const mysteryMoodTile = {
       file: Images.mysteryMoodTile,
       id: 69,
     };
-    yield mysteryMoodTile;
 
+    let featuredSongTile = null;
     try {
-      // If there is no featured song, `this.props.featuredSong.artwork` will throw an error
-      // let's catch it.
-      const featuredSongTile = {
+      // If there is no featured song, `this.props.featuredSong.artwork` will throw an error.
+      // Let's catch it.
+      featuredSongTile = {
         file: this.props.featuredSong.artwork,
         id: 99,
       };
-      yield featuredSongTile;
-    } catch (e) {
-      console.warn(e);
-    }
-  }
+    } catch (e) {}
 
+    return this.props.moods.concat([mysteryMoodTile, featuredSongTile]);
+  };
 
   onPressMoodTile = (moodObj) => {
     if (moodObj.id === tileConstants.MYSTERY) {
