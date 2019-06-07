@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 import {
   View,
   ActivityIndicator,
-  FlatList, Image,
+  FlatList,
+  Image,
+  StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
+import { LEADERBOARDS } from '../../redux/constants';
 import LeaderboardRow from './components/leaderboardRow';
-import MoodImageOnTopHeader from '../../components/headers/MoodImageOnTopHeader';
+import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { loadQueueStartingAtId } from '../../redux/modules/queue';
 import { sendScoreDelta } from '../../redux/modules/score';
 import { spacing } from '../../assets/styles';
 
-const styles = {
+const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#fff',
   },
   leaderboardContainer: {
     flex: 1,
-    paddingTop: spacing.sm,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     marginHorizontal: spacing.sm,
@@ -30,9 +32,18 @@ const styles = {
     height: 100,
     resizeMode: 'contain',
   },
-};
+});
 
 class LeaderboardScreen extends Component {
+  componentDidMount() {
+    this.props.navigation.addListener('willFocus', this.componentWillFocus);
+  }
+
+  componentWillFocus = () => {
+    const leaderboardType = this.props.navigation.state.key;
+    this.props.loadLeaderboardSongs(LEADERBOARDS[leaderboardType]);
+  };
+
   _navigateToLeaderboardScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Leaderboard',
@@ -53,7 +64,6 @@ class LeaderboardScreen extends Component {
   };
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    // this.props.loadLeaderboardSongQueue(pressedLeaderboardSongIndex);
     this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
     this._navigateToPlayScreen();
   };
@@ -89,11 +99,6 @@ getLeaderBoard = () => (
 
   render = () => (
     <View style={styles.background}>
-      <MoodImageOnTopHeader
-        title='Leaderboard'
-        titleIsCentered={false}
-        topComponent={this.topComponent()}
-      />
       <View style={styles.leaderboardContainer}>
         {this.getLeaderBoard()}
       </View>
@@ -107,7 +112,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  // loadLeaderboardSongQueue,
+  loadLeaderboardSongs,
   loadQueueStartingAtId,
   sendScoreDelta,
 };

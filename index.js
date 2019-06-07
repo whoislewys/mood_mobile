@@ -13,7 +13,6 @@ export default class App extends Component {
         // maxCacheSize: 1024 * 5, // 5 mb
       });
       await TrackPlayer.updateOptions({
-        stopWithApp: true,
         // TODO: set up custom background play controls styling, e.g.
         // icon: <album art>
         // docs on that here: https://github.com/react-native-kit/react-native-track-player/wiki/Documentation#player-functions

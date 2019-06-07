@@ -2,8 +2,8 @@ import React from 'react';
 import {
   FlatList,
 } from 'react-native';
+import Images from '@assets/images';
 import Mood from './mood';
-import Images from '@assets/images'
 import { tileConstants } from '../../../redux/constants';
 
 export default class MoodList extends React.Component {
@@ -16,21 +16,35 @@ export default class MoodList extends React.Component {
     />
   );
 
+  _keyExtractor = mood => mood.name;
+
+  _renderItem = ({ item }) => (
+    <Mood
+      mood={item}
+      playscreen={this.props.playscreen}
+      selected={this.props.selected}
+      onPressMoodTile={this.onPressMoodTile}
+    />
+  );
+
   _getMoodTiles = () => {
-    // Images.mysteryMoodTile;
     const mysteryMoodTile = {
       file: Images.mysteryMoodTile,
       id: 69,
     };
-    const featuredSongTile = {
-      file: this.props.featuredSong.artwork,
-      id: 99,
-    };
-    const tiles = this.props.moods.concat([mysteryMoodTile, featuredSongTile]);
-    return tiles;
-  };
 
-  _keyExtractor = mood => mood.name;
+    let featuredSongTile = null;
+    try {
+      // If there is no featured song, `this.props.featuredSong.artwork` will throw an error.
+      // Let's catch it.
+      featuredSongTile = {
+        file: this.props.featuredSong.artwork,
+        id: 99,
+      };
+    } catch (e) {}
+
+    return this.props.moods.concat([mysteryMoodTile, featuredSongTile]);
+  };
 
   onPressMoodTile = (moodObj) => {
     if (moodObj.id === tileConstants.MYSTERY) {
@@ -45,14 +59,4 @@ export default class MoodList extends React.Component {
       this.props.playscreen();
     }
   };
-
-  _renderItem = ({ item }) => (
-    <Mood
-      mood={item}
-      playscreen={this.props.playscreen}
-      selected={this.props.selected}
-      onPressMoodTile={this.onPressMoodTile}
-    />
-  );
-
 }

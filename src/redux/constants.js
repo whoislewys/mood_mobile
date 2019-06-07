@@ -1,4 +1,4 @@
-/** Redux Constants **/
+/** Redux Constants * */
 // Anal
 export const LOG_EVENT = 'ANAL/LOG_EVENT';
 export const SET_DEVICE_INFO = 'ANAL/SET_DEVICE_INFO';
@@ -20,6 +20,13 @@ export const GOOGLE_API_KEY = 'AIzaSyBBpspRcmIZc9XqVj3Xk6r227t1s02nnuQ';
 export const LEADERBOARD_LOAD_SONGS = 'leaderboard/LOAD';
 export const LEADERBOARD_LOAD_SONGS_SUCCESS = 'leaderboard/LOAD_SUCCESS';
 export const LEADERBOARD_LOAD_SONGS_FAIL = 'leaderboard/LOAD_FAIL';
+
+export const LEADERBOARDS = {
+  'All Time': 'leaderboard',
+  Daily: 'daily',
+  Weekly: 'weekly',
+  Monthly: 'monthly',
+};
 
 // Mood
 export const LOAD_MOODS = 'moods/LOAD';
@@ -49,7 +56,7 @@ export const PLAYLIST_LOAD_SONGS_FAIL = 'playlists/LOAD_SONGS_FAIL';
 export const UPDATE_PLAYLIST = 'playlists/UPDATE';
 export const UPDATE_PLAYLIST_SUCCESS = 'playlists/UPDATE_SUCCESS';
 export const UPDATE_PLAYLIST_FAIL = 'playlists/UPDATE_FAIL';
-//D
+// D
 // todo
 
 // Client
@@ -107,7 +114,7 @@ export const STOP_TIMER = 'score/STOP_TIMER';
 // Settings
 export const DATA_TRACK_TOGGLE = 'settings/DATA_TRACK_TOGGLE';
 
-/** Other Constants **/
+/** Other Constants * */
 // Analytics events
 export const anal = {
   songShare: 'Song Share',

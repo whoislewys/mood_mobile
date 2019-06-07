@@ -7,13 +7,16 @@ import {
 import { fonts, spacing, colors } from '../../assets/styles';
 
 const styles = StyleSheet.create({
-  headerStyle: {
-    marginTop: spacing.md,
+  topComponentContainer: {
+    paddingTop: spacing.sm,
     backgroundColor: '#fff',
-    marginLeft: spacing.sm,
-    marginRight: spacing.sm,
+  },
+  textContainer: {
+    backgroundColor: '#fff',
+    height: spacing.headerHeight / 2.1,
   },
   headerText: {
+    marginLeft: spacing.sm,
     fontFamily: fonts.primary,
     fontSize: fonts.header,
     color: colors.header,
@@ -29,12 +32,16 @@ const MoodImageOnTopHeader = ({
   titleIsCentered,
   topComponent,
 }) => (
-  <View style={styles.headerStyle}>
-    { topComponent }
-    { titleIsCentered
-      ? <Text style={[styles.headerText, styles.headerTextCenterAlign]}>{title}</Text>
-      : <Text style={styles.headerText}>{title}</Text>
-    }
+  <View>
+    <View style={styles.topComponentContainer}>
+      { topComponent }
+    </View>
+    <View style={styles.textContainer}>
+      { titleIsCentered
+        ? <Text style={[styles.headerText, styles.headerTextCenterAlign]}>{title}</Text>
+        : <Text style={styles.headerText}>{title}</Text>
+      }
+    </View>
   </View>
 );
 

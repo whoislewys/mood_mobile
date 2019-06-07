@@ -16,7 +16,7 @@ export const initialState = {
 export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_SONGS:
-      return { ...state, loading: true };
+      return { ...state, songs: [], loading: true };
     case LOAD_SONGS_SUCCESS:
       const songs = mapSongsToValidTrackObjects(action.payload.data);
       return { ...state, loading: false, songs };
@@ -24,25 +24,26 @@ export function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
-        error: 'Error while fetching leaderboard.',
+        error: action.e,
       };
     default:
       return state;
   }
 }
 
-export function loadLeaderboardSongs() {
+export function loadLeaderboardSongs(leaderboardType) {
   return async (dispatch) => {
     dispatch({ type: LOAD_SONGS });
     try {
-      let songs = await axios.get('https://api.moodindustries.com/api/v1/stats/leaderboard',
+      const url = `https://api.moodindustries.com/api/v1/stats/${leaderboardType}`;
+      const songs = await axios.get(url,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
     } catch (e) {
-      dispatch({ type: LOAD_SONGS_FAIL });
+      dispatch({ type: LOAD_SONGS_FAIL, e });
     }
   };
 }
