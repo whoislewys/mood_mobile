@@ -1,10 +1,16 @@
 import React from 'react';
-import { Animated, Easing } from 'react-native';
+import {
+  Animated,
+  Easing,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
   createStackNavigator,
 } from 'react-navigation';
+import Images from '@assets/images';
 
 import ErrorScreen from '../screens/error';
 import EventsForm from '../screens/events/events-form';
@@ -23,7 +29,17 @@ import TabBar from './components/TabBar';
 
 import MoodLeftHeaderWithSettingsButton
   from '../components/headers/MoodLeftHeaderWithSettingsButton';
-import { colors } from '../assets/styles';
+import { colors, fonts } from '../assets/styles';
+import MoodImageOnTopHeader from '../components/headers/MoodImageOnTopHeader';
+
+const styles = StyleSheet.create({
+  moodLogo: {
+    alignSelf: 'center',
+    width: 168,
+    height: 100,
+    resizeMode: 'contain',
+  },
+});
 
 const map = SomeComponent => class SomeClass extends React.Component {
     // utility function to map screenProps to and navigation params to regular props
@@ -57,6 +73,10 @@ const MyMusicNavigator = createMaterialTopTabNavigator({
       backgroundColor: colors.black,
       alignSelf: 'center',
     },
+    labelStyle: {
+      fontSize: 13,
+      fontFamily: fonts.primary,
+    },
     style: {
       backgroundColor: '#fff',
     },
@@ -74,9 +94,56 @@ const MyMusicNavigatorWithHeader = createStackNavigator({
   },
 });
 
+const leaderboardNavigator = createMaterialTopTabNavigator({
+  Daily: { screen: map(LeaderboardScreen) },
+  Weekly: { screen: map(LeaderboardScreen) },
+  Monthly: { screen: map(LeaderboardScreen) },
+  'All Time': { screen: map(LeaderboardScreen) },
+},
+{
+  tabBarOptions: {
+    activeTintColor: colors.black,
+    inactiveTintColor: colors.gray,
+    indicatorStyle: {
+      backgroundColor: colors.black,
+      alignSelf: 'center',
+    },
+    labelStyle: {
+      fontSize: 13,
+      fontFamily: fonts.primary,
+    },
+    style: {
+      backgroundColor: '#fff',
+    },
+  },
+});
+
+
+const topComponent = () => (
+  <Image source={Images.moodLogo} style={styles.moodLogo} />
+);
+
+const leaderboardNavigatorWithHeader = createStackNavigator({
+  Leaderboard: leaderboardNavigator,
+}, {
+  navigationOptions: {
+    header: props => (
+      <MoodImageOnTopHeader
+        {...props}
+        title='Leaderboard'
+        titleIsCentered={false}
+        topComponent={topComponent()}
+      />
+    ),
+    headerStyle: {
+      backgroundColor: '#fff',
+    },
+  },
+});
+
 const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
-  Leaderboard: { screen: map(LeaderboardScreen) },
+  Leaderboard: leaderboardNavigatorWithHeader,
   Events: { screen: map(EventsScreen) },
   MyMusic: MyMusicNavigatorWithHeader,
 }, {

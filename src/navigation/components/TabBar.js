@@ -11,7 +11,6 @@ import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
-import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { loadPlaylists, loadSavedSongs } from '../../redux/modules/playlists';
 import { handlePlayPress, skipToNext, skipToPrevious } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
@@ -114,7 +113,6 @@ const TabBar = class TabBar extends Component {
           if (currentIndex !== navIndex) {
             const navRouteName = navigation.state.routes[navIndex].routeName;
             if (navRouteName === 'Leaderboard') {
-              this.props.loadLeaderboardSongs();
               navigation.navigate(route.routeName);
             } else if (navRouteName === 'Events') {
               this.props.loadEvents();
@@ -201,7 +199,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   handlePlayPress,
   loadEvents,
-  loadLeaderboardSongs,
   loadPlaylists,
   loadSavedSongs,
   skipToNext,
