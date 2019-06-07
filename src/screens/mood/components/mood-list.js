@@ -21,14 +21,12 @@ export default class MoodList extends React.Component {
       file: Images.mysteryMoodTile,
       id: 69,
     };
-    const tiles = this.props.moods.concat([mysteryMoodTile]);
-    if (this.props.featuredSong != null) {
-      const featuredSongTile = {
-        file: this.props.featuredSong.artwork,
-        id: 99,
-      };
-      tiles.concat([featuredSongTile]);
-    }
+    // todo: figure out an elegant way to catch the featured song tile not being here
+    const featuredSongTile = {
+      file: this.props.featuredSong.artwork,
+      id: 99,
+    };
+    const tiles = this.props.moods.concat([mysteryMoodTile, featuredSongTile]);
     return tiles;
   };
 
