@@ -28,6 +28,10 @@ export const LOAD_MOODS_FAIL = 'moods/LOAD_FAIL';
 export const LOAD_FEATURED_SUCCESS = 'tiles/LOAD_FEATURED_SUCCESS';
 export const LOAD_FEATURED_FAIL = 'tiles/LOAD_FEATURED_SUCCESS';
 export const SET_MOOD = 'moods/SET';
+export const tileConstants = {
+  MYSTERY: 69,
+  FEATURED_SONG: 99,
+};
 
 // Playlists
 // C

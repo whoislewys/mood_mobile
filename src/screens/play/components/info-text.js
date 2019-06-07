@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   artistName: {
-    color: 'rgba(255, 255, 255, 0.87)',
+    color: '#fff',
     fontFamily: fonts.primary,
     fontSize: fonts.body,
   },
