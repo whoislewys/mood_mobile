@@ -3,51 +3,31 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  StatusBar,
 } from 'react-native';
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
-import { loadSongsForMoodId } from '../../redux/modules/queue';
+import { loadSongsForAllMoods, loadSongsForMoodId, loadSharedSongQueue } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
+import MoodLeftHeaderWithSettingsButton from '../../components/headers/MoodLeftHeaderWithSettingsButton';
+import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  padding: {
-    flex: 25,
-  },
-  moodList: {
-    flex: 90,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    marginLeft: 2,
-    marginRight: 2,
-  },
-  footer: {
-    flex: 8,
-    backgroundColor: 'rgba(102, 102, 102, 1)',
-  },
-  goArrow: {
-    resizeMode: 'stretch',
-    height: 20,
+  flatListContainer: {
+    flex: 1,
+    marginTop: spacing.sm * 0.731, // for some reason there's some padding on the moodlist i can't get rid of, so i hacked together this custom margin so it looks the same as the events screen
   },
 });
 
 class MoodScreen extends Component {
   componentDidMount = () => {
-    StatusBar.setBarStyle('dark-content', true);
     SplashScreen.hide();
-  }
+  };
 
-  navigateToMoodScreen = (params = {}) => {
-    this.props.navigation.navigate({
-      routeName: 'Mood',
-      params: { ...params, visible: true },
-    });
-  }
 
   navigateToPlayScreenFromMoodScreen = (params = {}) => {
     const currentScreenName = 'MoodScreen';
@@ -82,10 +62,13 @@ class MoodScreen extends Component {
   };
 
   getContent = () => {
-    if (!this.props.loading) {
+    if (!this.props.loading && this.props.moods.length) {
       return (
         <MoodList
+          featuredSong={this.props.featuredSong}
           loadSongsForMoodId={this.props.loadSongsForMoodId}
+          loadSongsForAllMoods={this.props.loadSongsForAllMoods}
+          loadSharedSongQueue={this.props.loadSharedSongQueue}
           setMood={this.props.setMood}
           moods={this.props.moods}
           selected={this.props.mood}
@@ -94,15 +77,13 @@ class MoodScreen extends Component {
         />
       );
     }
-
-    return (
-      <ActivityIndicator color={'black'} size={'large'} animating={true} style={{ flex: 10 }} />
-    );
-  }
+    return null;
+  };
 
   render = () => (
     <View style={styles.container}>
-      <View style={styles.moodList}>
+      <MoodLeftHeaderWithSettingsButton title='Discover' navigation={this.props.navigation} />
+      <View style={styles.flatListContainer}>
         { this.getContent() }
       </View>
     </View>
@@ -111,6 +92,7 @@ class MoodScreen extends Component {
 
 const mapStateToProps = state => ({
   moods: state.mood.moods,
+  featuredSong: state.mood.featuredSong,
   selected: state.mood.selected,
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
@@ -119,6 +101,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setMood,
+  loadSharedSongQueue,
+  loadSongsForAllMoods,
   loadSongsForMoodId,
 };
 

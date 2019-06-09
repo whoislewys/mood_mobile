@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -10,
     width: 55,
-    height: '110%',
+    height: '140%',
+    backgroundColor: 'transparent',
   },
   time: {
     backgroundColor: 'transparent',
@@ -83,11 +84,11 @@ export default class TimeBar extends Component {
       const x = (this.state.position / this.state.duration) * width;
       if (!this.state.dragging) this.setState({ x });
     }
-  }
+  };
 
   getTickBoxStyle = () => ({
     left: this.state.x - 17,
-  })
+  });
 
   getTickStyle = () => {
     let style = {
@@ -107,7 +108,7 @@ export default class TimeBar extends Component {
     }
 
     return style;
-  }
+  };
 
   getTime = () => {
     let elem = null;
@@ -125,7 +126,7 @@ export default class TimeBar extends Component {
     }
 
     return elem;
-  }
+  };
 
   onStartShouldSetResponder = (e) => {
     this.dragging = true;
@@ -136,9 +137,9 @@ export default class TimeBar extends Component {
     };
 
     return true;
-  }
+  };
 
-  onMoveShouldSetResponder = () => true
+  onMoveShouldSetResponder = () => true;
 
   setPosition = (e) => {
     const dx = this.state.x + (e.nativeEvent.pageX - this.drag.x);
@@ -150,12 +151,12 @@ export default class TimeBar extends Component {
 
       this.drag.x = e.nativeEvent.pageX;
     }
-  }
+  };
 
   handleRelease = () => {
     this.setState({ dragging: false });
     this.props.setTime(this.pxToSeconds(this.state.x));
-  }
+  };
 
   pxToSeconds = pixels => (pixels / width) * this.state.duration;
 

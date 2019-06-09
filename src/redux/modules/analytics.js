@@ -1,10 +1,11 @@
 import axios from 'axios';
 import moment from 'moment';
-
-const LOG_EVENT = 'ANAL/LOG_EVENT';
-const SET_DEVICE_INFO = 'ANAL/SET_DEVICE_INFO';
-const SET_USER_ID = 'ANAL/SET_USER_ID';
-const API_KEY = 'c1bb5c361a35b3978494ded3f756fb65';
+import {
+  LOG_EVENT,
+  SET_DEVICE_INFO,
+  SET_USER_ID,
+  API_KEY,
+} from '../constants';
 
 const initialState = {
   userId: '',
@@ -13,7 +14,7 @@ const initialState = {
   eventsTracked: 0,
 };
 
-export default function reducer(state = initialState, action = {}) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOG_EVENT:
       // can use eventsTracked to batch send events later if needed
@@ -45,12 +46,11 @@ export default function reducer(state = initialState, action = {}) {
  * @optional:
  *    @param: {object} eventProperties - additional data you want to track with the event
  *      e.g. {'songSource': 'Mood', 'song': {'title': 'Only Time', 'artist': 'Enya'}}
- *    @param: {object} userProperties - user data you want to track with the event
- *      e.g. {'cohort': 'Instagram Referrals'}
 */
-export function logEvent(eventName, eventProperties, userProperties) {
+export function logEvent(eventName, eventProperties) {
   return async (dispatch, getState) => {
-    // https://amplitude.zendesk.com/hc/en-us/articles/204771828-HTTP-API
+    // if user turned off data tracking, exit this func immediately
+    if (!getState().settings.dataShouldBeTracked) return;
     const { userId, deviceId, deviceIsEmulator } = getState().analytics;
 
     // do not allow emulators to send analytics
@@ -62,10 +62,13 @@ export function logEvent(eventName, eventProperties, userProperties) {
       return;
     }
 
+    // TODO: pull userProperties off of auth state
+
     // prepare an event object to be an event parameter
     const eventObj = { event_type: eventName };
     if (eventProperties != null) eventObj.event_properties = eventProperties;
-    if (userProperties != null) eventObj.user_properties = userProperties;
+    // TODO: add userproperties on login
+    // if (userProperties != null) eventObj.user_properties = userProperties;
     if (userId.length > 0) eventObj.userId = userId;
     if (deviceId.length > 0) eventObj.device_id = deviceId;
 

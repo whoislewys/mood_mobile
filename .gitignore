@@ -28,6 +28,7 @@ project.xcworkspace
 #
 build/
 .idea
+android/app/src/main/gen/com/mood_mobile
 .gradle
 local.properties
 *.iml

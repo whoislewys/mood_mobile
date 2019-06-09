@@ -11,7 +11,7 @@ import { NavigationRoute } from 'react-navigation';
 import Images from '@assets/images';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
-import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
+import { loadPlaylists, loadSavedSongs } from '../../redux/modules/playlists';
 import { handlePlayPress, skipToNext, skipToPrevious } from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
@@ -79,14 +79,14 @@ const TabBar = class TabBar extends Component {
     if (label === 'Mood') {
       return <Image source={Images.home} style={[styles.icon, { tintColor }]} />;
     }
-    if (label === 'Play') {
-      return <Image source={Images.player} style={[styles.icon, { tintColor }]} />;
-    }
     if (label === 'Leaderboard') {
       return <Image source={Images.leaderboard} style={[styles.icon, { tintColor }]} />;
     }
     if (label === 'Events') {
       return <Image source={Images.events} style={[styles.icon, { tintColor }]} />;
+    }
+    if (label === 'MyMusic') {
+      return <Image source={Images.myMusic} style={[styles.icon, { tintColor }]} />;
     }
     return <View />;
   };
@@ -113,16 +113,14 @@ const TabBar = class TabBar extends Component {
           if (currentIndex !== navIndex) {
             const navRouteName = navigation.state.routes[navIndex].routeName;
             if (navRouteName === 'Leaderboard') {
-              this.props.loadLeaderboardSongs();
               navigation.navigate(route.routeName);
-            } else if (navRouteName === 'Play') {
-              if (!this.props.queue.length) {
-                Alert.alert('Let\'s pick a mood first! 🎧');
-              } else {
-                navigation.navigate(route.routeName);
-              }
             } else if (navRouteName === 'Events') {
               this.props.loadEvents();
+              navigation.navigate(route.routeName);
+            } else if (navRouteName === 'MyMusic') {
+              // this call also loads all playlists for cur user,
+              // because 'Saved Songs' is just a playlist with a special name
+              // this.props.loadSavedSongs();
               navigation.navigate(route.routeName);
             } else {
               navigation.navigate(route.routeName);
@@ -134,9 +132,9 @@ const TabBar = class TabBar extends Component {
           tintColor,
           label,
         })}
-        {/* <Text style={[styles.tabBarButtonText, { color }]}>
-          {label}
-        </Text> */}
+        {/*<Text style={[styles.tabBarButtonText]}>*/}
+        {/*{label}*/}
+        {/*</Text>*/}
       </TouchableOpacity>
     );
   };
@@ -157,13 +155,12 @@ const TabBar = class TabBar extends Component {
     });
   }
 
-
   render = () => {
     const { navigation } = this.props;
     const tabBarButtons = [];
 
     // add buttons to bottom tab bar
-    for (let i = 3; i < navigation.state.routes.length; i++) {
+    for (let i = 0; i < navigation.state.routes.length; i++) {
       // start at tabNavigator screen 3 | screens are numbered in app-navigator.js
       tabBarButtons.push(this.renderTabBarButton(navigation.state.routes[i], i));
     }
@@ -181,6 +178,7 @@ const TabBar = class TabBar extends Component {
             handlePlayPress={this._handlePlayPress}
             curTrack={this.props.curTrack}
             navigateToPlayscreenFromPlaybar={() => this.navigateToPlayscreenFromPlaybar()}
+            navigation={this.props.navigation} // add navigation here to push it down the the star component in playbar
           />
         </View>
         <View {...this.props} style={styles.tabBar}>
@@ -195,14 +193,16 @@ const mapStateToProps = state => ({
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
   playbackState: state.queue.playback,
+  playlists: state.playlists.playlists,
 });
 
 const mapDispatchToProps = {
   handlePlayPress,
+  loadEvents,
+  loadPlaylists,
+  loadSavedSongs,
   skipToNext,
   skipToPrevious,
-  loadLeaderboardSongs,
-  loadEvents,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabBar);

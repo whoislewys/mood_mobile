@@ -31,7 +31,7 @@ export default class Background extends Component {
       <Image source={this.props.image} style={styles.bgImage} blurRadius={this.props.blur} />
       { this.getOverlay() }
     </View>
-  )
+  );
 
   getOverlay = () => {
     if (this.props.overlay === undefined) {
@@ -43,10 +43,10 @@ export default class Background extends Component {
       );
     }
     return (
-        <View style={styles.container}>
-          <Image source={this.props.overlay} style={styles.bgImage} />
-          { this.props.children }
-        </View>
+      <View style={styles.container}>
+        <Image source={this.props.overlay} style={styles.bgImage} />
+        { this.props.children }
+      </View>
     );
   }
 }

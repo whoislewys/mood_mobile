@@ -4,7 +4,7 @@ import {
   View,
   Text,
 } from 'react-native';
-
+import axios from 'axios';
 import RNRestart from 'react-native-restart';
 
 const styles = StyleSheet.create({
@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   mainText: {
     fontWeight: '700',
@@ -40,7 +41,7 @@ export default class ErrorScreen extends Component {
   }
 
   checkConnectivity = async () => {
-    const isConnected = await fetch('https://www.google.com').catch(() => {});
+    const isConnected = await axios.get('https://www.google.com').catch(() => {});
     if (isConnected) {
       clearInterval(this.state.internetCheck);
       RNRestart.Restart();

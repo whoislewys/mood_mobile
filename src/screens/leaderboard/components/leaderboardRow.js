@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import Images from '@assets/images';
-import { fonts, colors } from '../../../assets/styles';
+import { fonts, colors, spacing } from '../../../assets/styles';
 
 const styles = StyleSheet.create({
   rowBackground: {
@@ -17,9 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 85,
-    marginBottom: 15,
-    marginRight: 5,
-    marginLeft: 5,
+    marginBottom: spacing.md,
     borderRadius: 10,
     elevation: 2,
     backgroundColor: '#fff',

@@ -6,14 +6,13 @@ import Player from './src/components/player';
 import store from './src/redux/store';
 import createEventHandler from './src/redux/event-handler';
 
-class App extends Component {
+export default class App extends Component {
     componentDidMount = async () => {
       await TrackPlayer.setupPlayer({
         // Can set maxCacheSize like this:
         // maxCacheSize: 1024 * 5, // 5 mb
       });
       await TrackPlayer.updateOptions({
-        stopWithApp: true,
         // TODO: set up custom background play controls styling, e.g.
         // icon: <album art>
         // docs on that here: https://github.com/react-native-kit/react-native-track-player/wiki/Documentation#player-functions
