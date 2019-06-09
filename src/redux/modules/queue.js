@@ -325,12 +325,13 @@ export function playbackTrack(track) {
   };
 }
 
+// try with duccking disabed
 export function handleDuck(data) {
   return async () => {
     const { permanent, ducking, paused } = data;
-    if (permanent === true) await TrackPlayer.stop();
+    // if (permanent === true) await TrackPlayer.stop();
     if (ducking) await TrackPlayer.pause(); // could just change vol here
-    if (paused) await TrackPlayer.pause();
+    // if (paused) await TrackPlayer.pause();
     if (!ducking && !paused && !permanent) await TrackPlayer.play();
   };
 }

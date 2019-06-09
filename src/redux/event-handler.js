@@ -19,9 +19,9 @@ async function eventHandler(store, data) {
     case 'remote-pause':
       store.dispatch(handlePlayPress());
       break;
-    case 'remote-stop':
-      TrackPlayer.stop();
-      break;
+    // case 'remote-stop':
+    //   TrackPlayer.stop();
+    //   break;
     case 'remote-next':
       store.dispatch(skipToNext());
       break;
@@ -41,8 +41,11 @@ async function eventHandler(store, data) {
       Alert.alert('An error ocurred', data.error);
       break;
     case 'remote-duck':
+      console.warn('remote duck event');
       store.dispatch(handleDuck(data));
+      break;
     default:
+      break;
   }
 }
 
