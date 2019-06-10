@@ -8,6 +8,7 @@ import {
   LOAD_FEATURED_FAIL,
 } from '../constants';
 import { mapSongsToValidTrackObjects } from '../util';
+import Images from '@assets/images';
 
 const initialState = {
   moods: [
@@ -24,12 +25,24 @@ export function reducer(state = initialState, action = {}) {
     case LOAD_MOODS:
       return { ...state, loading: true };
     case LOAD_MOODS_SUCCESS:
-      let { data } = action.payload;
-      data = Object.keys(data).map(key => data[key]);
+      const { data: moods } = action.payload;
+      moods.forEach((mood) => {
+        if (mood.id === 1) {
+          mood.file = Images.happyTile;
+        } else if (mood.id === 2) {
+          mood.file = Images.angryTile;
+        } else if (mood.id === 3) {
+          mood.file = Images.romanticTile;
+        } else if (mood.id === 5) {
+          mood.file = Images.sadTile;
+        } else {
+          console.warn('unexpected mood');
+        }
+      });
       return {
         ...state,
         loading: false,
-        moods: data,
+        moods,
       };
     case LOAD_MOODS_FAIL:
       return {

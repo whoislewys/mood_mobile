@@ -70,22 +70,15 @@ export default class Mood extends React.Component {
   );
 
   getMoodTileImage = (id) => {
-    if (id === tileConstants.MYSTERY) {
-      return <Image style={styles.moodArt} source={this.props.mood.file} />;
-    }
     if (id === tileConstants.FEATURED_SONG) {
-      return this.props.mood.file
-        ? (
-          <View style={styles.moodArt}>
-            <ImageBackground style={styles.featuredTile} source={{ uri: this.props.mood.file }}>
-              <View style={styles.subTextContainer}>
-                <Text style={styles.textStyle}>Song of the Week</Text>
-              </View>
-            </ImageBackground>
+      return (
+        <ImageBackground style={styles.moodArt} source={{ uri: this.props.mood.file }}>
+          <View style={styles.subTextContainer}>
+            <Text style={styles.textStyle}>Song of the Week</Text>
           </View>
-        )
-        : null;
+        </ImageBackground>
+      );
     }
-    return <Image style={styles.moodArt} source={{ uri: this.props.mood.file }} />;
+    return <Image style={styles.moodArt} source={this.props.mood.file} />;
   };
 }
