@@ -98,6 +98,11 @@
 		F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D94297707149471BBFE9B883 /* explicit-icon.png */; };
 		F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A5D4433A564CB3B8304205 /* saved-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
+		EF3FDBD86286465BBFAAF12E /* angry-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E1D9CDFD24C1AB5D72A7C /* angry-tile.png */; };
+		3F2BD57D1F434B42A3A9A46F /* happy-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = D6ED0A889B01432C959223CE /* happy-tile.png */; };
+		43AF7D4609FC4A4D8565B829 /* mystery-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D18EAF605CF444EBB93D79E /* mystery-tile.png */; };
+		FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 656F9179472744F38EAC701D /* romantic-tile.png */; };
+		71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9B80535F8F4D5B90FA4881 /* sad-tile.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -537,6 +542,11 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; };
+		180E1D9CDFD24C1AB5D72A7C /* angry-tile.png */ = {isa = PBXFileReference; name = "angry-tile.png"; path = "../src/assets/img/angry-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D6ED0A889B01432C959223CE /* happy-tile.png */ = {isa = PBXFileReference; name = "happy-tile.png"; path = "../src/assets/img/happy-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6D18EAF605CF444EBB93D79E /* mystery-tile.png */ = {isa = PBXFileReference; name = "mystery-tile.png"; path = "../src/assets/img/mystery-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		656F9179472744F38EAC701D /* romantic-tile.png */ = {isa = PBXFileReference; name = "romantic-tile.png"; path = "../src/assets/img/romantic-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AE9B80535F8F4D5B90FA4881 /* sad-tile.png */ = {isa = PBXFileReference; name = "sad-tile.png"; path = "../src/assets/img/sad-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -870,6 +880,11 @@
 				2ABDDB4A34E1470E83D75834 /* cancel-playlist.png */,
 				94AF000E23B84E1682437756 /* google-icon.png */,
 				E7CE2CC95F6141DFBE5F53A6 /* mystery-mood-tile.png */,
+				180E1D9CDFD24C1AB5D72A7C /* angry-tile.png */,
+				D6ED0A889B01432C959223CE /* happy-tile.png */,
+				6D18EAF605CF444EBB93D79E /* mystery-tile.png */,
+				656F9179472744F38EAC701D /* romantic-tile.png */,
+				AE9B80535F8F4D5B90FA4881 /* sad-tile.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1559,6 +1574,11 @@
 				A5598D0A21A74F4EA93F82EF /* cancel-playlist.png in Resources */,
 				A3184803DD924D27A5976F8A /* google-icon.png in Resources */,
 				36A63EE5C3D9480089C14C05 /* mystery-mood-tile.png in Resources */,
+				EF3FDBD86286465BBFAAF12E /* angry-tile.png in Resources */,
+				3F2BD57D1F434B42A3A9A46F /* happy-tile.png in Resources */,
+				43AF7D4609FC4A4D8565B829 /* mystery-tile.png in Resources */,
+				FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */,
+				71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

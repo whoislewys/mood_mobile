@@ -14,10 +14,12 @@ const { width } = dimensions;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // height: dimensions.height,
+    backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '4%',
+    marginBottom: 20,
     elevation: 2,
     shadowOpacity: 0.2,
     shadowRadius: 4,
