@@ -16,7 +16,7 @@ const images = {
   // Home Screen (Mood Screen)
   angryTile: require('./img/angry-tile.png'),
   happyTile: require('./img/happy-tile.png'),
-  // mysteryMoodTile: require('./img/mystery-tile.png'),
+  mysteryMoodTile: require('./img/mystery-tile.png'),
 
   romanticTile: require('./img/romantic-tile.png'),
   sadTile: require('./img/sad-tile.png'),
