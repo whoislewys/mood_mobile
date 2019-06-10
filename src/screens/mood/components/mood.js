@@ -18,6 +18,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '4%',
+    elevation: 2,
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 5,
+      height: 9,
+    },
   },
   moodArt: {
     resizeMode: 'contain',
