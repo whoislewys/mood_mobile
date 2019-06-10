@@ -29,12 +29,16 @@ export function reducer(state = initialState, action = {}) {
       moods.forEach((mood) => {
         if (mood.id === 1) {
           mood.file = Images.happyTile;
+          mood.name = 'Happy';
         } else if (mood.id === 2) {
           mood.file = Images.angryTile;
+          mood.name = 'Angry';
         } else if (mood.id === 3) {
           mood.file = Images.romanticTile;
+          mood.name = 'Romantic';
         } else if (mood.id === 5) {
           mood.file = Images.sadTile;
+          mood.name = 'Sad';
         } else {
           console.warn('unexpected mood');
         }
