@@ -101,10 +101,8 @@ class Playlists extends Component {
 
   _playlistButton = () => (
     {
-      // cant pass artwork through here, the way we called images was incompatible
       id: 'create-playlist',
       name: 'Create Playlist',
-      description: 'Make a new bonerific playlist',
     });
 
   handleScroll = (event) => {
