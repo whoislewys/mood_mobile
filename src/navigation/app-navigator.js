@@ -144,7 +144,7 @@ const leaderboardNavigatorWithHeader = createStackNavigator({
 const TabNavigator = createBottomTabNavigator({
   Mood: { screen: map(MoodScreen) },
   Leaderboard: leaderboardNavigatorWithHeader,
-  Events: { screen: map(EventsScreen) },
+  // Events: { screen: map(EventsScreen) },
   MyMusic: MyMusicNavigatorWithHeader,
 }, {
   tabBarOptions: {
