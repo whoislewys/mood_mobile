@@ -1,5 +1,6 @@
 import axios from 'axios';
 import firebase from 'react-native-firebase';
+import moment from 'moment';
 import {
   ADD_TO_NEW_PLAYLIST_SONGS,
   ADD_SONG_TO_TO_DELETE_SET,
@@ -280,9 +281,13 @@ export function createPlaylist() {
 
     dispatch({ type: CREATE_PLAYLIST });
     try {
-      // submit new playlist
-      const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? 'New Playlist'
+      const currentDatetime = moment().format('LLLL');
+      // if user leaves playlist name blank, create one with title: 'New Playlist <current datetime>'
+      const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? `New Playlist ${currentDatetime}`
         : getState().playlists.newPlaylistName;
+
+      if (playlistNameToSubmit === 'SavedSongs') return;
+
       const token = await firebase.auth().currentUser.getIdToken();
       const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
         {
@@ -293,13 +298,10 @@ export function createPlaylist() {
         },
         { headers: { Authorization: token } });
       const newPlaylistId = newPlaylist.data.id;
-      // dispatch success action & refresh the list of playlists
-      dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
 
+      dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
       dispatch(loadPlaylists());
     } catch (err) {
-      // in case an error happened, close the modal
-      console.warn('error:', err);
       dispatch(closeModal());
       dispatch({ type: CREATE_PLAYLIST_FAIL, err });
     }
