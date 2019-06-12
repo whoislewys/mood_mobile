@@ -286,7 +286,7 @@ export function createPlaylist() {
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? `New Playlist ${currentDatetime}`
         : getState().playlists.newPlaylistName;
 
-      if (playlistNameToSubmit === 'SavedSongs') return;
+      if (playlistNameToSubmit === 'Saved Songs') throw new Error('Can\'t name new playlist "Saved Songs"');
 
       const token = await firebase.auth().currentUser.getIdToken();
       const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
