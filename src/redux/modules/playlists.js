@@ -6,6 +6,9 @@ import {
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
   CREATE_PLAYLIST_FAIL,
+  DELETE_PLAYLIST,
+  DELETE_PLAYLIST_SUCCESS,
+  DELETE_PLAYLIST_FAIL,
   DELETE_SAVED_SONGS,
   LOAD_PLAYLISTS,
   LOAD_PLAYLISTS_SUCCESS,
@@ -130,13 +133,25 @@ export function reducer(state = initialState, action = {}) {
     case CREATE_PLAYLIST_FAIL:
       return { ...state, loading: false, error: 'Error while creating playlist' };
 
+    case DELETE_PLAYLIST:
+      return { ...state };
+    case DELETE_PLAYLIST_SUCCESS:
+      return { ...state };
+    case DELETE_PLAYLIST_FAIL:
+      return { ...state, error: action.e };
+
     case LOAD_PLAYLISTS:
-      return { ...state, loading: true };
+      return { ...state, playlists: [], loading: true };
     case LOAD_PLAYLISTS_SUCCESS:
       const playlists = action.payload.data;
       return { ...state, loading: false, playlists };
     case LOAD_PLAYLISTS_FAIL:
-      return { ...state, loading: false, error: 'Error while fetching playlist' };
+      return {
+        ...state,
+        error: 'Error while fetching playlist',
+        loading: false,
+        playlists: [],
+      };
 
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
@@ -284,6 +299,7 @@ export function createPlaylist() {
       dispatch(loadPlaylists());
     } catch (err) {
       // in case an error happened, close the modal
+      console.warn('error:', err);
       dispatch(closeModal());
       dispatch({ type: CREATE_PLAYLIST_FAIL, err });
     }
@@ -542,6 +558,27 @@ export function saveSong(song) {
 
     // refresh songs after update is complete
     await dispatch(loadSavedSongs());
+  };
+}
+
+export function deletePlaylist(playlistId) {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_PLAYLIST });
+
+    try {
+      const token = await firebase.auth()
+        .currentUser
+        .getIdToken();
+      await axios.delete(`https://api.moodindustries.com/api/v1/playlists/${playlistId}`,
+        {
+          headers: { Authorization: token },
+          t: 'EXVbAWTqbGFl7BKuqUQv',
+        });
+      dispatch({ type: DELETE_PLAYLIST_SUCCESS });
+    } catch (e) {
+      console.warn('error deleteing: ', e);
+      dispatch({ type: DELETE_PLAYLIST_FAIL, e });
+    }
   };
 }
 

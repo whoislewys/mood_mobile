@@ -51,6 +51,7 @@ const images = {
   // Playlists Screen
   createPlaylist: require('./img/create-playlist.png'),
   cancelPlaylist: require('./img/cancel-playlist.png'),
+  deletePlaylist: require('./img/delete-playlist.png'),
 
   // Saved Songs Screen
   addToSavedSongs: require('./img/save-song.png'),
