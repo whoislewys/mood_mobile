@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -44,10 +45,11 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* mood_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mood_mobileTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
-		36A63EE5C3D9480089C14C05 /* mystery-mood-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = E7CE2CC95F6141DFBE5F53A6 /* mystery-mood-tile.png */; };
 		36B4959611D040BA98687CCB /* selected-home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EF11813B38634D3680D67B0A /* selected-home-icon.png */; };
 		3C0C008BCC784CC4A9B8C5ED /* shuffle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A175A2FF88E4BA09D83BA19 /* shuffle.png */; };
+		3F2BD57D1F434B42A3A9A46F /* happy-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = D6ED0A889B01432C959223CE /* happy-tile.png */; };
 		4345345FB37E4943A84E3DEA /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 676E2E65EED34F26B26B46ED /* libRNDeviceInfo.a */; };
+		43AF7D4609FC4A4D8565B829 /* mystery-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D18EAF605CF444EBB93D79E /* mystery-tile.png */; };
 		475B0F63D6C14F80B221C825 /* selected-left-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 75E20E42C4A34BA68D2A3E0A /* selected-left-chevron.png */; };
 		49C04EC9FD334B5194237172 /* round-play-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 075897FF1496410190F1AA69 /* round-play-2x.png */; };
 		4DC44D9DB1CD4BD9982341D7 /* background-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 95BF9B8D136042F48789EFC0 /* background-overlay.png */; };
@@ -62,6 +64,7 @@
 		67E4902F5F014F1AA9A7EA35 /* selected-round-skip_previous.png in Resources */ = {isa = PBXBuildFile; fileRef = A16208D20E8048F386EC8A0B /* selected-round-skip_previous.png */; };
 		6E51FC71F57A49ED8AE40B11 /* round-pause_circle_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = B790C0EA94124FDFB63379F0 /* round-pause_circle_outline.png */; };
 		700157424A65468EB1CA7E17 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27569F4B5E410FA4B6A524 /* libRNDeviceInfo-tvOS.a */; };
+		71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9B80535F8F4D5B90FA4881 /* sad-tile.png */; };
 		7F965C06A8944E1FA322DED5 /* selected-down-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B94A45EA4A84DE1A1155EEE /* selected-down-chevron.png */; };
 		8310FABA8D394BA58E9869DF /* libreact-native-branch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BC89C058C04D8C8C5F5C64 /* libreact-native-branch.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -95,14 +98,11 @@
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		EE0B9F005D0B4EA18A4CE71E /* selected-round-discover.png in Resources */ = {isa = PBXBuildFile; fileRef = E821143D5EE4479CB619D579 /* selected-round-discover.png */; };
+		EF3FDBD86286465BBFAAF12E /* angry-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E1D9CDFD24C1AB5D72A7C /* angry-tile.png */; };
 		F7159880D45D4F4C915AFDD8 /* explicit-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D94297707149471BBFE9B883 /* explicit-icon.png */; };
 		F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A5D4433A564CB3B8304205 /* saved-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
-		EF3FDBD86286465BBFAAF12E /* angry-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E1D9CDFD24C1AB5D72A7C /* angry-tile.png */; };
-		3F2BD57D1F434B42A3A9A46F /* happy-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = D6ED0A889B01432C959223CE /* happy-tile.png */; };
-		43AF7D4609FC4A4D8565B829 /* mystery-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D18EAF605CF444EBB93D79E /* mystery-tile.png */; };
 		FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 656F9179472744F38EAC701D /* romantic-tile.png */; };
-		71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = AE9B80535F8F4D5B90FA4881 /* sad-tile.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -466,6 +466,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = mood_mobile/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1768FC3D79D24FCDDC6990C0 /* libPods-mood_mobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mood_mobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		180E1D9CDFD24C1AB5D72A7C /* angry-tile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "angry-tile.png"; path = "../src/assets/img/angry-tile.png"; sourceTree = "<group>"; };
 		23DA727A2BE74669AC1D12DF /* star-rounded.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "star-rounded.png"; path = "../src/assets/img/star-rounded.png"; sourceTree = "<group>"; };
 		2678D6EEAE9542B1A38B6F5D /* add-event-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "add-event-button.png"; path = "../src/assets/img/add-event-button.png"; sourceTree = "<group>"; };
 		2ABDDB4A34E1470E83D75834 /* cancel-playlist.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "cancel-playlist.png"; path = "../src/assets/img/cancel-playlist.png"; sourceTree = "<group>"; };
@@ -489,10 +490,12 @@
 		62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Light.ttf"; path = "../src/assets/fonts/Quicksand/Quicksand-Light.ttf"; sourceTree = "<group>"; };
 		643BFA9BAFDF4027919F9266 /* playlist-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "playlist-button.png"; path = "../src/assets/img/playlist-button.png"; sourceTree = "<group>"; };
 		652435A09D194A3150D69760 /* libPods-mood_mobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mood_mobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		656F9179472744F38EAC701D /* romantic-tile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "romantic-tile.png"; path = "../src/assets/img/romantic-tile.png"; sourceTree = "<group>"; };
 		6748C31959D1AA8AE6CD7D82 /* Pods-mood_mobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobileTests.debug.xcconfig"; path = "Target Support Files/Pods-mood_mobileTests/Pods-mood_mobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		676E2E65EED34F26B26B46ED /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		683C42FFB40547079C9116A5 /* gradient-heading.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "gradient-heading.png"; path = "../src/assets/img/gradient-heading.png"; sourceTree = "<group>"; };
 		6BEDB5499D5C4185A3F60DBE /* star-rounded-outline.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "star-rounded-outline.png"; path = "../src/assets/img/star-rounded-outline.png"; sourceTree = "<group>"; };
+		6D18EAF605CF444EBB93D79E /* mystery-tile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mystery-tile.png"; path = "../src/assets/img/mystery-tile.png"; sourceTree = "<group>"; };
 		6DA61579C0DA4DE8A8709EE8 /* round-settings.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-settings.png"; path = "../src/assets/img/round-settings.png"; sourceTree = "<group>"; };
 		720FC630E9AD4B189F15B6A5 /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Medium.ttf"; path = "../src/assets/fonts/Quicksand/Quicksand-Medium.ttf"; sourceTree = "<group>"; };
 		747D2D7159E94E97AB985E51 /* selected-round-format-leaderboard.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-round-format-leaderboard.png"; path = "../src/assets/img/selected-round-format-leaderboard.png"; sourceTree = "<group>"; };
@@ -513,6 +516,7 @@
 		AB1498BE35C64F8480454C35 /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		ABFD48B532414D0EB0A95AB6 /* selected-round-events.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-round-events.png"; path = "../src/assets/img/selected-round-events.png"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		AE9B80535F8F4D5B90FA4881 /* sad-tile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "sad-tile.png"; path = "../src/assets/img/sad-tile.png"; sourceTree = "<group>"; };
 		B6CB029B07B548D1B087DE6A /* Color-Mood-Logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Color-Mood-Logo.png"; path = "../src/assets/img/Color-Mood-Logo.png"; sourceTree = "<group>"; };
 		B790C0EA94124FDFB63379F0 /* round-pause_circle_outline.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-pause_circle_outline.png"; path = "../src/assets/img/round-pause_circle_outline.png"; sourceTree = "<group>"; };
 		B7BC89C058C04D8C8C5F5C64 /* libreact-native-branch.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libreact-native-branch.a"; sourceTree = "<group>"; };
@@ -530,6 +534,7 @@
 		D158E1257D3F46B8A7A86E06 /* selected-star-rounded.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-star-rounded.png"; path = "../src/assets/img/selected-star-rounded.png"; sourceTree = "<group>"; };
 		D28E03B4940A47BD846AEEA5 /* round-bug_report.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-bug_report.png"; path = "../src/assets/img/round-bug_report.png"; sourceTree = "<group>"; };
 		D3A4A1EEF7FC4DACA068E7C5 /* round-stars-1.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-stars-1.png"; path = "../src/assets/img/round-stars-1.png"; sourceTree = "<group>"; };
+		D6ED0A889B01432C959223CE /* happy-tile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "happy-tile.png"; path = "../src/assets/img/happy-tile.png"; sourceTree = "<group>"; };
 		D94297707149471BBFE9B883 /* explicit-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "explicit-icon.png"; path = "../src/assets/img/explicit-icon.png"; sourceTree = "<group>"; };
 		DB3E8CAF9E024C3A9A029C92 /* round-pause-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-pause-2x.png"; path = "../src/assets/img/round-pause-2x.png"; sourceTree = "<group>"; };
 		E48C7F99B833D1C6DE4215CE /* Pods-mood_mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobile.debug.xcconfig"; path = "Target Support Files/Pods-mood_mobile/Pods-mood_mobile.debug.xcconfig"; sourceTree = "<group>"; };
@@ -542,11 +547,6 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; };
-		180E1D9CDFD24C1AB5D72A7C /* angry-tile.png */ = {isa = PBXFileReference; name = "angry-tile.png"; path = "../src/assets/img/angry-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D6ED0A889B01432C959223CE /* happy-tile.png */ = {isa = PBXFileReference; name = "happy-tile.png"; path = "../src/assets/img/happy-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6D18EAF605CF444EBB93D79E /* mystery-tile.png */ = {isa = PBXFileReference; name = "mystery-tile.png"; path = "../src/assets/img/mystery-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		656F9179472744F38EAC701D /* romantic-tile.png */ = {isa = PBXFileReference; name = "romantic-tile.png"; path = "../src/assets/img/romantic-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		AE9B80535F8F4D5B90FA4881 /* sad-tile.png */ = {isa = PBXFileReference; name = "sad-tile.png"; path = "../src/assets/img/sad-tile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1573,7 +1573,6 @@
 				C476875CC91B49EDAFB7D128 /* close-icon.png in Resources */,
 				A5598D0A21A74F4EA93F82EF /* cancel-playlist.png in Resources */,
 				A3184803DD924D27A5976F8A /* google-icon.png in Resources */,
-				36A63EE5C3D9480089C14C05 /* mystery-mood-tile.png in Resources */,
 				EF3FDBD86286465BBFAAF12E /* angry-tile.png in Resources */,
 				3F2BD57D1F434B42A3A9A46F /* happy-tile.png in Resources */,
 				43AF7D4609FC4A4D8565B829 /* mystery-tile.png in Resources */,
