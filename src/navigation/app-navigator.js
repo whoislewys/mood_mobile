@@ -13,8 +13,8 @@ import {
 import Images from '@assets/images';
 
 import ErrorScreen from '../screens/error';
-import EventsForm from '../screens/events/events-form';
-import EventsScreen from '../screens/events';
+import FullScreenWebView from '../screens/webview';
+// import EventsScreen from '../screens/events';
 import LeaderboardScreen from '../screens/leaderboard';
 import LoginScreen from '../screens/login';
 import LibraryScreen from '../screens/savedSongs';
@@ -156,8 +156,10 @@ const TabNavigator = createBottomTabNavigator({
 });
 
 export default createStackNavigator({
+  // this screen will get rendered first!!!
   Splash: { screen: map(SplashScreen) },
-  EventsForm: { screen: map(EventsForm) },
+  // these can be navigated to from anywhere
+  FullScreenWebView: { screen: map(FullScreenWebView) },
   Home: TabNavigator,
   Play: { screen: map(PlayScreen) },
   Login: { screen: map(LoginScreen) },

@@ -62,7 +62,13 @@ class EventsScreen extends Component {
         {/*<GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={90} />*/}
         <GradientButton
           text='ADD EVENT'
-          onPress={() => this.props.navigation.navigate('EventsForm')}
+          onPress={() =>
+            this.props.navigation.navigate({
+              routeName: 'EventsForm',
+              params: {
+                url: 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1',
+              },
+          })}
           width={90}
         />
       </MoodLeftHeader>

@@ -155,8 +155,13 @@ class SplashScreen extends Component {
         {
           text: 'Review!',
           onPress: () => {
-            Linking.openURL('https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk');
             this.setReviewed('true');
+            this.props.navigation.navigate({
+              routeName: 'EventsForm',
+              params: {
+                url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
+              },
+            });
           },
           style: 'cancel',
         },
