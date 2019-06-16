@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View,
   NetInfo,
-  Linking,
   Alert,
   AsyncStorage,
   BackHandler,
@@ -157,7 +156,7 @@ class SplashScreen extends Component {
           onPress: () => {
             this.setReviewed('true');
             this.props.navigation.navigate({
-              routeName: 'EventsForm',
+              routeName: 'FullScreenWebView',
               params: {
                 url: 'https://docs.google.com/forms/d/1Dh8RjPtftLzvWAkf7XfGl_vZCo268rQ8P3r8noPOcIk/edit?usp=drivesdk',
               },

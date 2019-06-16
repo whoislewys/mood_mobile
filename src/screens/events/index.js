@@ -3,7 +3,6 @@ import {
   View,
   ActivityIndicator,
   FlatList,
-  Linking,
 } from 'react-native';
 import { connect } from 'react-redux';
 import EventRow from './components/event-row';
@@ -59,15 +58,14 @@ class EventsScreen extends Component {
   render = () => (
     <View style={styles.background}>
       <MoodLeftHeader title='Phx Events'>
-        {/*<GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={90} />*/}
+        {/* <GradientButton text='ADD EVENT' onPress={() => Linking.openURL(ADD_EVENT_URL)} width={90} /> */}
         <GradientButton
           text='ADD EVENT'
-          onPress={() =>
-            this.props.navigation.navigate({
-              routeName: 'EventsForm',
-              params: {
-                url: 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1',
-              },
+          onPress={() => this.props.navigation.navigate({
+            routeName: 'FullScreenWebView',
+            params: {
+              url: 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1',
+            },
           })}
           width={90}
         />
