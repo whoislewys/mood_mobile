@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -103,6 +102,7 @@
 		F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A5D4433A564CB3B8304205 /* saved-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
 		FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 656F9179472744F38EAC701D /* romantic-tile.png */; };
+		E756A6EB98C940CA98AEEE19 /* delete-playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 90F3B150BD864DC9A18BE916 /* delete-playlist.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -547,6 +547,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; };
+		90F3B150BD864DC9A18BE916 /* delete-playlist.png */ = {isa = PBXFileReference; name = "delete-playlist.png"; path = "../src/assets/img/delete-playlist.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -885,6 +886,7 @@
 				6D18EAF605CF444EBB93D79E /* mystery-tile.png */,
 				656F9179472744F38EAC701D /* romantic-tile.png */,
 				AE9B80535F8F4D5B90FA4881 /* sad-tile.png */,
+				90F3B150BD864DC9A18BE916 /* delete-playlist.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1578,6 +1580,7 @@
 				43AF7D4609FC4A4D8565B829 /* mystery-tile.png in Resources */,
 				FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */,
 				71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */,
+				E756A6EB98C940CA98AEEE19 /* delete-playlist.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
