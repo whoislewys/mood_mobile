@@ -12,8 +12,9 @@ import Images from '@assets/images';
 import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
 import {
   addSongToDeleted,
-  removeSongFromDeleted,
+  deletePlaylist,
   deleteSongsFromPlaylist,
+  removeSongFromDeleted,
   resetToDeleteSet,
 } from '../../redux/modules/playlists';
 import { sendScoreDelta } from '../../redux/modules/score';
@@ -102,10 +103,18 @@ class PlaylistDetail extends Component {
       title={this.props.curPlaylistTitle}
       leftButtonIcon={Images.arrowLeft}
       onPressLeftButton={this.props.navigation.goBack}
+      // todo: provision these when new playlist experience improves
       // rightButtonIcon={Images.savedIcon}
-      onPressRightButton={() => console.warn('saving')}
+      // onPressRightButton={() => console.warn('saving')}
+      rightButtonIcon={Images.deletePlaylist}
+      onPressRightButton={() => this._deleteCurPlaylist()}
     />
   );
+
+  _deleteCurPlaylist = () => {
+    this.props.deletePlaylist(this.props.curPlaylistId);
+    this.props.navigation.goBack();
+  };
 
   keyExtractor = song => song.id.toString();
 
@@ -160,6 +169,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addSongToDeleted,
+  deletePlaylist,
   deleteSongsFromPlaylist,
   loadQueueStartingAtId,
   removeSongFromDeleted,

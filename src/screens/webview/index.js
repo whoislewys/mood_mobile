@@ -4,8 +4,8 @@ import {
   TouchableOpacity,
   View,
   Image,
+  WebView,
 } from 'react-native';
-import { WebView } from 'react-native';
 import Images from '@assets/images';
 import { colors, spacing } from '../../assets/styles';
 
@@ -23,18 +23,17 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     resizeMode: 'contain',
-    // TODO this tintcolor only used for settings screen, maybe make it a prop?
     tintColor: colors.black,
   },
 });
 
-export default class EventsForm extends Component {
+export default class FullScreenWebView extends Component {
   render() {
     return (
       <View style={styles.container}>
         <WebView
           style={{ ...StyleSheet.absoluteFillObject }}
-          source={{ uri: 'https://goo.gl/forms/PoVlPj9YbhVq8zTp1' }}
+          source={{ uri: this.props.url }}
           useWebkit
         />
         <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.goBack()}>

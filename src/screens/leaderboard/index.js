@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   leaderboardContainer: {
+    paddingTop: spacing.sm,
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',

@@ -101,10 +101,8 @@ class Playlists extends Component {
 
   _playlistButton = () => (
     {
-      // cant pass artwork through here, the way we called images was incompatible
       id: 'create-playlist',
       name: 'Create Playlist',
-      description: 'Make a new bonerific playlist',
     });
 
   handleScroll = (event) => {
@@ -122,6 +120,13 @@ class Playlists extends Component {
 
   getPlaylists = () => {
     const playlistsNoSavedSongs = this.props.playlists.filter(playlist => playlist.name !== 'Saved Songs');
+
+    playlistsNoSavedSongs.forEach(function (playlist) {
+      if (playlist.artworks[0] != null) {
+        // todo: stitch together 4 artworks in songRow if (playlist.artworks.length > 4)
+        playlist.artwork = playlist.artworks[0];
+      }
+    });
 
     return (
       !this.props.loading && this.props.playlists !== undefined

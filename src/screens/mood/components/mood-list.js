@@ -9,6 +9,7 @@ import { tileConstants } from '../../../redux/constants';
 export default class MoodList extends React.Component {
   render = () => (
     <FlatList
+      style={{ flex: 1 }}
       data={this._getMoodTiles()}
       keyExtractor={this._keyExtractor}
       renderItem={this._renderItem}

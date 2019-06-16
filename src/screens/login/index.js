@@ -6,7 +6,7 @@ import {
   Alert,
   StyleSheet,
   Image,
-  Linking, ActivityIndicator,
+  ActivityIndicator,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import Images from '@assets/images';
@@ -142,9 +142,9 @@ class LoginScreen extends Component {
           <View style={styles.tos}>
             <Text style={{ textAlign: 'center' }}>
               {'By signing in, you agree to Mood\'s '}
-              {/* <Text onPress={LoginScreen._openTos} style={styles.linkText}>Terms & Conditions</Text> */}
+              {/* <Text onPress={this._openTos} style={styles.linkText}>Terms & Conditions</Text> */}
               {/* {' and '} */}
-              <Text onPress={LoginScreen._ppTouch} style={styles.linkText}>Privacy Policy</Text>
+              <Text onPress={this._ppTouch} style={styles.linkText}>Privacy Policy</Text>
             </Text>
           </View>
         </GestureRecognizer>
@@ -152,7 +152,7 @@ class LoginScreen extends Component {
     );
   }
 
-  onSwipe= () => {
+  onSwipe = () => {
     this.props.navigation.goBack();
   };
 
@@ -160,9 +160,14 @@ class LoginScreen extends Component {
   //   Linking.openURL('https://www.example.com');
   // }
 
-  static _ppTouch() {
-    Linking.openURL('https://docs.google.com/document/d/1c2Os5qrUO1vPD-noTqL-6KTLI_uOqhZ_W0HhoYsPVlE/edit?usp=sharing');
-  }
+  _ppTouch = () => {
+    this.props.navigation.navigate({
+      routeName: 'FullScreenWebView',
+      params: {
+        url: 'https://docs.google.com/document/d/1c2Os5qrUO1vPD-noTqL-6KTLI_uOqhZ_W0HhoYsPVlE/edit?usp=sharing',
+      },
+    });
+  };
 
   _signIn = async () => {
     try {

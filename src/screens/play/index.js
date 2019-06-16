@@ -110,6 +110,14 @@ class PlayScreen extends Component {
     this.props.navigation.goBack();
   }
 
+  componentDidMount() {
+    if (this._carouselref != null) {
+      if (this._carouselref.currentIndex !== this.props.curTrackIndex) {
+        this._carouselref.snapToItem(this.props.curTrackIndex);
+      }
+    }
+  }
+
   render = () => {
     if (!this.props.queue.length || (this.props.curTrack == null)) {
       return (
@@ -121,7 +129,6 @@ class PlayScreen extends Component {
         />
       );
     }
-
     return (
       <View style={styles.container}>
         { this._getBackground() }
