@@ -577,8 +577,8 @@ export function deletePlaylist(playlistId) {
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
       dispatch({ type: DELETE_PLAYLIST_SUCCESS });
+      await dispatch(loadPlaylists());
     } catch (e) {
-      console.warn('error deleteing: ', e);
       dispatch({ type: DELETE_PLAYLIST_FAIL, e });
     }
   };
