@@ -100,8 +100,6 @@ const styles = StyleSheet.create({
 
 
 class PlayScreen extends Component {
-  _carouselref;
-
   onSwipeDown() {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
@@ -110,10 +108,17 @@ class PlayScreen extends Component {
     this.props.navigation.goBack();
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      carouselRef: undefined,
+    };
+  }
+
   componentDidMount() {
-    if (this._carouselref != null) {
-      if (this._carouselref.currentIndex !== this.props.curTrackIndex) {
-        this._carouselref.snapToItem(this.props.curTrackIndex);
+    if (this.state.carouselRef != null) {
+      if (this.state.carouselRef.currentIndex !== this.props.curTrackIndex) {
+        this.state.carouselRef.snapToItem(this.props.curTrackIndex);
       }
     }
   }
@@ -171,13 +176,13 @@ class PlayScreen extends Component {
 
   _nextTrack = () => {
     this.props.skipToNext();
-    this._carouselref.snapToItem(this.props.curTrackIndex);
+    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
   };
 
   _previousTrack = () => {
     // args: snapToNext(animated, fireCallback)
     this.props.skipToPrevious();
-    this._carouselref.snapToItem(this.props.curTrackIndex);
+    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
   };
 
   getDropdownBar = () => (
@@ -219,9 +224,9 @@ class PlayScreen extends Component {
   };
 
   _handleCarouselSnap = (slideIndex) => {
-    if (slideIndex > this._carouselref.currentIndex) {
+    if (slideIndex > this.state.carouselRef.currentIndex) {
       this.props.skipToNext();
-    } else if (slideIndex < this._carouselref.currentIndex) {
+    } else if (slideIndex < this.state.carouselRef.currentIndex) {
       this.props.skipToPrevious();
     }
   };
@@ -231,7 +236,8 @@ class PlayScreen extends Component {
       style={{ flex: 1 }}
     >
       <Carousel
-        ref={(c) => { this._carouselref = c; }}
+        // ref={(c) => { this.state.carouselRef = c; }}
+        ref={(carousel) => { console.warn(`carousel: ${carousel}`); if (!this.state.carouselRef) { this.setState({ carouselRef: carousel }); } }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
         itemWidth={dimensions.width}
