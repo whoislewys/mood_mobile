@@ -182,7 +182,7 @@ export function skipToNext() {
       // works, but should be optimized for skipping several tracks back to back
       // will probably just have to fanagle trackplayer state
       // maybe make this just increment the index and do a trackPlayer.skip(index)
-      await TrackPlayer.skipToNext();
+      TrackPlayer.skipToNext();
     } catch (_) {}
     dispatch(startScoreTimer());
   };
@@ -191,7 +191,7 @@ export function skipToNext() {
 export function skipToPrevious() {
   return async (dispatch) => {
     try {
-      await TrackPlayer.skipToPrevious();
+      TrackPlayer.skipToPrevious();
     } catch (_) {}
     dispatch(startScoreTimer());
   };

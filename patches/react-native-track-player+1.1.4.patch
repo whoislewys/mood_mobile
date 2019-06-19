@@ -1,0 +1,309 @@
+diff --git a/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/MusicService.java b/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/MusicService.java
+index ee5756e..e739087 100644
+--- a/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/MusicService.java
++++ b/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/MusicService.java
+@@ -1,8 +1,8 @@
+ package com.guichaguri.trackplayer.service;
+ 
+-import android.app.Activity;
+-import android.app.Notification;
+ import android.app.NotificationChannel;
++import android.app.NotificationManager;
++import android.content.Context;
+ import android.content.Intent;
+ import android.os.Build;
+ import android.os.Bundle;
+@@ -12,7 +12,6 @@ import android.support.v4.app.NotificationCompat;
+ import android.support.v4.content.LocalBroadcastManager;
+ import android.support.v4.media.session.MediaButtonReceiver;
+ 
+-import android.support.v4.media.session.MediaSessionCompat;
+ import com.facebook.react.HeadlessJsTaskService;
+ import com.facebook.react.ReactInstanceManager;
+ import com.facebook.react.bridge.Arguments;
+@@ -25,9 +24,24 @@ import javax.annotation.Nullable;
+  */
+ public class MusicService extends HeadlessJsTaskService {
+ 
++    private static final String MUSIC_SERVICE_NOTIFICATION_CHANNEL_ID = "MusicService";
++
+     MusicManager manager;
+     Handler handler;
+ 
++    @Override
++    public void onCreate(){
++        super.onCreate();
++
++        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
++            NotificationChannel channel = new NotificationChannel(MUSIC_SERVICE_NOTIFICATION_CHANNEL_ID,"MusicService",
++                    NotificationManager.IMPORTANCE_LOW);
++            channel.setShowBadge(false);
++            channel.setSound(null, null);
++            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
++        }
++    }
++
+     @Nullable
+     @Override
+     protected HeadlessJsTaskConfig getTaskConfig(Intent intent) {
+@@ -77,7 +91,7 @@ public class MusicService extends HeadlessJsTaskService {
+                 String channel = null;
+ 
+                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+-                    channel = NotificationChannel.DEFAULT_CHANNEL_ID;
++                    channel = MUSIC_SERVICE_NOTIFICATION_CHANNEL_ID;
+                 }
+ 
+                 // Sets the service to foreground with an empty notification
+diff --git a/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/metadata/MetadataManager.java b/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/metadata/MetadataManager.java
+index f946840..7a366f8 100644
+--- a/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/metadata/MetadataManager.java
++++ b/node_modules/react-native-track-player/android/src/main/java/com/guichaguri/trackplayer/service/metadata/MetadataManager.java
+@@ -145,7 +145,7 @@ public class MetadataManager {
+         builder.setSmallIcon(getIcon(options, "icon", R.drawable.play));
+ 
+         // Update the jump interval
+-        jumpInterval = options.getInt("jumpInterval", 15);
++        jumpInterval = (int) Math.round(options.getDouble("jumpInterval", 15.0));
+ 
+         // Update the rating type
+         ratingType = options.getInt("ratingType", RatingCompat.RATING_NONE);
+diff --git a/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift b/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift
+index a7f5e43..ebe9421 100644
+--- a/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift
++++ b/node_modules/react-native-track-player/ios/RNTrackPlayer/Models/Track.swift
+@@ -100,12 +100,13 @@ class Track: NSObject, AudioItem, TimePitching {
+                 if let data = data, let artwork = UIImage(data: data), error == nil {
+                     handler(artwork)
+                 }
+-                
+-                handler(nil)
++                else {
++                    handler(nil)
++                }
+             }).resume()
++        } else {
++            handler(nil)
+         }
+-        
+-        handler(nil)
+     }
+ 
+     // MARK: - TimePitching Protocol
+diff --git a/node_modules/react-native-track-player/ios/RNTrackPlayer/RNTrackPlayer.swift b/node_modules/react-native-track-player/ios/RNTrackPlayer/RNTrackPlayer.swift
+index bbe40f3..7a0d4fd 100644
+--- a/node_modules/react-native-track-player/ios/RNTrackPlayer/RNTrackPlayer.swift
++++ b/node_modules/react-native-track-player/ios/RNTrackPlayer/RNTrackPlayer.swift
+@@ -83,6 +83,7 @@ public class RNTrackPlayer: RCTEventEmitter {
+             "remote-previous",
+             "remote-jump-forward",
+             "remote-jump-backward",
++            "remote-duck"
+         ]
+     }
+     
+@@ -145,6 +146,8 @@ public class RNTrackPlayer: RCTEventEmitter {
+             }
+         }
+         
++        registerForInterruptionNotification()
++        
+         resolve(NSNull())
+     }
+     
+@@ -229,6 +232,37 @@ public class RNTrackPlayer: RCTEventEmitter {
+         resolve(NSNull())
+     }
+     
++    private func registerForInterruptionNotification() {
++        let notificationCenter = NotificationCenter.default
++        notificationCenter.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
++        notificationCenter.addObserver(self,
++                                       selector: #selector(handleInterruption),
++                                       name: AVAudioSession.interruptionNotification,
++                                       object: nil)
++    }
++    
++    @objc func handleInterruption(notification: Notification) {
++        guard let userInfo = notification.userInfo,
++            let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
++            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
++                return
++        }
++        if type == .began {
++            self.sendEvent(withName: "remote-duck", body: "began")
++        }
++        else if type == .ended {
++            self.sendEvent(withName: "remote-duck", body: "ended")
++            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
++                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
++                if options.contains(.shouldResume) {
++                    self.sendEvent(withName: "remote-duck", body: "shouldResume")
++                } else {
++                    self.sendEvent(withName: "remote-duck", body: "notResume")
++                }
++            }
++        }
++    }
++    
+     @objc(add:before:resolver:rejecter:)
+     public func add(trackDicts: [[String: Any]], before trackId: String?, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {        
+         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+diff --git a/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapper.swift b/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapper.swift
+index 66590b8..f84d334 100644
+--- a/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapper.swift
++++ b/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapper.swift
+@@ -75,6 +75,8 @@ class AVPlayerWrapper: AVPlayerWrapperProtocol {
+         return avPlayer.currentItem
+     }
+     
++    var _pendingAsset: AVAsset? = nil
++    
+     var automaticallyWaitsToMinimizeStalling: Bool {
+         get { return avPlayer.automaticallyWaitsToMinimizeStalling }
+         set { avPlayer.automaticallyWaitsToMinimizeStalling = newValue }
+@@ -129,11 +131,21 @@ class AVPlayerWrapper: AVPlayerWrapperProtocol {
+     }
+     
+     func play() {
+-        avPlayer.play()
++        if _state == .loading {
++            _playWhenReady = true
++        }
++        else {
++            avPlayer.play()
++        }
+     }
+     
+     func pause() {
+-        avPlayer.pause()
++        if _state == .loading {
++            _playWhenReady = false
++        }
++        else {
++            avPlayer.pause()
++        }
+     }
+     
+     func togglePlaying() {
+@@ -151,32 +163,70 @@ class AVPlayerWrapper: AVPlayerWrapperProtocol {
+     }
+     
+     func seek(to seconds: TimeInterval) {
+-        avPlayer.seek(to: CMTimeMakeWithSeconds(seconds, preferredTimescale: 1000)) { (finished) in
+-            if let _ = self._initialTime {
+-                self._initialTime = nil
+-                if self._playWhenReady {
+-                    self.play()
++        if _state == .loading || _state == .idle {
++            self._initialTime = seconds
++        }
++        else {
++            avPlayer.seek(to: CMTimeMakeWithSeconds(seconds, preferredTimescale: 1000)) { (finished) in
++                if let _ = self._initialTime {
++                    self._initialTime = nil
++                    if self._playWhenReady {
++                        self.play()
++                    }
+                 }
++                self.delegate?.AVWrapper(seekTo: Int(seconds), didFinish: finished)
+             }
+-            self.delegate?.AVWrapper(seekTo: Int(seconds), didFinish: finished)
+         }
+     }
+ 
+     func load(from url: URL, playWhenReady: Bool) {
+-        reset(soft: true)
++        reset(soft: false)
+         _playWhenReady = playWhenReady
+ 
+         // Set item
+-        let currentAsset = AVURLAsset(url: url)
+-        let currentItem = AVPlayerItem(asset: currentAsset, automaticallyLoadedAssetKeys: [Constants.assetPlayableKey])
+-        currentItem.preferredForwardBufferDuration = bufferDuration
+-        avPlayer.replaceCurrentItem(with: currentItem)
+-
+-        // Register for events
+-        playerTimeObserver.registerForBoundaryTimeEvents()
+-        playerObserver.startObserving()
+-        playerItemNotificationObserver.startObserving(item: currentItem)
+-        playerItemObserver.startObserving(item: currentItem)
++        self._pendingAsset = AVURLAsset(url: url)
++        if let pendingAsset = _pendingAsset {
++            pendingAsset.loadValuesAsynchronously(forKeys: [Constants.assetPlayableKey], completionHandler: {
++                var error: NSError? = nil
++                let status = pendingAsset.statusOfValue(forKey: Constants.assetPlayableKey, error: &error)
++                
++                DispatchQueue.main.async {
++                    let isPendingAsset = (self._pendingAsset != nil && pendingAsset.isEqual(self._pendingAsset))
++                    
++                    switch status {
++                    case .loaded:
++                        if isPendingAsset {
++                            let currentItem = AVPlayerItem(asset: pendingAsset, automaticallyLoadedAssetKeys: [Constants.assetPlayableKey])
++                            currentItem.preferredForwardBufferDuration = self.bufferDuration
++                            self.avPlayer.automaticallyWaitsToMinimizeStalling = false
++                            self.avPlayer.replaceCurrentItem(with: currentItem)
++                            
++                            // Register for events
++                            self.playerTimeObserver.registerForBoundaryTimeEvents()
++                            self.playerObserver.startObserving()
++                            self.playerItemNotificationObserver.startObserving(item: currentItem)
++                            self.playerItemObserver.startObserving(item: currentItem)
++                        }
++                        break
++                        
++                    case .failed:
++                        // print("load asset failed")
++                        if isPendingAsset {
++                            self.delegate?.AVWrapper(failedWithError: error)
++                            self._pendingAsset = nil
++                        }
++                        break
++                        
++                    case .cancelled:
++                        // print("load asset cancelled")
++                        break
++                        
++                    default:
++                        break
++                    }
++                }
++            })
++        }
+     }
+     
+     func load(from url: URL, playWhenReady: Bool, initialTime: TimeInterval?) {
+@@ -192,6 +242,11 @@ class AVPlayerWrapper: AVPlayerWrapperProtocol {
+         playerTimeObserver.unregisterForBoundaryTimeEvents()
+         playerItemNotificationObserver.stopObservingCurrentItem()
+         
++        if self._pendingAsset != nil {
++            self._pendingAsset?.cancelLoading()
++            self._pendingAsset = nil
++        }
++        
+         if !soft {
+             avPlayer.replaceCurrentItem(with: nil)
+         }
+@@ -229,6 +284,7 @@ extension AVPlayerWrapper: AVPlayerObserverDelegate {
+                 self.seek(to: initialTime)
+             }
+             else if _playWhenReady {
++                self._state = .playing
+                 self.play()
+             }
+             
+diff --git a/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapperProtocol.swift b/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapperProtocol.swift
+index e7582ee..1c33fb8 100644
+--- a/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapperProtocol.swift
++++ b/node_modules/react-native-track-player/ios/RNTrackPlayer/Vendor/AudioPlayer/AVPlayerWrapper/AVPlayerWrapperProtocol.swift
+@@ -9,7 +9,7 @@ import Foundation
+ import AVFoundation
+ 
+ 
+-protocol AVPlayerWrapperProtocol {
++protocol AVPlayerWrapperProtocol: class {
+     
+     var state: AVPlayerWrapperState { get }
+     
