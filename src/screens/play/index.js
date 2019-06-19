@@ -240,7 +240,7 @@ class PlayScreen extends Component {
         ref={(carousel) => { console.warn(`carousel: ${carousel}`); if (!this.state.carouselRef) { this.setState({ carouselRef: carousel }); } }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
-        itemWidth={dimensions.width}
+        itemWidth={0.902 * dimensions.width}
         renderItem={this._renderCarouselItem}
         onBeforeSnapToItem={this._handleCarouselSnap}
         firstItem={this.props.curTrackIndex}
