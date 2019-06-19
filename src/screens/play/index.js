@@ -236,8 +236,11 @@ class PlayScreen extends Component {
       style={{ flex: 1 }}
     >
       <Carousel
-        // ref={(c) => { this.state.carouselRef = c; }}
-        ref={(carousel) => { console.warn(`carousel: ${carousel}`); if (!this.state.carouselRef) { this.setState({ carouselRef: carousel }); } }}
+        ref={(carousel) => {
+          if (!this.state.carouselRef) {
+            this.setState({ carouselRef: carousel });
+          }
+        }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
         itemWidth={dimensions.width}
