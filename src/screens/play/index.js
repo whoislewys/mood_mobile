@@ -115,10 +115,10 @@ class PlayScreen extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     if (this.state.carouselRef != null) {
       if (this.state.carouselRef.currentIndex !== this.props.curTrackIndex) {
-        this.state.carouselRef.snapToItem(this.props.curTrackIndex);
+        this.state.carouselRef.snapToItem(this.props.curTrackIndex, false, false);
       }
     }
   }
