@@ -115,14 +115,6 @@ class PlayScreen extends Component {
     };
   }
 
-  componentDidUpdate() {
-    if (this.state.carouselRef != null) {
-      if (this.state.carouselRef.currentIndex !== this.props.curTrackIndex) {
-        this.state.carouselRef.snapToItem(this.props.curTrackIndex, false, false);
-      }
-    }
-  }
-
   render = () => {
     if (!this.props.queue.length || (this.props.curTrack == null)) {
       return (
@@ -175,12 +167,13 @@ class PlayScreen extends Component {
   );
 
   _nextTrack = () => {
+    // skip forward transitions
     this.props.skipToNext();
     this.state.carouselRef.snapToItem(this.props.curTrackIndex);
   };
 
   _previousTrack = () => {
-    // args: snapToNext(animated, fireCallback)
+    // skip backward transitions
     this.props.skipToPrevious();
     this.state.carouselRef.snapToItem(this.props.curTrackIndex);
   };
@@ -224,6 +217,7 @@ class PlayScreen extends Component {
   };
 
   _handleCarouselSnap = (slideIndex) => {
+    // for swiping transitions
     if (slideIndex > this.state.carouselRef.currentIndex) {
       this.props.skipToNext();
     } else if (slideIndex < this.state.carouselRef.currentIndex) {
@@ -247,6 +241,7 @@ class PlayScreen extends Component {
         renderItem={this._renderCarouselItem}
         onBeforeSnapToItem={this._handleCarouselSnap}
         firstItem={this.props.curTrackIndex}
+        useScrollView
         lockScrollWhileSnapping
       />
     </View>
