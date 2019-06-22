@@ -41,7 +41,6 @@ async function eventHandler(store, data) {
       Alert.alert('An error ocurred', data.error);
       break;
     case 'remote-duck':
-      console.warn('remote duck event');
       store.dispatch(handleDuck(data));
       break;
     default:

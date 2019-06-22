@@ -1,5 +1,6 @@
 import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
+import { Platform } from 'react-native';
 import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
 import { logEvent } from './analytics';
@@ -126,7 +127,7 @@ export function reducer(state = initialState, action = {}) {
         curTrackIndex: 0,
       };
 
-    // Handles the dispatches from TrackPlayer event handlers
+    // Reducers for TrackPlayer event handler's dispatches
     case PLAYBACK_STATE:
       return {
         ...state,
@@ -296,6 +297,7 @@ export function loadSharedSongQueue(sharedTrack) {
 
 // TrackPlayer event action creators
 export function playbackState(state) {
+  // called on play/pauseevent
   return {
     type: PLAYBACK_STATE,
     state,
@@ -303,13 +305,17 @@ export function playbackState(state) {
 }
 
 export function playbackTrack(track) {
+  // called on track changed event
   return (dispatch, getState) => {
     const { queue, queueType } = getState().queue;
 
     // find new current track
     const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
     let newCurTrack = queue[newCurTrackIndex];
+
+    // if no track found, set curTrack to first in the queue
     if (newCurTrack === undefined) newCurTrack = queue[0];
+
     dispatch({
       newCurTrack,
       newCurTrackIndex,
@@ -331,13 +337,15 @@ export function playbackTrack(track) {
   };
 }
 
-// try with duccking disabed
 export function handleDuck(data) {
   return async () => {
+    // Explicit ducking is only supported by android, iOS handles it it's own way
+    if (Platform.OS === 'ios') return;
+
     const { permanent, ducking, paused } = data;
-    // if (permanent === true) await TrackPlayer.stop();
+    if (permanent === true) await TrackPlayer.pause();
     if (ducking) await TrackPlayer.pause(); // could just change vol here
-    // if (paused) await TrackPlayer.pause();
+    if (paused) await TrackPlayer.pause();
     if (!ducking && !paused && !permanent) await TrackPlayer.play();
   };
 }
