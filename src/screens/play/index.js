@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   ImageBackground,
+  StatusBar,
 } from 'react-native';
 import Images from '@assets/images';
 import Carousel from 'react-native-snap-carousel';
@@ -128,6 +129,7 @@ class PlayScreen extends Component {
     }
     return (
       <View style={styles.container}>
+        <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
         { this._getBackground() }
         <PlayOnOpen
           playing={this.props.playing}
