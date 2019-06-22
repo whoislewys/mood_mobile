@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   ImageBackground,
+  StatusBar,
 } from 'react-native';
 import Images from '@assets/images';
 import Carousel from 'react-native-snap-carousel';
@@ -100,14 +101,19 @@ const styles = StyleSheet.create({
 
 
 class PlayScreen extends Component {
-  _carouselref;
-
   onSwipeDown() {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
       return;
     }
     this.props.navigation.goBack();
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      carouselRef: undefined,
+    };
   }
 
   render = () => {
@@ -121,9 +127,9 @@ class PlayScreen extends Component {
         />
       );
     }
-
     return (
       <View style={styles.container}>
+        <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
         { this._getBackground() }
         <PlayOnOpen
           playing={this.props.playing}
@@ -163,14 +169,15 @@ class PlayScreen extends Component {
   );
 
   _nextTrack = () => {
+    // skip forward transitions
     this.props.skipToNext();
-    this._carouselref.snapToItem(this.props.curTrackIndex);
+    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
   };
 
   _previousTrack = () => {
-    // args: snapToNext(animated, fireCallback)
+    // skip backward transitions
     this.props.skipToPrevious();
-    this._carouselref.snapToItem(this.props.curTrackIndex);
+    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
   };
 
   getDropdownBar = () => (
@@ -212,9 +219,10 @@ class PlayScreen extends Component {
   };
 
   _handleCarouselSnap = (slideIndex) => {
-    if (slideIndex > this._carouselref.currentIndex) {
+    // for swiping transitions
+    if (slideIndex > this.state.carouselRef.currentIndex) {
       this.props.skipToNext();
-    } else if (slideIndex < this._carouselref.currentIndex) {
+    } else if (slideIndex < this.state.carouselRef.currentIndex) {
       this.props.skipToPrevious();
     }
   };
@@ -224,13 +232,18 @@ class PlayScreen extends Component {
       style={{ flex: 1 }}
     >
       <Carousel
-        ref={(c) => { this._carouselref = c; }}
+        ref={(carousel) => {
+          if (!this.state.carouselRef) {
+            this.setState({ carouselRef: carousel });
+          }
+        }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
-        itemWidth={dimensions.width}
+        itemWidth={0.902 * dimensions.width}
         renderItem={this._renderCarouselItem}
         onBeforeSnapToItem={this._handleCarouselSnap}
         firstItem={this.props.curTrackIndex}
+        useScrollView
         lockScrollWhileSnapping
       />
     </View>

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Linking,
   FlatList,
   Alert,
 } from 'react-native';
@@ -115,7 +114,7 @@ class SettingsScreen extends Component {
 
   settingsHeader = () => (
     <MoodCenterHeader
-      title='Settingzz'
+      title='Settings'
       leftButtonIcon={Images.arrowLeft}
       onPressLeftButton={this._navigateToMoodScreen}
     />
@@ -190,7 +189,12 @@ class SettingsScreen extends Component {
   );
 
   onPressLinkButton = (url) => {
-    Linking.openURL(url);
+    this.props.navigation.navigate({
+      routeName: 'FullScreenWebView',
+      params: {
+        url,
+      },
+    });
   };
 
   renderListItem = elem => (

@@ -23,7 +23,15 @@ const MoodLeftHeaderWithSettingsButton = props => (
     {...props}
   >
     <View style={styles.buttonRow}>
-      <TouchableOpacity onPress={() => Linking.openURL('http://moodindustries.com/bug_reports/new')}>
+      <TouchableOpacity onPress={() => {
+        props.navigation.navigate({
+          routeName: 'FullScreenWebView',
+          params: {
+            url: 'https://www.moodindustries.com/bug_reports/new',
+          },
+        });
+      }}
+      >
         <Image source={Images.bugIcon} style={styles.icon} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => props.navigation.navigate('Settings')}>

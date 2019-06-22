@@ -14,7 +14,12 @@ const images = {
   addEventButton: require('./img/add-event-button.png'),
 
   // Home Screen (Mood Screen)
-  mysteryMoodTile: require('./img/mystery-mood-tile.png'),
+  angryTile: require('./img/angry-tile.png'),
+  happyTile: require('./img/happy-tile.png'),
+  mysteryMoodTile: require('./img/mystery-tile.png'),
+
+  romanticTile: require('./img/romantic-tile.png'),
+  sadTile: require('./img/sad-tile.png'),
 
   // Leaderboard
   leaderboardStar: require('./img/round-stars-1.png'),
@@ -46,6 +51,7 @@ const images = {
   // Playlists Screen
   createPlaylist: require('./img/create-playlist.png'),
   cancelPlaylist: require('./img/cancel-playlist.png'),
+  deletePlaylist: require('./img/delete-playlist.png'),
 
   // Saved Songs Screen
   addToSavedSongs: require('./img/save-song.png'),

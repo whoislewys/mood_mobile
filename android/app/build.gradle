@@ -106,8 +106,8 @@ android {
         applicationId "com.mood_mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.0"
     }
     signingConfigs {
         release {
@@ -156,8 +156,12 @@ def safeExtGet(prop, fallback) {
 dependencies {
     implementation project(':react-native-firebase')
     implementation project(':react-native-google-signin')
-    implementation project(':react-native-device-info')
-    implementation project(':react-native-track-player')
+    implementation(project(":react-native-device-info"),  {
+        exclude group: "com.google.android.gms"
+    })
+    implementation (project(':react-native-track-player'), {
+        exclude group: "com.google.android.gms"
+    })
     implementation project(':react-native-splash-screen')
     implementation project(':react-native-restart')
     implementation project(':react-native-branch')

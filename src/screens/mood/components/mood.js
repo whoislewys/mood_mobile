@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   ImageBackground,
 } from 'react-native';
 import { dimensions, fonts } from '../../../assets/styles';
@@ -18,24 +17,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 20,
+    elevation: 10,
+    backgroundColor: '#0000',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 5,
+      height: 4,
+    },
   },
   moodArt: {
     resizeMode: 'contain',
-    width: width * 0.49,
-    height: width * 0.49,
-    justifyContent: 'center',
-  },
-  featuredTile: {
-    resizeMode: 'stretch',
-    width: width * 0.409,
-    height: width * 0.409,
-    alignItems: 'center',
-    alignSelf: 'center',
-    borderRadius: 5,
+    width: width * 0.44,
+    height: width * 0.44,
+    borderRadius: 4,
     overflow: 'hidden',
     justifyContent: 'flex-end',
-    marginTop: '-4.9%',
   },
   tile: {
     flex: 1,
@@ -46,6 +44,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(0,0,0, 0.5)',
+  },
+  moodTileSubtextContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  moodTextStyle: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    color: '#fff',
+    fontFamily: fonts.primaryBold,
+    fontSize: fonts.subHeader,
+    marginBottom: '6%',
   },
   textStyle: {
     alignSelf: 'center',
@@ -61,7 +72,7 @@ export default class Mood extends React.Component {
     <TouchableOpacity
       style={styles.container}
       onPress={() => this.props.onPressMoodTile(this.props.mood)}
-      activeOpacity={0.5}
+      activeOpacity={0.6}
     >
       <View style={styles.tile}>
         { this.getMoodTileImage(this.props.mood.id) }
@@ -69,23 +80,24 @@ export default class Mood extends React.Component {
     </TouchableOpacity>
   );
 
+  getFeaturedSongTile = () => (
+    <ImageBackground style={styles.moodArt} source={{ uri: this.props.mood.file }}>
+      <View style={styles.subTextContainer}>
+        <Text style={styles.textStyle}>Song of the Week</Text>
+      </View>
+    </ImageBackground>
+  );
+
   getMoodTileImage = (id) => {
-    if (id === tileConstants.MYSTERY) {
-      return <Image style={styles.moodArt} source={this.props.mood.file} />;
-    }
     if (id === tileConstants.FEATURED_SONG) {
-      return this.props.mood.file
-        ? (
-          <View style={styles.moodArt}>
-            <ImageBackground style={styles.featuredTile} source={{ uri: this.props.mood.file }}>
-              <View style={styles.subTextContainer}>
-                <Text style={styles.textStyle}>Song of the Week</Text>
-              </View>
-            </ImageBackground>
-          </View>
-        )
-        : null;
+      return this.getFeaturedSongTile();
     }
-    return <Image style={styles.moodArt} source={{ uri: this.props.mood.file }} />;
+    return (
+      <ImageBackground style={styles.moodArt} source={this.props.mood.file}>
+        <View style={styles.moodTileSubtextContainer}>
+          <Text style={styles.moodTextStyle}>{this.props.mood.name}</Text>
+        </View>
+      </ImageBackground>
+    );
   };
 }
