@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
+    elevation: 10,
+    backgroundColor: '#0000',
     shadowOpacity: 0.2,
     shadowRadius: 5,
     shadowOffset: {
@@ -32,7 +34,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     overflow: 'hidden',
     justifyContent: 'flex-end',
-    elevation: 10,
   },
   tile: {
     flex: 1,
@@ -71,7 +72,7 @@ export default class Mood extends React.Component {
     <TouchableOpacity
       style={styles.container}
       onPress={() => this.props.onPressMoodTile(this.props.mood)}
-      activeOpacity={0.5}
+      activeOpacity={0.6}
     >
       <View style={styles.tile}>
         { this.getMoodTileImage(this.props.mood.id) }
