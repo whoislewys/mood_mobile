@@ -1,5 +1,6 @@
 import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
+import { Platform } from 'react-native';
 import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
 import { startScoreTimer } from './score';
 import { logEvent } from './analytics';
@@ -330,13 +331,15 @@ export function playbackTrack(track) {
   };
 }
 
-// try with duccking disabed
 export function handleDuck(data) {
   return async () => {
+    // Explicit ducking is only supported by android, iOS handles it it's own way
+    if (Platform.OS === 'ios') return;
+
     const { permanent, ducking, paused } = data;
-    // if (permanent === true) await TrackPlayer.stop();
+    if (permanent === true) await TrackPlayer.pause();
     if (ducking) await TrackPlayer.pause(); // could just change vol here
-    // if (paused) await TrackPlayer.pause();
+    if (paused) await TrackPlayer.pause();
     if (!ducking && !paused && !permanent) await TrackPlayer.play();
   };
 }
