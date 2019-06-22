@@ -114,7 +114,7 @@ class SettingsScreen extends Component {
 
   settingsHeader = () => (
     <MoodCenterHeader
-      title='Settingzz'
+      title='Settings'
       leftButtonIcon={Images.arrowLeft}
       onPressLeftButton={this._navigateToMoodScreen}
     />
