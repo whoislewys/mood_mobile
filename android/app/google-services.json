@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "979028939811-9d13ameu2vee1i5ahlg3siolp4f3rde3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mood_mobile",
+            "certificate_hash": "71c249ac61fe24076538dd56550051d981b3a8f6"
+          }
+        },
+        {
           "client_id": "979028939811-cg0pfg1i2rhddto6vh98migetjo98ovm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
