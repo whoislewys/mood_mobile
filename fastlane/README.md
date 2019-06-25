@@ -40,6 +40,11 @@ Deploy a new version to the App Store
 fastlane android beta
 ```
 Build a release APK for beta usage
+### android release
+```
+fastlane android release
+```
+Deploy a new version to the Play Store
 
 ----
 
