@@ -61,7 +61,7 @@ export default class PlayControls extends Component {
     };
   }
 
-  async componentDidMount() {
+  async componentDidUpdate() {
     this._buo = await this._createBUO();
   }
 
