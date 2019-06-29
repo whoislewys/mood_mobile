@@ -73,7 +73,7 @@ export function logEvent(eventName, eventProperties) {
     if (userProperties != null) eventObj.user_properties = userProperties;
 
     // UserID should get set on login, deviceId should be set on app open
-    if (userId.length > 0) eventObj.userId = userId;
+    if (userId.length > 0) eventObj.user_id = userId;
     if (deviceId.length > 0) eventObj.device_id = deviceId;
 
     const encodedEventObj = encodeURIComponent(JSON.stringify(eventObj));
@@ -88,8 +88,8 @@ export function logEvent(eventName, eventProperties) {
     // make the request
     try {
       // DEBUG:
+      // console.warn('posting eventObj: ', eventObj);
       // console.log('posturl: ', url);
-      // console.warn('eventObj');
       axios.post(url);
     } catch (e) {
       console.log('error: ', e.response);

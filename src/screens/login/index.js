@@ -177,9 +177,7 @@ class LoginScreen extends Component {
       const currentUser = await firebase.auth().signInWithCredential(credential);
 
       this.props.userLoggedIn(currentUser.user);
-      // todo: set the user id
-      console.warn('currentUser: ', currentUser);
-      this.props.setUserId(currentUser.userInfo);
+      this.props.setUserId(currentUser.user.uid);
       this.props.logEvent(anal.login);
 
       Alert.alert('Logged in!', null);
