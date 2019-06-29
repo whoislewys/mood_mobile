@@ -21,7 +21,7 @@ import {
 } from '../../assets/styles';
 import config from './config';
 import { userLoggedIn } from '../../redux/modules/auth';
-import { logEvent } from '../../redux/modules/analytics';
+import { setUserId, logEvent } from '../../redux/modules/analytics';
 import { anal } from '../../redux/constants';
 
 const styles = StyleSheet.create({
@@ -177,6 +177,9 @@ class LoginScreen extends Component {
       const currentUser = await firebase.auth().signInWithCredential(credential);
 
       this.props.userLoggedIn(currentUser.user);
+      // todo: set the user id
+      console.warn('currentUser: ', currentUser);
+      this.props.setUserId(currentUser.userInfo);
       this.props.logEvent(anal.login);
 
       Alert.alert('Logged in!', null);
@@ -199,8 +202,9 @@ class LoginScreen extends Component {
 }
 
 const mapDispatchToProps = {
-  userLoggedIn,
   logEvent,
+  setUserId,
+  userLoggedIn,
 };
 
 export default connect(null, mapDispatchToProps)(LoginScreen);

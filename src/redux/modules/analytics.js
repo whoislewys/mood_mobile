@@ -62,13 +62,17 @@ export function logEvent(eventName, eventProperties) {
       return;
     }
 
-    // TODO: pull userProperties off of auth state
-
-    // prepare an event object to be an event parameter
+    // Initialize an object to send off to amplitude
     const eventObj = { event_type: eventName };
+
+    // Set properties on the event obj
     if (eventProperties != null) eventObj.event_properties = eventProperties;
-    // TODO: add userproperties on login
-    // if (userProperties != null) eventObj.user_properties = userProperties;
+
+    // User properties will just be a dump of whatever is in the auth state
+    const userProperties = getState().auth;
+    if (userProperties != null) eventObj.user_properties = userProperties;
+
+    // UserID should get set on login, deviceId should be set on app open
     if (userId.length > 0) eventObj.userId = userId;
     if (deviceId.length > 0) eventObj.device_id = deviceId;
 
@@ -85,7 +89,7 @@ export function logEvent(eventName, eventProperties) {
     try {
       // DEBUG:
       // console.log('posturl: ', url);
-      // console.log('eventObj');
+      // console.warn('eventObj');
       axios.post(url);
     } catch (e) {
       console.log('error: ', e.response);
@@ -99,6 +103,5 @@ export function setDeviceInfo(deviceId, isEmulator) {
 }
 
 export function setUserId(userId) {
-  // get the users UUID on login
   return { type: SET_USER_ID, userId };
 }
