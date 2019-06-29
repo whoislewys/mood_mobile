@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import firebase from 'react-native-firebase';
 import Navigator from '../navigation/app-navigator';
+import { setUserId } from '../redux/modules/analytics';
 import { userLoggedIn } from '../redux/modules/auth';
 import { setMood } from '../redux/modules/mood';
 import { stopPlayback } from '../redux/modules/queue';
@@ -11,7 +12,11 @@ import { stopScoreTimer } from '../redux/modules/score';
 class Player extends Component {
   componentDidMount = async () => {
     const { currentUser } = firebase.auth();
-    if (currentUser != null) this.props.userLoggedIn(currentUser);
+    // if user still has login info from a previous login, act as if they just signed in
+    if (currentUser != null) {
+      this.props.userLoggedIn(currentUser);
+      this.props.setUserId(currentUser.uid);
+    }
   };
 
   componentWillUnmount = () => {
@@ -45,6 +50,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setMood,
+  setUserId,
   stopScoreTimer,
   stopPlayback,
   userLoggedIn,

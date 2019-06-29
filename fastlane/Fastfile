@@ -51,4 +51,13 @@ platform :android do
       project_dir: './android',
       task: 'clean assembleRelease')
   end
+
+  desc 'Deploy a new version to the Play Store'
+  lane :release do
+    # todo: capture_screenshots
+    gradle(
+      project_dir: './android',
+      task: 'clean assembleRelease')
+    upload_to_play_store # requires `supply` setup https://docs.fastlane.tools/getting-started/android/setup/#setting-up-supply
+  end
 end

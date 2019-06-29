@@ -4,6 +4,9 @@ import {
 } from '../constants';
 
 export const initialState = {
+  // Be sure that you ONLY USE BASIC TYPES in the auth state
+  // This is good redux practice in general,
+  // but especially important here because this object is dumped into every single analytic
   email: '',
   name: '',
   photoURL: '',
