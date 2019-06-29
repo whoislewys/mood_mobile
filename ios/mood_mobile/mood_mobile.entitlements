@@ -6,6 +6,7 @@
 	<array>
 		<string>applinks:moodmusic.app.link</string>
 		<string>applinks:moodmusic-alternate.app.link</string>
+		<string>applinks:app.moodindustries.com</string>
 	</array>
 </dict>
 </plist>
