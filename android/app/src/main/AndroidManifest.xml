@@ -33,11 +33,17 @@
         </intent-filter>
 
         <!-- Branch App Links (optional) -->
+<!--        <intent-filter android:autoVerify="true">-->
+<!--            <action android:name="android.intent.action.VIEW" />-->
+<!--            <category android:name="android.intent.category.DEFAULT" />-->
+<!--            <category android:name="android.intent.category.BROWSABLE" />-->
+<!--            <data android:scheme="https" android:host="moodmusic.app.link" />-->
+<!--        </intent-filter>-->
         <intent-filter android:autoVerify="true">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" android:host="moodmusic.app.link" />
+            <data android:scheme="https" android:host="app.moodindustries.com" />
         </intent-filter>
       </activity>
 
