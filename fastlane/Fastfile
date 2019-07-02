@@ -34,13 +34,13 @@ platform :ios do
 
   desc 'Deploy a new version to the App Store'
   lane :release do
-    #capture_screenshots # not yet configured
     match(
       type: 'appstore',
       git_url: 'https://github.com/SamRond/mood_mobile_certs'
     )
-    gym(scheme: 'mood_mobile', project: './ios/mood_mobile.xcodeproj')
-    upload_to_app_store
+    increment_build_number(xcodeproj: './ios/mood_mobile.xcodeproj')
+    gym(scheme: 'mood_mobile', workspace: './ios/mood_mobile.xcworkspace')
+    upload_to_app_store(screenshots_path: './fastlane/screenshots')
   end
 end
 
