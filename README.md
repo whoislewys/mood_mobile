@@ -31,3 +31,16 @@ Luis wrote a small [`react-native-clean` script](https://gist.github.com/whoisle
 > Sometimes, a JS refresh is not enough to update code, especially if you recently added functionality that utilizes native code.
 
 > Also, please run this before merging a new branch to ensure that your changes still result in a clean build. Slack him if you need it. 
+
+## Fastlane
+
+#### Generating Screenshots
+`cd fastlane`
+`fastlane snapshot`
+`cd screenshots`
+`fastlane frameit black`
+
+#### Pushing new builds
+`fastlane ios beta` for new Testflight build
+
+`fastlane android beta` for new Android build. Go into `android/app/build/outputs/apk/release`, rename the apk to `Mood.dev.apk` and upload it to Google Drive
