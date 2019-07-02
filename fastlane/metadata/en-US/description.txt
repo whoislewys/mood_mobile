@@ -1,0 +1,20 @@
+Mood. Tailoring the discovery of new music to your mood.
+
+Mood is a unique, first of its kind music discovery service that enables you to discover the latest upcoming underground artists all while tailoring their music to your mood.
+
+If you are an avid music listener who is actively trying to discover the best emerging artists with unique music then our music discovery app will enable you to discover the best and most original new music. At Mood, we have created an app for those who want to connect emotionally with music while also discovering the next generation of artists and songs in the most personal way.
+
+We are in the proof of concept stage. What does this mean? The app you download today is our pre-release/beta version, a test product. That being said we are looking forward to your feedback, ideas, and reviews as we continue to test Mood with you and the rest of our test community.  As we gear up to launch the first official version of Mood we want to hear from you because, with the implementation of your ideas and feedback, we will be able to build you the most personal music discovery app ever!
+
+What do we have to offer?
+
+Mood Tiles: These are how you select your mood and tailor your music to it. Right now we offer four of the seven human moods. Happy, sad, angry, and romantic. As we continue to grow we will add moods.  
+
+Media Player: Our media player offers you complete control of your music experience. Play, pause, scrub, repeat, shuffle,  and skip your music all with a tap or swipe of your finger.
+
+Settings: Experiencing problems, wanting to review, or just looking for more info? Use our in-app settings page to submit reviews, bug reports, and get a hold of us.   
+
+Thanks for listening, now go listen to some Mood Music!
+
+Enjoy,
+Mood.
