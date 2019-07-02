@@ -42,6 +42,14 @@ platform :ios do
     gym(scheme: 'mood_mobile', workspace: './ios/mood_mobile.xcworkspace')
     upload_to_app_store(screenshots_path: './fastlane/screenshots')
   end
+
+  desc 'Upload new screenshots to App Store'
+  lane :screenshots do
+    deliver(
+      submit_for_review: false,
+      skip_binary_upload: true
+    )
+  end
 end
 
 platform :android do

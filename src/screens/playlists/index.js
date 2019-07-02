@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   playlistButtonContainer: {
     flex: 1,
     alignItems: 'center',
-    marginTop: spacing.md, // TODO: replace with global margin
+    marginTop: spacing.md,
     marginBottom: spacing.md,
   },
   playlistButton: {

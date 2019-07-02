@@ -8,6 +8,7 @@ import createEventHandler from './src/redux/event-handler';
 
 export default class App extends Component {
     componentDidMount = async () => {
+      console.disableYellowBox = true;
       await TrackPlayer.setupPlayer({
         // Can set maxCacheSize like this:
         // maxCacheSize: 1024 * 5, // 5 mb

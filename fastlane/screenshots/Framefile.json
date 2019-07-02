@@ -20,7 +20,8 @@
     "background": "../../src/assets/img/mystery-tile.png",
     "padding": 50,
     "stack_title": true,
-    "title_min_height": "30%"
+    "title_min_height": "30%",
+    "show_complete_frame": false
   },
 
   "data": [
