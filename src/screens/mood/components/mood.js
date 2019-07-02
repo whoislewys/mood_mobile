@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
 export default class Mood extends React.Component {
   render = () => (
     <TouchableOpacity
+      accessible={false}
+      testID={`MoodTile-${this.props.mood.id}`}
       style={styles.container}
       onPress={() => this.props.onPressMoodTile(this.props.mood)}
       activeOpacity={0.6}
@@ -81,8 +83,12 @@ export default class Mood extends React.Component {
   );
 
   getFeaturedSongTile = () => (
-    <ImageBackground style={styles.moodArt} source={{ uri: this.props.mood.file }}>
-      <View style={styles.subTextContainer}>
+    <ImageBackground
+      testID='FeaturedSongBackground'
+      style={styles.moodArt}
+      source={{ uri: this.props.mood.file }}
+    >
+      <View style={styles.subTextContainer} testID='FeaturedSongContainer'>
         <Text style={styles.textStyle}>Song of the Week</Text>
       </View>
     </ImageBackground>
@@ -93,7 +99,7 @@ export default class Mood extends React.Component {
       return this.getFeaturedSongTile();
     }
     return (
-      <ImageBackground style={styles.moodArt} source={this.props.mood.file}>
+      <ImageBackground style={styles.moodArt} source={this.props.mood.file} testID={`MoodTileBackground-${this.props.mood.file}`}>
         <View style={styles.moodTileSubtextContainer}>
           <Text style={styles.moodTextStyle}>{this.props.mood.name}</Text>
         </View>

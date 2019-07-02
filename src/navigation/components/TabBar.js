@@ -106,6 +106,8 @@ const TabBar = class TabBar extends Component {
     const label = getLabelText({ route, focused: currentIndex === navIndex, index: navIndex });
     return (
       <TouchableOpacity
+        testID={`TabBarButton-${route.key}`}
+        accessible={false}
         key={route.key}
         style={styles.tabBarButton}
         activeOpacity={1}
@@ -167,12 +169,16 @@ const TabBar = class TabBar extends Component {
 
     return (
       <GestureRecognizer
+        testID='BottomBarsContainer'
         style={styles.bottomBarsContainer}
         onSwipeUp={() => this.navigateToPlayscreenFromPlaybar()}
         onSwipeRight={() => this.props.skipToPrevious()}
         onSwipeLeft={() => this.props.skipToNext()}
       >
-        <View style={styles.playbarContainer}>
+        <View
+          testID='PlaybarContainer'
+          style={styles.playbarContainer}
+        >
           <PlayBar
             playbackState={this.props.playbackState}
             handlePlayPress={this._handlePlayPress}
@@ -181,7 +187,11 @@ const TabBar = class TabBar extends Component {
             navigation={this.props.navigation} // add navigation here to push it down the the star component in playbar
           />
         </View>
-        <View {...this.props} style={styles.tabBar}>
+        <View
+          testID='TabBar'
+          style={styles.tabBar}
+          {...this.props}
+        >
           {tabBarButtons}
         </View>
       </GestureRecognizer>

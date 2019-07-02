@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -81,9 +80,9 @@ class MoodScreen extends Component {
   };
 
   render = () => (
-    <View style={styles.container}>
+    <View style={styles.container} testID='MoodScreen'>
       <MoodLeftHeaderWithSettingsButton title='Discover' navigation={this.props.navigation} />
-      <View style={styles.flatListContainer}>
+      <View style={styles.flatListContainer} testID="MoodScreen-MoodsListContainer">
         { this.getContent() }
       </View>
     </View>

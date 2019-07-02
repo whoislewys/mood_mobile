@@ -146,7 +146,7 @@ export default class PlayControls extends Component {
 
   playButton = () => {
     let ret = (
-      <TouchableOpacity onPress={this.props.handlePlayPress} testId='play-button'>
+      <TouchableOpacity onPress={this.props.handlePlayPress} testID='play-button'>
         <Image source={Images.playButton} style={styles.playButton} />
       </TouchableOpacity>
     );
@@ -157,7 +157,7 @@ export default class PlayControls extends Component {
       );
     } else if (this.props.playing) {
       ret = (
-        <TouchableOpacity onPress={this.props.handlePlayPress} testId='play-button'>
+        <TouchableOpacity onPress={this.props.handlePlayPress} testID='play-button'>
           <Image source={Images.pauseButton} style={styles.playButton} />
         </TouchableOpacity>
       );

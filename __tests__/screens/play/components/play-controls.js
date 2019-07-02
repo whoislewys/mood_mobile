@@ -17,7 +17,7 @@ describe('PlayControls Component', () => {
     const wrapper = shallow(<PlayControls handlePlayPress={mockHandlePlayPress} />);
 
     // 3. reach down and find the PlayButton
-    const playButton = wrapper.find({ testId: 'play-button' });
+    const playButton = wrapper.find({ testID: 'play-button' });
 
     // 4. fake pressing the play button
     playButton.props().onPress();

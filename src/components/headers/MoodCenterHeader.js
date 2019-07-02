@@ -48,13 +48,23 @@ const styles = StyleSheet.create({
 });
 
 const renderLeftButton = (buttonIcon, onPressButton) => (
-  <TouchableOpacity style={styles.buttonContainer} onPress={() => onPressButton()} activeOpacity={0.6}>
+  <TouchableOpacity
+    testID='MoodCenterHeaderLeftButton'
+    style={styles.buttonContainer}
+    onPress={() => onPressButton()}
+    activeOpacity={0.6}
+  >
     <Image source={buttonIcon} style={styles.buttonIcon} />
   </TouchableOpacity>
 );
 
 const renderRightButton = (buttonIcon, onPressButton) => (
-  <TouchableOpacity style={[styles.buttonContainer, styles.buttonRightAlign]} onPress={() => onPressButton()} activeOpacity={0.6}>
+  <TouchableOpacity
+    testID='MoodCenterHeaderRightButton'
+    style={[styles.buttonContainer, styles.buttonRightAlign]}
+    onPress={() => onPressButton()}
+    activeOpacity={0.6}
+  >
     <Image source={buttonIcon} style={styles.buttonIcon} />
   </TouchableOpacity>
 );
@@ -66,8 +76,8 @@ const MoodCenterHeader = ({
   onPressRightButton,
   rightButtonIcon,
 }) => (
-  <View style={styles.header}>
-    <View style={styles.headerContentsContainer}>
+  <View style={styles.header} testID='MoodCenterHeader'>
+    <View style={styles.headerContentsContainer} testID='MoodCenterHeaderContentsContainer'>
       { renderLeftButton(leftButtonIcon, onPressLeftButton) }
       <Text style={styles.headerText} numberOfLines={1} ellipsizeMode='tail'>{title}</Text>
       { renderRightButton(rightButtonIcon, onPressRightButton) }

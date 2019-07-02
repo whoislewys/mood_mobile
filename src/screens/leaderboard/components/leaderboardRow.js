@@ -115,6 +115,8 @@ const LeaderboardRow = ({
 
   return (
     <TouchableOpacity
+      accessible={false}
+      testID={`LeaderboardRow-${title}`}
       style={styles.rowBackground}
       onPress={() => _handleLeaderboardRowPress(index)}
     >
