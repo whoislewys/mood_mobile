@@ -23,7 +23,7 @@ languages([
 scheme("mood_mobileUITests")
 
 # Where should the resulting screenshots be stored?
-output_directory("./fastlane/screenshots")
+output_directory("./fastlane/ios_screenshots")
 
 # remove the '#' to clear all previously generated screenshots before creating new ones
 clear_previous_screenshots(true)

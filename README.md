@@ -34,13 +34,22 @@ Luis wrote a small [`react-native-clean` script](https://gist.github.com/whoisle
 
 ## Fastlane
 
-#### Generating Screenshots
-`cd fastlane`
-`fastlane snapshot`
-`cd screenshots`
-`fastlane frameit black`
-
 #### Pushing new builds
 `fastlane ios beta` for new Testflight build
 
 `fastlane android beta` for new Android build. Go into `android/app/build/outputs/apk/release`, rename the apk to `Mood.dev.apk` and upload it to Google Drive
+
+#### Generating Screenshots
+**For iOS**
+In the root dir,
+`fastlane snapshot`
+`cd fastlane/ios_screenshots`
+`fastlane frameit black`
+`cd ..`
+`fastlane deliver`
+
+**For Android**
+Go to https://developer.android.com/distribute/marketing-tools/device-art-generator
+Drag each screenshot over to the Pixel 2 icon
+Save image as
+> TODO: Find a way to automate these with fastlane screengrab + an imagemagick script? similar to what frameit does but for android
