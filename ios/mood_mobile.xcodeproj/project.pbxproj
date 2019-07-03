@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -94,6 +95,9 @@
 		E62731E6222A166F00A13836 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
 		E62731E7222A166F00A13836 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */; };
 		E627326E222A178300A13836 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E627326D222A178300A13836 /* LaunchScreen.storyboard */; };
+		E689E3B822CAA25B0064FC6E /* mood_mobileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689E3B722CAA25B0064FC6E /* mood_mobileUITests.swift */; };
+		E689E3ED22CAA29F0064FC6E /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689E3EC22CAA29E0064FC6E /* SnapshotHelper.swift */; };
+		E756A6EB98C940CA98AEEE19 /* delete-playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 90F3B150BD864DC9A18BE916 /* delete-playlist.png */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		EE0B9F005D0B4EA18A4CE71E /* selected-round-discover.png in Resources */ = {isa = PBXBuildFile; fileRef = E821143D5EE4479CB619D579 /* selected-round-discover.png */; };
@@ -102,7 +106,6 @@
 		F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A5D4433A564CB3B8304205 /* saved-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
 		FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 656F9179472744F38EAC701D /* romantic-tile.png */; };
-		E756A6EB98C940CA98AEEE19 /* delete-playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 90F3B150BD864DC9A18BE916 /* delete-playlist.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -428,6 +431,13 @@
 			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
 			remoteInfo = "RNDeviceInfo-tvOS";
 		};
+		E689E3BA22CAA25B0064FC6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = mood_mobile;
+		};
 		E6BDADB02248271E004DECB3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8EB350D4CC6749499737B0BC /* RNFirebase.xcodeproj */;
@@ -505,6 +515,7 @@
 		82FCDE05EA5C470889E650EE /* round-play_circle_outline-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-play_circle_outline-2x.png"; path = "../src/assets/img/round-play_circle_outline-2x.png"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8EB350D4CC6749499737B0BC /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
+		90F3B150BD864DC9A18BE916 /* delete-playlist.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "delete-playlist.png"; path = "../src/assets/img/delete-playlist.png"; sourceTree = "<group>"; };
 		9288211305F8420BBA866C96 /* gradient-button.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "gradient-button.png"; path = "../src/assets/img/gradient-button.png"; sourceTree = "<group>"; };
 		9496A94BC54D4FF0869C3792 /* save-song.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "save-song.png"; path = "../src/assets/img/save-song.png"; sourceTree = "<group>"; };
 		94AF000E23B84E1682437756 /* google-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "google-icon.png"; path = "../src/assets/img/google-icon.png"; sourceTree = "<group>"; };
@@ -540,6 +551,10 @@
 		E48C7F99B833D1C6DE4215CE /* Pods-mood_mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobile.debug.xcconfig"; path = "Target Support Files/Pods-mood_mobile/Pods-mood_mobile.debug.xcconfig"; sourceTree = "<group>"; };
 		E6184F5D223B86F70020541A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E627326D222A178300A13836 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E689E3B522CAA25B0064FC6E /* mood_mobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mood_mobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E689E3B722CAA25B0064FC6E /* mood_mobileUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mood_mobileUITests.swift; sourceTree = "<group>"; };
+		E689E3B922CAA25B0064FC6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E689E3EC22CAA29E0064FC6E /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
 		E6D67E89222B74AC0062A8A2 /* mood_mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mood_mobile.entitlements; path = mood_mobile/mood_mobile.entitlements; sourceTree = "<group>"; };
 		E7CE2CC95F6141DFBE5F53A6 /* mystery-mood-tile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "mystery-mood-tile.png"; path = "../src/assets/img/mystery-mood-tile.png"; sourceTree = "<group>"; };
 		E821143D5EE4479CB619D579 /* selected-round-discover.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-round-discover.png"; path = "../src/assets/img/selected-round-discover.png"; sourceTree = "<group>"; };
@@ -547,7 +562,6 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; };
-		90F3B150BD864DC9A18BE916 /* delete-playlist.png */ = {isa = PBXFileReference; name = "delete-playlist.png"; path = "../src/assets/img/delete-playlist.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -611,6 +625,13 @@
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
 				0B6ED1045102D8678AB61B13 /* libPods-mood_mobile-tvOSTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E689E3B222CAA25B0064FC6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -808,6 +829,7 @@
 				13B07FAE1A68108700A75B9A /* mood_mobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mood_mobileTests */,
+				E689E3B622CAA25B0064FC6E /* mood_mobileUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E62731E8222A166F00A13836 /* Recovered References */,
@@ -826,6 +848,7 @@
 				00E356EE1AD99517003FC87E /* mood_mobileTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* mood_mobile-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* mood_mobile-tvOSTests.xctest */,
+				E689E3B522CAA25B0064FC6E /* mood_mobileUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -978,6 +1001,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E689E3B622CAA25B0064FC6E /* mood_mobileUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E689E3EC22CAA29E0064FC6E /* SnapshotHelper.swift */,
+				E689E3B722CAA25B0064FC6E /* mood_mobileUITests.swift */,
+				E689E3B922CAA25B0064FC6E /* Info.plist */,
+			);
+			path = mood_mobileUITests;
+			sourceTree = "<group>";
+		};
 		E6BDADAD2248271E004DECB3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,12 +1098,31 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* mood_mobile-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E689E3B422CAA25B0064FC6E /* mood_mobileUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E689E3EB22CAA25B0064FC6E /* Build configuration list for PBXNativeTarget "mood_mobileUITests" */;
+			buildPhases = (
+				E689E3B122CAA25B0064FC6E /* Sources */,
+				E689E3B222CAA25B0064FC6E /* Frameworks */,
+				E689E3B322CAA25B0064FC6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E689E3BB22CAA25B0064FC6E /* PBXTargetDependency */,
+			);
+			name = mood_mobileUITests;
+			productName = mood_mobileUITests;
+			productReference = E689E3B522CAA25B0064FC6E /* mood_mobileUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -1098,6 +1150,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					E689E3B422CAA25B0064FC6E = {
+						CreatedOnToolsVersion = 10.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -1196,6 +1253,7 @@
 				00E356ED1AD99517003FC87E /* mood_mobileTests */,
 				2D02E47A1E0B4A5D006451C7 /* mood_mobile-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* mood_mobile-tvOSTests */,
+				E689E3B422CAA25B0064FC6E /* mood_mobileUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1599,6 +1657,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E689E3B322CAA25B0064FC6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1755,6 +1820,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E689E3B122CAA25B0064FC6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E689E3B822CAA25B0064FC6E /* mood_mobileUITests.swift in Sources */,
+				E689E3ED22CAA29F0064FC6E /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1767,6 +1841,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* mood_mobile-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		E689E3BB22CAA25B0064FC6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* mood_mobile */;
+			targetProxy = E689E3BA22CAA25B0064FC6E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1861,7 +1940,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mood_mobile/mood_mobile.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 343H7RTVF7;
 				HEADER_SEARCH_PATHS = (
@@ -1897,7 +1976,7 @@
 				CODE_SIGN_ENTITLEMENTS = mood_mobile/mood_mobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = 343H7RTVF7;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2189,6 +2268,61 @@
 			};
 			name = Release;
 		};
+		E689E3BC22CAA25B0064FC6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = mood_mobileUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.moodindustries.mood-mobileUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = mood_mobile;
+			};
+			name = Debug;
+		};
+		E689E3BD22CAA25B0064FC6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = mood_mobileUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.moodindustries.mood-mobileUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = mood_mobile;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2233,6 +2367,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E689E3EB22CAA25B0064FC6E /* Build configuration list for PBXNativeTarget "mood_mobileUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E689E3BC22CAA25B0064FC6E /* Debug */,
+				E689E3BD22CAA25B0064FC6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

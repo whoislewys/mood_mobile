@@ -22,19 +22,22 @@ const MoodLeftHeaderWithSettingsButton = props => (
   <MoodLeftHeader
     {...props}
   >
-    <View style={styles.buttonRow}>
-      <TouchableOpacity onPress={() => {
-        props.navigation.navigate({
-          routeName: 'FullScreenWebView',
-          params: {
-            url: 'https://www.moodindustries.com/bug_reports/new',
-          },
-        });
-      }}
+    <View style={styles.buttonRow} testID='MoodLeftHeaderWithSettingsButtonRow'>
+      <TouchableOpacity
+        accessible={false}
+        testID='HeaderBugReportButton'
+        onPress={() => {
+          props.navigation.navigate({
+            routeName: 'FullScreenWebView',
+            params: {
+              url: 'https://www.moodindustries.com/bug_reports/new',
+            },
+          });
+        }}
       >
         <Image source={Images.bugIcon} style={styles.icon} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => props.navigation.navigate('Settings')}>
+      <TouchableOpacity onPress={() => props.navigation.navigate('Settings')} accessible={false} testID='HeaderSettingsButton'>
         <Image source={Images.settingsGear} style={styles.icon} />
       </TouchableOpacity>
     </View>

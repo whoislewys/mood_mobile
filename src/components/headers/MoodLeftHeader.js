@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
 });
 
 const MoodLeftHeader = ({ title, children }) => (
-  <View style={styles.header}>
-    <View style={styles.headerContentsContainer}>
+  <View style={styles.header} testID='MoodLeftHeader'>
+    <View style={styles.headerContentsContainer} testID='MoodLeftHeaderContentsContainer'>
       <Text style={styles.headerText}>{title}</Text>
       {children}
     </View>

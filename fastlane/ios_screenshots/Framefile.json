@@ -1,0 +1,53 @@
+{
+  "default": {
+    "keyword": {
+      "fonts": [
+        {
+          "font": "../../src/assets/fonts/Quicksand/Quicksand-Bold.ttf",
+          "supported": ["de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "nl-NL", "sv-SE", "pt-BR"]
+        }
+      ]
+    },
+    "title": {
+      "fonts": [
+        {
+          "font": "../../src/assets/fonts/Quicksand/Quicksand-Medium.ttf",
+          "supported": ["en-US"]
+        }
+      ],
+      "color": "#FFFFFF"
+    },
+    "background": "../../src/assets/img/mystery-tile.png",
+    "padding": 50,
+    "stack_title": true,
+    "title_min_height": "30%",
+    "show_complete_frame": false
+  },
+
+  "data": [
+    {
+      "filter": "Discover",
+      "keyword": {
+        "color": "#FFFFFF"
+      }
+    },
+    {
+      "filter": "Rank",
+      "keyword": {
+        "color": "#FFFFFF"
+      }
+    },
+    {
+      "filter": "Share",
+      "keyword": {
+        "color": "#FFFFFF"
+      }
+    },
+    {
+      "filter": "Listen",
+      "keyword": {
+        "color": "#FFFFFF"
+      }
+    }
+  ]
+}
