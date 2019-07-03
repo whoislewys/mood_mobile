@@ -34,3 +34,5 @@ workspace('./ios/mood_mobile.xcworkspace')
 
 # For more information about all available options run
 # fastlane action snapshot
+
+concurrent_simulators(false)
