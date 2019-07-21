@@ -17,7 +17,10 @@ export const updateCurrentTrack = store => next => (action) => {
         const curTrack = action.newCurTrack;
         const tpCurTrack = await TrackPlayer.getTrack(await TrackPlayer.getCurrentTrack());
 
-        if (tpCurTrack.id !== curTrack.id) {
+        // if either track is null for some reason, return
+        if (curTrack == null || tpCurTrack.id == null) return;
+
+        if (curTrack.id !== tpCurTrack.id) {
           const storeQueue = store.getState().queue.queue;
           store.dispatch({
             type: SET_CUR_TRACK,
