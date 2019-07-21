@@ -5,13 +5,14 @@ import {
 } from '../constants';
 
 export const updateCurrentTrack = store => next => (action) => {
-  // This middleware waits a bit after getting a track-change event, then makes sure the store's current track is in sync with the TrackPlayer
+  // This middleware waits a bit after getting a track-change event,
+  // then makes sure the store's current track is in sync with the TrackPlayer
   next(action);
   if (action.type === PLAYBACK_TRACK) {
     let updateCurTrackTimer;
     let updateCurrentTrackFunc = async () => {
       try {
-        // Check if the curtrack coming from track-change event & the curtrack coming from the TrackPlayer are different
+        // Check if curtrack coming from track change action & the curtrack coming from the TrackPlayer are different
         // If they are, update the store with the TrackPlayer's curTrack
         const curTrack = action.newCurTrack;
         const tpCurTrack = await TrackPlayer.getTrack(await TrackPlayer.getCurrentTrack());
@@ -36,4 +37,3 @@ export const updateCurrentTrack = store => next => (action) => {
     updateCurTrackTimer = setTimeout(updateCurrentTrackFunc, 2000);
   }
 };
-
