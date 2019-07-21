@@ -23,10 +23,11 @@ const styles = StyleSheet.create({
     flex: 1,
     // give this image the same height & width so
     // borderRadius will be applied
-    height: 0.902 * dimensions.width,
-    width: 0.902 * dimensions.width,
+    height: 0.903 * dimensions.width,
+    width: 0.903 * dimensions.width,
     resizeMode: 'contain',
     borderRadius: 4,
+    overflow: 'hidden',
   },
 });
 
