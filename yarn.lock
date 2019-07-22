@@ -6071,10 +6071,10 @@ react-native-modal@^9.0.0:
     prop-types "^15.6.2"
     react-native-animatable "^1.2.4"
 
-react-native-restart@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.9.tgz#252611ef4e28a791b02ab4dabd1a7e9ae5fec6b3"
-  integrity sha512-kE+bSLFwr0EvHGXOGLDyM+lNAPgt4Cy67v1jdHK9kjgc4osrJVs8WwmWJvQwjDuGNXl14aLD/Ud5JhB4KRlrsQ==
+react-native-restart@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.12.tgz#afd51c445bdadfd34a02e29955eefe66a86af86d"
+  integrity sha512-aSvcsiSLUbHt1E0AXuC2gpIXBTn1p3J4jfTYFbFv/D19zTLW5WVUb4blgVt70RCkqvZWD3NEymS4ZZmFWGDclA==
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
