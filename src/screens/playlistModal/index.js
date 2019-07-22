@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   modalContents: {
-    height: '100%',
-    width: '100%',
+    flex: 1,
     borderRadius: 10,
     elevation: 35,
     shadowRadius: 300,
