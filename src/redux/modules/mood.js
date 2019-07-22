@@ -56,7 +56,7 @@ export function reducer(state = initialState, action = {}) {
       };
 
     case LOAD_FEATURED_SUCCESS:
-      return { ...state, featuredSong: mapSongsToValidTrackObjects(action.featuredResp.data)[0] };
+      return { ...state, featuredSong: mapSongsToValidTrackObjects([action.featuredResp.data])[0] };
     case LOAD_FEATURED_FAIL:
       return { ...state, featuredSong: {}, error: action.e };
 

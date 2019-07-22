@@ -100,6 +100,7 @@ export const SET_CUR_PLAYLIST_ID = 'queue/SET_CUR_PLAYLIST_ID';
 export const PLAYBACK_STATE = 'playback/STATE';
 export const PLAYBACK_TRACK = 'playback/TRACK';
 export const PLAY_SHUFFLED_PLAYLIST = 'queue/SHUFFLE';
+export const SET_CUR_TRACK = 'queue/SET_CUR_TRACK';
 
 export const MOOD_TYPE = 'mood';
 export const LEADERBOARD_TYPE = 'leaderboard';

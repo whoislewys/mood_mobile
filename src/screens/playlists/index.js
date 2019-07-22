@@ -10,6 +10,7 @@ import PlaylistRow from './components/playlistRow';
 import {
   closeModal,
   createPlaylist,
+  loadPlaylists,
   loadSongsForPlaylistId,
   openModal,
   saveSongToPlaylist,
@@ -19,7 +20,7 @@ import {
   updateNewPlaylistName,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
-import { spacing } from '../../assets/styles';
+import { dimensions, spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   playlistButtonContainer: {
     flex: 1,
     alignItems: 'center',
-    marginTop: spacing.md,
+    marginTop: spacing.md, // TODO: replace with global margin
     marginBottom: spacing.md,
   },
   playlistButton: {
@@ -44,6 +45,14 @@ const styles = StyleSheet.create({
  * This component is rendered both as a full screen, and as a child of the PlaylistModal
  */
 class Playlists extends Component {
+  componentWillFocus = () => {
+    this.props.loadPlaylists();
+  }
+
+  componentWillBlur = () => {
+    this.props.setPlaylistModalHalfScreen();
+  }
+
   _navigateToPlaylistsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Playlists',
@@ -61,7 +70,10 @@ class Playlists extends Component {
     });
   };
 
-  keyExtractor = song => song.id.toString();
+  keyExtractor = (playlist) => {
+    const key = playlist.id.toString();
+    return key;
+  }
 
   _showCurrentPlaylist = (pressedPlaylist) => {
     this.props.setCurrentPlaylist(pressedPlaylist);
@@ -106,6 +118,7 @@ class Playlists extends Component {
     });
 
   handleScroll = (event) => {
+    console.warn('handling scroll');
     // get the yoffset where the user let their finger off the screen after scrolling
     const yOffset = event.nativeEvent.contentOffset.y;
 
@@ -136,7 +149,9 @@ class Playlists extends Component {
             renderItem={this._renderItem}
             keyExtractor={this.keyExtractor}
             ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
-            ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
+            // HACK: add a big footer to the end of the flatlist so that it reliably sends scroll events for any amount of playlists > 1
+            // in both the standalone screen and modal contexts
+            ListFooterComponent={<View style={{ height: 0, paddingBottom: dimensions.height * 0.5 }} />}
             showsVerticalScrollIndicator={false}
             onScrollEndDrag={this.handleScroll}
             scrollEventThrottle={16}
@@ -145,7 +160,6 @@ class Playlists extends Component {
         : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
     );
   };
-
 
   _onCreatePlaylist = async () => {
     await this.props.createPlaylist();
@@ -195,6 +209,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   closeModal,
   createPlaylist,
+  loadPlaylists,
   loadSongsForPlaylistId,
   openModal,
   saveSongToPlaylist,

@@ -13,12 +13,6 @@ Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.5
 
 Make sure you run `cd ios && pod install`
 
-Download [XCode 10.1](https://developer.apple.com/download/more/?name=Xcode).
-
-Open your up-to-date XCode.
-
-Go to the tabs in the menu bar and navigate to XCode -> Preferences -> Locations and in the "Command Line Tools:" dropdown, select `XCode 10.1`.
-
 ## Running App 
 1. `yarn`
 2. [iOS only] `cd ios && pod install && cd ..`

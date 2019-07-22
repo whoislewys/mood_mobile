@@ -66,7 +66,7 @@ platform :android do
     gradle(
       project_dir: './android',
       task: 'clean assembleRelease')
-    increment_version_code # make sure to bundle install, this is a plugin from https://github.com/Jems22/fastlane-plugin-increment_version_code
+    increment_version_code # make sure to run `bundle install` first, this is a plugin from https://github.com/Jems22/fastlane-plugin-increment_version_code
     upload_to_play_store # requires `supply` setup https://docs.fastlane.tools/getting-started/android/setup/#setting-up-supply
   end
 end
