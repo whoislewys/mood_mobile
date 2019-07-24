@@ -101,6 +101,9 @@ const leaderboardNavigator = createMaterialTopTabNavigator({
   'All Time': { screen: map(LeaderboardScreen) },
 },
 {
+  navigationOptions: {
+    tabBarTestID: 'LeaderboardTabBar',
+  },
   tabBarOptions: {
     activeTintColor: colors.black,
     inactiveTintColor: colors.gray,

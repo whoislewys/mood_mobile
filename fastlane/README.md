@@ -31,6 +31,11 @@ Push a new beta build to TestFlight
 fastlane ios release
 ```
 Deploy a new version to the App Store
+### ios screenshots
+```
+fastlane ios screenshots
+```
+Upload new screenshots to App Store
 
 ----
 

@@ -105,14 +105,14 @@ class ShootingStar extends Component {
 
     return (
       (this.props.count <= this.props.maxCount) ? (
-        <Animated.View style={[clapBubbleStyle, animationStyle]}>
-          <View style={styles.shootingStarShadow}>
+        <Animated.View style={[clapBubbleStyle, animationStyle]} testID={`ShootingStar-${this.props.key}`}>
+          <View style={styles.shootingStarShadow} testID='ShootingStarShadow'>
             <Image source={Images.star} style={[styles.shootingStar, extraStyles]} />
           </View>
           <Text style={[styles.countText, this.props.textColor]}>{this.props.count}</Text>
         </Animated.View>
       ) : (
-        <Animated.View style={[clapBubbleStyle, animationStyle]}>
+        <Animated.View style={[clapBubbleStyle, animationStyle]} testID='ShootingStarMaxedOut'>
           <Text style={styles.countText}>{this.props.maxCount}</Text>
         </Animated.View>
       )
@@ -184,8 +184,10 @@ export class StarButton extends Component {
       : <Image source={Images.star} style={[styles.star, extraStyles]} />;
 
     return (
-      <View>
+      <View testID='StarTouchableContainer'>
         <TouchableOpacity
+          accessible={false}
+          testID='StartTouchable'
           onPress={this.clap}
           onPressIn={this.keepClapping}
           onPressOut={this.stopClapping}

@@ -19,6 +19,7 @@ import {
   PLAYBACK_STATE,
   PLAYBACK_TRACK,
   RESET_QUEUE,
+  SET_CUR_TRACK,
 } from '../constants';
 
 export const initialState = {
@@ -137,6 +138,14 @@ export function reducer(state = initialState, action = {}) {
       return {
         ...state,
         track: action.track,
+        curTrack: action.newCurTrack,
+        curTrackIndex: action.newCurTrackIndex,
+      };
+
+    // used along with updateCurrentTrack middleware to prevent desync issues between TrackPlayer and store
+    case SET_CUR_TRACK:
+      return {
+        ...state,
         curTrack: action.newCurTrack,
         curTrackIndex: action.newCurTrackIndex,
       };

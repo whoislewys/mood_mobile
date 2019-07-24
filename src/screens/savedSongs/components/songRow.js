@@ -69,13 +69,13 @@ class SongRow extends Component {
 
   _getSavedSongButton = () => (!this.props.songIdsToDelete.has(this.props.savedSong.id)
     ? (
-      <TouchableOpacity activeOpacity={0.7} onPress={() => this._unsaveSong()} testId='saved-song-button'>
-        <Image source={Images.savedIcon} style={styles.savedIcon} testId='saved-song-image' />
+      <TouchableOpacity activeOpacity={0.7} onPress={() => this._unsaveSong()} testID='saved-song-button'>
+        <Image source={Images.savedIcon} style={styles.savedIcon} testID='saved-song-image' />
       </TouchableOpacity>
     )
     : (
-      <TouchableOpacity activeOpacity={0.7} onPress={() => this._resaveSong()} testId='saved-song-button'>
-        <Image source={Images.addToSavedSongs} style={styles.savedIcon} testId='saved-song-image' />
+      <TouchableOpacity activeOpacity={0.7} onPress={() => this._resaveSong()} testID='saved-song-button'>
+        <Image source={Images.addToSavedSongs} style={styles.savedIcon} testID='saved-song-image' />
       </TouchableOpacity>
     )
   );

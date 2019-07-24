@@ -35,16 +35,30 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForTesting = "NO"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "mood_mobileTests.xctest"
                BlueprintName = "mood_mobileTests"
+               ReferencedContainer = "container:mood_mobile.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E689E3B422CAA25B0064FC6E"
+               BuildableName = "mood_mobileUITests.xctest"
+               BlueprintName = "mood_mobileUITests"
                ReferencedContainer = "container:mood_mobile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -56,16 +70,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "mood_mobileTests.xctest"
-               BlueprintName = "mood_mobileTests"
-               ReferencedContainer = "container:mood_mobile.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

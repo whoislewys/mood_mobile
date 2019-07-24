@@ -122,8 +122,9 @@ class SettingsScreen extends Component {
 
   render = () => {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} testID='SettingsScreen-View'>
         <FlatList
+          testID='SettingsItemsFlatList'
           data={[
             {
               key: 'rate',
@@ -199,11 +200,13 @@ class SettingsScreen extends Component {
 
   renderListItem = elem => (
     <TouchableOpacity
+      accessible={false}
+      testID={`SettingsItem-${elem}`}
       activeOpacity={0.6}
       style={styles.button}
       onPress={() => elem.item.handlePress(elem.item.url)}
     >
-      <View style={styles.detailsContainer}>
+      <View style={styles.detailsContainer} testID={`SettingsItem-View-${elem}`}>
         <Text
           style={styles.settingName}
           numberOfLines={1}
@@ -216,7 +219,7 @@ class SettingsScreen extends Component {
       {
         elem.item.hasSwitch === true
           ? (
-            <View style={styles.switchStyle}>
+            <View style={styles.switchStyle} testID={`SettingsItem-ToggleView-${elem}`}>
               <ToggleSwitch
                 value={this.props.dataShouldBeTracked}
                 buttonWidth={51}
@@ -234,7 +237,7 @@ class SettingsScreen extends Component {
             </View>
           )
           : (
-            <View style={styles.buttonPadding}>
+            <View style={styles.buttonPadding} testID={`SettingsItem-ButtonPadding-${elem}`}>
               <GradientButton
                 onPress={() => elem.item.handlePress(elem.item.url)}
                 text={elem.item.buttonText}

@@ -239,7 +239,7 @@ class PlayScreen extends Component {
         }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
-        itemWidth={0.902 * dimensions.width}
+        itemWidth={0.910 * dimensions.width}
         renderItem={this._renderCarouselItem}
         onBeforeSnapToItem={this._handleCarouselSnap}
         firstItem={this.props.curTrackIndex}
