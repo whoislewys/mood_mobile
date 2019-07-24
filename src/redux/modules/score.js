@@ -85,8 +85,11 @@ export function sendScoreDelta(currentTrackId) {
 
 export function startScoreTimer() {
   return (dispatch, getState) => {
+    const { curTrack } = getState().queue;
+    if (!curTrack) return;
+
     clearInterval(getState().score.timer);
-    const newTimer = setInterval(() => dispatch(sendScoreDelta(getState().queue.curTrack.id)), SEND_SCORE_TIME);
+    const newTimer = setInterval(() => dispatch(sendScoreDelta(curTrack.id)), SEND_SCORE_TIME);
     dispatch({
       type: START_TIMER,
       newTimer,
