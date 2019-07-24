@@ -21,6 +21,7 @@ export const updateCurrentTrack = store => next => (action) => {
         if (curTrack == null || tpCurTrack.id == null) return;
 
         if (curTrack.id !== tpCurTrack.id) {
+          // todo: maybe get the trackplayer queue instead of the store queue?
           const storeQueue = store.getState().queue.queue;
           store.dispatch({
             type: SET_CUR_TRACK,
