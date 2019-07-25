@@ -355,6 +355,6 @@ export function handleDuck(data) {
     if (permanent === true) await TrackPlayer.pause();
     if (ducking) await TrackPlayer.pause(); // could just change vol here
     if (paused) await TrackPlayer.pause();
-    if (!ducking && !paused && !permanent) await TrackPlayer.play();
+    if (!ducking && !paused && !permanent) await TrackPlayer.pause();
   };
 }

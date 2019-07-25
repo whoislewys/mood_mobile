@@ -5,6 +5,7 @@ import TrackPlayer from 'react-native-track-player';
 import Player from './src/components/player';
 import store from './src/redux/store';
 import createEventHandler from './src/redux/event-handler';
+import playbackService from './src/redux/playback-service';
 
 export default class App extends Component {
     componentDidMount = async () => {
@@ -33,4 +34,5 @@ export default class App extends Component {
 }
 
 AppRegistry.registerComponent('mood_mobile', () => App);
-TrackPlayer.registerEventHandler(createEventHandler(store));
+// TrackPlayer.registerEventHandler(createEventHandler(store));
+TrackPlayer.registerPlaybackService(() => playbackService(store));
