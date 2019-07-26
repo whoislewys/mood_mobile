@@ -29,7 +29,7 @@ export const initialState = {
   loading: false,
   playback: null,
   sharedTrack: null,
-  track: null,
+  track: -1,
   queue: [],
   queueType: '',
 };
@@ -215,6 +215,16 @@ export function stopPlayback() {
   };
 }
 
+export function setCurTrack(newCurTrack, newCurTrackIndex) {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: SET_CUR_TRACK,
+      newCurTrack,
+      newCurTrackIndex,
+    });
+  };
+}
+
 // Mood action creator
 export function loadSongsForMoodId(moodId) {
   return async (dispatch) => {
@@ -313,28 +323,45 @@ export function playbackState(state) {
   };
 }
 
-export function playbackTrack(track) {
+// export function playbackTrack(track) {
+//   // called on track changed event
+//   return (dispatch, getState) => {
+//     const { queue, queueType } = getState().queue;
+//
+//     // find new current track
+//     const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
+//     let newCurTrack = queue[newCurTrackIndex];
+//
+//     // if no track found, set curTrack to first in the queue
+//     if (newCurTrack === undefined) newCurTrack = queue[0];
+//
+//     dispatch({
+//       newCurTrack,
+//       newCurTrackIndex,
+//       type: PLAYBACK_TRACK,
+//       track,
+//     });
+//
+//     // do not log analytic or start score timer for an empty queue
+//     if (!queue.length) return;
+//
+//     dispatch(
+//       logEvent(
+//         anal.songPlay,
+//         songPlayAnalyticEventFactory(anal.songPlay, queueType, newCurTrack),
+//       ),
+//     );
+//
+//     dispatch(startScoreTimer());
+//   };
+// }
+
+// todo: try this one out with old event handler and guys resolution method on github
+// https://github.com/react-native-kit/react-native-track-player/issues/610
+export function playbackTrackV2() {
   // called on track changed event
-  return (dispatch, getState) => {
-    const { queue, queueType } = getState().queue;
-
-    // find new current track
-    const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
-    let newCurTrack = queue[newCurTrackIndex];
-
-    // if no track found, set curTrack to first in the queue
-    if (newCurTrack === undefined) newCurTrack = queue[0];
-
-    dispatch({
-      newCurTrack,
-      newCurTrackIndex,
-      type: PLAYBACK_TRACK,
-      track,
-    });
-
-    // do not log analytic or start score timer for an empty queue
-    if (!queue.length) return;
-
+  return (dispatch) => {
+    const { queueType } = getState().song.queue;
     dispatch(
       logEvent(
         anal.songPlay,

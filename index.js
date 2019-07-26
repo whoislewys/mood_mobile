@@ -34,5 +34,5 @@ export default class App extends Component {
 }
 
 AppRegistry.registerComponent('mood_mobile', () => App);
-// TrackPlayer.registerEventHandler(createEventHandler(store));
-TrackPlayer.registerPlaybackService(() => playbackService(store));
+TrackPlayer.registerEventHandler(createEventHandler(store));
+// TrackPlayer.registerPlaybackService(() => playbackService(store));

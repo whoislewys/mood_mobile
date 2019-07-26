@@ -34,10 +34,10 @@ export default async function (store) {
   });
 
   TrackPlayer.addEventListener('playback-state', () => {
-    store.dispatch(playbackState(data.state));
+    store.dispatch(playbackState(state));
   });
 
-  TrackPlayer.addEventListener('playback-track-changed', () => {
+  TrackPlayer.addEventListener('playback-track-changed', (data) => {
     store.dispatch(playbackTrack(data.nextTrack));
   });
 
