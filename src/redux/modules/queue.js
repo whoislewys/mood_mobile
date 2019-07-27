@@ -215,6 +215,16 @@ export function stopPlayback() {
   };
 }
 
+export function setCurTrack(newCurTrack, newCurTrackIndex) {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: SET_CUR_TRACK,
+      newCurTrack,
+      newCurTrackIndex,
+    });
+  };
+}
+
 // Mood action creator
 export function loadSongsForMoodId(moodId) {
   return async (dispatch) => {

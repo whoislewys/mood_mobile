@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import Carousel from 'react-native-snap-carousel';
+import TrackPlayer from 'react-native-track-player';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayOnOpen from './components/play-on-open';
@@ -23,6 +24,7 @@ import {
   handlePlayPress,
   skipToNext,
   skipToPrevious,
+  setCurTrack,
 } from '../../redux/modules/queue';
 import { logEvent } from '../../redux/modules/analytics';
 
@@ -99,7 +101,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 class PlayScreen extends Component {
   onSwipeDown() {
     if (!this.props.queue.length) {
@@ -109,10 +110,26 @@ class PlayScreen extends Component {
     this.props.navigation.goBack();
   }
 
+  async componentDidUpdate() {
+    if (this.state.curTrack.id !== this.props.curTrack.id) {
+      let newCurTrack;
+      let newCurTrackIndex;
+
+      newCurTrack = await TrackPlayer.getTrack(await TrackPlayer.getCurrentTrack());
+      TrackPlayer.getQueue().then((tpqueue) => {
+        newCurTrackIndex = tpqueue.findIndex(findTrack => findTrack.id === newCurTrack.id);
+      });
+
+      this.setState({ curTrack: newCurTrack }, () => this.props.setCurTrack(newCurTrack, newCurTrackIndex));
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       carouselRef: undefined,
+      curTrack: {},
+      curTrackIndex: NaN,
     };
   }
 
@@ -160,7 +177,7 @@ class PlayScreen extends Component {
   _getBackground = () => (
     <View style={styles.imageBackground}>
       <ImageBackground
-        source={{ uri: this.props.curTrack.artwork }}
+        source={{ uri: this.state.curTrack.artwork }}
         blurRadius={25}
         style={styles.imageBackground}
       />
@@ -171,13 +188,13 @@ class PlayScreen extends Component {
   _nextTrack = () => {
     // skip forward transitions
     this.props.skipToNext();
-    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
+    this.state.carouselRef.snapToItem(this.state.curTrackIndex);
   };
 
   _previousTrack = () => {
     // skip backward transitions
     this.props.skipToPrevious();
-    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
+    this.state.carouselRef.snapToItem(this.state.curTrackIndex);
   };
 
   getDropdownBar = () => (
@@ -201,7 +218,7 @@ class PlayScreen extends Component {
           onPress={() => (
             this.props.navigation.navigate({
               routeName: 'PlaylistModal',
-              params: { songIdToAdd: parseInt(this.props.curTrack.id, 10) },
+              params: { songIdToAdd: parseInt(this.state.curTrack.id, 10) },
             })
           )}
           style={styles.playlistButtonContainer}
@@ -242,7 +259,7 @@ class PlayScreen extends Component {
         itemWidth={0.910 * dimensions.width}
         renderItem={this._renderCarouselItem}
         onBeforeSnapToItem={this._handleCarouselSnap}
-        firstItem={this.props.curTrackIndex}
+        firstItem={0}
         useScrollView
         lockScrollWhileSnapping
       />
@@ -256,7 +273,7 @@ class PlayScreen extends Component {
     >
       <InfoText
         setTime={this.props.setTime}
-        track={this.props.curTrack}
+        track={this.state.curTrack}
       />
     </GestureRecognizer>
   );
@@ -273,7 +290,7 @@ class PlayScreen extends Component {
         playing={this.props.playing}
         handlePlayPress={this.props.handlePlayPress}
         loading={this.props.loading}
-        currentTrack={this.props.curTrack}
+        currentTrack={this.state.curTrack}
         navigation={this.props.navigation}
       />
     </GestureRecognizer>
@@ -292,6 +309,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logEvent,
   handlePlayPress,
+  setCurTrack,
   skipToNext,
   skipToPrevious,
 };
