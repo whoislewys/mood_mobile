@@ -159,6 +159,7 @@ export function reducer(state = initialState, action = {}) {
 // TrackPlayer controls
 export function handlePlayPress() {
   return async (dispatch, getState) => {
+    // try curtrack here instead of track too
     const { track, queue, playback } = getState().queue;
     if (track === null) {
       await TrackPlayer.reset();
@@ -227,6 +228,7 @@ export function loadSongsForMoodId(moodId) {
           responseType: 'json',
         });
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+      dispatch(handlePlayPress());
       dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
@@ -257,6 +259,7 @@ export function loadSongsForAllMoods(moodIds) {
         .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
 
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: { data: allMoodSongs } });
+      dispatch(handlePlayPress());
       dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
@@ -297,6 +300,7 @@ export function loadSharedSongQueue(sharedTrack) {
           responseType: 'json',
         });
       dispatch({ type: LOAD_SHARED_SONG_QUEUE_SUCCESS, payload: songs });
+      dispatch(handlePlayPress());
       dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
