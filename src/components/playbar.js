@@ -9,7 +9,7 @@ import {
 import TrackPlayer from 'react-native-track-player';
 import { colors, fonts } from '../assets/styles';
 import Images from '../assets/images';
-import StarButton from './medium-star';
+import HeartButton from './score-component-v2';
 
 const styles = StyleSheet.create({
   container: {
@@ -111,11 +111,8 @@ export default class PlayBar extends Component {
       onPress={this.props.navigateToPlayscreenFromPlaybar}
     >
       <View style={styles.starContainer} testID={'starContainer'}>
-        <StarButton
+        <HeartButton
           extraStyles={{ tintColor: colors.black }}
-          textColor={{ color: '#fff' }}
-          shootFrom={{ x: 20, y: 0 }}
-          spray={15}
           navigation={this.props.navigation}
         />
       </View>

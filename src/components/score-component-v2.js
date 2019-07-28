@@ -14,11 +14,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: '5%',
   },
   star: {
     resizeMode: 'contain',
-    height: 30,
-    width: 30,
+    height: 27,
+    width: 27,
     tintColor: '#fff',
   },
 });
