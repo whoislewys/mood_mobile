@@ -7,7 +7,6 @@ import { setUserId } from '../redux/modules/analytics';
 import { userLoggedIn } from '../redux/modules/auth';
 import { setMood } from '../redux/modules/mood';
 import { stopPlayback } from '../redux/modules/queue';
-import { stopScoreTimer } from '../redux/modules/score';
 
 class Player extends Component {
   componentDidMount = async () => {
@@ -17,10 +16,6 @@ class Player extends Component {
       this.props.userLoggedIn(currentUser);
       this.props.setUserId(currentUser.uid);
     }
-  };
-
-  componentWillUnmount = () => {
-    this.props.stopScoreTimer();
   };
 
   render = () => (
@@ -51,7 +46,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setMood,
   setUserId,
-  stopScoreTimer,
   stopPlayback,
   userLoggedIn,
 };
