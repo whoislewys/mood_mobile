@@ -7,7 +7,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import Images from '@assets/images';
-import { incrementScore } from '../redux/modules/score';
+import { incrementScore, sendScore } from '../redux/modules/score-v2';
+
+// todo:
+// 1. refactor scoring so that it only sends 1 score to API with NO timers
+// 2. pull this branch into the bug/random-crashed3 branch and see if it fixes the random crashes anything
 
 const styles = StyleSheet.create({
   starButton: {
@@ -42,6 +46,7 @@ export class HeartButton extends Component {
     const newScore = this.props.currentScore + 1;
     if (newScore <= maxCount) {
       this.props.incrementScore();
+      this.props.sendScore(this.props.curTrack.id);
     }
   };
 
@@ -72,12 +77,13 @@ export class HeartButton extends Component {
 
 const mapStateToProps = state => ({
   currentScore: state.score.currentScore,
-  scoreDelta: state.score.scoreDelta,
+  curTrack: state.queue.curTrack,
   userIsLoggedIn: state.auth.userIsLoggedIn,
 });
 
 const mapDispatchToProps = {
   incrementScore,
+  sendScore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeartButton);
