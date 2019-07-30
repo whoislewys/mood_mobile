@@ -7,23 +7,29 @@ import store from './src/redux/store';
 import createEventHandler from './src/redux/event-handler';
 
 export default class App extends Component {
-    componentDidMount = async () => {
-      await TrackPlayer.setupPlayer({
-        // Can set maxCacheSize like this:
-        // maxCacheSize: 1024 * 5, // 5 mb
-      });
-      await TrackPlayer.updateOptions({
-        // TODO: set up custom background play controls styling, e.g.
-        // icon: <album art>
-        // docs on that here: https://github.com/react-native-kit/react-native-track-player/wiki/Documentation#player-functions
-        capabilities: [
-          TrackPlayer.CAPABILITY_PLAY,
-          TrackPlayer.CAPABILITY_PAUSE,
-          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-        ],
-      });
-    }
+  componentDidMount = async () => {
+    const capabilitiesList = [
+      TrackPlayer.CAPABILITY_PLAY,
+      TrackPlayer.CAPABILITY_PAUSE,
+      TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+      TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+    ];
+
+    await TrackPlayer.setupPlayer({
+      // Can set maxCacheSize like this:
+      // maxCacheSize: 1024 * 5, // 5 mb
+    });
+
+    // necessary for setting capabilities
+    await TrackPlayer.updateOptions({
+      // TODO: set up custom background play controls styling, e.g.
+      // icon: <album art>
+      // docs on that here: https://github.com/react-native-kit/react-native-track-player/wiki/Documentation#player-functions
+      capabilities: capabilitiesList,
+      compactCapabilities: capabilitiesList,
+      notificationCapabilities: capabilitiesList,
+    });
+  }
 
     render = () => (
       <Provider store={store}>
