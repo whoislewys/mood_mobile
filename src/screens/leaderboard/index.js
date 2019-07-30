@@ -12,7 +12,6 @@ import { LEADERBOARDS } from '../../redux/constants';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import { loadQueueStartingAtId } from '../../redux/modules/queue';
-import { sendScoreDelta } from '../../redux/modules/score';
 import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
@@ -115,7 +114,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadLeaderboardSongs,
   loadQueueStartingAtId,
-  sendScoreDelta,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);
