@@ -2,7 +2,7 @@ import axios from 'axios';
 import TrackPlayer from 'react-native-track-player';
 import { Platform } from 'react-native';
 import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
-import { startScoreTimer } from './score';
+import { clearScore } from './score-v2';
 import { logEvent } from './analytics';
 import {
   anal,
@@ -194,7 +194,6 @@ export function skipToNext() {
       // maybe make this just increment the index and do a trackPlayer.skip(index)
       await TrackPlayer.skipToNext();
     } catch (_) {}
-    dispatch(startScoreTimer());
   };
 }
 
@@ -203,7 +202,6 @@ export function skipToPrevious() {
     try {
       await TrackPlayer.skipToPrevious();
     } catch (_) {}
-    dispatch(startScoreTimer());
   };
 }
 
@@ -227,7 +225,6 @@ export function loadSongsForMoodId(moodId) {
           responseType: 'json',
         });
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
-      dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
     }
@@ -257,7 +254,6 @@ export function loadSongsForAllMoods(moodIds) {
         .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
 
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: { data: allMoodSongs } });
-      dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
     }
@@ -281,7 +277,6 @@ export function loadQueueStartingAtId(startSongIndex, songs) {
     await TrackPlayer.add(songs);
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     await TrackPlayer.play();
-    dispatch(startScoreTimer());
   };
 }
 
@@ -297,7 +292,6 @@ export function loadSharedSongQueue(sharedTrack) {
           responseType: 'json',
         });
       dispatch({ type: LOAD_SHARED_SONG_QUEUE_SUCCESS, payload: songs });
-      dispatch(startScoreTimer());
     } catch (e) {
       dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
     }
@@ -318,6 +312,9 @@ export function playbackTrack(track) {
   return (dispatch, getState) => {
     const { queue, queueType } = getState().queue;
 
+    // when a new track comes through, clear the score
+    dispatch(clearScore());
+
     // find new current track
     const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
     let newCurTrack = queue[newCurTrackIndex];
@@ -331,8 +328,7 @@ export function playbackTrack(track) {
       type: PLAYBACK_TRACK,
       track,
     });
-
-    // do not log analytic or start score timer for an empty queue
+    // do not log analytic for empty queue
     if (!queue.length) return;
 
     dispatch(
@@ -341,8 +337,6 @@ export function playbackTrack(track) {
         songPlayAnalyticEventFactory(anal.songPlay, queueType, newCurTrack),
       ),
     );
-
-    dispatch(startScoreTimer());
   };
 }
 

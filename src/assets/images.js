@@ -29,6 +29,8 @@ const images = {
   googleIcon: require('./img/google-icon.png'),
 
   // Media Player
+  heart: require('./img/heart-filled.png'),
+  heartOutline: require('./img/heart-hollow.png'),
   pauseButton: require('./img/round-pause-2x.png'),
   playButton: require('./img/round-play-2x.png'),
   share: require('./img/selected-share-arrow.png'),

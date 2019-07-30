@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import branch from 'react-native-branch';
-import StarButton from '../../../components/medium-star';
+import HeartButton from '../../../components/score-component-v2';
 import { anal } from '../../../redux/constants';
 import { colors } from '../../../assets/styles';
 
@@ -67,11 +67,8 @@ export default class PlayControls extends Component {
 
   render = () => (
     <View style={styles.playControls}>
-      <StarButton
+      <HeartButton
         extraStyles={{ tintColor: '#fff' }}
-        textColor={{ color: colors.gold }}
-        shootFrom={{ x: 0, y: 0 }}
-        spray={23}
         navigation={this.props.navigation}
       />
       <TouchableOpacity onPress={this.props.skipBack}>

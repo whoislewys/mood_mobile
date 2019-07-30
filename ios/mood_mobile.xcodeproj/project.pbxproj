@@ -105,6 +105,8 @@
 		F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A5D4433A564CB3B8304205 /* saved-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
 		FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 656F9179472744F38EAC701D /* romantic-tile.png */; };
+		A51E1CAFFE50481087B7AE7F /* heart-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B7B45FACF440499E6F6605 /* heart-filled.png */; };
+		399FCDD2BFD9451FB6A9D71D /* heart-hollow.png in Resources */ = {isa = PBXBuildFile; fileRef = E0011E4341D348A4858EC95D /* heart-hollow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -561,6 +563,8 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; };
+		C8B7B45FACF440499E6F6605 /* heart-filled.png */ = {isa = PBXFileReference; name = "heart-filled.png"; path = "../src/assets/img/heart-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E0011E4341D348A4858EC95D /* heart-hollow.png */ = {isa = PBXFileReference; name = "heart-hollow.png"; path = "../src/assets/img/heart-hollow.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -909,6 +913,8 @@
 				656F9179472744F38EAC701D /* romantic-tile.png */,
 				AE9B80535F8F4D5B90FA4881 /* sad-tile.png */,
 				90F3B150BD864DC9A18BE916 /* delete-playlist.png */,
+				C8B7B45FACF440499E6F6605 /* heart-filled.png */,
+				E0011E4341D348A4858EC95D /* heart-hollow.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1638,6 +1644,8 @@
 				FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */,
 				71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */,
 				E756A6EB98C940CA98AEEE19 /* delete-playlist.png in Resources */,
+				A51E1CAFFE50481087B7AE7F /* heart-filled.png in Resources */,
+				399FCDD2BFD9451FB6A9D71D /* heart-hollow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
