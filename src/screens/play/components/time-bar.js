@@ -178,6 +178,14 @@ export default class TimeBar extends Component {
     };
 
     return (
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
+      // TODO: for performance an Animated.View with useNativeDriver=true prop should be used here
       <View style={styles.timeBar}>
         <View style={animationStyle1} />
         { this.getTime() }

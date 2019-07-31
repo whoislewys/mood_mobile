@@ -237,7 +237,6 @@ class PlayScreen extends Component {
         renderItem={this._renderCarouselItem}
         onBeforeSnapToItem={this._handleCarouselSnap}
         firstItem={this.props.curTrackIndex}
-        useScrollView
         lockScrollWhileSnapping
       />
     </View>
