@@ -14,7 +14,6 @@ import Images from '@assets/images';
 import Carousel from 'react-native-snap-carousel';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import AlbumArtCarouselItem from './components/album-art-carousel-item';
-import PlayOnOpen from './components/play-on-open';
 import PlayControls from './components/play-controls';
 import TimeBar from './components/time-bar';
 import InfoText from './components/info-text';
@@ -117,7 +116,7 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    if (!this.props.queue.length || (this.props.curTrack == null)) {
+    if (!this.props.queue.length || (this.props.curTrack == null) || this.props.track == null) {
       return (
         <ActivityIndicator
           color='black'
@@ -131,11 +130,6 @@ class PlayScreen extends Component {
       <View style={styles.container}>
         <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
         { this._getBackground() }
-        <PlayOnOpen
-          playing={this.props.playing}
-          playByDefault={this.props.handlePlayPress}
-          parentScreen={this.props.parentScreen}
-        />
         <View style={styles.playContainer}>
           <View style={styles.dropdownBarContainer}>
             { this.getDropdownBar() }
@@ -243,7 +237,6 @@ class PlayScreen extends Component {
         renderItem={this._renderCarouselItem}
         onBeforeSnapToItem={this._handleCarouselSnap}
         firstItem={this.props.curTrackIndex}
-        useScrollView
         lockScrollWhileSnapping
       />
     </View>
@@ -287,6 +280,7 @@ const mapStateToProps = state => ({
   curTrack: state.queue.curTrack,
   curTrackIndex: state.queue.curTrackIndex,
   deviceId: state.analytics.deviceId,
+  track: state.queue.track,
 });
 
 const mapDispatchToProps = {

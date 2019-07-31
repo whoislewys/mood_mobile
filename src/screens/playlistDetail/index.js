@@ -17,7 +17,6 @@ import {
   removeSongFromDeleted,
   resetToDeleteSet,
 } from '../../redux/modules/playlists';
-import { sendScoreDelta } from '../../redux/modules/score';
 // todo: DRY up this SongRow component
 import SongRow from './components/songRow';
 // import SongRow from '../savedSongs/components/songRow';
@@ -174,7 +173,6 @@ const mapDispatchToProps = {
   loadQueueStartingAtId,
   removeSongFromDeleted,
   resetToDeleteSet,
-  sendScoreDelta,
   shufflePlay,
 };
 

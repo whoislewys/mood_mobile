@@ -45,8 +45,10 @@ export class HeartButton extends Component {
     const { maxCount } = this.state;
     const newScore = this.props.currentScore + 1;
     if (newScore <= maxCount) {
-      this.props.incrementScore();
-      this.props.sendScore(this.props.curTrack.id);
+      this.props.incrementScore(this.props.currentScore);
+      if (this.props.curTrack != null) {
+        this.props.sendScore(this.props.curTrack.id);
+      }
     }
   };
 
