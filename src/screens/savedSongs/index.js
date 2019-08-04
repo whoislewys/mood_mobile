@@ -18,7 +18,6 @@ import {
   removeSongFromDeleted,
   resetToDeleteSet,
 } from '../../redux/modules/playlists';
-import { sendScoreDelta } from '../../redux/modules/score';
 import SongRow from './components/songRow';
 import { colors, fonts, spacing } from '../../assets/styles';
 
@@ -172,7 +171,6 @@ const mapDispatchToProps = {
   loadSavedSongs,
   removeSongFromDeleted,
   resetToDeleteSet,
-  sendScoreDelta,
   shufflePlay,
 };
 
