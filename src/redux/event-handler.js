@@ -35,7 +35,7 @@ async function eventHandler(store, data) {
       store.dispatch(playbackState(data.state));
       break;
     case 'playback-track-changed':
-      store.dispatch(playbackTrack(data.nextTrack));
+      store.dispatch(playbackTrack(data));
       break;
     case 'playback-error':
       Alert.alert('An error ocurred', data.error);

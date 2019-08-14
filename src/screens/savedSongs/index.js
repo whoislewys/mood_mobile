@@ -101,7 +101,7 @@ export class SavedSongs extends Component {
   );
 
   _handleSongRowPress = async (pressedSongIndex) => {
-    this.props.loadQueueStartingAtId(pressedSongIndex, this.props.savedSongs);
+    await this.props.loadQueueStartingAtId(pressedSongIndex, this.props.savedSongs);
     this._navigateToPlayScreen();
   };
 

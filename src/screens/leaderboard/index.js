@@ -64,7 +64,7 @@ class LeaderboardScreen extends Component {
   };
 
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
+    await this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
     this._navigateToPlayScreen();
   };
 
