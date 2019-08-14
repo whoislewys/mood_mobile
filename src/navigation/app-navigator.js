@@ -97,7 +97,7 @@ const MyMusicNavigatorWithHeader = createStackNavigator({
 const leaderboardNavigator = createMaterialTopTabNavigator({
   Daily: { screen: map(LeaderboardScreen) },
   Weekly: { screen: map(LeaderboardScreen) },
-  Monthly: { screen: map(LeaderboardScreen) },
+  // Monthly: { screen: map(LeaderboardScreen) },
   'All Time': { screen: map(LeaderboardScreen) },
 },
 {
