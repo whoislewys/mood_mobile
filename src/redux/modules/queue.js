@@ -319,17 +319,12 @@ export function playbackTrack(data) {
     const { queue, queueType } = getState().queue;
 
     const { nextTrack: track } = data;
-    // todo: figure out why playback track is regressing the current track
-    console.warn('data: ', data);
-    console.warn('nexttrack: ', track);
     // when a new track comes through, clear the score
     dispatch(clearScore());
 
     // find new current track
     const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === track);
     let newCurTrack = queue[newCurTrackIndex];
-
-    console.warn('playbacktrack curtrack', newCurTrackIndex);
 
     // if no track found, set curTrack to first in the queue
     if (newCurTrack === undefined) newCurTrack = queue[0];
