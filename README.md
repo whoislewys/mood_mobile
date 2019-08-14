@@ -29,8 +29,12 @@ Luis wrote a small [`react-native-clean` script](https://gist.github.com/whoisle
 ## Deloyment (Fastlane)
 
 #### Pushing new builds
+**IOS**
 `fastlane ios beta` for new Testflight build
 
+For new apple App Store build, open mood_mobile.xcworkspace. Open the `info.plist`. Increment the field `Bundle versions string, short`
+
+**ANDROID** 
 1. Open `/android/app/build.gradle` and manually increment the versionCode field.
 2. `fastlane android beta` for new Android build.
 3. Go into `android/app/build/outputs/apk/release`, rename the APK to `Mood.dev.apk` and upload it to Google Drive. Rename the same APK to `Mood.apk`, log into Play Console, and use it to create a new release there.
