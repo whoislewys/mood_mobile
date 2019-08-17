@@ -89,7 +89,7 @@ class PlaylistDetail extends Component {
   );
 
   _handleSongRowPress = async (pressedLeaderboardSongIndex) => {
-    this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.playlistSongs);
+    await this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.playlistSongs);
     this._navigateToPlayScreen();
   };
 

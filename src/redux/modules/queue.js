@@ -188,20 +188,20 @@ export function shufflePlay(songs) {
 }
 
 export function skipToNext() {
-  return (dispatch) => {
+  return async (dispatch) => {
     try {
       // works, but should be optimized for skipping several tracks back to back
       // will probably just have to fanagle trackplayer state
       // maybe make this just increment the index and do a trackPlayer.skip(index)
-      TrackPlayer.skipToNext();
+      await TrackPlayer.skipToNext();
     } catch (_) {}
   };
 }
 
 export function skipToPrevious() {
-  return (dispatch) => {
+  return async (dispatch) => {
     try {
-      TrackPlayer.skipToPrevious();
+      await TrackPlayer.skipToPrevious();
     } catch (_) {}
   };
 }
@@ -266,9 +266,9 @@ export function loadSongsForAllMoods(moodIds) {
 export function loadQueueStartingAtId(startSongIndex, songs) {
   return async (dispatch) => {
     await TrackPlayer.reset();
-    dispatch({ type: RESET_QUEUE });
+    await dispatch({ type: RESET_QUEUE });
 
-    dispatch({
+    await dispatch({
       type: LOAD_QUEUE_STARTING_AT_ID,
       startSongIndex,
       songs,
@@ -278,8 +278,10 @@ export function loadQueueStartingAtId(startSongIndex, songs) {
 
     // maybe move this into a helper function
     await TrackPlayer.add(songs);
+    await TrackPlayer.pause();
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     await TrackPlayer.play();
+    await TrackPlayer.skip(selectedLeaderboardSong.id);
   };
 }
 
@@ -311,11 +313,12 @@ export function playbackState(state) {
   };
 }
 
-export function playbackTrack(track) {
+export function playbackTrack(data) {
   // called on track changed event
   return (dispatch, getState) => {
     const { queue, queueType } = getState().queue;
 
+    const { nextTrack: track } = data;
     // when a new track comes through, clear the score
     dispatch(clearScore());
 
@@ -353,6 +356,6 @@ export function handleDuck(data) {
     if (permanent === true) await TrackPlayer.pause();
     if (ducking) await TrackPlayer.pause(); // could just change vol here
     if (paused) await TrackPlayer.pause();
-    if (!ducking && !paused && !permanent) await TrackPlayer.play();
+    if (!ducking && !paused && !permanent) await TrackPlayer.pause();
   };
 }

@@ -105,8 +105,7 @@
 		F9747E52E9544122AEED36C4 /* saved-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0A5D4433A564CB3B8304205 /* saved-icon.png */; };
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
 		FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 656F9179472744F38EAC701D /* romantic-tile.png */; };
-		A51E1CAFFE50481087B7AE7F /* heart-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B7B45FACF440499E6F6605 /* heart-filled.png */; };
-		399FCDD2BFD9451FB6A9D71D /* heart-hollow.png in Resources */ = {isa = PBXBuildFile; fileRef = E0011E4341D348A4858EC95D /* heart-hollow.png */; };
+		B3A66E8AC9494BBBB6291E75 /* heart-leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EC93DB822F7410F95BD547A /* heart-leaderboard.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -540,6 +539,7 @@
 		C3635FEE75714DE29AEBA690 /* RNPlaceholder.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; path = RNPlaceholder.swift; sourceTree = "<group>"; };
 		C3E4E3E72E3E4B32AE252EB1 /* shuffle-button-unselected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "shuffle-button-unselected.png"; path = "../src/assets/img/shuffle-button-unselected.png"; sourceTree = "<group>"; };
 		C843A82C1509421AA190D78B /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
+		C8B7B45FACF440499E6F6605 /* heart-filled.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "heart-filled.png"; path = "../src/assets/img/heart-filled.png"; sourceTree = "<group>"; };
 		C8E9453BCB368F3DDCA060FF /* Pods-mood_mobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobileTests.release.xcconfig"; path = "Target Support Files/Pods-mood_mobileTests/Pods-mood_mobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		C9320DEB0720482480FF55B1 /* repeat-unselected.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "repeat-unselected.png"; path = "../src/assets/img/repeat-unselected.png"; sourceTree = "<group>"; };
 		D0A5D4433A564CB3B8304205 /* saved-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "saved-icon.png"; path = "../src/assets/img/saved-icon.png"; sourceTree = "<group>"; };
@@ -549,6 +549,7 @@
 		D6ED0A889B01432C959223CE /* happy-tile.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "happy-tile.png"; path = "../src/assets/img/happy-tile.png"; sourceTree = "<group>"; };
 		D94297707149471BBFE9B883 /* explicit-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "explicit-icon.png"; path = "../src/assets/img/explicit-icon.png"; sourceTree = "<group>"; };
 		DB3E8CAF9E024C3A9A029C92 /* round-pause-2x.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "round-pause-2x.png"; path = "../src/assets/img/round-pause-2x.png"; sourceTree = "<group>"; };
+		E0011E4341D348A4858EC95D /* heart-hollow.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "heart-hollow.png"; path = "../src/assets/img/heart-hollow.png"; sourceTree = "<group>"; };
 		E48C7F99B833D1C6DE4215CE /* Pods-mood_mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mood_mobile.debug.xcconfig"; path = "Target Support Files/Pods-mood_mobile/Pods-mood_mobile.debug.xcconfig"; sourceTree = "<group>"; };
 		E6184F5D223B86F70020541A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E627326D222A178300A13836 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -563,8 +564,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; };
-		C8B7B45FACF440499E6F6605 /* heart-filled.png */ = {isa = PBXFileReference; name = "heart-filled.png"; path = "../src/assets/img/heart-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E0011E4341D348A4858EC95D /* heart-hollow.png */ = {isa = PBXFileReference; name = "heart-hollow.png"; path = "../src/assets/img/heart-hollow.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4EC93DB822F7410F95BD547A /* heart-leaderboard.png */ = {isa = PBXFileReference; name = "heart-leaderboard.png"; path = "../src/assets/img/heart-leaderboard.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -915,6 +915,7 @@
 				90F3B150BD864DC9A18BE916 /* delete-playlist.png */,
 				C8B7B45FACF440499E6F6605 /* heart-filled.png */,
 				E0011E4341D348A4858EC95D /* heart-hollow.png */,
+				4EC93DB822F7410F95BD547A /* heart-leaderboard.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1168,6 +1169,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1644,8 +1646,7 @@
 				FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */,
 				71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */,
 				E756A6EB98C940CA98AEEE19 /* delete-playlist.png in Resources */,
-				A51E1CAFFE50481087B7AE7F /* heart-filled.png in Resources */,
-				399FCDD2BFD9451FB6A9D71D /* heart-hollow.png in Resources */,
+				B3A66E8AC9494BBBB6291E75 /* heart-leaderboard.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1686,7 +1687,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1947,7 +1948,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mood_mobile/mood_mobile.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 40;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 343H7RTVF7;
 				HEADER_SEARCH_PATHS = (
@@ -1983,7 +1984,7 @@
 				CODE_SIGN_ENTITLEMENTS = mood_mobile/mood_mobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_TEAM = 343H7RTVF7;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
