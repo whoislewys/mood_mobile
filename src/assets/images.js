@@ -22,7 +22,7 @@ const images = {
   sadTile: require('./img/sad-tile.png'),
 
   // Leaderboard
-  leaderboardStar: require('./img/round-stars-1.png'),
+  leaderboardStar: require('./img/heart-leaderboard.png'),
   moodLogo: require('./img/Color-Mood-Logo.png'),
 
   // Login
