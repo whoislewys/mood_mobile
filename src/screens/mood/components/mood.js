@@ -100,9 +100,9 @@ export default class Mood extends React.Component {
     }
     return (
       <ImageBackground style={styles.moodArt} source={this.props.mood.file} testID={`MoodTileBackground-${this.props.mood.file}`}>
-        <View style={styles.moodTileSubtextContainer}>
+        {/* <View style={styles.moodTileSubtextContainer}>
           <Text style={styles.moodTextStyle}>{this.props.mood.name}</Text>
-        </View>
+        </View> */}
       </ImageBackground>
     );
   };
