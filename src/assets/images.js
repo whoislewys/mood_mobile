@@ -56,8 +56,8 @@ const images = {
   deletePlaylist: require('./img/delete-playlist.png'),
 
   // Saved Songs Screen
-  addToSavedSongs: require('./img/save-song.png'),
-  savedIcon: require('./img/saved-icon.png'),
+  addToSavedSongs: require('./img/heart-hollow.png'),
+  savedIcon: require('./img/heart-filled.png'),
   shuffle: require('./img/shuffle.png'),
 
   // Settings Screen
