@@ -56,14 +56,17 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: fonts.primaryBold,
     fontSize: fonts.subHeader,
-    marginBottom: '6%',
   },
   textStyle: {
     alignSelf: 'center',
     textAlign: 'center',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
     color: '#fff',
     fontFamily: fonts.primaryBold,
     fontSize: fonts.body,
+    padding: '2%',
+    paddingTop: '0.5%',
   },
 });
 
