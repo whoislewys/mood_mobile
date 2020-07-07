@@ -16,8 +16,8 @@ Make sure you run `cd ios && pod install`
 ## Running App 
 1. `yarn`
 2. [iOS only] `cd ios && pod install && cd ..`
-3. `react-native-link`
-4. `react-native-run-ios` or `react-native-run-android`
+3. `react-native link`
+4. `react-native run-ios` or `react-native run-android`
 
 ## General Troubleshooting
 Luis wrote a small [`react-native-clean` script](https://gist.github.com/whoislewys/18942ac40edb68460c709fe2ed74dee4). Kill your Metro Bundler, run `react-native-clean`, and run `react-native-run-*` again to get a fresh, artisinal, hand-crafted, non-GMO, fully vaccinated, grass-fed build.
