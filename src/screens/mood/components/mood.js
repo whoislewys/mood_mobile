@@ -56,14 +56,17 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: fonts.primaryBold,
     fontSize: fonts.subHeader,
-    marginBottom: '6%',
   },
   textStyle: {
     alignSelf: 'center',
     textAlign: 'center',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
     color: '#fff',
     fontFamily: fonts.primaryBold,
     fontSize: fonts.body,
+    padding: '2%',
+    paddingTop: '0.5%',
   },
 });
 
@@ -100,9 +103,9 @@ export default class Mood extends React.Component {
     }
     return (
       <ImageBackground style={styles.moodArt} source={this.props.mood.file} testID={`MoodTileBackground-${this.props.mood.file}`}>
-        <View style={styles.moodTileSubtextContainer}>
+        {/* <View style={styles.moodTileSubtextContainer}>
           <Text style={styles.moodTextStyle}>{this.props.mood.name}</Text>
-        </View>
+        </View> */}
       </ImageBackground>
     );
   };

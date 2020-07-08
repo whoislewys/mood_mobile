@@ -106,6 +106,25 @@
 		F9AB39AD5597419E840460A0 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62B8E44FD07B433B9FE2C3BB /* Quicksand-Light.ttf */; };
 		FDAA496C893B48D399FDC09B /* romantic-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 656F9179472744F38EAC701D /* romantic-tile.png */; };
 		B3A66E8AC9494BBBB6291E75 /* heart-leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EC93DB822F7410F95BD547A /* heart-leaderboard.png */; };
+		AA75343117CE42BFBE2999E9 /* angry-tile.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6FCF115C689042D78723A1BE /* angry-tile.svg */; };
+		B20DE51140A740FABA1801E9 /* angry-tile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1007275EEC2A42F5A793D544 /* angry-tile@2x.png */; };
+		9E23068C8A644BF5B9D387DE /* angry-tile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E0EFE2D23AA4B379C77C8D3 /* angry-tile@3x.png */; };
+		99BA3911B0814F00B9C97E56 /* happy-tile.svg in Resources */ = {isa = PBXBuildFile; fileRef = 66AE037D25A74E8A8CF1B0F0 /* happy-tile.svg */; };
+		C514C56625094BD0BE0F1355 /* happy-tile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 947B85912B8740C29AF91869 /* happy-tile@2x.png */; };
+		D40E5F6D5EBB4788930981E4 /* happy-tile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 82A9F7B62FCF48FEB0C241D6 /* happy-tile@3x.png */; };
+		F360B179F47F44D988C49DCC /* main-pause-button-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7ADD27B8FC47DCB17095D5 /* main-pause-button-white.png */; };
+		DDF1CF5D94644F808ED70111 /* main-play-button-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C29BAEF62B1E44A2BA11EAF8 /* main-play-button-white.png */; };
+		C05920F912C243108AC41073 /* mystery-tile.svg in Resources */ = {isa = PBXBuildFile; fileRef = E00DEF6B045B4096AEB2EB73 /* mystery-tile.svg */; };
+		5D7312A137AE4EC39B5535DE /* mystery-tile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F56B4DA48B459785C321A8 /* mystery-tile@2x.png */; };
+		A0238C825514498C8813AF53 /* mystery-tile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE36775AA84EAA8D7A4DF8 /* mystery-tile@3x.png */; };
+		194BD499A7F440B4BA213C8F /* outline-white-heart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 368BBB21ECEC421F91A82230 /* outline-white-heart@3x.png */; };
+		524EA4931EE841F4B620C917 /* romantic-tile.svg in Resources */ = {isa = PBXBuildFile; fileRef = 3D486EB20AB841FA8DD68A51 /* romantic-tile.svg */; };
+		7DCBCC28731642579601CD1A /* romantic-tile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4B6E46762249858788748B /* romantic-tile@2x.png */; };
+		7CB2EF2D7ACF4546B794FD64 /* romantic-tile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4512A966280C4FE1A54EAC85 /* romantic-tile@3x.png */; };
+		95A684F65ABD44C496FEC937 /* sad-tile.svg in Resources */ = {isa = PBXBuildFile; fileRef = A191549747E6438C8781FE8D /* sad-tile.svg */; };
+		86DFC6205F0B4EE492B6D335 /* sad-tile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D1B0D421FD04DD782D0A7C8 /* sad-tile@2x.png */; };
+		99C834214B4840A9A5A1A60C /* sad-tile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CA659DDF9E42CDB97C659A /* sad-tile@3x.png */; };
+		59D960D5ABBA401EBC10D0DC /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 876F1B13278544DD82D0F58E /* share.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -565,6 +584,25 @@
 		EF11813B38634D3680D67B0A /* selected-home-icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "selected-home-icon.png"; path = "../src/assets/img/selected-home-icon.png"; sourceTree = "<group>"; };
 		F20B362BCDAA4B95A90FB79E /* my-music.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "my-music.png"; path = "../src/assets/img/my-music.png"; sourceTree = "<group>"; };
 		4EC93DB822F7410F95BD547A /* heart-leaderboard.png */ = {isa = PBXFileReference; name = "heart-leaderboard.png"; path = "../src/assets/img/heart-leaderboard.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6FCF115C689042D78723A1BE /* angry-tile.svg */ = {isa = PBXFileReference; name = "angry-tile.svg"; path = "../src/assets/img/angry-tile.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1007275EEC2A42F5A793D544 /* angry-tile@2x.png */ = {isa = PBXFileReference; name = "angry-tile@2x.png"; path = "../src/assets/img/angry-tile@2x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6E0EFE2D23AA4B379C77C8D3 /* angry-tile@3x.png */ = {isa = PBXFileReference; name = "angry-tile@3x.png"; path = "../src/assets/img/angry-tile@3x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		66AE037D25A74E8A8CF1B0F0 /* happy-tile.svg */ = {isa = PBXFileReference; name = "happy-tile.svg"; path = "../src/assets/img/happy-tile.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		947B85912B8740C29AF91869 /* happy-tile@2x.png */ = {isa = PBXFileReference; name = "happy-tile@2x.png"; path = "../src/assets/img/happy-tile@2x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		82A9F7B62FCF48FEB0C241D6 /* happy-tile@3x.png */ = {isa = PBXFileReference; name = "happy-tile@3x.png"; path = "../src/assets/img/happy-tile@3x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8B7ADD27B8FC47DCB17095D5 /* main-pause-button-white.png */ = {isa = PBXFileReference; name = "main-pause-button-white.png"; path = "../src/assets/img/main-pause-button-white.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C29BAEF62B1E44A2BA11EAF8 /* main-play-button-white.png */ = {isa = PBXFileReference; name = "main-play-button-white.png"; path = "../src/assets/img/main-play-button-white.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E00DEF6B045B4096AEB2EB73 /* mystery-tile.svg */ = {isa = PBXFileReference; name = "mystery-tile.svg"; path = "../src/assets/img/mystery-tile.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		84F56B4DA48B459785C321A8 /* mystery-tile@2x.png */ = {isa = PBXFileReference; name = "mystery-tile@2x.png"; path = "../src/assets/img/mystery-tile@2x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5CBE36775AA84EAA8D7A4DF8 /* mystery-tile@3x.png */ = {isa = PBXFileReference; name = "mystery-tile@3x.png"; path = "../src/assets/img/mystery-tile@3x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		368BBB21ECEC421F91A82230 /* outline-white-heart@3x.png */ = {isa = PBXFileReference; name = "outline-white-heart@3x.png"; path = "../src/assets/img/outline-white-heart@3x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3D486EB20AB841FA8DD68A51 /* romantic-tile.svg */ = {isa = PBXFileReference; name = "romantic-tile.svg"; path = "../src/assets/img/romantic-tile.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4A4B6E46762249858788748B /* romantic-tile@2x.png */ = {isa = PBXFileReference; name = "romantic-tile@2x.png"; path = "../src/assets/img/romantic-tile@2x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4512A966280C4FE1A54EAC85 /* romantic-tile@3x.png */ = {isa = PBXFileReference; name = "romantic-tile@3x.png"; path = "../src/assets/img/romantic-tile@3x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A191549747E6438C8781FE8D /* sad-tile.svg */ = {isa = PBXFileReference; name = "sad-tile.svg"; path = "../src/assets/img/sad-tile.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5D1B0D421FD04DD782D0A7C8 /* sad-tile@2x.png */ = {isa = PBXFileReference; name = "sad-tile@2x.png"; path = "../src/assets/img/sad-tile@2x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		88CA659DDF9E42CDB97C659A /* sad-tile@3x.png */ = {isa = PBXFileReference; name = "sad-tile@3x.png"; path = "../src/assets/img/sad-tile@3x.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		876F1B13278544DD82D0F58E /* share.png */ = {isa = PBXFileReference; name = "share.png"; path = "../src/assets/img/share.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -916,6 +954,25 @@
 				C8B7B45FACF440499E6F6605 /* heart-filled.png */,
 				E0011E4341D348A4858EC95D /* heart-hollow.png */,
 				4EC93DB822F7410F95BD547A /* heart-leaderboard.png */,
+				6FCF115C689042D78723A1BE /* angry-tile.svg */,
+				1007275EEC2A42F5A793D544 /* angry-tile@2x.png */,
+				6E0EFE2D23AA4B379C77C8D3 /* angry-tile@3x.png */,
+				66AE037D25A74E8A8CF1B0F0 /* happy-tile.svg */,
+				947B85912B8740C29AF91869 /* happy-tile@2x.png */,
+				82A9F7B62FCF48FEB0C241D6 /* happy-tile@3x.png */,
+				8B7ADD27B8FC47DCB17095D5 /* main-pause-button-white.png */,
+				C29BAEF62B1E44A2BA11EAF8 /* main-play-button-white.png */,
+				E00DEF6B045B4096AEB2EB73 /* mystery-tile.svg */,
+				84F56B4DA48B459785C321A8 /* mystery-tile@2x.png */,
+				5CBE36775AA84EAA8D7A4DF8 /* mystery-tile@3x.png */,
+				368BBB21ECEC421F91A82230 /* outline-white-heart@3x.png */,
+				3D486EB20AB841FA8DD68A51 /* romantic-tile.svg */,
+				4A4B6E46762249858788748B /* romantic-tile@2x.png */,
+				4512A966280C4FE1A54EAC85 /* romantic-tile@3x.png */,
+				A191549747E6438C8781FE8D /* sad-tile.svg */,
+				5D1B0D421FD04DD782D0A7C8 /* sad-tile@2x.png */,
+				88CA659DDF9E42CDB97C659A /* sad-tile@3x.png */,
+				876F1B13278544DD82D0F58E /* share.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1647,6 +1704,25 @@
 				71EC81F5EFC94072AAD88398 /* sad-tile.png in Resources */,
 				E756A6EB98C940CA98AEEE19 /* delete-playlist.png in Resources */,
 				B3A66E8AC9494BBBB6291E75 /* heart-leaderboard.png in Resources */,
+				AA75343117CE42BFBE2999E9 /* angry-tile.svg in Resources */,
+				B20DE51140A740FABA1801E9 /* angry-tile@2x.png in Resources */,
+				9E23068C8A644BF5B9D387DE /* angry-tile@3x.png in Resources */,
+				99BA3911B0814F00B9C97E56 /* happy-tile.svg in Resources */,
+				C514C56625094BD0BE0F1355 /* happy-tile@2x.png in Resources */,
+				D40E5F6D5EBB4788930981E4 /* happy-tile@3x.png in Resources */,
+				F360B179F47F44D988C49DCC /* main-pause-button-white.png in Resources */,
+				DDF1CF5D94644F808ED70111 /* main-play-button-white.png in Resources */,
+				C05920F912C243108AC41073 /* mystery-tile.svg in Resources */,
+				5D7312A137AE4EC39B5535DE /* mystery-tile@2x.png in Resources */,
+				A0238C825514498C8813AF53 /* mystery-tile@3x.png in Resources */,
+				194BD499A7F440B4BA213C8F /* outline-white-heart@3x.png in Resources */,
+				524EA4931EE841F4B620C917 /* romantic-tile.svg in Resources */,
+				7DCBCC28731642579601CD1A /* romantic-tile@2x.png in Resources */,
+				7CB2EF2D7ACF4546B794FD64 /* romantic-tile@3x.png in Resources */,
+				95A684F65ABD44C496FEC937 /* sad-tile.svg in Resources */,
+				86DFC6205F0B4EE492B6D335 /* sad-tile@2x.png in Resources */,
+				99C834214B4840A9A5A1A60C /* sad-tile@3x.png in Resources */,
+				59D960D5ABBA401EBC10D0DC /* share.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,8 @@ import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
 import { loadSongsForAllMoods, loadSongsForMoodId, loadSharedSongQueue } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
-import MoodLeftHeaderWithSettingsButton from '../../components/headers/MoodLeftHeaderWithSettingsButton';
+// import MoodLeftHeaderWithSettingsButton from '../../components/headers/MoodLeftHeaderWithSettingsButton';
+import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
 import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
@@ -81,7 +82,8 @@ class MoodScreen extends Component {
 
   render = () => (
     <View style={styles.container} testID='MoodScreen'>
-      <MoodLeftHeaderWithSettingsButton title='Discover' navigation={this.props.navigation} />
+      <MoodLeftHeader title="Discover" />
+      {/* <MoodLeftHeaderWithSettingsButton title='Discover' navigation={this.props.navigation} /> */}
       <View style={styles.flatListContainer} testID="MoodScreen-MoodsListContainer">
         { this.getContent() }
       </View>

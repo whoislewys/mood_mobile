@@ -57,7 +57,7 @@ export default class PlayControls extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shareIcon: Images.shareOutline,
+      shareIcon: Images.share,
     };
   }
 
@@ -138,7 +138,7 @@ export default class PlayControls extends Component {
     const { url } = await this._buo.generateShortUrl(linkProperties, controlParams);
     await Share.share({ message: `Check out this bop on mood! ${url}`, title: 'I have some new music for you!' });
 
-    this.setState({ shareIcon: Images.shareOutline });
+    this.setState({ shareIcon: Images.share });
   };
 
   playButton = () => {
