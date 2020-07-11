@@ -13,6 +13,8 @@ Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.5
 
 Make sure you run `cd ios && pod install`
 
+> You must install cocoapods if you don't already have them, `sudo gem install cocoapods`
+
 ## Running App 
 1. `yarn`
 2. [iOS only] `cd ios && pod install && cd ..`
