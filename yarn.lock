@@ -6135,6 +6135,11 @@ react-native-track-player@1.1.4:
   resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-1.1.4.tgz#b8d2b76c57e382d02aa23f9bd70f5b8c1ea42c30"
   integrity sha512-6+fK+DeFPX+1v+GL+BFnvqC6pDElAps9cgDgVaMRVy/vgJIezWWWQltALBWpstQetUlR0kp27/CZWu6iJUNi9Q==
 
+react-native-ux-cam@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-ux-cam/-/react-native-ux-cam-5.2.0.tgz#81c9b9d233dd019f372bf665c398342fe5f4a36d"
+  integrity sha512-18iHV52ZfhIHm7JXNUVZxEGfapEyU1YYDsE6rceImKf0Y9dodmWihmV7BVxIM0sgkKFJqqcv1iASkBbGaQvKzQ==
+
 react-native@0.59.10:
   version "0.59.10"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.10.tgz#352f381e382f93a0403be499c9e384bf51c2591c"

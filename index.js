@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
-import { Provider } from 'react-redux';
+import React, {Component} from 'react';
+import {AppRegistry} from 'react-native';
 import TrackPlayer from 'react-native-track-player';
+import RNUxcam from 'react-native-ux-cam';
+import {Provider} from 'react-redux';
 import Player from './src/components/player';
-import store from './src/redux/store';
 import createEventHandler from './src/redux/event-handler';
+import store from './src/redux/store';
+
+RNUxcam.optIntoSchematicRecordings(); // Add this line to enable iOS screen recordings
+RNUxcam.startWithKey('egfdnzk1wgo5nse');
 
 export default class App extends Component {
   componentDidMount = async () => {
@@ -21,7 +25,7 @@ export default class App extends Component {
     });
 
     // necessary for setting capabilities
-    await TrackPlayer.updateOptions({
+    TrackPlayer.updateOptions({
       // TODO: set up custom background play controls styling, e.g.
       // icon: <album art>
       // docs on that here: https://github.com/react-native-kit/react-native-track-player/wiki/Documentation#player-functions

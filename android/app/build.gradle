@@ -155,6 +155,7 @@ def safeExtGet(prop, fallback) {
 }
 
 dependencies {
+    implementation project(':react-native-ux-cam')
     implementation project(':react-native-firebase')
     implementation project(':react-native-google-signin')
     implementation(project(":react-native-device-info"),  {
