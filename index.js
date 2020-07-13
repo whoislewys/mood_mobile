@@ -1,14 +1,17 @@
-import React, {Component} from 'react';
-import {AppRegistry} from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry, Platform } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import RNUxcam from 'react-native-ux-cam';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import Player from './src/components/player';
 import createEventHandler from './src/redux/event-handler';
 import store from './src/redux/store';
 
-RNUxcam.optIntoSchematicRecordings(); // Add this line to enable iOS screen recordings
-RNUxcam.startWithKey('egfdnzk1wgo5nse');
+if (Platform.OS === 'android') {
+  // RNUXCam is incomaptible with current dependencies on iOS
+  RNUxcam.optIntoSchematicRecordings(); // this initializes rec
+  RNUxcam.startWithKey('egfdnzk1wgo5nse'); // api key
+}
 
 export default class App extends Component {
   componentDidMount = async () => {
