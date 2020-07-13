@@ -11,6 +11,8 @@ Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.5
 ### iOS
 Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.58/getting-started.html) doc for 0.58.
 
+Make sure you are on XCode 10.2
+
 Make sure you run `cd ios && pod install`
 
 > You must install cocoapods if you don't already have them, `sudo gem install cocoapods`
