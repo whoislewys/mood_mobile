@@ -183,10 +183,12 @@ class LoginScreen extends Component {
       Alert.alert('Logged in!', null);
       this.props.navigation.goBack();
     } catch (error) {
+      console.warn('error: ', error);
+      console.warn('error code: ', error.code);
+      console.warn('error tostr: ', error.toString());
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // they cancelled, all good
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // `alert` signature: (title, message)
         Alert.alert('In Progress', null);
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         Alert.alert('Play Services not Available', null);
