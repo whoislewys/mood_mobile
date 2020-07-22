@@ -3,6 +3,7 @@ package com.mood_mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.uxcam.RNUxcamPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNUxcamPackage(),
           new RNFirebasePackage(),
           new RNFirebaseAuthPackage(),
           new RNGoogleSigninPackage(),

@@ -186,7 +186,6 @@ class LoginScreen extends Component {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // they cancelled, all good
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // `alert` signature: (title, message)
         Alert.alert('In Progress', null);
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         Alert.alert('Play Services not Available', null);

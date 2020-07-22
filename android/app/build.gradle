@@ -107,7 +107,7 @@ android {
         applicationId "com.mood_mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
+        versionCode 12
         versionName "1.0.0"
     }
     signingConfigs {
@@ -155,6 +155,7 @@ def safeExtGet(prop, fallback) {
 }
 
 dependencies {
+    implementation project(':react-native-ux-cam')
     implementation project(':react-native-firebase')
     implementation project(':react-native-google-signin')
     implementation(project(":react-native-device-info"),  {
