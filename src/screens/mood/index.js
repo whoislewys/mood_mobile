@@ -31,6 +31,7 @@ class MoodScreen extends Component {
 
   navigateToPlayScreenFromMoodScreen = (params = {}) => {
     const currentScreenName = 'MoodScreen';
+    console.warn('navving to play screen');
     this.props.navigation.navigate({
       routeName: 'Play',
       params: {
