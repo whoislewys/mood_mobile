@@ -41,6 +41,8 @@ class MoodScreen extends Component {
         moodscreen: this.navigateToMoodScreen,
       },
     });
+
+    // TODO: set activityIndicator to show up here instead of PlayScreen
   };
 
   navigateToSettingsScreen = (params = {}) => {

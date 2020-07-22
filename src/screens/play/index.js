@@ -121,17 +121,18 @@ class PlayScreen extends Component {
     if (!this.props.queue.length || (this.props.curTrack == null) || this.props.track == null) {
       // TODO: make this activity spinner show up on the mood screen, don't nav till the data loaded
       return (
-      <View style={styles.container}>
-        <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
-        <ActivityIndicator
-          color='white'
-          size='large'
-          animating
-          style={{ flex: 10 }}
-        />
-      </View>
+        <View style={styles.container}>
+          <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
+          <ActivityIndicator
+            color='white'
+            size='large'
+            animating
+            style={{ flex: 10 }}
+          />
+        </View>
       );
     }
+
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
