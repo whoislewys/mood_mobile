@@ -26,6 +26,7 @@
     "react-native-swift": "^1.2.2",
     "react-native-swipe-gestures": "^1.0.3",
     "react-native-track-player": "1.1.4",
+    "react-native-ux-cam": "^5.2.0",
     "react-navigation": "2.2.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
