@@ -1,16 +1,15 @@
+import debounce from 'lodash.debounce';
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
-import { connect } from 'react-redux';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { setMood } from '../../redux/modules/mood';
-import { loadSongsForAllMoods, loadSongsForMoodId, loadSharedSongQueue } from '../../redux/modules/queue';
-import MoodList from './components/mood-list';
+import { connect } from 'react-redux';
+import { spacing } from '../../assets/styles';
 // import MoodLeftHeaderWithSettingsButton from '../../components/headers/MoodLeftHeaderWithSettingsButton';
 import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
-import { spacing } from '../../assets/styles';
+import { tileConstants } from '../../redux/constants';
+import { setMood } from '../../redux/modules/mood';
+import { loadSharedSongQueue, loadSongsForAllMoods, loadSongsForMoodId } from '../../redux/modules/queue';
+import MoodList from './components/mood-list';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,37 +23,64 @@ const styles = StyleSheet.create({
 });
 
 class MoodScreen extends Component {
+  timesNavved = 0;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isNavigating: false,
+    };
+  }
+
   componentDidMount = () => {
     SplashScreen.hide();
   };
 
+  componentDidUpdate = () => {
+    if (this.state.isNavigating) {
+      if (this.props.queue.length && this.props.curTrack != null && this.props.track != null) {
+        this.navigateToPlayScreenFromMoodScreen();
+        this.timesNavved = 0;
+        this.setState({ isNavigating: false });
+      }
+    }
+  }
 
-  navigateToPlayScreenFromMoodScreen = (params = {}) => {
-    const currentScreenName = 'MoodScreen';
-    console.warn('navving to play screen');
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: {
-        ...params,
-        parentScreen: currentScreenName,
-        visible: false,
-        moodscreen: this.navigateToMoodScreen,
-      },
-    });
+  playMusicForMoodTile = async (moodObj) => {
+    // show loading spinner
+    this.setState({ isNavigating: true });
 
-    // TODO: set activityIndicator to show up here instead of PlayScreen
+    // kick off loading actions
+    if (moodObj.id === tileConstants.MYSTERY) {
+      const ids = this.props.moods.map(mood => mood.id);
+      await this.props.loadSongsForAllMoods(ids);
+    } else if (moodObj.id === tileConstants.FEATURED_SONG) {
+      await this.props.loadSharedSongQueue(this.props.featuredSong);
+    } else {
+      await this.props.loadSongsForMoodId(moodObj.id);
+    }
   };
 
-  navigateToSettingsScreen = (params = {}) => {
-    this.props.navigation.navigate({
-      routeName: 'Settings',
-      params: {
-        ...params,
-        playscreen: this.navigateToPlayScreenFromPlaybar,
-        moodscreen: this.navigateToMoodScreen,
-        visible: true,
-      },
-    });
+  clearMoodLoading = () => {
+    this.setState({ isNavigating: false });
+  };
+
+  navigateToPlayScreenFromMoodScreen = async (params = {}) => {
+    if (this.timesNavved === 0) {
+      this.timesNavved++;
+      const currentScreenName = 'MoodScreen';
+      console.warn('navving to play screen from modd');
+      const visible = false;
+      this.props.navigation.navigate({
+        routeName: 'Play',
+        params: {
+          ...params,
+          clearMoodLoading: this.clearMoodLoading,
+          parentScreen: currentScreenName,
+          visible,
+        },
+      });
+    }
   };
 
   navigateToLeaderboardScreen = (params = {}) => {
@@ -65,6 +91,17 @@ class MoodScreen extends Component {
   };
 
   getContent = () => {
+    if (this.state.isNavigating || this.props.loading) {
+      return (
+        <ActivityIndicator
+          color='black'
+          size='large'
+          animating
+          style={{flex: 10}}
+        />
+      );
+    }
+
     if (!this.props.loading && this.props.moods.length) {
       return (
         <MoodList
@@ -76,10 +113,12 @@ class MoodScreen extends Component {
           moods={this.props.moods}
           selected={this.props.mood}
           settings={this.navigateToSettingsScreen}
-          playscreen={this.navigateToPlayScreenFromMoodScreen}
+          playMusicForMoodTile={this.playMusicForMoodTile}
         />
       );
     }
+
+
     return null;
   };
 
@@ -88,7 +127,7 @@ class MoodScreen extends Component {
       <MoodLeftHeader title="Discover" />
       {/* <MoodLeftHeaderWithSettingsButton title='Discover' navigation={this.props.navigation} /> */}
       <View style={styles.flatListContainer} testID="MoodScreen-MoodsListContainer">
-        { this.getContent() }
+        {this.getContent()}
       </View>
     </View>
   )
