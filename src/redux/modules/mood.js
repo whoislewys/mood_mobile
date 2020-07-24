@@ -78,7 +78,7 @@ export function setMood(moodObj) {
 export function loadMoods() {
   return async (dispatch) => {
     dispatch({ type: LOAD_MOODS });
-    return axios.get('https://api.moodindustries.com/api/v1/moods/',
+    return axios.get('http://3.101.44.100/api/v1/moods',
       {
         params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
         responseType: 'json',

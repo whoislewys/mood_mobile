@@ -260,7 +260,7 @@ export function loadPlaylists() {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
       const token = await firebase.auth().currentUser.getIdToken();
-      const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
+      const playlists = await axios.get('http://3.101.44.100/api/v1/playlists',
         {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',

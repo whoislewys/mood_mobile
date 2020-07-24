@@ -113,8 +113,6 @@ class PlayScreen extends Component {
     this.state = {
       carouselRef: undefined,
     };
-
-    console.warn('play screen constructed');
   }
 
   render = () => {

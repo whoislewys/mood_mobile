@@ -220,14 +220,18 @@ export function loadSongsForMoodId(moodId) {
     await TrackPlayer.reset();
     dispatch({ type: LOAD_SONGS });
     try {
-      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+      console.warn('loading songs for mood');
+      const songs = await axios.get(`http://3.101.44.100/api/v1/moods/${moodId}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
+      console.warn('got songs for mood');
       dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
       dispatch(handlePlayPress());
     } catch (e) {
+      console.warn('failed to get songs for mood');
+      console.warn('error: ', e);
       dispatch({ type: LOAD_SONGS_FAIL });
     }
   };
@@ -240,7 +244,7 @@ export function loadSongsForAllMoods(moodIds) {
     try {
       const songsPromises = [];
       for (let i = 0; i < moodIds.length; i++) {
-        const songsPromise = axios.get(`https://api.moodindustries.com/api/v1/moods/${moodIds[i]}/songs`,
+        const songsPromise = axios.get(`http://3.101.44.100/api/v1/moods/${moodIds[i]}/songs`,
           {
             params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
             responseType: 'json',
@@ -291,7 +295,7 @@ export function loadSharedSongQueue(sharedTrack) {
     await TrackPlayer.reset();
     dispatch({ type: LOAD_SHARED_SONG_QUEUE, sharedTrack });
     try {
-      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+      const songs = await axios.get(`http://3.101.44.100/api/v1/moods/${sharedTrack.mood_id}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
