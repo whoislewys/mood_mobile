@@ -22,7 +22,6 @@ export default class MoodList extends React.Component {
   _renderItem = ({ item }) => (
     <Mood
       mood={item}
-      playscreen={this.props.playscreen}
       selected={this.props.selected}
       onPressMoodTile={this.onPressMoodTile}
     />
@@ -51,13 +50,10 @@ export default class MoodList extends React.Component {
     if (moodObj.id === tileConstants.MYSTERY) {
       const ids = this.props.moods.map(mood => mood.id);
       this.props.loadSongsForAllMoods(ids);
-      this.props.playscreen();
     } else if (moodObj.id === tileConstants.FEATURED_SONG) {
       this.props.loadSharedSongQueue(this.props.featuredSong);
-      this.props.playscreen();
     } else {
       this.props.loadSongsForMoodId(moodObj.id);
-      this.props.playscreen();
     }
   };
 }

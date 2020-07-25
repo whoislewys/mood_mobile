@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Platform } from 'react-native';
+import { AppRegistry, Platform, StatusBar } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import RNUxcam from 'react-native-ux-cam';
 import { Provider } from 'react-redux';
@@ -40,6 +40,7 @@ export default class App extends Component {
 
     render = () => (
       <Provider store={store}>
+        <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
         <Player />
       </Provider>
     )

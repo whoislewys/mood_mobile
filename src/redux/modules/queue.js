@@ -4,9 +4,10 @@ import { Platform } from 'react-native';
 import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
 import { clearScore } from './score-v2';
 import { logEvent } from './analytics';
+import NavigationService from '../../navigation/navigation-service';
 import {
   anal,
-  LEADERBOARD_TYPE,
+  FILL_QUEUE,
   LOAD_QUEUE_STARTING_AT_ID,
   LOAD_SONGS,
   LOAD_SONGS_SUCCESS,
@@ -47,6 +48,17 @@ export function reducer(state = initialState, action = {}) {
         track: null,
         queueType: '',
       };
+    case FILL_QUEUE:
+      let moodSongs = [];
+      moodSongs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
+      return {
+        ...state,
+        loading: false,
+        queue: moodSongs,
+        curTrack: moodSongs[0],
+        curTrackIndex: 0,
+        queueType: MOOD_TYPE,
+      };
     case LOAD_SONGS:
       return {
         ...state,
@@ -58,15 +70,9 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
     case LOAD_SONGS_SUCCESS:
-      let moodSongs = null;
-      moodSongs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
       return {
         ...state,
         loading: false,
-        queue: moodSongs,
-        curTrack: moodSongs[0],
-        curTrackIndex: 0,
-        queueType: MOOD_TYPE,
       };
     case LOAD_SONGS_FAIL:
       return {
@@ -225,7 +231,9 @@ export function loadSongsForMoodId(moodId) {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
-      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+      dispatch({ type: FILL_QUEUE, payload: songs });
+      // NavigationService.navigate('Play');
+      dispatch({ type: LOAD_SONGS_SUCCESS });
       dispatch(handlePlayPress());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
@@ -255,7 +263,8 @@ export function loadSongsForAllMoods(moodIds) {
       Object.values(songsLists)
         .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
 
-      dispatch({ type: LOAD_SONGS_SUCCESS, payload: { data: allMoodSongs } });
+      dispatch({ type: FILL_QUEUE, payload: { data: allMoodSongs } });
+      dispatch({ type: LOAD_SONGS_SUCCESS });
       dispatch(handlePlayPress());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });

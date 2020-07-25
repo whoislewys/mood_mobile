@@ -42,8 +42,6 @@ const MoodLeftHeaderWithSettingsButton = props => (
       </TouchableOpacity>
     </View>
   </MoodLeftHeader>
-
-
 );
 
 export default MoodLeftHeaderWithSettingsButton;
