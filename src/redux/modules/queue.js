@@ -238,26 +238,25 @@ export function finishedNavvingToPlayScreen() {
   });
 }
 
-// export function loadSongsForMoodId(moodId) {
-//   return async (dispatch) => {
-//     await TrackPlayer.reset();
-//     dispatch({ type: LOAD_SONGS });
-//     try {
-//       const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
-//         {
-//           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
-//           responseType: 'json',
-//         });
-//       dispatch({ type: FILL_QUEUE, payload: songs });
-//       // NavigationService.navigate('Play');
-//       dispatch({ type: LOAD_SONGS_SUCCESS });
-//       dispatch(handlePlayPress());
-//       setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
-//     } catch (e) {
-//       dispatch({ type: LOAD_SONGS_FAIL });
-//     }
-//   };
-// }
+export function loadSongsForMoodId(moodId) {
+  return async (dispatch) => {
+    await TrackPlayer.reset();
+    dispatch({ type: LOAD_SONGS });
+    try {
+      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`,
+        {
+          params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+          responseType: 'json',
+        });
+      dispatch({ type: FILL_QUEUE, payload: songs });
+      dispatch({ type: LOAD_SONGS_SUCCESS });
+      dispatch(handlePlayPress());
+      setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
+    } catch (e) {
+      dispatch({ type: LOAD_SONGS_FAIL });
+    }
+  };
+}
 
 /// Instead of filling queue with our own logic, fill it by reacting to track player events
 export function loadSongsForMoodId2(moodId) {
