@@ -4,9 +4,10 @@ import { Platform } from 'react-native';
 import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
 import { clearScore } from './score-v2';
 import { logEvent } from './analytics';
+import NavigationService from '../../navigation/navigation-service';
 import {
   anal,
-  LEADERBOARD_TYPE,
+  FILL_QUEUE,
   LOAD_QUEUE_STARTING_AT_ID,
   LOAD_SONGS,
   LOAD_SONGS_SUCCESS,
@@ -20,6 +21,7 @@ import {
   PLAYBACK_TRACK,
   RESET_QUEUE,
   SET_CUR_TRACK,
+  FINISHED_NAVVING_TO_PLAY_SCREEN,
 } from '../constants';
 
 export const initialState = {
@@ -27,6 +29,7 @@ export const initialState = {
   curTrackIndex: NaN,
   errors: null,
   loading: false,
+  navvingToPlayScreen: false,
   playback: null,
   sharedTrack: null,
   track: null,
@@ -47,18 +50,8 @@ export function reducer(state = initialState, action = {}) {
         track: null,
         queueType: '',
       };
-    case LOAD_SONGS:
-      return {
-        ...state,
-        loading: true,
-        queue: [],
-        curTrack: null,
-        curTrackIndex: NaN,
-        track: null,
-        queueType: '',
-      };
-    case LOAD_SONGS_SUCCESS:
-      let moodSongs = null;
+    case FILL_QUEUE:
+      let moodSongs = [];
       moodSongs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
       return {
         ...state,
@@ -67,6 +60,27 @@ export function reducer(state = initialState, action = {}) {
         curTrack: moodSongs[0],
         curTrackIndex: 0,
         queueType: MOOD_TYPE,
+      };
+    case LOAD_SONGS:
+      return {
+        ...state,
+        loading: true,
+        navvingToPlayScreen: true,
+        queue: [],
+        curTrack: null,
+        curTrackIndex: NaN,
+        track: null,
+        queueType: '',
+      };
+    case LOAD_SONGS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case FINISHED_NAVVING_TO_PLAY_SCREEN:
+      return {
+        ...state,
+        navvingToPlayScreen: false,
       };
     case LOAD_SONGS_FAIL:
       return {
@@ -81,6 +95,7 @@ export function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
+        navvingToPlayScreen: true,
         queue: songs,
         curTrack: songs[startSongIndex],
         curTrackIndex: startSongIndex,
@@ -215,6 +230,12 @@ export function stopPlayback() {
 }
 
 // Mood action creator
+export function finishedNavvingToPlayScreen() {
+  return ({
+    type: FINISHED_NAVVING_TO_PLAY_SCREEN,
+  });
+}
+
 export function loadSongsForMoodId(moodId) {
   return async (dispatch) => {
     await TrackPlayer.reset();
@@ -225,8 +246,11 @@ export function loadSongsForMoodId(moodId) {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
-      dispatch({ type: LOAD_SONGS_SUCCESS, payload: songs });
+      dispatch({ type: FILL_QUEUE, payload: songs });
+      // NavigationService.navigate('Play');
+      dispatch({ type: LOAD_SONGS_SUCCESS });
       dispatch(handlePlayPress());
+      setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
     }
@@ -255,7 +279,8 @@ export function loadSongsForAllMoods(moodIds) {
       Object.values(songsLists)
         .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
 
-      dispatch({ type: LOAD_SONGS_SUCCESS, payload: { data: allMoodSongs } });
+      dispatch({ type: FILL_QUEUE, payload: { data: allMoodSongs } });
+      dispatch({ type: LOAD_SONGS_SUCCESS });
       dispatch(handlePlayPress());
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
@@ -277,6 +302,7 @@ export function loadQueueStartingAtId(startSongIndex, songs) {
     const selectedLeaderboardSong = songs[startSongIndex];
 
     // maybe move this into a helper function
+    setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
     await TrackPlayer.add(songs);
     await TrackPlayer.pause();
     await TrackPlayer.skip(selectedLeaderboardSong.id);

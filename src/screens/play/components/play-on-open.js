@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 
+// TODO: make this fucker obsolete
 export default class PlayOnOpen extends Component {
   componentDidMount = () => {
     // only autoplay when not playing & parent is not playbar
