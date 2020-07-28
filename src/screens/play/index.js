@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
 
 
 class PlayScreen extends Component {
+  carousel = undefined;
+
   onSwipeDown() {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
@@ -110,24 +112,12 @@ class PlayScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carouselRef: undefined,
     };
   }
 
   render = () => {
-    // if (!this.props.queue.length || (this.props.curTrack == null) || this.props.track == null) {
-    //   // TODO: make this activity spinner show up on the mood screen, don't nav till the data loaded
-    //   return (
-    //     <View style={styles.container}>
-    //       <ActivityIndicator
-    //         color='white'
-    //         size='large'
-    //         animating
-    //         style={{flex: 10}}
-    //       />
-    //     </View>
-    //   );
-    // }
+    console.warn('curtrack: ', this.props.curTrack);
+    console.warn('curtrack art: ', this.props.curTrack.artwork);
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
@@ -167,13 +157,13 @@ class PlayScreen extends Component {
   _nextTrack = () => {
     // skip forward transitions
     this.props.skipToNext();
-    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
+    this.carousel.snapToItem(this.props.curTrackIndex);
   };
 
   _previousTrack = () => {
     // skip backward transitions
     this.props.skipToPrevious();
-    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
+    this.carousel.snapToItem(this.props.curTrackIndex);
   };
 
   getDropdownBar = () => (
@@ -216,9 +206,9 @@ class PlayScreen extends Component {
 
   _handleCarouselSnap = (slideIndex) => {
     // for swiping transitions
-    if (slideIndex > this.state.carouselRef.currentIndex) {
+    if (slideIndex > this.carousel.currentIndex) {
       this.props.skipToNext();
-    } else if (slideIndex < this.state.carouselRef.currentIndex) {
+    } else if (slideIndex < this.carousel.currentIndex) {
       this.props.skipToPrevious();
     }
   };
@@ -229,9 +219,7 @@ class PlayScreen extends Component {
     >
       <Carousel
         ref={(carousel) => {
-          if (!this.state.carouselRef) {
-            this.setState({carouselRef: carousel});
-          }
+          this.carousel = carousel;
         }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
