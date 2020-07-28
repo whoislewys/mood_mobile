@@ -95,6 +95,7 @@ export function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
+        navvingToPlayScreen: true,
         queue: songs,
         curTrack: songs[startSongIndex],
         curTrackIndex: startSongIndex,
@@ -249,7 +250,7 @@ export function loadSongsForMoodId(moodId) {
       // NavigationService.navigate('Play');
       dispatch({ type: LOAD_SONGS_SUCCESS });
       dispatch(handlePlayPress());
-      setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 500);
+      setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
     }
@@ -301,6 +302,7 @@ export function loadQueueStartingAtId(startSongIndex, songs) {
     const selectedLeaderboardSong = songs[startSongIndex];
 
     // maybe move this into a helper function
+    setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
     await TrackPlayer.add(songs);
     await TrackPlayer.pause();
     await TrackPlayer.skip(selectedLeaderboardSong.id);

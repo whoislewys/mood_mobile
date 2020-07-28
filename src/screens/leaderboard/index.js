@@ -83,8 +83,19 @@ class LeaderboardScreen extends Component {
     <Image source={Images.moodLogo} style={styles.moodLogo} />
   );
 
-getLeaderBoard = () => (
-  this.props.leaderboardSongs.length
+getLeaderBoard = () => {
+  if (this.props.navvingToPlayScreen) {
+    return (
+      <ActivityIndicator
+        color='black'
+        size='large'
+        animating
+        style={{ flex: 10 }}
+      />
+    );
+  }
+
+  return this.props.leaderboardSongs.length
     ? (
       <FlatList
         data={this.props.leaderboardSongs}
@@ -94,8 +105,8 @@ getLeaderBoard = () => (
         showsVerticalScrollIndicator={false}
       />
     )
-    : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-);
+    : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />;
+};
 
   render = () => (
     <View style={styles.background}>
@@ -107,6 +118,7 @@ getLeaderBoard = () => (
 }
 
 const mapStateToProps = state => ({
+  navvingToPlayScreen: state.queue.navvingToPlayScreen,
   leaderboardSongs: state.leaderboard.songs,
   queue: state.queue.queue,
 });
