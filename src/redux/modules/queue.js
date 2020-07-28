@@ -92,6 +92,8 @@ export function reducer(state = initialState, action = {}) {
 
     case LOAD_QUEUE_STARTING_AT_ID:
       const { startSongIndex, songs } = action;
+      console.warn('start song index:', startSongIndex);
+      console.warn('cure track : ', songs[startSongIndex]);
       return {
         ...state,
         loading: false,
@@ -307,7 +309,6 @@ export function loadQueueStartingAtId(startSongIndex, songs) {
     await TrackPlayer.pause();
     await TrackPlayer.skip(selectedLeaderboardSong.id);
     await TrackPlayer.play();
-    await TrackPlayer.skip(selectedLeaderboardSong.id);
   };
 }
 

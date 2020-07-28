@@ -16,6 +16,8 @@ target 'mood_mobile' do
   target 'mood_mobile-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'RNUxcam', :path => '../node_modules/react-native-ux-cam'
+
   end
 
   target 'mood_mobileTests' do
