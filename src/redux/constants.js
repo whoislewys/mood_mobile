@@ -89,6 +89,7 @@ export const UPDATE_NEW_PLAYLIST_NAME = 'playlists/UPDATE_NEW_PLAYLIST_NAME';
 
 // Queue
 export const FILL_QUEUE = 'queue/FILL_QUEUE';
+export const FINISHED_NAVVING_TO_PLAY_SCREEN = 'queue/FINISHED_NAVVING_TO_PLAY_SCREEN';
 export const LOAD_QUEUE_STARTING_AT_ID = 'queue/LOAD_QUEUE_STARTING_FROM_ID';
 export const LOAD_SONGS = 'queue/LOAD';
 export const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';

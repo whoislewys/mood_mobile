@@ -21,6 +21,7 @@ import {
   PLAYBACK_TRACK,
   RESET_QUEUE,
   SET_CUR_TRACK,
+  FINISHED_NAVVING_TO_PLAY_SCREEN,
 } from '../constants';
 
 export const initialState = {
@@ -28,6 +29,7 @@ export const initialState = {
   curTrackIndex: NaN,
   errors: null,
   loading: false,
+  navvingToPlayScreen: false,
   playback: null,
   sharedTrack: null,
   track: null,
@@ -63,6 +65,7 @@ export function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: true,
+        navvingToPlayScreen: true,
         queue: [],
         curTrack: null,
         curTrackIndex: NaN,
@@ -73,6 +76,11 @@ export function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
+      };
+    case FINISHED_NAVVING_TO_PLAY_SCREEN:
+      return {
+        ...state,
+        navvingToPlayScreen: false,
       };
     case LOAD_SONGS_FAIL:
       return {
@@ -221,6 +229,12 @@ export function stopPlayback() {
 }
 
 // Mood action creator
+export function finishedNavvingToPlayScreen() {
+  return ({
+    type: FINISHED_NAVVING_TO_PLAY_SCREEN,
+  });
+}
+
 export function loadSongsForMoodId(moodId) {
   return async (dispatch) => {
     await TrackPlayer.reset();
@@ -235,6 +249,7 @@ export function loadSongsForMoodId(moodId) {
       // NavigationService.navigate('Play');
       dispatch({ type: LOAD_SONGS_SUCCESS });
       dispatch(handlePlayPress());
+      setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 500);
     } catch (e) {
       dispatch({ type: LOAD_SONGS_FAIL });
     }

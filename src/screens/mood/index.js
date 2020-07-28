@@ -24,33 +24,27 @@ const styles = StyleSheet.create({
 });
 
 class MoodScreen extends Component {
-  constructor(props) {
-    super(props);
-    console.warn('queue: ', this.props.queue);
-    console.warn('queue length: ', this.props.queue.length);
-  }
-
   componentDidMount = () => {
     SplashScreen.hide();
   };
 
   componentDidUpdate() {
+    // Watch for pieces of state related to loading song queue to finish
+    // before navigating to play screen
     if (!this.props.loading && this.props.queue.length && this.props.curTrack != null && this.props.track != null) {
-      console.warn('curtrack:', this.props.curTrack);
-      console.warn('this curtrack artwork: ', this.props.curTrack.artwork);
       this.props.navigation.navigate('Play');
     }
   }
 
   getContent = () => {
-    if (this.props.loading) {
+    if (this.props.loading || this.props.navvingToPlayScreen) {
       return (
-          <ActivityIndicator
-            color='black'
-            size='large'
-            animating
-            style={{flex: 10}}
-          />
+        <ActivityIndicator
+          color='black'
+          size='large'
+          animating
+          style={{ flex: 10 }}
+        />
       );
     }
 
@@ -85,6 +79,7 @@ const mapStateToProps = state => ({
   featuredSong: state.mood.featuredSong,
   selected: state.mood.selected,
   queue: state.queue.queue,
+  navvingToPlayScreen: state.queue.navvingToPlayScreen,
   curTrack: state.queue.curTrack,
   track: state.queue.track,
 });
