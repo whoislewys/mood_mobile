@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/RPCs/FIRGetAccountInfoResponse.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRGetAccountInfoResponse.h

@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/FIRAuthWebUtils.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Utilities/FIRAuthWebUtils.h

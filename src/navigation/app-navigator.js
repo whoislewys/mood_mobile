@@ -8,8 +8,13 @@ import {
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
-  createStackNavigator,
-} from 'react-navigation';
+} from 'react-navigation-tabs';
+import {
+  createStackNavigator
+} from 'react-navigation-stack';
+import {
+  createAppContainer
+} from 'react-navigation'
 import Images from '@assets/images';
 
 import ErrorScreen from '../screens/error';
@@ -158,7 +163,7 @@ const TabNavigator = createBottomTabNavigator({
   tabBarComponent: props => <TabBarComponent {...props} />,
 });
 
-export default createStackNavigator({
+export default createAppContainer(createStackNavigator({
   // this screen will get rendered first!!!
   Splash: { screen: map(SplashScreen) },
   // these can be navigated to from anywhere
@@ -171,14 +176,14 @@ export default createStackNavigator({
   PlaylistDetail: { screen: map(PlaylistDetailScreen) },
   PlaylistModal: { screen: map(PlaylistModal) },
 }, {
-  cardStyle: {
-    backgroundColor: 'transparent',
-  },
   headerMode: 'none',
   navigationOptions: {
     gesturesEnabled: false,
+    cardStyle: {
+      backgroundColor: 'transparent',
+    },
   },
-  transitionConfig: () => ({
+  options: () => ({
     transitionSpec: {
       duration: 300,
       easing: Easing.out(Easing.poly(4)),
@@ -214,4 +219,4 @@ export default createStackNavigator({
       return { opacity, transform: [{ translateY }] };
     },
   }),
-});
+}));

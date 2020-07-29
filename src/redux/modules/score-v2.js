@@ -1,5 +1,5 @@
 import axios from 'axios';
-import firebase from 'react-native-firebase';
+import auth from '@react-native-firebase/auth';
 import { logEvent } from './analytics';
 import { saveSong } from './playlists';
 import {
@@ -50,7 +50,7 @@ export function incrementScore(currentScore) {
 export function sendScore(currentTrackId) {
   return async (dispatch) => {
     try {
-      const token = await firebase.auth()
+      const token = await auth()
         .currentUser
         .getIdToken();
 

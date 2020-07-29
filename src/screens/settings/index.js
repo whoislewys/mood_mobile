@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
-import firebase from 'react-native-firebase';
+import auth from '@react-native-firebase/auth';
 import Images from '@assets/images';
 import ToggleSwitch from '../../components/toggle-switch';
 import { fonts, colors } from '../../assets/styles';
@@ -175,7 +175,7 @@ class SettingsScreen extends Component {
     //   return;
     // }
     try {
-      firebase.auth().signOut();
+      auth().signOut();
       this.props.userLoggedOut();
       Alert.alert('Logout Successful!', null);
     } catch (error) {

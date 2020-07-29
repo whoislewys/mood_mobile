@@ -1,5 +1,5 @@
 import axios from 'axios';
-import firebase from 'react-native-firebase';
+import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 import {
   ADD_TO_NEW_PLAYLIST_SONGS,
@@ -259,7 +259,7 @@ export function loadPlaylists() {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
     try {
-      const token = await firebase.auth().currentUser.getIdToken();
+      const token = await auth().currentUser.getIdToken();
       const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
         {
           headers: { Authorization: token },
@@ -288,7 +288,7 @@ export function createPlaylist() {
 
       if (playlistNameToSubmit === 'Saved Songs') throw new Error('Can\'t name new playlist "Saved Songs"');
 
-      const token = await firebase.auth().currentUser.getIdToken();
+      const token = await auth().currentUser.getIdToken();
       const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
@@ -310,7 +310,7 @@ export function createPlaylist() {
 
 // Actually loads songs
 async function loadSongsForPlaylistIdHelper(id) {
-  const token = await firebase.auth().currentUser.getIdToken();
+  const token = await auth().currentUser.getIdToken();
   try {
     const songs = await axios.get(`https://api.moodindustries.com/api/v1/playlists/${id}`,
       {
@@ -364,7 +364,7 @@ export function getSavedSongPlaylist() {
     } else {
       // if we couldn't find the 'Saved Songs' playlist, create it
       try {
-        const token = await firebase.auth()
+        const token = await auth()
           .currentUser
           .getIdToken();
         const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
@@ -400,7 +400,7 @@ export function loadSavedSongs() {
         await dispatch(getSavedSongPlaylist());
       }
       const { savedSongsPlaylistId } = getState().playlists;
-      const token = await firebase.auth().currentUser.getIdToken();
+      const token = await auth().currentUser.getIdToken();
       const savedSongsPlaylist = await axios.get(`https://api.moodindustries.com/api/v1/playlists/${savedSongsPlaylistId}`,
         {
           headers: { Authorization: token },
@@ -440,7 +440,7 @@ export function updatePlaylist(playlistId, songIds) {
 
     dispatch({ type: UPDATE_PLAYLIST });
     try {
-      const token = await firebase.auth().currentUser.getIdToken();
+      const token = await auth().currentUser.getIdToken();
       const url = `https://api.moodindustries.com/api/v1/playlists/${playlistId}`;
       const songsResp = await axios.patch(url,
         {
@@ -568,7 +568,7 @@ export function deletePlaylist(playlistId) {
     dispatch({ type: DELETE_PLAYLIST });
 
     try {
-      const token = await firebase.auth()
+      const token = await auth()
         .currentUser
         .getIdToken();
       await axios.delete(`https://api.moodindustries.com/api/v1/playlists/${playlistId}`,

@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/RPCs/FIREmailLinkSignInRequest.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIREmailLinkSignInRequest.h

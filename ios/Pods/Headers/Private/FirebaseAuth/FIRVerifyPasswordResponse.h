@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/RPCs/FIRVerifyPasswordResponse.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRVerifyPasswordResponse.h

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
   View,
-  NetInfo,
   Alert,
   AsyncStorage,
   BackHandler,
 } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 import { connect } from 'react-redux';
 import branch from 'react-native-branch';
 import DeviceInfo from 'react-native-device-info';
@@ -22,11 +22,12 @@ class SplashScreen extends Component {
     this.state = {
       internetCheck: null,
     };
-    NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
+
+    NetInfo.addEventListener(this.handleConnectivityChange);
   }
 
   componentDidMount = async () => {
-    this.props.setDeviceInfo(DeviceInfo.getUniqueID(), DeviceInfo.isEmulator());
+    this.props.setDeviceInfo(DeviceInfo.getUniqueId(), DeviceInfo.isEmulator());
 
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
 
@@ -93,7 +94,7 @@ class SplashScreen extends Component {
 
   componentWillUnmount = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
-    NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
+    NetInfo.removeEventListener(this.handleConnectivityChange);
     if (this._unsubscribeFromBranch) {
       this._unsubscribeFromBranch();
       this._unsubscribeFromBranch = null;
@@ -169,8 +170,8 @@ class SplashScreen extends Component {
     );
   };
 
-  handleConnectivityChange = (isConnected) => {
-    if (!isConnected) {
+  handleConnectivityChange = (state) => {
+    if (!state.isConnected) {
       this.props.stopPlayback();
       this.navigateToErrorScreen();
     }

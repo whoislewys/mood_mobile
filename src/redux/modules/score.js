@@ -1,5 +1,5 @@
 import axios from 'axios';
-import firebase from 'react-native-firebase';
+import auth from '@react-native-firebase/auth';
 import { logEvent } from './analytics';
 import { saveSong } from './playlists';
 import {
@@ -64,7 +64,7 @@ export function sendScoreDelta(currentTrackId) {
       const eventProperties = { trackId: currentTrackId, starsSent: getState().score.scoreDelta };
       dispatch(logEvent(anal.songStar, eventProperties));
       try {
-        const token = await firebase.auth()
+        const token = await auth()
           .currentUser
           .getIdToken();
 

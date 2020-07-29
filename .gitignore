@@ -20,7 +20,6 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
 *.mobileprovision
 *.zip
 
@@ -64,3 +63,8 @@ buck-out/
 
 # OS X
 .DS_Store
+
+# CocoaPods
+/ios/Pods/
+
+!debug.keystore

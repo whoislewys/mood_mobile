@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
-import firebase from 'react-native-firebase';
+import auth from '@react-native-firebase/auth';
 import Navigator from '../navigation/app-navigator';
 import { setUserId } from '../redux/modules/analytics';
 import { userLoggedIn } from '../redux/modules/auth';
@@ -10,7 +10,7 @@ import { stopPlayback } from '../redux/modules/queue';
 
 class Player extends Component {
   componentDidMount = async () => {
-    const { currentUser } = firebase.auth();
+    const { currentUser } = auth();
     // if user still has login info from a previous login, act as if they just signed in
     if (currentUser != null) {
       this.props.userLoggedIn(currentUser);

@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/RPCs/FIRDeleteAccountRequest.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRDeleteAccountRequest.h

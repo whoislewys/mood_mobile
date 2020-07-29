@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/FIRAuthDispatcher.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Auth/FIRAuthDispatcher.h

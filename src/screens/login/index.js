@@ -8,9 +8,9 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import firebase from 'react-native-firebase';
+import auth from '@react-native-firebase/auth';
 import Images from '@assets/images';
-import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { connect } from 'react-redux';
 import {
@@ -173,8 +173,8 @@ class LoginScreen extends Component {
     try {
       this.setState({ showSpinner: true });
       const userInfo = await GoogleSignin.signIn();
-      const credential = firebase.auth.GoogleAuthProvider.credential(userInfo.idToken, userInfo.accessToken);
-      const currentUser = await firebase.auth().signInWithCredential(credential);
+      const credential = auth.GoogleAuthProvider.credential(userInfo.idToken, userInfo.accessToken);
+      const currentUser = await auth().signInWithCredential(credential);
 
       this.props.userLoggedIn(currentUser.user);
       this.props.setUserId(currentUser.user.uid);

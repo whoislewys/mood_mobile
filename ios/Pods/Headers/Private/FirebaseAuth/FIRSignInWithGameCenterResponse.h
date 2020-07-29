@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/RPCs/FIRSignInWithGameCenterResponse.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRSignInWithGameCenterResponse.h

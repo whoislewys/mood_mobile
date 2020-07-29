@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/RPCs/FIRCreateAuthURIRequest.h
+../../../FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRCreateAuthURIRequest.h

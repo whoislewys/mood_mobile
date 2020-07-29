@@ -1,4 +1,5 @@
 {
+  "root": true,
   "parserOptions": {
     "ecmaFeatures": {
         "jsx": true,
@@ -9,6 +10,7 @@
     "jest": true
   },
   "extends" : [
+    "@react-native-community",
     "plugin:import/warnings",
     "airbnb"
   ],

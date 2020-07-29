@@ -1,1 +1,1 @@
-../../../FirebaseAuth/Firebase/Auth/Source/AuthProviders/EmailPassword/FIREmailPasswordAuthCredential.h
+../../../FirebaseAuth/FirebaseAuth/Sources/AuthProvider/Email/FIREmailPasswordAuthCredential.h
