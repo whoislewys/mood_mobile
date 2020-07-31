@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
-import { loadSongsForAllMoods, loadSongsForMoodId, loadSharedSongQueue } from '../../redux/modules/queue';
+import { loadSongsForAllMoods, loadSongsForMoodId2, loadSharedSongQueue } from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
 import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
 import { spacing } from '../../assets/styles';
@@ -28,13 +28,13 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   };
 
-  componentDidUpdate() {
+  // componentDidUpdate() {
     // Watch for pieces of state related to loading song queue to finish
     // before navigating to play screen
-    if (!this.props.loading && this.props.queue.length && this.props.curTrack != null && this.props.track != null) {
-      this.props.navigation.navigate('Play');
-    }
-  }
+    // if (!this.props.loading && this.props.queue.length && this.props.curTrack != null && this.props.track != null) {
+    //   this.props.navigation.navigate('Play');
+    // }
+  // }
 
   getContent = () => {
     if (this.props.loading || this.props.navvingToPlayScreen) {
@@ -52,7 +52,7 @@ class MoodScreen extends Component {
       return (
         <MoodList
           featuredSong={this.props.featuredSong}
-          loadSongsForMoodId={this.props.loadSongsForMoodId}
+          loadSongsForMoodId={this.props.loadSongsForMoodId2}
           loadSongsForAllMoods={this.props.loadSongsForAllMoods}
           loadSharedSongQueue={this.props.loadSharedSongQueue}
           setMood={this.props.setMood}
@@ -78,17 +78,17 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   featuredSong: state.mood.featuredSong,
   selected: state.mood.selected,
-  queue: state.queue.queue,
+  // queue: state.queue.queue,
   navvingToPlayScreen: state.queue.navvingToPlayScreen,
-  curTrack: state.queue.curTrack,
-  track: state.queue.track,
+  // curTrack: state.queue.curTrack,
+  // track: state.queue.track,
 });
 
 const mapDispatchToProps = {
   setMood,
   loadSharedSongQueue,
   loadSongsForAllMoods,
-  loadSongsForMoodId,
+  loadSongsForMoodId2,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoodScreen);

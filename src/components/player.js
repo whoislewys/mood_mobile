@@ -43,7 +43,7 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   loading: state.queue.loading,
   errors: state.queue.loading,
-  playbackState: state.queue.playback,
+  playbackState: state.queue.playbackState,
   track: state.queue.track,
   curTrack: state.queue.curTrack,
   queue: state.queue.queue,

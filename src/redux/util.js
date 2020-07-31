@@ -1,16 +1,19 @@
 import { anal } from './constants';
 
 export function mapSongsToValidTrackObjects(list) {
-  return list.map(t => ({
-    album: t.album_name,
-    artist: t.artist,
-    artwork: t.art_url,
-    id: t.id.toString(),
-    mood_id: t.mood_id,
-    title: t.name,
-    url: t.file,
-    stars: t.stars,
-  }));
+  // console.warn('list: ', list);
+  return list.map((t) => {
+    return {
+      id: t.id.toString(),
+      url: t.file,
+      title: t.name,
+      artist: t.artist,
+      artwork: t.art_url,
+      album: t.album_name,
+      // mood_id: t.mood_id,
+      // stars: t.stars,
+    };
+  });
 }
 
 /**

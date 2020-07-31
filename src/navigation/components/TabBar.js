@@ -158,6 +158,7 @@ const TabBar = class TabBar extends Component {
   }
 
   render = () => {
+    console.warn('playbar this.props.playback state', this.props.playbackState);
     const { navigation } = this.props;
     const tabBarButtons = [];
 
@@ -202,7 +203,7 @@ const TabBar = class TabBar extends Component {
 const mapStateToProps = state => ({
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
-  playbackState: state.queue.playback,
+  playbackState: state.queue.playbackState,
   playlists: state.playlists.playlists,
 });
 
