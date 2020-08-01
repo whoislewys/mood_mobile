@@ -22,6 +22,7 @@ import {
   skipToNext,
   skipToPrevious,
   getCurrentTrackSelector,
+  getCurrentTrackIndex,
 } from '../../redux/modules/queue';
 import {logEvent} from '../../redux/modules/analytics';
 
@@ -102,6 +103,12 @@ const styles = StyleSheet.create({
 class PlayScreen extends Component {
   carousel = undefined;
 
+  // componentDidUpdate() {
+  //   console.warn('curtrackid: ', this.props.curTrackIndex);
+  //   works, but doesn't give the cool animation
+  //   this.carousel.snapToItem(this.props.curTrackIndex);
+  // }
+
   onSwipeDown() {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
@@ -130,8 +137,7 @@ class PlayScreen extends Component {
             {this.getDropdownBar()}
           </View>
           <View style={styles.albumArtContainer}>
-            {/* {this.getAlbumArtCarousel()} */}
-            <AlbumArtCarouselItem artwork={this.props.curTrack.artwork} />
+            {this.getAlbumArtCarousel()}
           </View>
           <View style={styles.playBarContainer}>
             <TimeBar setTime={this.props.setTime} />
@@ -158,16 +164,14 @@ class PlayScreen extends Component {
     </View>
   );
 
-  _nextTrack = () => {
-    // skip forward transitions
+  skipForward = () => {
     this.props.skipToNext();
-    // this.carousel.snapToItem(this.props.curTrackIndex);
+    this.carousel.snapToNext();
   };
 
-  _previousTrack = () => {
-    // skip backward transitions
+  skipBack = () => {
     this.props.skipToPrevious();
-    // this.carousel.snapToItem(this.props.curTrackIndex);
+    this.carousel.snapToPrev();
   };
 
   getDropdownBar = () => (
@@ -255,8 +259,8 @@ class PlayScreen extends Component {
     >
       <PlayControls
         logEvent={this.props.logEvent}
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
+        skipForward={this.skipForward}
+        skipBack={this.skipBack}
         playing={this.props.playing}
         handlePlayPress={() => this.props.handlePlayPress(this.props.playbackState)}
         loading={this.props.loading}
@@ -273,7 +277,8 @@ const mapStateToProps = state => ({
   queue: state.queue.queue,
   // curTrack: state.queue.curTrack,
   curTrack: getCurrentTrackSelector(state),
-  curTrackIndex: state.queue.curTrackIndex,
+  curTrackIndex: getCurrentTrackIndex(state),
+  curTrackId: state.queue.curTrackId,
   playbackState: state.queue.playbackState,
   deviceId: state.analytics.deviceId,
   track: state.queue.track,

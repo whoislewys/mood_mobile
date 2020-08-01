@@ -195,7 +195,7 @@ export function reducer(state = initialState, action = {}) {
   }
 }
 
-/// Selectors
+/* Selectors */
 const getCurrentTrackId = (state) => {
   return state.queue.curTrackId;
 };
@@ -210,6 +210,14 @@ export const getCurrentTrackSelector = createSelector(
     const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === curTrackId);
     const newCurTrack = queue[newCurTrackIndex];
     return newCurTrack;
+  },
+);
+
+export const getCurrentTrackIndex = createSelector(
+  [getQueue, getCurrentTrackId],
+  (queue, curTrackId) => {
+    const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === curTrackId);
+    return newCurTrackIndex;
   },
 );
 
