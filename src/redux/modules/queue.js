@@ -25,7 +25,7 @@ import {
 } from '../constants';
 
 export const initialState = {
-  curTrack: null,
+  curTrackId: null,
   curTrackIndex: NaN,
   errors: null,
   loading: false,
@@ -50,17 +50,32 @@ export function reducer(state = initialState, action = {}) {
         track: null,
         queueType: '',
       };
+
     // case FILL_QUEUE:
     //   let moodSongs = [];
-      // moodSongs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
-      // return {
-      //   ...state,
-      //   loading: false,
-      //   queue: moodSongs,
-      //   curTrack: moodSongs[0],
-      //   curTrackIndex: 0,
-      //   queueType: MOOD_TYPE,
-      // };
+    //   moodSongs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     queue: moodSongs,
+    //     curTrack: moodSongs[0],
+    //     curTrackIndex: 0,
+    //     queueType: MOOD_TYPE,
+    //   };
+      
+    //v2
+    case FILL_QUEUE:
+      let moodSongs = [];
+      moodSongs = shuffle(mapSongsToValidTrackObjects(action.songs));
+      return {
+        ...state,
+        loading: false,
+        queue: moodSongs,
+        curTrack: moodSongs[0],
+        curTrackIndex: 0,
+        queueType: MOOD_TYPE,
+      };
+
     case LOAD_SONGS:
       return {
         ...state,
@@ -92,8 +107,6 @@ export function reducer(state = initialState, action = {}) {
 
     case LOAD_QUEUE_STARTING_AT_ID:
       const { startSongIndex, songs } = action;
-      console.warn('start song index:', startSongIndex);
-      console.warn('cure track : ', songs[startSongIndex]);
       return {
         ...state,
         loading: false,
@@ -164,7 +177,7 @@ export function reducer(state = initialState, action = {}) {
       };
     case PLAYBACK_TRACK:
       return {
-        ...state, curTrack: action.curTrack,
+        ...state, curTrackId: action.curTrack,
       };
 
     // used along with updateCurrentTrack middleware to prevent desync issues between TrackPlayer and store
@@ -182,21 +195,30 @@ export function reducer(state = initialState, action = {}) {
 
 /* Action Creators */
 // TrackPlayer controls
-export function handlePlayPress() {
-  return async (dispatch, getState) => {
-    // try curtrack here instead of track too
-    const { track, queue, playback } = getState().queue;
-    if (track === null) {
-      await TrackPlayer.reset();
-      await TrackPlayer.add(queue);
-      await TrackPlayer.play();
-    } else if (playback === TrackPlayer.STATE_PAUSED) {
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.pause();
-    }
-  };
+// export function handlePlayPress() {
+//   return async (dispatch, getState) => {
+//     // try curtrack here instead of track too
+//     const { track, queue, playback } = getState().queue;
+//     if (track === null) {
+//       await TrackPlayer.reset();
+//       await TrackPlayer.add(queue);
+//       await TrackPlayer.play();
+//     } else if (playback === TrackPlayer.STATE_PAUSED) {
+//       await TrackPlayer.play();
+//     } else {
+//       await TrackPlayer.pause();
+//     }
+//   };
+// }
+
+export function handlePlayPress(playbackState) {
+  if (playbackState === TrackPlayer.STATE_PAUSED) {
+    TrackPlayer.play();
+  } else {
+    TrackPlayer.pause();
+  }
 }
+
 
 export function shufflePlay(songs) {
   const shuffledSongs = shuffle(songs);
@@ -276,15 +298,19 @@ export function loadSongsForMoodId2(moodId) {
         responseType: 'json',
       });
       songs = songsResp.data;
+
+      dispatch({
+        type: FILL_QUEUE,
+        songs,
+      });
+
+      NavigationService.navigate('Play');
     } catch (e) {
       console.warn('axios error:', e);
     }
 
     try {
       const trackPlayerSongs = mapSongsToValidTrackObjects(songs);
-      // const trackPlayerSongsSlice = trackPlayerSongs.slice(0, 1);
-      // console.warn('adding songs: ', trackPlayerSongsSlice);
-      // await TrackPlayer.add(trackPlayerSongsSlice);
       await TrackPlayer.add(trackPlayerSongs);
     } catch (e) {
       console.warn('unhandled add tp e: ', e);
@@ -381,8 +407,6 @@ export function loadSharedSongQueue(sharedTrack) {
 
 export function playbackState2(data) {
   // called on play/pauseevent
-  console.warn('playback state 2 data: ', data);
-  console.warn('playback state: ', data.state);
   return {
     type: PLAYBACK_STATE,
     playbackState: data.state,
@@ -390,8 +414,6 @@ export function playbackState2(data) {
 }
 
 export function playbackTrack2(data) {
-  console.warn('playback track 2 data: ', data);
-  console.warn('cur track: ', data.nextTrack);
   return {
     type: PLAYBACK_TRACK,
     curTrack: data.nextTrack,

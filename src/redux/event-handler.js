@@ -34,14 +34,12 @@ async function eventHandler(store, data) {
     //   break;
     case 'playback-state':
       // store.dispatch(playbackState(data.state));
-      console.warn('playback state 2');
       store.dispatch(playbackState2(data));
       break;
     // case 'playback-track-changed':
     //   store.dispatch(playbackTrack(data));
     //   break;
     case 'playback-track-changed':
-      console.warn('playback track changed: ');
       store.dispatch(playbackTrack2(data));
       break;
     // case 'playback-error':

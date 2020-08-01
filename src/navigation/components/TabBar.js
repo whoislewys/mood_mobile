@@ -158,7 +158,6 @@ const TabBar = class TabBar extends Component {
   }
 
   render = () => {
-    console.warn('playbar this.props.playback state', this.props.playbackState);
     const { navigation } = this.props;
     const tabBarButtons = [];
 

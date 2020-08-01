@@ -118,6 +118,8 @@ class PlayScreen extends Component {
   render = () => {
     console.warn('curtrack: ', this.props.curTrack);
     console.warn('curtrack art: ', this.props.curTrack.artwork);
+    console.warn('playbackState: ', this.props.playbackState);
+
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
@@ -254,7 +256,7 @@ class PlayScreen extends Component {
         skipForward={this._nextTrack}
         skipBack={this._previousTrack}
         playing={this.props.playing}
-        handlePlayPress={this.props.handlePlayPress}
+        handlePlayPress={() => this.props.handlePlayPress(this.props.playbackState)}
         loading={this.props.loading}
         currentTrack={this.props.curTrack}
         navigation={this.props.navigation}
@@ -269,6 +271,7 @@ const mapStateToProps = state => ({
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
   curTrackIndex: state.queue.curTrackIndex,
+  playbackState: state.queue.playbackState,
   deviceId: state.analytics.deviceId,
   track: state.queue.track,
 });

@@ -23,16 +23,12 @@ export default class App extends Component {
     ];
 
     const state1 = await TrackPlayer.getState();
-    console.warn('b4 setup state: ', state1);
-
-    console.warn('setup player in app.js');
     await TrackPlayer.setupPlayer({
       // Can set maxCacheSize like this:
       // maxCacheSize: 1024 * 5, // 5 mb
     });
 
     const state = await TrackPlayer.getState();
-    console.warn('tp state: ', state);
 
     // necessary for setting capabilities
     TrackPlayer.updateOptions({

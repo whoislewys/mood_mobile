@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
 export default class PlayBar extends Component {
   playButton = () => {
     if (this.props.playbackState === TrackPlayer.STATE_PLAYING) {
-      console.warn('playbar this.props.playback state', this.props.playbackState);
       return (
         <View style={styles.playButtonContainer}>
           <TouchableOpacity onPress={this.props.handlePlayPress} activeOpacity={0.6}>

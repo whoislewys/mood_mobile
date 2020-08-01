@@ -46,6 +46,7 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-native": "^3.6.0",
     "jest": "^24.8.0",
+    "jetifier": "^1.6.6",
     "metro-react-native-babel-preset": "^0.54.1",
     "object.assign": "^4.1.0",
     "object.entries": "^1.1.0",

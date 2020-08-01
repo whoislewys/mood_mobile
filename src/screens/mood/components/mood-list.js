@@ -47,7 +47,6 @@ export default class MoodList extends React.Component {
   };
 
   onPressMoodTile = (moodObj) => {
-    console.warn('press mood tile: ', moodObj);
     if (moodObj.id === tileConstants.MYSTERY) {
       const ids = this.props.moods.map(mood => mood.id);
       this.props.loadSongsForAllMoods(ids);
