@@ -17,9 +17,9 @@ export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD_SONGS:
       return { ...state, songs: [], loading: true };
-    // case LOAD_SONGS_SUCCESS:
-    //   const songs = mapSongsToValidTrackObjects(action.payload.data);
-    //   return { ...state, loading: false, songs };
+    case LOAD_SONGS_SUCCESS:
+      const songs = mapSongsToValidTrackObjects(action.payload.data);
+      return { ...state, loading: false, songs };
     case LOAD_SONGS_FAIL:
       return {
         ...state,

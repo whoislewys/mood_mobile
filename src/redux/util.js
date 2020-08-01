@@ -10,8 +10,8 @@ export function mapSongsToValidTrackObjects(list) {
       artist: t.artist,
       artwork: t.art_url,
       album: t.album_name,
-      // mood_id: t.mood_id,
-      // stars: t.stars,
+      mood_id: t.mood_id,
+      stars: t.stars,
     };
   });
 }

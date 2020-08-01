@@ -84,6 +84,7 @@ class LeaderboardScreen extends Component {
   );
 
 getLeaderBoard = () => {
+  console.warn('navving to playscreen: ', this.props.navvingToPlayScreen);
   if (this.props.navvingToPlayScreen) {
     return (
       <ActivityIndicator
@@ -95,6 +96,7 @@ getLeaderBoard = () => {
     );
   }
 
+  console.warn('leaderboardsongs', this.props.leaderboardSongs);
   return this.props.leaderboardSongs.length
     ? (
       <FlatList
