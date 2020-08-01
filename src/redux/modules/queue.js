@@ -211,12 +211,18 @@ export function reducer(state = initialState, action = {}) {
 //   };
 // }
 
-export function handlePlayPress(playbackState) {
-  if (playbackState === TrackPlayer.STATE_PAUSED) {
-    TrackPlayer.play();
-  } else {
-    TrackPlayer.pause();
-  }
+export function handlePlayPress() {
+  return async (dispatch) => {
+    const playbackState = await TrackPlayer.getState();
+    console.warn('playuback state: ', playbackState);
+    if (playbackState === TrackPlayer.STATE_PAUSED) {
+      console.warn('playback state pause, playing');
+      await TrackPlayer.play();
+    } else {
+      console.warn('playback state pause, playing');
+      await TrackPlayer.pause();
+    }
+  };
 }
 
 
