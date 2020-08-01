@@ -40,7 +40,7 @@ class MoodScreen extends Component {
   }
 
   getContent = () => {
-    if (this.props.loading) {
+    if (this.props.loading || this.props.navvingToPlayScreen) {
       return (
         <ActivityIndicator
           color='black'

@@ -356,6 +356,7 @@ export function loadSongsForMoodId2(moodId) {
     }
 
     dispatch({ type: LOAD_SONGS_SUCCESS });
+    setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
   };
 }
 
