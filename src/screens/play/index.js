@@ -130,7 +130,8 @@ class PlayScreen extends Component {
             {this.getDropdownBar()}
           </View>
           <View style={styles.albumArtContainer}>
-            {this.getAlbumArtCarousel()}
+            {/* {this.getAlbumArtCarousel()} */}
+            <AlbumArtCarouselItem artwork={this.props.curTrack.artwork} />
           </View>
           <View style={styles.playBarContainer}>
             <TimeBar setTime={this.props.setTime} />
@@ -160,13 +161,13 @@ class PlayScreen extends Component {
   _nextTrack = () => {
     // skip forward transitions
     this.props.skipToNext();
-    this.carousel.snapToItem(this.props.curTrackIndex);
+    // this.carousel.snapToItem(this.props.curTrackIndex);
   };
 
   _previousTrack = () => {
     // skip backward transitions
     this.props.skipToPrevious();
-    this.carousel.snapToItem(this.props.curTrackIndex);
+    // this.carousel.snapToItem(this.props.curTrackIndex);
   };
 
   getDropdownBar = () => (
