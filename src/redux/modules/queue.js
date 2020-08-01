@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { createSelector } from 'reselect';
 import TrackPlayer from 'react-native-track-player';
 import { Platform } from 'react-native';
 import { mapSongsToValidTrackObjects, shuffle, songPlayAnalyticEventFactory } from '../util';
@@ -66,12 +67,13 @@ export function reducer(state = initialState, action = {}) {
     //v2
     case FILL_QUEUE:
       let moodSongs = [];
-      moodSongs = shuffle(mapSongsToValidTrackObjects(action.songs));
+      moodSongs = action.songs;
+      console.warn('nu queue: ', moodSongs);
       return {
         ...state,
         loading: false,
         queue: moodSongs,
-        curTrack: moodSongs[0],
+        // curTrack: moodSongs[0],
         curTrackIndex: 0,
         queueType: MOOD_TYPE,
       };
@@ -112,7 +114,7 @@ export function reducer(state = initialState, action = {}) {
         loading: false,
         navvingToPlayScreen: true,
         queue: songs,
-        curTrack: songs[startSongIndex],
+        // curTrack: songs[startSongIndex],
         curTrackIndex: startSongIndex,
         queueType: '',
       };
@@ -124,7 +126,7 @@ export function reducer(state = initialState, action = {}) {
         loading: true,
         queue: [],
         sharedTrack: action.sharedTrack,
-        curTrack: null,
+        // curTrack: null,
         curTrackIndex: NaN,
         track: null,
         queueType: '',
@@ -154,7 +156,7 @@ export function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         queue: action.songs,
-        curTrack: action.songs[0],
+        // curTrack: action.songs[0],
         curTrackIndex: 0,
       };
 
@@ -177,7 +179,7 @@ export function reducer(state = initialState, action = {}) {
       };
     case PLAYBACK_TRACK:
       return {
-        ...state, curTrackId: action.curTrack,
+        ...state, curTrackId: action.curTrackId,
       };
 
     // used along with updateCurrentTrack middleware to prevent desync issues between TrackPlayer and store
@@ -192,6 +194,24 @@ export function reducer(state = initialState, action = {}) {
       return state;
   }
 }
+
+/// Selectors
+const getCurrentTrackId = (state) => {
+  return state.queue.curTrackId;
+};
+
+const getQueue = (state) => {
+  return state.queue.queue;
+};
+
+export const getCurrentTrackSelector = createSelector(
+  [getQueue, getCurrentTrackId],
+  (queue, curTrackId) => {
+    const newCurTrackIndex = queue.findIndex(findTrack => findTrack.id === curTrackId);
+    const newCurTrack = queue[newCurTrackIndex];
+    return newCurTrack;
+  },
+);
 
 /* Action Creators */
 // TrackPlayer controls
@@ -298,26 +318,33 @@ export function finishedNavvingToPlayScreen() {
 export function loadSongsForMoodId2(moodId) {
   return async (dispatch) => {
     let songs;
+
+    // set loading
+    dispatch({ type: LOAD_SONGS });
+
+    try {
+      await TrackPlayer.reset();
+    } catch(e) {
+      console.warn('error restting tp: ', e);
+    }
+
     try {
       const songsResp = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`, {
         params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
         responseType: 'json',
       });
       songs = songsResp.data;
-
-      dispatch({
-        type: FILL_QUEUE,
-        songs,
-      });
-
-      NavigationService.navigate('Play');
     } catch (e) {
       console.warn('axios error:', e);
     }
 
     try {
-      const trackPlayerSongs = mapSongsToValidTrackObjects(songs);
+      const trackPlayerSongs = shuffle(mapSongsToValidTrackObjects(songs));
       await TrackPlayer.add(trackPlayerSongs);
+      dispatch({
+        type: FILL_QUEUE,
+        songs: trackPlayerSongs,
+      });
     } catch (e) {
       console.warn('unhandled add tp e: ', e);
     }
@@ -422,7 +449,7 @@ export function playbackState2(data) {
 export function playbackTrack2(data) {
   return {
     type: PLAYBACK_TRACK,
-    curTrack: data.nextTrack,
+    curTrackId: data.nextTrack,
   };
 }
 

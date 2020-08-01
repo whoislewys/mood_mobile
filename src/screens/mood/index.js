@@ -7,7 +7,12 @@ import {
 import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
-import { loadSongsForAllMoods, loadSongsForMoodId2, loadSharedSongQueue } from '../../redux/modules/queue';
+import {
+  loadSongsForAllMoods,
+  loadSongsForMoodId2,
+  loadSharedSongQueue,
+  getCurrentTrackSelector,
+} from '../../redux/modules/queue';
 import MoodList from './components/mood-list';
 import MoodLeftHeader from '../../components/headers/MoodLeftHeader';
 import { spacing } from '../../assets/styles';
@@ -28,16 +33,14 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   };
 
-  // componentDidUpdate() {
-    // Watch for pieces of state related to loading song queue to finish
-    // before navigating to play screen
-    // if (!this.props.loading && this.props.queue.length && this.props.curTrack != null && this.props.track != null) {
-    //   this.props.navigation.navigate('Play');
-    // }
-  // }
+  componentDidUpdate() {
+    if (this.props.curTrack != null) {
+      this.props.navigation.navigate('Play');
+    }
+  }
 
   getContent = () => {
-    if (this.props.loading || this.props.navvingToPlayScreen) {
+    if (this.props.loading) {
       return (
         <ActivityIndicator
           color='black'
@@ -80,6 +83,7 @@ const mapStateToProps = state => ({
   selected: state.mood.selected,
   // queue: state.queue.queue,
   navvingToPlayScreen: state.queue.navvingToPlayScreen,
+  curTrack: getCurrentTrackSelector(state),
   // curTrack: state.queue.curTrack,
   // track: state.queue.track,
 });

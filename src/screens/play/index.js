@@ -21,6 +21,7 @@ import {
   handlePlayPress,
   skipToNext,
   skipToPrevious,
+  getCurrentTrackSelector,
 } from '../../redux/modules/queue';
 import {logEvent} from '../../redux/modules/analytics';
 
@@ -117,7 +118,7 @@ class PlayScreen extends Component {
 
   render = () => {
     console.warn('curtrack: ', this.props.curTrack);
-    console.warn('curtrack art: ', this.props.curTrack.artwork);
+    // console.warn('curtrack art: ', this.props.curTrack.artwork);
     console.warn('playbackState: ', this.props.playbackState);
 
     return (
@@ -269,7 +270,8 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
   queue: state.queue.queue,
-  curTrack: state.queue.curTrack,
+  // curTrack: state.queue.curTrack,
+  curTrack: getCurrentTrackSelector(state),
   curTrackIndex: state.queue.curTrackIndex,
   playbackState: state.queue.playbackState,
   deviceId: state.analytics.deviceId,
