@@ -325,17 +325,16 @@ export function finishedNavvingToPlayScreen() {
 /// Instead of filling queue with our own logic, fill it by reacting to track player events
 export function loadSongsForMoodId2(moodId) {
   return async (dispatch) => {
-    let songs;
-
     // set loading
     dispatch({ type: LOAD_SONGS });
 
     try {
       await TrackPlayer.reset();
-    } catch(e) {
+    } catch (e) {
       console.warn('error restting tp: ', e);
     }
 
+    let songs;
     try {
       const songsResp = await axios.get(`https://api.moodindustries.com/api/v1/moods/${moodId}/songs`, {
         params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
@@ -399,23 +398,66 @@ export function loadSongsForAllMoods(moodIds) {
   };
 }
 
-export function loadQueueStartingAtId(startSongIndex, songs) {
+// export function loadQueueStartingAtId(startSongIndex, songs) {
+//   return async (dispatch) => {
+//     await TrackPlayer.reset();
+//     await dispatch({ type: RESET_QUEUE });
+
+//     await dispatch({
+//       type: LOAD_QUEUE_STARTING_AT_ID,
+//       startSongIndex,
+//       songs,
+//     });
+
+//     await TrackPlayer.add(songs);
+//     await TrackPlayer.pause();
+//     setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
+//     const selectedLeaderboardSong = songs[startSongIndex];
+//     await TrackPlayer.skip(selectedLeaderboardSong.id);
+//     await TrackPlayer.play();
+//   };
+// }
+
+export function loadQueueStartingAtIndex2(startSongId, songs) {
+  console.warn('loading queue starting at song id: ', startSongId);
+
   return async (dispatch) => {
-    await TrackPlayer.reset();
-    await dispatch({ type: RESET_QUEUE });
+    try {
+      await TrackPlayer.reset();
+    } catch (e) {
+      console.warn('error restting tp: ', e);
+    }
 
-    await dispatch({
-      type: LOAD_QUEUE_STARTING_AT_ID,
-      startSongIndex,
-      songs,
-    });
+    try {
+      await TrackPlayer.add(songs);
+      dispatch({
+        type: FILL_QUEUE,
+        songs,
+      });
+    } catch (e) {
+      console.warn('unhandled add tp e: ', e);
+    }
 
-    await TrackPlayer.add(songs);
-    await TrackPlayer.pause();
+    // try {
+    //   await TrackPlayer.pause();
+    // } catch (e) {
+    //   console.warn('unhandled play tp e: ', e);
+    // }
+
+    try {
+      await TrackPlayer.skip(startSongId);
+    } catch (e) {
+      console.warn('unhandled skip tp e: ', e);
+    }
+
+
+    // try {
+    //   await TrackPlayer.play();
+    // } catch (e) {
+    //   console.warn('unhandled skip tp e: ', e);
+    // }
+
     setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
-    const selectedLeaderboardSong = songs[startSongIndex];
-    await TrackPlayer.skip(selectedLeaderboardSong.id);
-    await TrackPlayer.play();
   };
 }
 

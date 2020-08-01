@@ -11,7 +11,10 @@ import Images from '@assets/images';
 import { LEADERBOARDS } from '../../redux/constants';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
-import { loadQueueStartingAtId } from '../../redux/modules/queue';
+import {
+  // loadQueueStartingAtId,
+  loadQueueStartingAtIndex2,
+} from '../../redux/modules/queue';
 import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
@@ -63,8 +66,9 @@ class LeaderboardScreen extends Component {
     });
   };
 
-  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    await this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
+  _handleLeaderboardRowPress = async (pressedLeaderboardSongId) => {
+    console.warn('pressed if: ', pressedLeaderboardSongId);
+    await this.props.loadQueueStartingAtIndex2(pressedLeaderboardSongId, this.props.leaderboardSongs);
     this._navigateToPlayScreen();
   };
 
@@ -84,7 +88,6 @@ class LeaderboardScreen extends Component {
   );
 
 getLeaderBoard = () => {
-  console.warn('navving to playscreen: ', this.props.navvingToPlayScreen);
   if (this.props.navvingToPlayScreen) {
     return (
       <ActivityIndicator
@@ -96,7 +99,6 @@ getLeaderBoard = () => {
     );
   }
 
-  console.warn('leaderboardsongs', this.props.leaderboardSongs);
   return this.props.leaderboardSongs.length
     ? (
       <FlatList
@@ -127,7 +129,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadLeaderboardSongs,
-  loadQueueStartingAtId,
+  // loadQueueStartingAtId,
+  loadQueueStartingAtIndex2,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);
