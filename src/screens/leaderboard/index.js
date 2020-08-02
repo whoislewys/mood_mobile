@@ -13,7 +13,8 @@ import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
 import {
   // loadQueueStartingAtId,
-  loadQueueStartingAtIndex2,
+  // loadQueueStartingAtIndex2,
+  loadQueueStartingAtSong,
 } from '../../redux/modules/queue';
 import { spacing } from '../../assets/styles';
 
@@ -54,22 +55,23 @@ class LeaderboardScreen extends Component {
     });
   };
 
-  _navigateToPlayScreen = () => {
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: {
-        parentScreen: 'Leaderboard',
-        visible: false,
-        // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToLeaderboardScreen,
-      },
-    });
-  };
+  // _navigateToPlayScreen = () => {
+  //   this.props.navigation.navigate({
+  //     routeName: 'Play',
+  //     params: {
+  //       parentScreen: 'Leaderboard',
+  //       visible: false,
+  //       // dont remember why this moodscreen prop even exists
+  //       moodscreen: this._navigateToLeaderboardScreen,
+  //     },
+  //   });
+  // };
 
-  _handleLeaderboardRowPress = async (pressedLeaderboardSongId) => {
-    console.warn('pressed if: ', pressedLeaderboardSongId);
-    await this.props.loadQueueStartingAtIndex2(pressedLeaderboardSongId, this.props.leaderboardSongs);
-    this._navigateToPlayScreen();
+  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex, pressedLeaderboardSongId) => {
+    console.warn('pressed id: ', pressedLeaderboardSongId);
+    console.warn('pressed idx: ', pressedLeaderboardSongIndex);
+    // await this.props.loadQueueStartingAtIndex2(pressedLeaderboardSongId, this.props.leaderboardSongs);
+    await this.props.loadQueueStartingAtSong(pressedLeaderboardSongIndex, pressedLeaderboardSongId, this.props.leaderboardSongs);
   };
 
   keyExtractor = song => song.id.toString();
@@ -130,7 +132,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadLeaderboardSongs,
   // loadQueueStartingAtId,
-  loadQueueStartingAtIndex2,
+  // loadQueueStartingAtIndex2,
+  loadQueueStartingAtSong,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);

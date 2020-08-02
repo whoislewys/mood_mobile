@@ -120,7 +120,7 @@ const LeaderboardRow = ({
       accessible={false}
       testID={`LeaderboardRow-${title}`}
       style={styles.rowBackground}
-      onPress={() => _handleLeaderboardRowPress(id)}
+      onPress={() => _handleLeaderboardRowPress(index, id)}
     >
       <Text style={styles.rank}>{index + 1}</Text>
       <Image style={styles.albumArt} source={{ uri: artwork }} />
@@ -131,6 +131,7 @@ const LeaderboardRow = ({
           ellipsizeMode="tail"
         >
           {title}
+          {/* {id} */}
         </Text>
         <Text
           style={styles.artistName}

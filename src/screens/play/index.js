@@ -156,7 +156,7 @@ class PlayScreen extends Component {
   _getBackground = () => (
     <View style={styles.imageBackground}>
       <ImageBackground
-        source={{uri: this.props.curTrack.artwork}}
+        source={{ uri: this.props.curTrack.artwork }}
         blurRadius={25}
         style={styles.imageBackground}
       />

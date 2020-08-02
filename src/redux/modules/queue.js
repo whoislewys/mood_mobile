@@ -363,6 +363,7 @@ export function loadSongsForMoodId2(moodId) {
     }
 
     dispatch({ type: LOAD_SONGS_SUCCESS });
+    NavigationService.navigate('Play');
     setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
   };
 }
@@ -418,7 +419,7 @@ export function loadSongsForAllMoods(moodIds) {
 //   };
 // }
 
-export function loadQueueStartingAtIndex2(startSongId, songs) {
+export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
   console.warn('loading queue starting at song id: ', startSongId);
 
   return async (dispatch) => {
@@ -429,7 +430,27 @@ export function loadQueueStartingAtIndex2(startSongId, songs) {
     }
 
     try {
-      await TrackPlayer.add(songs);
+      // if songs only has one song in it
+      if (songs.length === 0) {
+        await TrackPlayer.add(songs);
+      } else {
+        // split songs into song clicked,
+        // songs before song clicked,
+        // and songs after song clicked
+        const selectedSong = songs[startSongIndex];
+        const songsBeforeSelected = songs.slice(0, startSongIndex);
+        const songsAfterSelected = songs.slice(startSongIndex, startSongIndex);
+        // add song clicked at the start of the queue
+        await TrackPlayer.add(selectedSong);
+
+        // add any songs before
+        // await TrackPlayer.add(songsBeforeSelected, startSongId);
+
+        // add any songs after
+        // Set it to null to add it at the end of the queue
+        // await TrackPlayer.add(songsAfterSelected, null);
+      }
+
       dispatch({
         type: FILL_QUEUE,
         songs,
@@ -438,25 +459,13 @@ export function loadQueueStartingAtIndex2(startSongId, songs) {
       console.warn('unhandled add tp e: ', e);
     }
 
-    // try {
-    //   await TrackPlayer.pause();
-    // } catch (e) {
-    //   console.warn('unhandled play tp e: ', e);
-    // }
-
     try {
-      await TrackPlayer.skip(startSongId);
+      await TrackPlayer.play();
     } catch (e) {
       console.warn('unhandled skip tp e: ', e);
     }
 
-
-    // try {
-    //   await TrackPlayer.play();
-    // } catch (e) {
-    //   console.warn('unhandled skip tp e: ', e);
-    // }
-
+    NavigationService.navigate('Play');
     setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
   };
 }
@@ -498,6 +507,8 @@ export function playbackState2(data) {
 }
 
 export function playbackTrack2(data) {
+  console.warn('playbackTrack event. data: ', data);
+  // console.warn('playbackTrack event. curtrack id: ', data.nextTrack);
   return {
     type: PLAYBACK_TRACK,
     curTrackId: data.nextTrack,

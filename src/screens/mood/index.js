@@ -33,12 +33,6 @@ class MoodScreen extends Component {
     SplashScreen.hide();
   };
 
-  componentDidUpdate() {
-    if (this.props.curTrack != null) {
-      this.props.navigation.navigate('Play');
-    }
-  }
-
   getContent = () => {
     if (this.props.loading || this.props.navvingToPlayScreen) {
       return (
