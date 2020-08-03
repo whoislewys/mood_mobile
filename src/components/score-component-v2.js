@@ -42,14 +42,11 @@ export class HeartButton extends Component {
       this.props.navigation.navigate('Login');
       return;
     }
-    console.warn('liking');
     // start from currentScore + 1 to not show 0 hearts
     const { maxCount } = this.state;
     const newScore = this.props.currentScore + 1;
-    console.warn('new score', newScore);
     if (newScore <= maxCount) {
       this.props.incrementScore(this.props.currentScore);
-      console.warn('incremented score');
       if (this.props.curTrack != null) {
         this.props.sendScore(this.props.curTrackId);
       }
