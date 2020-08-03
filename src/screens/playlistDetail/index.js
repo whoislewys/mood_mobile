@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
+  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
@@ -20,7 +21,12 @@ import {
 // todo: DRY up this SongRow component
 import SongRow from './components/songRow';
 // import SongRow from '../savedSongs/components/songRow';
-import { spacing } from '../../assets/styles';
+import {
+  dimensions,
+  fonts,
+  colors,
+  spacing,
+} from '../../assets/styles';
 import MoodCenterHeader from '../../components/headers/MoodCenterHeader';
 
 const styles = StyleSheet.create({
@@ -42,6 +48,15 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     resizeMode: 'contain',
+  },
+  noSongsWarningContainer: {
+    flex: 1,
+    fontFamily: fonts.primary,
+    fontSize: fonts.subHeader,
+    alignItems: 'center',
+    textAlign: 'center',
+    marginTop: dimensions.height * 0.33,
+    color: colors.black,
   },
 });
 
@@ -134,9 +149,16 @@ class PlaylistDetail extends Component {
     />
   );
 
-  getPlaylistSongs = () => (
-    this.props.playlistSongs != null
-      ? (
+  getPlaylistSongs = () => {
+    if (this.props.playlistSongs != null) {
+      if (this.props.playlistSongs.length === 0) {
+        return (
+          <Text style={styles.noSongsWarningContainer}>
+            No songs in this playlist!
+          </Text>
+        );
+      }
+      return (
         <FlatList
           data={this.props.playlistSongs}
           renderItem={this._renderItem}
@@ -145,18 +167,23 @@ class PlaylistDetail extends Component {
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
-      )
-      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  );
+      );
+    }
+    return (
+      <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+    );
+  };
 
-  render = () => (
-    <View style={styles.container}>
-      {this._renderHeader()}
-      <View style={styles.songsContainer}>
-        {this.getPlaylistSongs()}
+  render = () => {
+    return (
+      <View style={styles.container}>
+        {this._renderHeader()}
+        <View style={styles.songsContainer}>
+          {this.getPlaylistSongs()}
+        </View>
       </View>
-    </View>
-  )
+    );
+  }
 }
 
 const mapStateToProps = state => ({
