@@ -24,6 +24,8 @@ Make sure you run `cd ios && pod install`
 ### Fastlane
 You must install fastlane if you want to deploy new iOS builds
 
+https://docs.fastlane.tools/getting-started/ios/setup/#rubygems-macoslinuxwindows
+
 ## Running App 
 1. `yarn`
 2. [iOS only] `cd ios && pod install && cd ..`
