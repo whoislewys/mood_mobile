@@ -395,10 +395,12 @@ export function loadSavedSongs() {
     dispatch({
       type: LOAD_SAVED_SONGS,
     });
+
     try {
       if (getState().playlists.savedSongsPlaylistId === -1) {
         await dispatch(getSavedSongPlaylist());
       }
+
       const { savedSongsPlaylistId } = getState().playlists;
       const token = await firebase.auth().currentUser.getIdToken();
       const savedSongsPlaylist = await axios.get(`https://api.moodindustries.com/api/v1/playlists/${savedSongsPlaylistId}`,
