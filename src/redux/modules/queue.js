@@ -420,8 +420,6 @@ export function loadSongsForAllMoods(moodIds) {
 // }
 
 export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
-  console.warn('loading queue starting at song id: ', startSongId);
-
   return async (dispatch) => {
     try {
       await TrackPlayer.reset();
@@ -433,28 +431,33 @@ export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
       // if songs only has one song in it
       if (songs.length === 0) {
         await TrackPlayer.add(songs);
+
+        dispatch({
+          type: FILL_QUEUE,
+          songs,
+        });
       } else {
         // split songs into song clicked,
         // songs before song clicked,
         // and songs after song clicked
         const selectedSong = songs[startSongIndex];
         const songsBeforeSelected = songs.slice(0, startSongIndex);
-        const songsAfterSelected = songs.slice(startSongIndex, startSongIndex);
+        const songsAfterSelected = songs.slice(startSongIndex);
         // add song clicked at the start of the queue
         await TrackPlayer.add(selectedSong);
 
         // add any songs before
-        // await TrackPlayer.add(songsBeforeSelected, startSongId);
+        await TrackPlayer.add(songsBeforeSelected, startSongId);
 
         // add any songs after
         // Set it to null to add it at the end of the queue
-        // await TrackPlayer.add(songsAfterSelected, null);
-      }
+        await TrackPlayer.add(songsAfterSelected, null);
 
-      dispatch({
-        type: FILL_QUEUE,
-        songs,
-      });
+        dispatch({
+          type: FILL_QUEUE,
+          songs: [selectedSong, ...songsBeforeSelected, ...songsAfterSelected],
+        });
+      }
     } catch (e) {
       console.warn('unhandled add tp e: ', e);
     }
@@ -507,8 +510,6 @@ export function playbackState2(data) {
 }
 
 export function playbackTrack2(data) {
-  console.warn('playbackTrack event. data: ', data);
-  // console.warn('playbackTrack event. curtrack id: ', data.nextTrack);
   return {
     type: PLAYBACK_TRACK,
     curTrackId: data.nextTrack,
