@@ -103,8 +103,11 @@ const styles = StyleSheet.create({
 class PlayScreen extends Component {
   carousel = undefined;
 
+  componentDidMount() {
+    this.carousel.snapToItem(this.props.curTrackIndex);
+  }
+
   // componentDidUpdate() {
-  //   console.warn('curtrackid: ', this.props.curTrackIndex);
   //   works, but doesn't give the cool animation
   //   this.carousel.snapToItem(this.props.curTrackIndex);
   // }
@@ -124,10 +127,6 @@ class PlayScreen extends Component {
   }
 
   render = () => {
-    console.warn('curtrack: ', this.props.curTrack);
-    // console.warn('curtrack art: ', this.props.curTrack.artwork);
-    console.warn('playbackState: ', this.props.playbackState);
-
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
@@ -275,7 +274,6 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
   queue: state.queue.queue,
-  // curTrack: state.queue.curTrack,
   curTrack: getCurrentTrackSelector(state),
   curTrackIndex: getCurrentTrackIndex(state),
   curTrackId: state.queue.curTrackId,
