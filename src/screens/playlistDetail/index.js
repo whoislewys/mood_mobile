@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
-import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
+import { loadQueueStartingAtSong, shufflePlay } from '../../redux/modules/queue';
 import {
   addSongToDeleted,
   deletePlaylist,
@@ -88,8 +88,8 @@ class PlaylistDetail extends Component {
     </View>
   );
 
-  _handleSongRowPress = async (pressedLeaderboardSongIndex) => {
-    await this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.playlistSongs);
+  _handleSongRowPress = async (playlistSongIndex, playlistSongId) => {
+    await this.props.loadQueueStartingAtSong(playlistSongIndex, playlistSongId, this.props.playlistSongs);
     this._navigateToPlayScreen();
   };
 
@@ -170,7 +170,7 @@ const mapDispatchToProps = {
   addSongToDeleted,
   deletePlaylist,
   deleteSongsFromPlaylist,
-  loadQueueStartingAtId,
+  loadQueueStartingAtSong,
   removeSongFromDeleted,
   resetToDeleteSet,
   shufflePlay,

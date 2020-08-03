@@ -120,17 +120,17 @@ export function reducer(state = initialState, action = {}) {
       };
 
     // Loading a shared song, with a queue of the same mood right after
-    case LOAD_SHARED_SONG_QUEUE:
-      return {
-        ...state,
-        loading: true,
-        queue: [],
-        sharedTrack: action.sharedTrack,
-        // curTrack: null,
-        curTrackIndex: NaN,
-        track: null,
-        queueType: '',
-      };
+    // case LOAD_SHARED_SONG_QUEUE:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //     queue: [],
+    //     sharedTrack: action.sharedTrack,
+    //     // curTrack: null,
+    //     curTrackIndex: NaN,
+    //     track: null,
+    //     queueType: '',
+    //   };
     // case LOAD_SHARED_SONG_QUEUE_SUCCESS:
       // const songs1 = shuffle(mapSongsToValidTrackObjects(action.payload.data));
       // // add the sharedTrack to front of array
@@ -242,12 +242,11 @@ export const getCurrentTrackIndex = createSelector(
 export function handlePlayPress() {
   return async (dispatch) => {
     const playbackState = await TrackPlayer.getState();
-    console.warn('playuback state: ', playbackState);
     if (playbackState === TrackPlayer.STATE_PAUSED) {
-      console.warn('playback state pause, playing');
+      // console.warn('playback state pause, playing');
       await TrackPlayer.play();
     } else {
-      console.warn('playback state pause, playing');
+      // console.warn('playback state pause, playing');
       await TrackPlayer.pause();
     }
   };
@@ -476,6 +475,7 @@ export function loadSongsForAllMoods2(moodIds) {
 
 export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
   return async (dispatch) => {
+    dispatch({ type: LOAD_SONGS });
     try {
       await TrackPlayer.reset();
     } catch (e) {
@@ -523,6 +523,7 @@ export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
       console.warn('unhandled skip tp e: ', e);
     }
 
+    dispatch({ type: LOAD_SONGS_SUCCESS });
     NavigationService.navigate('Play');
     setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
   };
@@ -531,21 +532,65 @@ export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
 // Shared song action creators
 export function loadSharedSongQueue(sharedTrack) {
   return async (dispatch) => {
-    await TrackPlayer.reset();
-    dispatch({ type: LOAD_SHARED_SONG_QUEUE, sharedTrack });
+    dispatch({ type: LOAD_SONGS });
+
     try {
-      const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+      await TrackPlayer.reset();
+    } catch (e) {
+      console.warn('reset tp err: ', e);
+    }
+
+    let songs;
+    try {
+      songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
-      dispatch({ type: LOAD_SHARED_SONG_QUEUE_SUCCESS, payload: songs });
-      dispatch(handlePlayPress());
     } catch (e) {
-      dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
+      console.warn('axios error:', e);
     }
+
+    try {
+      const trackPlayerSongs = shuffle(mapSongsToValidTrackObjects(songs));
+      await TrackPlayer.add(trackPlayerSongs);
+      dispatch({
+        type: FILL_QUEUE,
+        songs: trackPlayerSongs,
+      });
+    } catch (e) {
+      console.warn('unhandled add tp e: ', e);
+    }
+
+    try {
+      await TrackPlayer.play();
+    } catch (e) {
+      console.warn('unhandled play tp e: ', e);
+    }
+
+    dispatch({ type: LOAD_SONGS_SUCCESS });
+    NavigationService.navigate('Play');
+    setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
   };
 }
+
+// export function loadSharedSongQueue(sharedTrack) {
+//   return async (dispatch) => {
+//     await TrackPlayer.reset();
+//     dispatch({ type: LOAD_SHARED_SONG_QUEUE, sharedTrack });
+//     try {
+//       const songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+//         {
+//           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+//           responseType: 'json',
+//         });
+//       dispatch({ type: LOAD_SHARED_SONG_QUEUE_SUCCESS, payload: songs });
+//       dispatch(handlePlayPress());
+//     } catch (e) {
+//       dispatch({ type: LOAD_SHARED_SONG_QUEUE_FAIL });
+//     }
+//   };
+// }
 
 // TrackPlayer event action creators
 // export function playbackState(state) {

@@ -82,9 +82,10 @@ class SplashScreen extends Component {
       };
 
       // Play the shared track
-      const { navigate } = this.props.navigation;
-      this.props.loadSharedSongQueue(sharedTrack)
-        .then(navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } }));
+      // const { navigate } = this.props.navigation;
+      this.props.loadSharedSongQueue(sharedTrack);
+      // this.props.loadSharedSongQueue(sharedTrack)
+      //   .then(navigate({ routeName: 'Play', params: { visible: false, parentScreen: 'Splash' } }));
     });
     // if you're here, no branch link was opened. continue to mood screen as usual
     this.props.logEvent(anal.appOpen);
