@@ -11,7 +11,7 @@ import Images from '@assets/images';
 import { LEADERBOARDS } from '../../redux/constants';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
-import { loadQueueStartingAtId } from '../../redux/modules/queue';
+import { loadQueueStartingAtSong } from '../../redux/modules/queue';
 import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
@@ -51,21 +51,8 @@ class LeaderboardScreen extends Component {
     });
   };
 
-  _navigateToPlayScreen = () => {
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: {
-        parentScreen: 'Leaderboard',
-        visible: false,
-        // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToLeaderboardScreen,
-      },
-    });
-  };
-
-  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    await this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
-    this._navigateToPlayScreen();
+  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex, pressedLeaderboardSongId) => {
+    await this.props.loadQueueStartingAtSong(pressedLeaderboardSongIndex, pressedLeaderboardSongId, this.props.leaderboardSongs);
   };
 
   keyExtractor = song => song.id.toString();
@@ -125,7 +112,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadLeaderboardSongs,
-  loadQueueStartingAtId,
+  loadQueueStartingAtSong,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);

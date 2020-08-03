@@ -22,10 +22,13 @@ export default class App extends Component {
       TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
     ];
 
+    const state1 = await TrackPlayer.getState();
     await TrackPlayer.setupPlayer({
       // Can set maxCacheSize like this:
       // maxCacheSize: 1024 * 5, // 5 mb
     });
+
+    const state = await TrackPlayer.getState();
 
     // necessary for setting capabilities
     TrackPlayer.updateOptions({

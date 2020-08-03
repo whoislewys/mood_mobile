@@ -202,7 +202,7 @@ const TabBar = class TabBar extends Component {
 const mapStateToProps = state => ({
   queue: state.queue.queue,
   curTrack: state.queue.curTrack,
-  playbackState: state.queue.playback,
+  playbackState: state.queue.playbackState,
   playlists: state.playlists.playlists,
 });
 
