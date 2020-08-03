@@ -368,10 +368,17 @@ export function loadSongsForMoodId2(moodId) {
   };
 }
 
-export function loadSongsForAllMoods(moodIds) {
+export function loadSongsForAllMoods2(moodIds) {
   return async (dispatch) => {
-    await TrackPlayer.reset();
     dispatch({ type: LOAD_SONGS });
+
+    try {
+      await TrackPlayer.reset();
+    } catch (e) {
+      console.warn('error restting tp: ', e);
+    }
+
+    let songsLists;
     try {
       const songsPromises = [];
       for (let i = 0; i < moodIds.length; i++) {
@@ -382,22 +389,70 @@ export function loadSongsForAllMoods(moodIds) {
           });
         songsPromises.push(songsPromise);
       }
-
-      const songsLists = await Promise.all(songsPromises);
-
-      // fill allMoodSongs with the list of songs associated with each mood
-      const allMoodSongs = [];
-      Object.values(songsLists)
-        .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
-
-      dispatch({ type: FILL_QUEUE, payload: { data: allMoodSongs } });
-      dispatch({ type: LOAD_SONGS_SUCCESS });
-      dispatch(handlePlayPress());
+      songsLists = await Promise.all(songsPromises);
     } catch (e) {
-      dispatch({ type: LOAD_SONGS_FAIL });
+      console.warn('error getting all mood songs');
     }
+
+    // fill allMoodSongs with the list of songs associated with each mood
+    const allMoodSongs = [];
+    Object.values(songsLists)
+      .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
+    const allSongsShuffled = shuffle(mapSongsToValidTrackObjects(allMoodSongs));
+
+    try {
+      console.warn('adding');
+      await TrackPlayer.add(allSongsShuffled);
+      dispatch({
+        type: FILL_QUEUE,
+        songs: allSongsShuffled,
+      });
+    } catch (e) {
+      console.warn('unhandled add tp e: ', e);
+    }
+
+    try {
+      await TrackPlayer.play();
+    } catch (e) {
+      console.warn('unhandled play tp e: ', e);
+    }
+
+    dispatch({ type: LOAD_SONGS_SUCCESS });
+    NavigationService.navigate('Play');
+    setTimeout(() => dispatch(finishedNavvingToPlayScreen()), 300);
   };
 }
+
+// export function loadSongsForAllMoods(moodIds) {
+//   return async (dispatch) => {
+//     await TrackPlayer.reset();
+//     dispatch({ type: LOAD_SONGS });
+//     try {
+//       const songsPromises = [];
+//       for (let i = 0; i < moodIds.length; i++) {
+//         const songsPromise = axios.get(`https://api.moodindustries.com/api/v1/moods/${moodIds[i]}/songs`,
+//           {
+//             params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
+//             responseType: 'json',
+//           });
+//         songsPromises.push(songsPromise);
+//       }
+
+//       const songsLists = await Promise.all(songsPromises);
+
+//       // fill allMoodSongs with the list of songs associated with each mood
+//       const allMoodSongs = [];
+//       Object.values(songsLists)
+//         .forEach(curMoodSongs => Array.prototype.push.apply(allMoodSongs, curMoodSongs.data));
+
+//       dispatch({ type: FILL_QUEUE, payload: { data: allMoodSongs } });
+//       dispatch({ type: LOAD_SONGS_SUCCESS });
+//       dispatch(handlePlayPress());
+//     } catch (e) {
+//       dispatch({ type: LOAD_SONGS_FAIL });
+//     }
+//   };
+// }
 
 // export function loadQueueStartingAtId(startSongIndex, songs) {
 //   return async (dispatch) => {
