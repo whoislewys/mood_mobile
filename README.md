@@ -24,6 +24,8 @@ Make sure you run `cd ios && pod install`
 ### Fastlane
 You must install fastlane if you want to deploy new iOS builds
 
+https://docs.fastlane.tools/getting-started/ios/setup/#rubygems-macoslinuxwindows
+
 ## Running App 
 1. `yarn`
 2. [iOS only] `cd ios && pod install && cd ..`
@@ -43,7 +45,7 @@ Luis wrote a small [`react-native-clean` script](https://gist.github.com/whoisle
 **IOS**
 `fastlane ios beta` for new Testflight build
 
-For new apple App Store build, open mood_mobile.xcworkspace. Open the `info.plist`. Increment the field `Bundle versions string, short`
+For new apple App Store build, open `ios/info.plist`. Increment the field `CFBundleShortVersionString` and `CFBundleVersion`
 
 **ANDROID** 
 1. Open `/android/app/build.gradle` and manually increment the versionCode field.
