@@ -7,6 +7,8 @@ Follow the official [Facebook] (https://facebook.github.io/react-native/docs/0.5
 
 Not covered above, but you will also need to install `gradle` to build the app for release. I recommend installing with [ASDF](https://asdf-vm.com/#/) ([Gradle plugin I used for asdf](https://github.com/rfrancis/asdf-gradle))
 
+> npx jetify (which is run as a postInstall script) will no longer be needed once the upgrade to react native 0.60 is done
+
 #### Troubleshooting
 * Sometimes a new emulator will not see the packager. If you've followed the Facebook guide and pulled from the repo recently, try opening the dev menu in your emulator (CMD+M on mac), clicking on `Dev Settings`, clicking on `Debug server host & port for device`, and typing in `localhost:8081` (or whatever port your metro bundler is running on) as the port.
 

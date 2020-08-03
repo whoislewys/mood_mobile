@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   StyleSheet,
   View,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
   Alert,
   ImageBackground,
   StatusBar,
@@ -17,13 +16,15 @@ import AlbumArtCarouselItem from './components/album-art-carousel-item';
 import PlayControls from './components/play-controls';
 import TimeBar from './components/time-bar';
 import InfoText from './components/info-text';
-import { dimensions } from '../../assets/styles';
+import {dimensions} from '../../assets/styles';
 import {
   handlePlayPress,
   skipToNext,
   skipToPrevious,
+  getCurrentTrackSelector,
+  getCurrentTrackIndex,
 } from '../../redux/modules/queue';
-import { logEvent } from '../../redux/modules/analytics';
+import {logEvent} from '../../redux/modules/analytics';
 
 const styles = StyleSheet.create({
   container: {
@@ -100,6 +101,17 @@ const styles = StyleSheet.create({
 
 
 class PlayScreen extends Component {
+  carousel = undefined;
+
+  componentDidMount() {
+    this.carousel.snapToItem(this.props.curTrackIndex);
+  }
+
+  // componentDidUpdate() {
+  //   works, but doesn't give the cool animation
+  //   this.carousel.snapToItem(this.props.curTrackIndex);
+  // }
+
   onSwipeDown() {
     if (!this.props.queue.length) {
       Alert.alert('Let\'s pick a mood first! 🎧');
@@ -111,44 +123,29 @@ class PlayScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carouselRef: undefined,
     };
   }
 
   render = () => {
-    if (!this.props.queue.length || (this.props.curTrack == null) || this.props.track == null) {
-      // TODO: make this activity spinner show up on the mood screen, don't nav till the data loaded
-      return (
-      <View style={styles.container}>
-        <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
-        <ActivityIndicator
-          color='white'
-          size='large'
-          animating
-          style={{ flex: 10 }}
-        />
-      </View>
-      );
-    }
     return (
       <View style={styles.container}>
         <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
-        { this._getBackground() }
+        {this._getBackground()}
         <View style={styles.playContainer}>
           <View style={styles.dropdownBarContainer}>
-            { this.getDropdownBar() }
+            {this.getDropdownBar()}
           </View>
           <View style={styles.albumArtContainer}>
-            { this.getAlbumArtCarousel() }
+            {this.getAlbumArtCarousel()}
           </View>
           <View style={styles.playBarContainer}>
             <TimeBar setTime={this.props.setTime} />
           </View>
           <View style={styles.trackInfoContainer}>
-            { this.getTrackInfoAndPlaybar() }
+            {this.getTrackInfoAndPlaybar()}
           </View>
           <View style={styles.playControlsContainer}>
-            { this.getPlayControls() }
+            {this.getPlayControls()}
           </View>
         </View>
       </View>
@@ -166,16 +163,14 @@ class PlayScreen extends Component {
     </View>
   );
 
-  _nextTrack = () => {
-    // skip forward transitions
+  skipForward = () => {
     this.props.skipToNext();
-    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
+    this.carousel.snapToNext();
   };
 
-  _previousTrack = () => {
-    // skip backward transitions
+  skipBack = () => {
     this.props.skipToPrevious();
-    this.state.carouselRef.snapToItem(this.props.curTrackIndex);
+    this.carousel.snapToPrev();
   };
 
   getDropdownBar = () => (
@@ -199,7 +194,7 @@ class PlayScreen extends Component {
           onPress={() => (
             this.props.navigation.navigate({
               routeName: 'PlaylistModal',
-              params: { songIdToAdd: parseInt(this.props.curTrack.id, 10) },
+              params: {songIdToAdd: parseInt(this.props.curTrack.id, 10)},
             })
           )}
           style={styles.playlistButtonContainer}
@@ -211,29 +206,27 @@ class PlayScreen extends Component {
     </GestureRecognizer>
   );
 
-  _renderCarouselItem = ({ item }) => {
+  _renderCarouselItem = ({item}) => {
     const art = item.artwork;
     return <AlbumArtCarouselItem artwork={art} />;
   };
 
   _handleCarouselSnap = (slideIndex) => {
     // for swiping transitions
-    if (slideIndex > this.state.carouselRef.currentIndex) {
+    if (slideIndex > this.carousel.currentIndex) {
       this.props.skipToNext();
-    } else if (slideIndex < this.state.carouselRef.currentIndex) {
+    } else if (slideIndex < this.carousel.currentIndex) {
       this.props.skipToPrevious();
     }
   };
 
   getAlbumArtCarousel = () => (
     <View
-      style={{ flex: 1 }}
+      style={{flex: 1}}
     >
       <Carousel
         ref={(carousel) => {
-          if (!this.state.carouselRef) {
-            this.setState({ carouselRef: carousel });
-          }
+          this.carousel = carousel;
         }}
         data={this.props.queue}
         sliderWidth={dimensions.width}
@@ -248,7 +241,7 @@ class PlayScreen extends Component {
 
   getTrackInfoAndPlaybar = () => (
     <GestureRecognizer
-      style={{ flex: 1 }}
+      style={{flex: 1}}
       onSwipeDown={() => this.onSwipeDown()}
     >
       <InfoText
@@ -260,15 +253,15 @@ class PlayScreen extends Component {
 
   getPlayControls = () => (
     <GestureRecognizer
-      style={{ flex: 1 }}
+      style={{flex: 1}}
       onSwipeDown={() => this.onSwipeDown()}
     >
       <PlayControls
         logEvent={this.props.logEvent}
-        skipForward={this._nextTrack}
-        skipBack={this._previousTrack}
+        skipForward={this.skipForward}
+        skipBack={this.skipBack}
         playing={this.props.playing}
-        handlePlayPress={this.props.handlePlayPress}
+        handlePlayPress={() => this.props.handlePlayPress(this.props.playbackState)}
         loading={this.props.loading}
         currentTrack={this.props.curTrack}
         navigation={this.props.navigation}
@@ -281,8 +274,10 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
   queue: state.queue.queue,
-  curTrack: state.queue.curTrack,
-  curTrackIndex: state.queue.curTrackIndex,
+  curTrack: getCurrentTrackSelector(state),
+  curTrackIndex: getCurrentTrackIndex(state),
+  curTrackId: state.queue.curTrackId,
+  playbackState: state.queue.playbackState,
   deviceId: state.analytics.deviceId,
   track: state.queue.track,
 });

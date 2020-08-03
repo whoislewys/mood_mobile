@@ -88,6 +88,8 @@ export const CLOSE_MODAL = 'playlists/CLOSE_MODAL';
 export const UPDATE_NEW_PLAYLIST_NAME = 'playlists/UPDATE_NEW_PLAYLIST_NAME';
 
 // Queue
+export const FILL_QUEUE = 'queue/FILL_QUEUE';
+export const FINISHED_NAVVING_TO_PLAY_SCREEN = 'queue/FINISHED_NAVVING_TO_PLAY_SCREEN';
 export const LOAD_QUEUE_STARTING_AT_ID = 'queue/LOAD_QUEUE_STARTING_FROM_ID';
 export const LOAD_SONGS = 'queue/LOAD';
 export const LOAD_SONGS_SUCCESS = 'queue/LOAD_SUCCESS';
@@ -110,9 +112,6 @@ export const CLEAR_SCORE = 'score/CLEAR_SCORE';
 export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
 export const SEND_SCORE_SUCCESS = 'score/SEND_SCORE_SUCCESS';
 export const SEND_SCORE_FAIL = 'score/SEND_SCORE_FAIL';
-// these should only be used in the score V1 component
-// export const START_TIMER = 'score/START_TIMER';
-// export const STOP_TIMER = 'score/STOP_TIMER';
 
 // Settings
 export const DATA_TRACK_TOGGLE = 'settings/DATA_TRACK_TOGGLE';

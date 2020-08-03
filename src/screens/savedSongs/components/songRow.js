@@ -83,7 +83,12 @@ class SongRow extends Component {
   render() {
     const {
       index,
-      savedSong: { artist, artwork, title },
+      savedSong: {
+        artist,
+        artwork,
+        title,
+        id,
+      },
       _handleSongRowPress,
       openPlaylistModal,
     } = this.props;
@@ -91,7 +96,7 @@ class SongRow extends Component {
     return (
       <TouchableOpacity
         style={styles.rowBackground}
-        onPress={() => _handleSongRowPress(index)}
+        onPress={() => _handleSongRowPress(index, id)}
       >
         <Image style={styles.albumArt} source={{ uri: artwork }} />
         <View style={styles.detailsContainer}>

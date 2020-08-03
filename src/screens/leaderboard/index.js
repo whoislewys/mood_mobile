@@ -11,7 +11,7 @@ import Images from '@assets/images';
 import { LEADERBOARDS } from '../../redux/constants';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
-import { loadQueueStartingAtId } from '../../redux/modules/queue';
+import { loadQueueStartingAtSong } from '../../redux/modules/queue';
 import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
@@ -51,21 +51,8 @@ class LeaderboardScreen extends Component {
     });
   };
 
-  _navigateToPlayScreen = () => {
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: {
-        parentScreen: 'Leaderboard',
-        visible: false,
-        // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToLeaderboardScreen,
-      },
-    });
-  };
-
-  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex) => {
-    await this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.leaderboardSongs);
-    this._navigateToPlayScreen();
+  _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex, pressedLeaderboardSongId) => {
+    await this.props.loadQueueStartingAtSong(pressedLeaderboardSongIndex, pressedLeaderboardSongId, this.props.leaderboardSongs);
   };
 
   keyExtractor = song => song.id.toString();
@@ -83,8 +70,19 @@ class LeaderboardScreen extends Component {
     <Image source={Images.moodLogo} style={styles.moodLogo} />
   );
 
-getLeaderBoard = () => (
-  this.props.leaderboardSongs.length
+getLeaderBoard = () => {
+  if (this.props.navvingToPlayScreen) {
+    return (
+      <ActivityIndicator
+        color='black'
+        size='large'
+        animating
+        style={{ flex: 10 }}
+      />
+    );
+  }
+
+  return this.props.leaderboardSongs.length
     ? (
       <FlatList
         data={this.props.leaderboardSongs}
@@ -94,8 +92,8 @@ getLeaderBoard = () => (
         showsVerticalScrollIndicator={false}
       />
     )
-    : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-);
+    : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />;
+};
 
   render = () => (
     <View style={styles.background}>
@@ -107,13 +105,14 @@ getLeaderBoard = () => (
 }
 
 const mapStateToProps = state => ({
+  navvingToPlayScreen: state.queue.navvingToPlayScreen,
   leaderboardSongs: state.leaderboard.songs,
   queue: state.queue.queue,
 });
 
 const mapDispatchToProps = {
   loadLeaderboardSongs,
-  loadQueueStartingAtId,
+  loadQueueStartingAtSong,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardScreen);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Platform } from 'react-native';
+import { AppRegistry, Platform, StatusBar } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import RNUxcam from 'react-native-ux-cam';
 import { Provider } from 'react-redux';
@@ -22,10 +22,13 @@ export default class App extends Component {
       TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
     ];
 
+    const state1 = await TrackPlayer.getState();
     await TrackPlayer.setupPlayer({
       // Can set maxCacheSize like this:
       // maxCacheSize: 1024 * 5, // 5 mb
     });
+
+    const state = await TrackPlayer.getState();
 
     // necessary for setting capabilities
     TrackPlayer.updateOptions({
@@ -40,6 +43,7 @@ export default class App extends Component {
 
     render = () => (
       <Provider store={store}>
+        <StatusBar translucent backgroundColor='rgba(0,0,0,0.00)' />
         <Player />
       </Provider>
     )

@@ -7,6 +7,7 @@ import { setUserId } from '../redux/modules/analytics';
 import { userLoggedIn } from '../redux/modules/auth';
 import { setMood } from '../redux/modules/mood';
 import { stopPlayback } from '../redux/modules/queue';
+import NavigationService from '../navigation/navigation-service';
 
 class Player extends Component {
   componentDidMount = async () => {
@@ -20,6 +21,11 @@ class Player extends Component {
 
   render = () => (
     <Navigator
+      ref={
+        (navigatorRef) => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }
+      }
       screenProps={{
         playing: this.props.playbackState === TrackPlayer.STATE_PLAYING,
         loading: this.props.loading,
@@ -36,11 +42,7 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
   loading: state.queue.loading,
-  errors: state.queue.loading,
-  playbackState: state.queue.playback,
-  track: state.queue.track,
-  curTrack: state.queue.curTrack,
-  queue: state.queue.queue,
+  playbackState: state.queue.playbackState,
 });
 
 const mapDispatchToProps = {

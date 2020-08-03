@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
-import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
+import { loadQueueStartingAtSong, shufflePlay } from '../../redux/modules/queue';
 import {
   addSongToDeleted,
   deleteSongsFromPlaylist,
@@ -92,7 +92,6 @@ export class SavedSongs extends Component {
         style={styles.shuffleButtonContainer}
         onPress={() => {
           this.props.shufflePlay(this.props.savedSongs);
-          this.props.navigation.navigate('Play');
         }}
       >
         <Image source={Images.shuffle} style={styles.shuffleButton} />
@@ -100,9 +99,9 @@ export class SavedSongs extends Component {
     </View>
   );
 
-  _handleSongRowPress = async (pressedSongIndex) => {
-    await this.props.loadQueueStartingAtId(pressedSongIndex, this.props.savedSongs);
-    this._navigateToPlayScreen();
+  _handleSongRowPress = async (pressedSongIndex, pressedSongId) => {
+    await this.props
+      .loadQueueStartingAtSong(pressedSongIndex, pressedSongId, this.props.savedSongs);
   };
 
   keyExtractor = song => song.id.toString();
@@ -167,7 +166,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   addSongToDeleted,
   deleteSongsFromPlaylist,
-  loadQueueStartingAtId,
+  loadQueueStartingAtSong,
   loadSavedSongs,
   removeSongFromDeleted,
   resetToDeleteSet,

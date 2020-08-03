@@ -6,10 +6,11 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
+  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Images from '@assets/images';
-import { loadQueueStartingAtId, shufflePlay } from '../../redux/modules/queue';
+import { loadQueueStartingAtSong, shufflePlay } from '../../redux/modules/queue';
 import {
   addSongToDeleted,
   deletePlaylist,
@@ -20,7 +21,12 @@ import {
 // todo: DRY up this SongRow component
 import SongRow from './components/songRow';
 // import SongRow from '../savedSongs/components/songRow';
-import { spacing } from '../../assets/styles';
+import {
+  dimensions,
+  fonts,
+  colors,
+  spacing,
+} from '../../assets/styles';
 import MoodCenterHeader from '../../components/headers/MoodCenterHeader';
 
 const styles = StyleSheet.create({
@@ -43,6 +49,15 @@ const styles = StyleSheet.create({
     height: 24,
     resizeMode: 'contain',
   },
+  noSongsWarningContainer: {
+    flex: 1,
+    fontFamily: fonts.primary,
+    fontSize: fonts.subHeader,
+    alignItems: 'center',
+    textAlign: 'center',
+    marginTop: dimensions.height * 0.33,
+    color: colors.black,
+  },
 });
 
 class PlaylistDetail extends Component {
@@ -62,25 +77,12 @@ class PlaylistDetail extends Component {
     });
   };
 
-  _navigateToPlayScreen = () => {
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: {
-        parentScreen: 'Leaderboard',
-        visible: false,
-        // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToLeaderboardScreen,
-      },
-    });
-  };
-
   _shuffleButton = () => (
     <View>
       <TouchableOpacity
         style={styles.shuffleButtonContainer}
         onPress={() => {
           this.props.shufflePlay(this.props.playlistSongs);
-          this.props.navigation.navigate('Play');
         }}
       >
         <Image source={Images.shuffle} style={styles.shuffleButton} />
@@ -88,9 +90,8 @@ class PlaylistDetail extends Component {
     </View>
   );
 
-  _handleSongRowPress = async (pressedLeaderboardSongIndex) => {
-    await this.props.loadQueueStartingAtId(pressedLeaderboardSongIndex, this.props.playlistSongs);
-    this._navigateToPlayScreen();
+  _handleSongRowPress = async (playlistSongIndex, playlistSongId) => {
+    await this.props.loadQueueStartingAtSong(playlistSongIndex, playlistSongId, this.props.playlistSongs);
   };
 
   _handleSaveButtonPress = () => {
@@ -134,9 +135,16 @@ class PlaylistDetail extends Component {
     />
   );
 
-  getPlaylistSongs = () => (
-    this.props.playlistSongs !== undefined
-      ? (
+  getPlaylistSongs = () => {
+    if (this.props.playlistSongs != null) {
+      if (this.props.playlistSongs.length === 0) {
+        return (
+          <Text style={styles.noSongsWarningContainer}>
+            No songs in this playlist!
+          </Text>
+        );
+      }
+      return (
         <FlatList
           data={this.props.playlistSongs}
           renderItem={this._renderItem}
@@ -145,18 +153,23 @@ class PlaylistDetail extends Component {
           ListFooterComponent={<View style={{ height: 0, marginBottom: 70 }} />}
           showsVerticalScrollIndicator={false}
         />
-      )
-      : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
-  );
+      );
+    }
+    return (
+      <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
+    );
+  };
 
-  render = () => (
-    <View style={styles.container}>
-      {this._renderHeader()}
-      <View style={styles.songsContainer}>
-        {this.getPlaylistSongs()}
+  render = () => {
+    return (
+      <View style={styles.container}>
+        {this._renderHeader()}
+        <View style={styles.songsContainer}>
+          {this.getPlaylistSongs()}
+        </View>
       </View>
-    </View>
-  )
+    );
+  }
 }
 
 const mapStateToProps = state => ({
@@ -170,7 +183,7 @@ const mapDispatchToProps = {
   addSongToDeleted,
   deletePlaylist,
   deleteSongsFromPlaylist,
-  loadQueueStartingAtId,
+  loadQueueStartingAtSong,
   removeSongFromDeleted,
   resetToDeleteSet,
   shufflePlay,
