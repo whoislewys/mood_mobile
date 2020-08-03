@@ -42,11 +42,7 @@ const mapStateToProps = state => ({
   moods: state.mood.moods,
   selected: state.mood.selected,
   loading: state.queue.loading,
-  errors: state.queue.loading,
   playbackState: state.queue.playbackState,
-  track: state.queue.track,
-  curTrack: state.queue.curTrack,
-  queue: state.queue.queue,
 });
 
 const mapDispatchToProps = {

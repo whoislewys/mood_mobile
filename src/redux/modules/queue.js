@@ -52,18 +52,6 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
 
-    // case FILL_QUEUE:
-    //   let moodSongs = [];
-    //   moodSongs = shuffle(mapSongsToValidTrackObjects(action.payload.data));
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     queue: moodSongs,
-    //     curTrack: moodSongs[0],
-    //     curTrackIndex: 0,
-    //     queueType: MOOD_TYPE,
-    //   };
-      
     //v2
     case FILL_QUEUE:
       let moodSongs = [];
@@ -113,35 +101,10 @@ export function reducer(state = initialState, action = {}) {
         loading: false,
         navvingToPlayScreen: true,
         queue: songs,
-        // curTrack: songs[startSongIndex],
         curTrackIndex: startSongIndex,
         queueType: '',
       };
 
-    // Loading a shared song, with a queue of the same mood right after
-    // case LOAD_SHARED_SONG_QUEUE:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //     queue: [],
-    //     sharedTrack: action.sharedTrack,
-    //     // curTrack: null,
-    //     curTrackIndex: NaN,
-    //     track: null,
-    //     queueType: '',
-    //   };
-    // case LOAD_SHARED_SONG_QUEUE_SUCCESS:
-      // const songs1 = shuffle(mapSongsToValidTrackObjects(action.payload.data));
-      // // add the sharedTrack to front of array
-      // songs1.unshift(state.sharedTrack);
-      // return {
-      //   ...state,
-      //   loading: false,
-      //   queue: songs1,
-      //   curTrack: songs1[0],
-      //   curTrackIndex: 0,
-      //   queueType: MOOD_TYPE,
-      // };
     case LOAD_SHARED_SONG_QUEUE_FAIL:
       return {
         ...state,
@@ -155,27 +118,14 @@ export function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         queue: action.songs,
-        // curTrack: action.songs[0],
         curTrackIndex: 0,
       };
 
-    // Reducers for TrackPlayer event handler's dispatches
-    // case PLAYBACK_STATE:
-    //   return {
-    //     ...state,
-    //     playback: action.state,
-    //   };
-    // case PLAYBACK_TRACK:
-    //   return {
-    //     ...state,
-    //     track: action.track,
-    //     curTrack: action.newCurTrack,
-    //     curTrackIndex: action.newCurTrackIndex,
-    //   };
     case PLAYBACK_STATE:
       return {
         ...state, playbackState: action.playbackState,
       };
+
     case PLAYBACK_TRACK:
       return {
         ...state, curTrackId: action.curTrackId,
@@ -512,9 +462,23 @@ export function playbackState2(data) {
 }
 
 export function playbackTrack2(data) {
-  return {
-    type: PLAYBACK_TRACK,
-    curTrackId: data.nextTrack,
+  return (dispatch, getState) => {
+    // when a new track comes through, clear the score
+    dispatch(clearScore());
+
+    dispatch({
+      type: PLAYBACK_TRACK,
+      curTrackId: data.nextTrack,
+    });
+
+    const queueType = getState().queueType;
+    // log songPlay analytic
+    dispatch(
+      logEvent(
+        anal.songPlay,
+        songPlayAnalyticEventFactory(anal.songPlay, queueType, data.nextTrack),
+      ),
+    );
   };
 }
 

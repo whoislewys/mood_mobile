@@ -7,11 +7,7 @@ import {
   INCREMENT_SCORE,
   SEND_SCORE_SUCCESS,
   SEND_SCORE_FAIL,
-  START_TIMER,
-  STOP_TIMER,
 } from '../constants';
-
-const SEND_SCORE_TIME = 8000; // in ms
 
 export const initialState = {
   currentScore: 0,
@@ -28,15 +24,6 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, scoreDelta: 0 };
     case SEND_SCORE_FAIL:
       return { ...state, scoreDelta: 0, error: action.e };
-    case START_TIMER:
-      return {
-        ...state,
-        currentScore: 0,
-        scoreDelta: 0,
-        timer: action.newTimer,
-      };
-    case STOP_TIMER:
-      return { ...state, timer: null };
     default:
       return state;
   }
@@ -80,26 +67,5 @@ export function sendScoreDelta(currentTrackId) {
         dispatch({ type: SEND_SCORE_FAIL, e });
       }
     }
-  };
-}
-
-export function startScoreTimer() {
-  return (dispatch, getState) => {
-    clearInterval(getState().score.timer);
-    const newTimer = setInterval(() => dispatch(sendScoreDelta(getState().queue.curTrack.id)), SEND_SCORE_TIME);
-    dispatch({
-      type: START_TIMER,
-      newTimer,
-    });
-  };
-}
-
-export function stopScoreTimer() {
-  // THIS ACTION SHOULD ONLY BE CALLED WHEN APP UNMOUNTS
-  return (dispatch, getState) => {
-    clearInterval(getState().score.timer);
-    dispatch({
-      type: STOP_TIMER,
-    });
   };
 }

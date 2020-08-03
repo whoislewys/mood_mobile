@@ -2,6 +2,7 @@ import axios from 'axios';
 import firebase from 'react-native-firebase';
 import { logEvent } from './analytics';
 import { saveSong } from './playlists';
+import { getCurrentTrackSelector } from './queue';
 import {
   anal,
   CLEAR_SCORE,
@@ -37,7 +38,7 @@ export function clearScore() {
 export function incrementScore(currentScore) {
   return (dispatch, getState) => {
     // if no current track, don't allow the user to rate
-    const { curTrack } = getState().queue;
+    const curTrack = getCurrentTrackSelector(getState());
     if (!curTrack) return;
 
     if (currentScore === 0) {

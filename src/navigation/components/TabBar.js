@@ -12,7 +12,12 @@ import Images from '@assets/images';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import PlayBar from '../../components/playbar';
 import { loadPlaylists, loadSavedSongs } from '../../redux/modules/playlists';
-import { handlePlayPress, skipToNext, skipToPrevious } from '../../redux/modules/queue';
+import {
+  handlePlayPress,
+  skipToNext,
+  skipToPrevious,
+  getCurrentTrackSelector,
+} from '../../redux/modules/queue';
 import { loadEvents } from '../../redux/modules/events';
 import { dimensions } from '../../assets/styles';
 
@@ -201,7 +206,7 @@ const TabBar = class TabBar extends Component {
 
 const mapStateToProps = state => ({
   queue: state.queue.queue,
-  curTrack: state.queue.curTrack,
+  curTrack: getCurrentTrackSelector(state),
   playbackState: state.queue.playbackState,
   playlists: state.playlists.playlists,
 });

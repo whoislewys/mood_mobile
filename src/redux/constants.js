@@ -112,9 +112,6 @@ export const CLEAR_SCORE = 'score/CLEAR_SCORE';
 export const INCREMENT_SCORE = 'score/INCREMENT_SCORE';
 export const SEND_SCORE_SUCCESS = 'score/SEND_SCORE_SUCCESS';
 export const SEND_SCORE_FAIL = 'score/SEND_SCORE_FAIL';
-// these should only be used in the score V1 component
-// export const START_TIMER = 'score/START_TIMER';
-// export const STOP_TIMER = 'score/STOP_TIMER';
 
 // Settings
 export const DATA_TRACK_TOGGLE = 'settings/DATA_TRACK_TOGGLE';

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Images from '@assets/images';
 import { incrementScore, sendScore } from '../redux/modules/score-v2';
+import { getCurrentTrackSelector } from '../redux/modules/queue';
 
 // todo:
 // 1. refactor scoring so that it only sends 1 score to API with NO timers
@@ -41,13 +42,16 @@ export class HeartButton extends Component {
       this.props.navigation.navigate('Login');
       return;
     }
+    console.warn('liking');
     // start from currentScore + 1 to not show 0 hearts
     const { maxCount } = this.state;
     const newScore = this.props.currentScore + 1;
+    console.warn('new score', newScore);
     if (newScore <= maxCount) {
       this.props.incrementScore(this.props.currentScore);
+      console.warn('incremented score');
       if (this.props.curTrack != null) {
-        this.props.sendScore(this.props.curTrack.id);
+        this.props.sendScore(this.props.curTrackId);
       }
     }
   };
@@ -79,7 +83,7 @@ export class HeartButton extends Component {
 
 const mapStateToProps = state => ({
   currentScore: state.score.currentScore,
-  curTrack: state.queue.curTrack,
+  curTrackId: state.queue.curTrackId,
   userIsLoggedIn: state.auth.userIsLoggedIn,
 });
 
