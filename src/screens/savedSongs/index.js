@@ -92,7 +92,6 @@ export class SavedSongs extends Component {
         style={styles.shuffleButtonContainer}
         onPress={() => {
           this.props.shufflePlay(this.props.savedSongs);
-          this.props.navigation.navigate('Play');
         }}
       >
         <Image source={Images.shuffle} style={styles.shuffleButton} />
@@ -101,9 +100,8 @@ export class SavedSongs extends Component {
   );
 
   _handleSongRowPress = async (pressedSongIndex, pressedSongId) => {
-    await this.props.
-      loadQueueStartingAtSong(pressedSongIndex, pressedSongId, this.props.savedSongs);
-    this._navigateToPlayScreen();
+    await this.props
+      .loadQueueStartingAtSong(pressedSongIndex, pressedSongId, this.props.savedSongs);
   };
 
   keyExtractor = song => song.id.toString();

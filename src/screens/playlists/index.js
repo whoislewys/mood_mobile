@@ -118,7 +118,7 @@ class Playlists extends Component {
     });
 
   handleScroll = (event) => {
-    console.warn('handling scroll');
+    // console.warn('handling scroll');
     // get the yoffset where the user let their finger off the screen after scrolling
     const yOffset = event.nativeEvent.contentOffset.y;
 

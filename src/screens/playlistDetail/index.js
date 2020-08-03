@@ -77,25 +77,12 @@ class PlaylistDetail extends Component {
     });
   };
 
-  _navigateToPlayScreen = () => {
-    this.props.navigation.navigate({
-      routeName: 'Play',
-      params: {
-        parentScreen: 'Leaderboard',
-        visible: false,
-        // dont remember why this moodscreen prop even exists
-        moodscreen: this._navigateToLeaderboardScreen,
-      },
-    });
-  };
-
   _shuffleButton = () => (
     <View>
       <TouchableOpacity
         style={styles.shuffleButtonContainer}
         onPress={() => {
           this.props.shufflePlay(this.props.playlistSongs);
-          this.props.navigation.navigate('Play');
         }}
       >
         <Image source={Images.shuffle} style={styles.shuffleButton} />
@@ -105,7 +92,6 @@ class PlaylistDetail extends Component {
 
   _handleSongRowPress = async (playlistSongIndex, playlistSongId) => {
     await this.props.loadQueueStartingAtSong(playlistSongIndex, playlistSongId, this.props.playlistSongs);
-    this._navigateToPlayScreen();
   };
 
   _handleSaveButtonPress = () => {

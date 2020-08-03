@@ -52,7 +52,7 @@ export function reducer(state = initialState, action = {}) {
         queueType: '',
       };
 
-    //v2
+    // v2
     case FILL_QUEUE:
       let moodSongs = [];
       moodSongs = action.songs;
@@ -203,16 +203,34 @@ export function handlePlayPress() {
 
 
 export function shufflePlay(songs) {
-  const shuffledSongs = shuffle(songs);
   return async (dispatch) => {
+    const shuffledSongs = shuffle(songs);
     dispatch({ type: RESET_QUEUE });
-    await TrackPlayer.reset();
-    await TrackPlayer.add(songs);
-    await TrackPlayer.play();
+
+    try {
+      await TrackPlayer.reset();
+    } catch (e) {
+      console.warn('tp reset err: ', e);
+    }
+
+    try {
+      await TrackPlayer.add(shuffledSongs);
+    } catch (e) {
+      console.warn('tp add err: ', e);
+    }
+
+    try {
+      await TrackPlayer.play();
+    } catch (e) {
+      console.warn('tp play err: ', e);
+    }
+
     dispatch({
-      type: PLAY_SHUFFLED_PLAYLIST,
+      type: FILL_QUEUE,
       songs: shuffledSongs,
     });
+
+    NavigationService.navigate('Play');
   };
 }
 
