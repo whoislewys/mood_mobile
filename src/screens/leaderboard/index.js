@@ -11,11 +11,7 @@ import Images from '@assets/images';
 import { LEADERBOARDS } from '../../redux/constants';
 import LeaderboardRow from './components/leaderboardRow';
 import { loadLeaderboardSongs } from '../../redux/modules/leaderboard';
-import {
-  // loadQueueStartingAtId,
-  // loadQueueStartingAtIndex2,
-  loadQueueStartingAtSong,
-} from '../../redux/modules/queue';
+import { loadQueueStartingAtSong } from '../../redux/modules/queue';
 import { spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
@@ -55,22 +51,7 @@ class LeaderboardScreen extends Component {
     });
   };
 
-  // _navigateToPlayScreen = () => {
-  //   this.props.navigation.navigate({
-  //     routeName: 'Play',
-  //     params: {
-  //       parentScreen: 'Leaderboard',
-  //       visible: false,
-  //       // dont remember why this moodscreen prop even exists
-  //       moodscreen: this._navigateToLeaderboardScreen,
-  //     },
-  //   });
-  // };
-
   _handleLeaderboardRowPress = async (pressedLeaderboardSongIndex, pressedLeaderboardSongId) => {
-    console.warn('pressed id: ', pressedLeaderboardSongId);
-    console.warn('pressed idx: ', pressedLeaderboardSongIndex);
-    // await this.props.loadQueueStartingAtIndex2(pressedLeaderboardSongId, this.props.leaderboardSongs);
     await this.props.loadQueueStartingAtSong(pressedLeaderboardSongIndex, pressedLeaderboardSongId, this.props.leaderboardSongs);
   };
 
@@ -131,8 +112,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadLeaderboardSongs,
-  // loadQueueStartingAtId,
-  // loadQueueStartingAtIndex2,
   loadQueueStartingAtSong,
 };
 

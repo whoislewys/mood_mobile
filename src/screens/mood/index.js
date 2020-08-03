@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { setMood } from '../../redux/modules/mood';
 import {
-  // loadSongsForAllMoods,
   loadSongsForAllMoods2,
   loadSongsForMoodId2,
   loadSharedSongQueue,
