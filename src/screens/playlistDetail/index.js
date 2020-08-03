@@ -135,7 +135,7 @@ class PlaylistDetail extends Component {
   );
 
   getPlaylistSongs = () => (
-    this.props.playlistSongs !== undefined
+    this.props.playlistSongs != null
       ? (
         <FlatList
           data={this.props.playlistSongs}

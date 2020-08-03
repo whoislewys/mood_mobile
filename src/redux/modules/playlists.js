@@ -156,21 +156,21 @@ export function reducer(state = initialState, action = {}) {
 
     case LOAD_SAVED_SONGS:
       return { ...state, loading: true };
-    // case LOAD_SAVED_SONGS_SUCCESS:
-    //   const savedSongs = mapSongsToValidTrackObjects(action.savedSongs);
-    //   return {
-    //     ...state,
-    //     savedSongs,
-    //     loading: false,
-    //   };
+    case LOAD_SAVED_SONGS_SUCCESS:
+      const savedSongs = mapSongsToValidTrackObjects(action.savedSongs);
+      return {
+        ...state,
+        savedSongs,
+        loading: false,
+      };
     case LOAD_SAVED_SONGS_FAIL:
       return { ...state, loading: false, error: action.e };
 
     case PLAYLIST_LOAD_SONGS:
       return { ...state, loading: true, songs: [] };
-    // case PLAYLIST_LOAD_SONGS_SUCCESS:
-    //   const songs = mapSongsToValidTrackObjects(action.payload.data.songs);
-    //   return { ...state, loading: false, songs };
+    case PLAYLIST_LOAD_SONGS_SUCCESS:
+      const songs = mapSongsToValidTrackObjects(action.payload.data.songs);
+      return { ...state, loading: false, songs };
     case PLAYLIST_LOAD_SONGS_FAIL:
       return {
         ...state,
@@ -181,13 +181,13 @@ export function reducer(state = initialState, action = {}) {
 
     case UPDATE_PLAYLIST:
       return { ...state, loading: true };
-    // case UPDATE_PLAYLIST_SUCCESS:
-    //   const { playlistId, updatedSongs } = action;
-    //   if (playlistId === state.savedSongsPlaylistId) {
+    case UPDATE_PLAYLIST_SUCCESS:
+      const { playlistId, updatedSongs } = action;
+      if (playlistId === state.savedSongsPlaylistId) {
         // need to update the store's saved songs because you might call update again with your old saved songs
-        // return { ...state, loading: false, savedSongs: mapSongsToValidTrackObjects(updatedSongs) };
-      // }
-      // return { ...state, loading: false, songs: updatedSongs };
+        return { ...state, loading: false, savedSongs: mapSongsToValidTrackObjects(updatedSongs) };
+      }
+      return { ...state, loading: false, songs: updatedSongs };
     case UPDATE_PLAYLIST_FAIL:
       return { ...state, loading: false, error: action.e };
     default:
