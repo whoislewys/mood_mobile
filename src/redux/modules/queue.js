@@ -542,17 +542,19 @@ export function loadSharedSongQueue(sharedTrack) {
 
     let songs;
     try {
-      songs = await axios.get(`https://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
+      const songsResp = await axios.get(`https://api.moodindustries.com/api/v1/moods/${sharedTrack.mood_id}/songs`,
         {
           params: { t: 'EXVbAWTqbGFl7BKuqUQv' },
           responseType: 'json',
         });
+      songs = songsResp.data;
     } catch (e) {
       console.warn('axios error:', e);
     }
 
     try {
       const trackPlayerSongs = shuffle(mapSongsToValidTrackObjects(songs));
+      trackPlayerSongs.unshift(sharedTrack);
       await TrackPlayer.add(trackPlayerSongs);
       dispatch({
         type: FILL_QUEUE,
