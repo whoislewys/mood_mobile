@@ -185,7 +185,7 @@ class SettingsScreen extends Component {
 
   footerElem = () => (
     <Text style={[styles.textRow, styles.copyrightText]}>
-      © 2019 Mood Industries LLC, all rights reserved.
+      © 2020 Mood Industries LLC, all rights reserved.
     </Text>
   );
 
