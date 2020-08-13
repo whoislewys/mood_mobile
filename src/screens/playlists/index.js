@@ -161,11 +161,12 @@ class Playlists extends Component {
   };
 
   _onCreatePlaylist = async () => {
-    await this.props.createPlaylist();
-    if (this.props.playlistError === '') {
-      this._handlePlaylistRowPress();
-      this.props.navigation.navigate('PlaylistDetail');
-    }
+    console.warn('this props song to add', this.props.songIdToAdd);
+    await this.props.createPlaylist(this.props.songIdToAdd);
+    // if (this.props.playlistError === '') {
+    //   this._handlePlaylistRowPress();
+    //   this.props.navigation.navigate('PlaylistDetail');
+    // }
   };
 
   getModal = () => (

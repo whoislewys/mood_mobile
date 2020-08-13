@@ -378,7 +378,7 @@ export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
     }
 
     try {
-      // if songs only has one song in it
+      // if songs to play is only one song
       if (songs.length === 0) {
         await TrackPlayer.add(songs);
 
@@ -397,10 +397,11 @@ export function loadQueueStartingAtSong(startSongIndex, startSongId, songs) {
         await TrackPlayer.add(selectedSong);
 
         // add any songs before
+        // https://react-native-track-player.js.org/documentation/#track-structure
         await TrackPlayer.add(songsBeforeSelected, startSongId);
 
         // add any songs after
-        // Set it to null to add it at the end of the queue
+        // Pass second arg of null to add it at the end of the queue
         await TrackPlayer.add(songsAfterSelected, null);
 
         dispatch({

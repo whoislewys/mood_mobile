@@ -281,29 +281,32 @@ export function loadPlaylists() {
   };
 }
 
-export function createPlaylist() {
+export function createPlaylist(newPlaylistSongs) {
   return async (dispatch, getState) => {
-    // start by closing the new playlist modal and checking if user is logged in
+    // start by closing the new playlist modal and ensuring if user is logged in
     dispatch(closeModal());
 
     if (!getState().auth.userIsLoggedIn) return;
 
     dispatch({ type: CREATE_PLAYLIST });
     try {
-      const currentDatetime = moment().format('LLLL');
       // if user leaves playlist name blank, create one with title: 'New Playlist <current datetime>'
+      const currentDatetime = moment().format('LLLL');
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? `New Playlist ${currentDatetime}`
         : getState().playlists.newPlaylistName;
 
+      // No 'Saved Songs' playlist, that would clobber our internal saved songs playlist for each user
       if (playlistNameToSubmit === 'Saved Songs') throw new Error('Can\'t name new playlist "Saved Songs"');
 
       const token = await firebase.auth().currentUser.getIdToken();
+      // const newPlaylistSongs = Array.from(getState().playlists.newPlaylistSongs);
+      console.warn('songs for new playlist songs: ', newPlaylistSongs); // ids fine? or need songs
       const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           name: playlistNameToSubmit,
           description: '',
-          song_ids: Array.from(getState().playlists.newPlaylistSongs),
+          song_ids: newPlaylistSongs,
         },
         { headers: { Authorization: token } });
       const newPlaylistId = newPlaylist.data.id;
@@ -317,7 +320,7 @@ export function createPlaylist() {
   };
 }
 
-// Actually loads songs
+// Actually loads songs into playlist
 async function loadSongsForPlaylistIdHelper(id) {
   const token = await firebase.auth().currentUser.getIdToken();
   try {
@@ -522,6 +525,7 @@ export function resetNewPlaylistSongs() {
  */
 export function saveSongToPlaylist(songId, playlistId) {
   // should save song to saved songs playlist
+  console.warn(`saving songid: ${songId} to playlistid ${playlistId}`);
   return async (dispatch, getState) => {
     if (getState().playlists.savedSongs) {
       // if the user hasn't loaded their saved songs yet, load it for them
