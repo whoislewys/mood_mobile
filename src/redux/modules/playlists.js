@@ -4,6 +4,7 @@ import moment from 'moment';
 import {
   ADD_TO_NEW_PLAYLIST_SONGS,
   ADD_SONG_TO_TO_DELETE_SET,
+  CLEAR_PLAYLISTS,
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
   CREATE_PLAYLIST_FAIL,
@@ -190,6 +191,14 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, loading: false, songs: updatedSongs };
     case UPDATE_PLAYLIST_FAIL:
       return { ...state, loading: false, error: action.e };
+    case CLEAR_PLAYLISTS:
+      return {
+        ...state,
+        playlists: [],
+        savedSongs: [],
+        curPlaylistTitle: '',
+        curPlaylistId: NaN,
+      };
     default:
       return state;
   }
@@ -319,7 +328,7 @@ async function loadSongsForPlaylistIdHelper(id) {
       });
     return songs;
   } catch (e) {
-    throw e;
+    console.warn('Error gettings songs for playlist:', e);
   }
 }
 
@@ -584,6 +593,14 @@ export function deletePlaylist(playlistId) {
       dispatch({ type: DELETE_PLAYLIST_FAIL, e });
     }
   };
+}
+
+
+/**
+ * Clears all playlists state, including saved songs. Should really only be used when user logs out
+**/
+export function clearPlaylists() {
+  return ({ type: CLEAR_PLAYLISTS });
 }
 
 export function setPlaylistScrollingNegative() {

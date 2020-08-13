@@ -60,6 +60,8 @@ export const UPDATE_PLAYLIST_FAIL = 'playlists/UPDATE_FAIL';
 export const DELETE_PLAYLIST = 'playlists/DELETE_PLAYLIST';
 export const DELETE_PLAYLIST_SUCCESS = 'playlists/DELETE_PLAYLIST_SUCCESS';
 export const DELETE_PLAYLIST_FAIL = 'playlists/DELETE_PLAYLIST_FAIL';
+// Misc
+export const CLEAR_PLAYLISTS = 'playlists/CLEAR_PLAYLISTS';
 
 // Client
 // checkmark screen stuff
