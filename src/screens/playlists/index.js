@@ -17,6 +17,7 @@ import {
   setCurrentPlaylist,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
+  resetNewPlaylistSongs,
   updateNewPlaylistName,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
@@ -87,6 +88,7 @@ class Playlists extends Component {
   _handlePlaylistRowPress =
     (pressedPlaylist) => {
       if (this.props.isPlaylistModalOpen) {
+        console.warn('saving song to playlist and closing modal');
         this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id);
         this.props.handleModalClose();
       } else {
@@ -161,12 +163,15 @@ class Playlists extends Component {
   };
 
   _onCreatePlaylist = async () => {
-    console.warn('this props song to add', this.props.songIdToAdd);
-    await this.props.createPlaylist(this.props.songIdToAdd);
-    // if (this.props.playlistError === '') {
-    //   this._handlePlaylistRowPress();
-    //   this.props.navigation.navigate('PlaylistDetail');
-    // }
+    songsForNewPlaylist = Array.from(this.props.newPlaylistSongs);
+    console.warn('songs for new playlist', songsForNewPlaylist);
+    await this.props.createPlaylist(songsForNewPlaylist);
+
+    if (this.props.playlistError === '') {
+      this._handlePlaylistRowPress();
+      this.props.navigation.navigate('PlaylistDetail');
+    }
+    this.props.resetNewPlaylistSongs();
   };
 
   getModal = () => (
@@ -180,6 +185,9 @@ class Playlists extends Component {
   );
 
   render = () => {
+    // console.warn('playlists rendered');
+    // console.warn('this props', this.props);
+
     // This screen can render in two contexts.
     // 1. As a modal that lets you add songs to a playlist
     // 2. As a standalone screen that you can play music through
@@ -210,6 +218,7 @@ const mapStateToProps = state => ({
   playlistError: state.playlists.error,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
   userIsLoggedIn: state.auth.userIsLoggedIn,
+  newPlaylistSongs: state.playlists.newPlaylistSongs,
 });
 
 const mapDispatchToProps = {
@@ -223,6 +232,7 @@ const mapDispatchToProps = {
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
   updateNewPlaylistName,
+  resetNewPlaylistSongs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlists);

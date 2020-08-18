@@ -99,8 +99,10 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, newPlaylistName: action.newPlaylistName };
 
     case ADD_TO_NEW_PLAYLIST_SONGS:
+      console.warn('Adding to new playlist id : ', action.songIdToSave);
       const newestPlaylistSongs = new Set();
-      if (state.newPlaylistSongs === undefined) {
+      if (state.newPlaylistSongs.size === 0) {
+        console.warn('new playlist songs size', state.newPlaylistSongs.size);
         newestPlaylistSongs.add(action.songIdToSave);
       } else {
         state.newPlaylistSongs.forEach(song => newestPlaylistSongs.add(song));
@@ -218,10 +220,10 @@ export function closeModal() {
   };
 }
 
-export function addToNewPlaylistSongs(newPlaylistSong) {
+export function addToNewPlaylistSongs(newPlaylistSongId) {
   return {
     type: ADD_TO_NEW_PLAYLIST_SONGS,
-    songIdToSave: newPlaylistSong.id,
+    songIdToSave: newPlaylistSongId,
   };
 }
 
@@ -267,6 +269,7 @@ export function updateNewPlaylistName(newPlaylistName) {
 export function loadPlaylists() {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
+    console.warn('loading playlists');
     try {
       const token = await firebase.auth().currentUser.getIdToken();
       const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
@@ -274,8 +277,10 @@ export function loadPlaylists() {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
+      console.warn('loaded playlists', playlists);
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
     } catch (e) {
+      console.warn('load playlists err', e);
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
     }
   };
@@ -300,8 +305,10 @@ export function createPlaylist(newPlaylistSongs) {
 
       const token = await firebase.auth().currentUser.getIdToken();
       // const newPlaylistSongs = Array.from(getState().playlists.newPlaylistSongs);
-      console.warn('songs for new playlist songs: ', newPlaylistSongs); // ids fine? or need songs
+      console.warn('songs for new playlist: ', newPlaylistSongs); // ids fine? or need songs
+      // console.warn('old way of getting playlist songs', Array.from(getState().playlists.newPlaylistSongs));
       const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
+      // const newPlaylist = await axios.post('http://127.0.0.1:3000/api/v1/playlists',
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           name: playlistNameToSubmit,
@@ -309,16 +316,21 @@ export function createPlaylist(newPlaylistSongs) {
           song_ids: newPlaylistSongs,
         },
         { headers: { Authorization: token } });
+      console.warn('new playlist created:', newPlaylist);
       const newPlaylistId = newPlaylist.data.id;
-
       dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
       dispatch(loadPlaylists());
     } catch (err) {
+      console.warn('create playlist err', err);
       dispatch(closeModal());
       dispatch({ type: CREATE_PLAYLIST_FAIL, err });
     }
   };
 }
+
+// export function setSongIdToAdd(songIdToAdd) {
+
+// }
 
 // Actually loads songs into playlist
 async function loadSongsForPlaylistIdHelper(id) {
@@ -514,6 +526,7 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
 }
 
 export function resetNewPlaylistSongs() {
+  console.warn('resseting to save songs');
   return ({ type: RESET_SAVED_SONGS_SET });
 }
 

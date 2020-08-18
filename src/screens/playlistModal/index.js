@@ -22,6 +22,7 @@ import {
   setPlaylistModalClosed,
   setPlaylistScrollingNotNegative,
   updateNewPlaylistName,
+  addToNewPlaylistSongs,
 } from '../../redux/modules/playlists';
 
 const styles = StyleSheet.create({
@@ -83,6 +84,7 @@ export class PlaylistModal extends Component {
   componentDidMount() {
     this.props.navigation.addListener('willFocus', this.componentWillFocus);
     this.props.navigation.addListener('willBlur', this.componentWillBlur);
+    this.props.addToNewPlaylistSongs(this.props.songIdToAdd);
   }
 
   componentWillFocus = () => {
@@ -136,7 +138,7 @@ export class PlaylistModal extends Component {
                 <Image source={Images.close} style={styles.exitButton} />
               </TouchableOpacity>
             </GestureRecognizer>
-            <Playlists songIdToAdd={this.props.songIdToAdd} navigation={this.props.navigation} handleModalClose={this.handleModalClose} />
+            <Playlists navigation={this.props.navigation} handleModalClose={this.handleModalClose} />
           </Animated.View>
         </Animated.View>
       </View>
@@ -172,7 +174,6 @@ export class PlaylistModal extends Component {
     this.props.setPlaylistModalHalfScreen();
     this.props.navigation.goBack();
   };
-
 }
 
 const mapStateToProps = state => ({
@@ -190,6 +191,7 @@ const mapDispatchToProps = {
   loadPlaylists,
   closeModal,
   updateNewPlaylistName,
+  addToNewPlaylistSongs,
   setPlaylistModalHalfScreen,
   setPlaylistModalOpen,
   setPlaylistModalClosed,
