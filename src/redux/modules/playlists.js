@@ -46,7 +46,7 @@ import { mapSongsToValidTrackObjects } from '../util';
 export const initialState = {
   curPlaylistId: NaN,
   curPlaylistTitle: '',
-  error: {},
+  error: '',
   isCreatePlaylistModalOpen: false,
   isPlaylistModalOpen: false,
   loading: false,
@@ -99,10 +99,8 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, newPlaylistName: action.newPlaylistName };
 
     case ADD_TO_NEW_PLAYLIST_SONGS:
-      console.warn('Adding to new playlist id : ', action.songIdToSave);
       const newestPlaylistSongs = new Set();
       if (state.newPlaylistSongs.size === 0) {
-        console.warn('new playlist songs size', state.newPlaylistSongs.size);
         newestPlaylistSongs.add(action.songIdToSave);
       } else {
         state.newPlaylistSongs.forEach(song => newestPlaylistSongs.add(song));
@@ -269,7 +267,6 @@ export function updateNewPlaylistName(newPlaylistName) {
 export function loadPlaylists() {
   return async (dispatch) => {
     dispatch({ type: LOAD_PLAYLISTS });
-    console.warn('loading playlists');
     try {
       const token = await firebase.auth().currentUser.getIdToken();
       const playlists = await axios.get('https://api.moodindustries.com/api/v1/playlists',
@@ -277,7 +274,6 @@ export function loadPlaylists() {
           headers: { Authorization: token },
           t: 'EXVbAWTqbGFl7BKuqUQv',
         });
-      console.warn('loaded playlists', playlists);
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
     } catch (e) {
       console.warn('load playlists err', e);
@@ -304,11 +300,7 @@ export function createPlaylist(newPlaylistSongs) {
       if (playlistNameToSubmit === 'Saved Songs') throw new Error('Can\'t name new playlist "Saved Songs"');
 
       const token = await firebase.auth().currentUser.getIdToken();
-      // const newPlaylistSongs = Array.from(getState().playlists.newPlaylistSongs);
-      console.warn('songs for new playlist: ', newPlaylistSongs); // ids fine? or need songs
-      // console.warn('old way of getting playlist songs', Array.from(getState().playlists.newPlaylistSongs));
       const newPlaylist = await axios.post('https://api.moodindustries.com/api/v1/playlists',
-      // const newPlaylist = await axios.post('http://127.0.0.1:3000/api/v1/playlists',
         {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           name: playlistNameToSubmit,
@@ -316,7 +308,6 @@ export function createPlaylist(newPlaylistSongs) {
           song_ids: newPlaylistSongs,
         },
         { headers: { Authorization: token } });
-      console.warn('new playlist created:', newPlaylist);
       const newPlaylistId = newPlaylist.data.id;
       dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
       dispatch(loadPlaylists());
@@ -475,7 +466,6 @@ export function updatePlaylist(playlistId, songIds) {
           song_ids: songIds,
         },
         { headers: { Authorization: token } });
-      console.warn('updated playlist songs: ', songsResp);
 
       if (songsResp.data.songs === undefined) {
         dispatch({
@@ -537,7 +527,6 @@ export function resetNewPlaylistSongs() {
  */
 export function saveSongToPlaylist(songId, playlistId) {
   // should save song to saved songs playlist
-  console.warn(`saving songid: ${songId} to playlistid ${playlistId}`);
   return async (dispatch, getState) => {
     if (!getState().playlists.savedSongs.length) {
       // if the user hasn't loaded their saved songs yet, load it for them
@@ -549,7 +538,6 @@ export function saveSongToPlaylist(songId, playlistId) {
     let playlistSongs;
     try {
       playlistSongs = await loadSongsForPlaylistIdHelper(playlistId);
-      console.warn('current playlist songs: ', playlistSongs);
     } catch (e) {
       dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL, error: e });
       return;
@@ -557,7 +545,6 @@ export function saveSongToPlaylist(songId, playlistId) {
 
     const playlistSongIds = playlistSongs.data.songs.map(s => s.id);
     playlistSongIds.push(songId);
-    console.warn('updated playlist song ids: ', playlistSongIds);
     dispatch(updatePlaylist(playlistId, playlistSongIds));
   };
 }

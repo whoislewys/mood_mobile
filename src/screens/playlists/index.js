@@ -88,7 +88,6 @@ class Playlists extends Component {
   _handlePlaylistRowPress =
     (pressedPlaylist) => {
       if (this.props.isPlaylistModalOpen) {
-        console.warn('saving song to playlist and closing modal');
         // TODO: currently newPlaylistSongs set only has 1 value in it at a time. this may not always be true in the future
         this.props.saveSongToPlaylist(this.props.newPlaylistSongs.values().next().value , pressedPlaylist.id);
         this.props.resetNewPlaylistSongs();
@@ -165,13 +164,13 @@ class Playlists extends Component {
   };
 
   _onCreatePlaylist = async () => {
-    songsForNewPlaylist = Array.from(this.props.newPlaylistSongs);
-    console.warn('songs for new playlist', songsForNewPlaylist);
+    const songsForNewPlaylist = Array.from(this.props.newPlaylistSongs);
     await this.props.createPlaylist(songsForNewPlaylist);
 
     if (this.props.playlistError === '') {
-      this._handlePlaylistRowPress();
-      this.props.navigation.navigate('PlaylistDetail');
+      if (this.props.isPlaylistModalOpen) {
+        this.props.handleModalClose();
+      }
     }
     this.props.resetNewPlaylistSongs();
   };
@@ -187,9 +186,6 @@ class Playlists extends Component {
   );
 
   render = () => {
-    // console.warn('playlists rendered');
-    // console.warn('this props', this.props);
-
     // This screen can render in two contexts.
     // 1. As a modal that lets you add songs to a playlist
     // 2. As a standalone screen that you can play music through

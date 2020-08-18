@@ -15,7 +15,6 @@ import { dimensions, spacing } from '../../assets/styles';
 import Playlists from '../playlists';
 import {
   closeModal,
-  createPlaylist,
   loadPlaylists,
   setPlaylistModalHalfScreen,
   setPlaylistModalOpen,
@@ -196,7 +195,6 @@ const mapDispatchToProps = {
   setPlaylistModalOpen,
   setPlaylistModalClosed,
   setPlaylistScrollingNotNegative,
-  createPlaylist,
 };
 
 PlaylistModal.propTypes = {
