@@ -89,7 +89,9 @@ class Playlists extends Component {
     (pressedPlaylist) => {
       if (this.props.isPlaylistModalOpen) {
         console.warn('saving song to playlist and closing modal');
-        this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id);
+        // TODO: currently newPlaylistSongs set only has 1 value in it at a time. this may not always be true in the future
+        this.props.saveSongToPlaylist(this.props.newPlaylistSongs.values().next().value , pressedPlaylist.id);
+        this.props.resetNewPlaylistSongs();
         this.props.handleModalClose();
       } else {
         this._showCurrentPlaylist(pressedPlaylist);

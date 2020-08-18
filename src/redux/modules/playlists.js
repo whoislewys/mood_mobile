@@ -24,8 +24,8 @@ import {
   PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
   REMOVE_SONG_FROM_TO_DELETE_SET,
   RESET_TO_DELETE_SET,
-  SAVE_RANKED_SONG,
-  SAVE_RANKED_SONG_SUCCESS,
+  // SAVE_RANKED_SONG,
+  // SAVE_RANKED_SONG_SUCCESS,
   SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
@@ -456,7 +456,7 @@ export function loadSavedSongs() {
 
 export function updatePlaylist(playlistId, songIds) {
   return async (dispatch) => {
-    // Prevent user from saving duplicate songs to a playlist
+    // Prevent user from saving duplicate songs to a playlist by using a set
     const seen = new Set();
     const songIdsHaveDuplicates = songIds.some(songId => seen.size === seen.add(songId).size);
     // TODO: add an alert here to warn user of duplicates
@@ -475,7 +475,7 @@ export function updatePlaylist(playlistId, songIds) {
           song_ids: songIds,
         },
         { headers: { Authorization: token } });
-
+      console.warn('updated playlist songs: ', songsResp);
 
       if (songsResp.data.songs === undefined) {
         dispatch({
@@ -526,7 +526,6 @@ export function deleteSongsFromPlaylist(playlistId, songIdsToDelete) {
 }
 
 export function resetNewPlaylistSongs() {
-  console.warn('resseting to save songs');
   return ({ type: RESET_SAVED_SONGS_SET });
 }
 
@@ -540,24 +539,25 @@ export function saveSongToPlaylist(songId, playlistId) {
   // should save song to saved songs playlist
   console.warn(`saving songid: ${songId} to playlistid ${playlistId}`);
   return async (dispatch, getState) => {
-    if (getState().playlists.savedSongs) {
+    if (!getState().playlists.savedSongs.length) {
       // if the user hasn't loaded their saved songs yet, load it for them
       await dispatch(loadSavedSongs());
     }
-    dispatch({ type: SAVE_RANKED_SONG });
+    // dispatch({ type: SAVE_RANKED_SONG });
 
-    // try and fetch the songs. if they fail, just short circuit out of this function
+    // try and fetch the current songs for the playlist. if they fail, just short circuit out of this function
     let playlistSongs;
     try {
       playlistSongs = await loadSongsForPlaylistIdHelper(playlistId);
+      console.warn('current playlist songs: ', playlistSongs);
     } catch (e) {
       dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL, error: e });
       return;
     }
 
-
     const playlistSongIds = playlistSongs.data.songs.map(s => s.id);
     playlistSongIds.push(songId);
+    console.warn('updated playlist song ids: ', playlistSongIds);
     dispatch(updatePlaylist(playlistId, playlistSongIds));
   };
 }
@@ -569,7 +569,7 @@ export function saveSong(song) {
       // if the user hasn't loaded their saved songs yet, load it for them
       await dispatch(loadSavedSongs());
     }
-    dispatch({ type: SAVE_RANKED_SONG });
+    // dispatch({ type: SAVE_RANKED_SONG });
 
     let { savedSongsPlaylistId } = getState().playlists;
     if (savedSongsPlaylistId === -1) {
@@ -584,7 +584,7 @@ export function saveSong(song) {
     savedSongIds.push(song.id);
     await dispatch(updatePlaylist(savedSongsPlaylistId, savedSongIds));
 
-    dispatch({ type: SAVE_RANKED_SONG_SUCCESS });
+    // dispatch({ type: SAVE_RANKED_SONG_SUCCESS });
 
     // refresh songs after update is complete
     await dispatch(loadSavedSongs());
