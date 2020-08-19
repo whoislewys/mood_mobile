@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   ActivityIndicator,
   FlatList,
   StyleSheet,
 } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PlaylistRow from './components/playlistRow';
 import {
   closeModal,
@@ -17,10 +17,11 @@ import {
   setCurrentPlaylist,
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
+  resetNewPlaylistSongs,
   updateNewPlaylistName,
 } from '../../redux/modules/playlists';
 import TwoButtonModal from '../../components/modals/two-button-modal';
-import {dimensions, spacing} from '../../assets/styles';
+import { dimensions, spacing } from '../../assets/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +57,7 @@ class Playlists extends Component {
   _navigateToPlaylistsScreen = (params = {}) => {
     this.props.navigation.navigate({
       routeName: 'Playlists',
-      params: {...params, visible: true},
+      params: { ...params, visible: true },
     });
   };
 
@@ -87,7 +88,9 @@ class Playlists extends Component {
   _handlePlaylistRowPress =
     (pressedPlaylist) => {
       if (this.props.isPlaylistModalOpen) {
-        this.props.saveSongToPlaylist(this.props.songIdToAdd, pressedPlaylist.id);
+        // TODO: currently newPlaylistSongs set only has 1 value in it at a time. this may not always be true in the future
+        this.props.saveSongToPlaylist(this.props.newPlaylistSongs.values().next().value , pressedPlaylist.id);
+        this.props.resetNewPlaylistSongs();
         this.props.handleModalClose();
       } else {
         this._showCurrentPlaylist(pressedPlaylist);
@@ -118,7 +121,6 @@ class Playlists extends Component {
     });
 
   handleScroll = (event) => {
-    // console.warn('handling scroll');
     // get the yoffset where the user let their finger off the screen after scrolling
     const yOffset = event.nativeEvent.contentOffset.y;
 
@@ -148,25 +150,29 @@ class Playlists extends Component {
             data={[this._playlistButton()].concat(playlistsNoSavedSongs)}
             renderItem={this._renderItem}
             keyExtractor={this.keyExtractor}
-            ListHeaderComponent={<View style={{paddingBottom: spacing.md}} />}
+            ListHeaderComponent={<View style={{ paddingBottom: spacing.md }} />}
             // HACK: add a big footer to the end of the flatlist so that it reliably sends scroll events for any amount of playlists > 1
             // in both the standalone screen and modal contexts
-            ListFooterComponent={<View style={{height: 0, paddingBottom: dimensions.height * 0.5}} />}
+            ListFooterComponent={<View style={{ height: 0, paddingBottom: dimensions.height * 0.5 }} />}
             showsVerticalScrollIndicator={false}
             onScrollEndDrag={this.handleScroll}
             scrollEventThrottle={16}
           />
         )
-        : <ActivityIndicator color='black' size='large' animating style={{flex: 10}} />
+        : <ActivityIndicator color='black' size='large' animating style={{ flex: 10 }} />
     );
   };
 
   _onCreatePlaylist = async () => {
-    await this.props.createPlaylist();
+    const songsForNewPlaylist = Array.from(this.props.newPlaylistSongs);
+    await this.props.createPlaylist(songsForNewPlaylist);
+
     if (this.props.playlistError === '') {
-      this._handlePlaylistRowPress();
-      this.props.navigation.navigate('PlaylistDetail');
+      if (this.props.isPlaylistModalOpen) {
+        this.props.handleModalClose();
+      }
     }
+    this.props.resetNewPlaylistSongs();
   };
 
   getModal = () => (
@@ -210,6 +216,7 @@ const mapStateToProps = state => ({
   playlistError: state.playlists.error,
   updateNewPlaylistName: state.playlists.updateNewPlaylistName,
   userIsLoggedIn: state.auth.userIsLoggedIn,
+  newPlaylistSongs: state.playlists.newPlaylistSongs,
 });
 
 const mapDispatchToProps = {
@@ -223,6 +230,7 @@ const mapDispatchToProps = {
   setPlaylistModalFullScreen,
   setPlaylistScrollingNegative,
   updateNewPlaylistName,
+  resetNewPlaylistSongs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlists);

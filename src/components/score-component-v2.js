@@ -80,6 +80,7 @@ export class HeartButton extends Component {
 
 const mapStateToProps = state => ({
   currentScore: state.score.currentScore,
+  curTrack: getCurrentTrackSelector(state),
   curTrackId: state.queue.curTrackId,
   userIsLoggedIn: state.auth.userIsLoggedIn,
 });

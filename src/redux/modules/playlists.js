@@ -4,6 +4,7 @@ import moment from 'moment';
 import {
   ADD_TO_NEW_PLAYLIST_SONGS,
   ADD_SONG_TO_TO_DELETE_SET,
+  CLEAR_PLAYLISTS,
   CREATE_PLAYLIST,
   CREATE_PLAYLIST_SUCCESS,
   CREATE_PLAYLIST_FAIL,
@@ -23,8 +24,8 @@ import {
   PLAYLIST_SCROLL_IS_NOT_NEGATIVE,
   REMOVE_SONG_FROM_TO_DELETE_SET,
   RESET_TO_DELETE_SET,
-  SAVE_RANKED_SONG,
-  SAVE_RANKED_SONG_SUCCESS,
+  // SAVE_RANKED_SONG,
+  // SAVE_RANKED_SONG_SUCCESS,
   SET_CUR_PLAYLIST_ID,
   SET_PLAYLIST_MODAL_FULL_SCREEN,
   SET_PLAYLIST_MODAL_HALF_SCREEN,
@@ -45,7 +46,7 @@ import { mapSongsToValidTrackObjects } from '../util';
 export const initialState = {
   curPlaylistId: NaN,
   curPlaylistTitle: '',
-  error: {},
+  error: '',
   isCreatePlaylistModalOpen: false,
   isPlaylistModalOpen: false,
   loading: false,
@@ -99,7 +100,7 @@ export function reducer(state = initialState, action = {}) {
 
     case ADD_TO_NEW_PLAYLIST_SONGS:
       const newestPlaylistSongs = new Set();
-      if (state.newPlaylistSongs === undefined) {
+      if (state.newPlaylistSongs.size === 0) {
         newestPlaylistSongs.add(action.songIdToSave);
       } else {
         state.newPlaylistSongs.forEach(song => newestPlaylistSongs.add(song));
@@ -190,6 +191,14 @@ export function reducer(state = initialState, action = {}) {
       return { ...state, loading: false, songs: updatedSongs };
     case UPDATE_PLAYLIST_FAIL:
       return { ...state, loading: false, error: action.e };
+    case CLEAR_PLAYLISTS:
+      return {
+        ...state,
+        playlists: [],
+        savedSongs: [],
+        curPlaylistTitle: '',
+        curPlaylistId: NaN,
+      };
     default:
       return state;
   }
@@ -209,10 +218,10 @@ export function closeModal() {
   };
 }
 
-export function addToNewPlaylistSongs(newPlaylistSong) {
+export function addToNewPlaylistSongs(newPlaylistSongId) {
   return {
     type: ADD_TO_NEW_PLAYLIST_SONGS,
-    songIdToSave: newPlaylistSong.id,
+    songIdToSave: newPlaylistSongId,
   };
 }
 
@@ -267,25 +276,27 @@ export function loadPlaylists() {
         });
       dispatch({ type: LOAD_PLAYLISTS_SUCCESS, payload: playlists });
     } catch (e) {
+      console.warn('load playlists err', e);
       dispatch({ type: LOAD_PLAYLISTS_FAIL });
     }
   };
 }
 
-export function createPlaylist() {
+export function createPlaylist(newPlaylistSongs) {
   return async (dispatch, getState) => {
-    // start by closing the new playlist modal and checking if user is logged in
+    // start by closing the new playlist modal and ensuring if user is logged in
     dispatch(closeModal());
 
     if (!getState().auth.userIsLoggedIn) return;
 
     dispatch({ type: CREATE_PLAYLIST });
     try {
-      const currentDatetime = moment().format('LLLL');
       // if user leaves playlist name blank, create one with title: 'New Playlist <current datetime>'
+      const currentDatetime = moment().format('LLLL');
       const playlistNameToSubmit = getState().playlists.newPlaylistName === '' ? `New Playlist ${currentDatetime}`
         : getState().playlists.newPlaylistName;
 
+      // No 'Saved Songs' playlist, that would clobber our internal saved songs playlist for each user
       if (playlistNameToSubmit === 'Saved Songs') throw new Error('Can\'t name new playlist "Saved Songs"');
 
       const token = await firebase.auth().currentUser.getIdToken();
@@ -294,21 +305,25 @@ export function createPlaylist() {
           t: 'EXVbAWTqbGFl7BKuqUQv',
           name: playlistNameToSubmit,
           description: '',
-          song_ids: Array.from(getState().playlists.newPlaylistSongs),
+          song_ids: newPlaylistSongs,
         },
         { headers: { Authorization: token } });
       const newPlaylistId = newPlaylist.data.id;
-
       dispatch({ type: CREATE_PLAYLIST_SUCCESS, payload: newPlaylistId });
       dispatch(loadPlaylists());
     } catch (err) {
+      console.warn('create playlist err', err);
       dispatch(closeModal());
       dispatch({ type: CREATE_PLAYLIST_FAIL, err });
     }
   };
 }
 
-// Actually loads songs
+// export function setSongIdToAdd(songIdToAdd) {
+
+// }
+
+// Actually loads songs into playlist
 async function loadSongsForPlaylistIdHelper(id) {
   const token = await firebase.auth().currentUser.getIdToken();
   try {
@@ -319,7 +334,7 @@ async function loadSongsForPlaylistIdHelper(id) {
       });
     return songs;
   } catch (e) {
-    throw e;
+    console.warn('Error gettings songs for playlist:', e);
   }
 }
 
@@ -432,7 +447,7 @@ export function loadSavedSongs() {
 
 export function updatePlaylist(playlistId, songIds) {
   return async (dispatch) => {
-    // Prevent user from saving duplicate songs to a playlist
+    // Prevent user from saving duplicate songs to a playlist by using a set
     const seen = new Set();
     const songIdsHaveDuplicates = songIds.some(songId => seen.size === seen.add(songId).size);
     // TODO: add an alert here to warn user of duplicates
@@ -451,7 +466,6 @@ export function updatePlaylist(playlistId, songIds) {
           song_ids: songIds,
         },
         { headers: { Authorization: token } });
-
 
       if (songsResp.data.songs === undefined) {
         dispatch({
@@ -514,13 +528,13 @@ export function resetNewPlaylistSongs() {
 export function saveSongToPlaylist(songId, playlistId) {
   // should save song to saved songs playlist
   return async (dispatch, getState) => {
-    if (getState().playlists.savedSongs) {
+    if (!getState().playlists.savedSongs.length) {
       // if the user hasn't loaded their saved songs yet, load it for them
       await dispatch(loadSavedSongs());
     }
-    dispatch({ type: SAVE_RANKED_SONG });
+    // dispatch({ type: SAVE_RANKED_SONG });
 
-    // try and fetch the songs. if they fail, just short circuit out of this function
+    // try and fetch the current songs for the playlist. if they fail, just short circuit out of this function
     let playlistSongs;
     try {
       playlistSongs = await loadSongsForPlaylistIdHelper(playlistId);
@@ -528,7 +542,6 @@ export function saveSongToPlaylist(songId, playlistId) {
       dispatch({ type: PLAYLIST_LOAD_SONGS_FAIL, error: e });
       return;
     }
-
 
     const playlistSongIds = playlistSongs.data.songs.map(s => s.id);
     playlistSongIds.push(songId);
@@ -543,7 +556,7 @@ export function saveSong(song) {
       // if the user hasn't loaded their saved songs yet, load it for them
       await dispatch(loadSavedSongs());
     }
-    dispatch({ type: SAVE_RANKED_SONG });
+    // dispatch({ type: SAVE_RANKED_SONG });
 
     let { savedSongsPlaylistId } = getState().playlists;
     if (savedSongsPlaylistId === -1) {
@@ -558,7 +571,7 @@ export function saveSong(song) {
     savedSongIds.push(song.id);
     await dispatch(updatePlaylist(savedSongsPlaylistId, savedSongIds));
 
-    dispatch({ type: SAVE_RANKED_SONG_SUCCESS });
+    // dispatch({ type: SAVE_RANKED_SONG_SUCCESS });
 
     // refresh songs after update is complete
     await dispatch(loadSavedSongs());
@@ -584,6 +597,14 @@ export function deletePlaylist(playlistId) {
       dispatch({ type: DELETE_PLAYLIST_FAIL, e });
     }
   };
+}
+
+
+/**
+ * Clears all playlists state, including saved songs. Should really only be used when user logs out
+**/
+export function clearPlaylists() {
+  return ({ type: CLEAR_PLAYLISTS });
 }
 
 export function setPlaylistScrollingNegative() {

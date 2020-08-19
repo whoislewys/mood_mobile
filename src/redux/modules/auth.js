@@ -2,6 +2,9 @@ import {
   USER_LOGGED_IN,
   USER_LOGGED_OUT,
 } from '../constants';
+import {
+  clearPlaylists,
+} from './playlists';
 
 export const initialState = {
   // Be sure that you ONLY USE BASIC TYPES in the auth state
@@ -45,7 +48,9 @@ export function userLoggedIn(userInfo) {
 }
 
 export function userLoggedOut() {
-  return {
-    type: USER_LOGGED_OUT,
+  return async (dispatch) => {
+    dispatch(clearPlaylists());
+
+    dispatch({ type: USER_LOGGED_OUT });
   };
 }
